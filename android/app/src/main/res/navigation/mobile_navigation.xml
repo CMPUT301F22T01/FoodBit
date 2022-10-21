@@ -3,23 +3,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_home">
+    app:startDestination="@+id/navigation_ingredient_storage">
+<!--    TODO: change app:startDestination above (right now it is ingredient storage)-->
 
     <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.CMPUT301F22T01.foodbit.ui.home.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
+        android:id="@+id/navigation_ingredient_storage"
+        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment"
+        android:label="@string/title_ingredient_storage"
+        tools:layout="@layout/fragment_ingredient_storage" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.CMPUT301F22T01.foodbit.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_recipe_book"
+        android:name="com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment"
+        android:label="@string/title_recipe_book"
+        tools:layout="@layout/fragment_recipe_book" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.CMPUT301F22T01.foodbit.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_meal_plan"
+        android:name="com.CMPUT301F22T01.foodbit.ui.MealPlanFragment"
+        android:label="@string/title_meal_plan"
+        tools:layout="@layout/fragment_meal_plan" />
+
+    <fragment
+        android:id="@+id/navigation_shopping_cart"
+        android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment"
+        android:label="@string/title_shopping_cart"
+        tools:layout="@layout/fragment_shopping_cart" />
 </navigation>

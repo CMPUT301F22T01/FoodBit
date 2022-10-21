@@ -1,6 +1,9 @@
 <resources>
     <string name="app_name">FoodBit</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_ingredient_storage">Ingredients</string>
+    <string name="title_recipe_book">Recipes</string>
+    <string name="title_meal_plan">Meal Plan</string>
+    <string name="title_shopping_cart">Shopping Cart</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
