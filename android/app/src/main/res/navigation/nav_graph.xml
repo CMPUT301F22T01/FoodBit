@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_menu"
+    app:startDestination="@id/fragment_meal_plan">
+    <fragment
+        android:id="@+id/fragment_ingredient_storage"
+        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment"
+        android:label="IngredientStorageFragment"
+        tools:layout="@layout/fragment_ingredient_storage"/>
+
+    <fragment
+        android:id="@+id/fragment_recipe_book"
+        android:name="com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment"
+        android:label="RecipeBookFragment"
+        tools:layout="@layout/fragment_recipe_book"/>
+
+    <fragment
+        android:id="@+id/fragment_meal_plan"
+        android:name="com.CMPUT301F22T01.foodbit.ui.MealPlanFragment"
+        android:label="MealPlanFragment"
+        tools:layout="@layout/fragment_meal_plan"/>
+
+    <fragment
+        android:id="@+id/fragment_shopping_cart"
+        android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment"
+        android:label="ShoppingCartFragment"
+        tools:layout="@layout/fragment_shopping_cart"/>
+
+</navigation>
