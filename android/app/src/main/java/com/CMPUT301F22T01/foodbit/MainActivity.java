@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+//        NOTICE: this is the implementation of bottom navigation view without using android navigation components
 //        final NavigationBarView navView = findViewById(R.id.nav_view);
 //
 //        // set and init default destination
