@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -17,23 +18,29 @@ import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
     // access a Cloud Firestore instance and retrieve data
-    final String TAG = "Sample";
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    RecipeBook recipeBook = getRecipeBook(db);
+    public final static String TAG = "Sample";
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference user = db.collection("user");
+//    RecipeBook recipeBook = getRecipeBook(db);
 
     // init UI
     IngredientStorageFragment ingredientStorageFragment = IngredientStorageFragment.newInstance("1","2");
-    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance(recipeBook);
+//    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance(recipeBook);
     MealPlanFragment mealPlanFragment = MealPlanFragment.newInstance("1","2");
     ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance("1","2");
 
@@ -72,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         setUpNavBar();
+
+
     }
 
     private void setUpNavBar(){
@@ -84,25 +93,6 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
 
-    private RecipeBook getRecipeBook(FirebaseFirestore db) {
-        RecipeBook recipeBook = new RecipeBook();
-        db.collection("recipes")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            RecipeBook recipeBook = new RecipeBook();
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d(TAG, document.getId() + " => " + document.getData());
-                                recipeBook.add(document.toObject(Recipe.class));
-                            }
-                        } else {
-                            Log.d(TAG, "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-        return recipeBook;
-    }
+
 
 }

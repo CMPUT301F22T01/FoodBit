@@ -14,10 +14,6 @@ public class RecipeBook implements Serializable {
         return recipes;
     }
 
-    public int size() {
-        return recipes.size();
-    }
-
     public void add(Recipe recipe) {
         assert !recipes.contains(recipe): "This recipe is already in the recipe book!";
         recipes.add(recipe);

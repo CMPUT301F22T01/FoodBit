@@ -10,9 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
 
+import java.util.ArrayList;
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
-    private RecipeBook recipeBook;
+    private ArrayList<Recipe> recipes;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -44,27 +46,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         }
     }
 
-    public RecipeAdapter(RecipeBook recipeBook) {
-        this.recipeBook = recipeBook;
+    public RecipeAdapter(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
     }
 
     @NonNull
     @Override
     public RecipeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_book_item, parent, false);
+                .inflate(R.layout.item_recipe_book, parent, false);
         return new RecipeAdapter.ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapter.ViewHolder holder, int position) {
-        holder.getRecipeTitleView().setText(recipeBook.getRecipes().get(position).getTitle());
-        holder.getRecipePrepTimeView().setText(String.valueOf(recipeBook.getRecipes().get(position).getPrepTime()));
-        holder.getRecipeNumServingsView().setText(String.valueOf(recipeBook.getRecipes().get(position).getNumServings()));
+        holder.getRecipeTitleView().setText(recipes.get(position).getTitle());
+        holder.getRecipePrepTimeView().setText(String.valueOf(recipes.get(position).getPrepTime()));
+        holder.getRecipeNumServingsView().setText(String.valueOf(recipes.get(position).getNumServings()));
     }
 
     @Override
     public int getItemCount() {
-        return recipeBook.size();
+        return recipes.size();
     }
 }
