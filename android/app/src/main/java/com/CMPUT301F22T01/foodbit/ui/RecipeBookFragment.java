@@ -5,6 +5,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -91,26 +94,38 @@ public class RecipeBookFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setAdapter(adapter);
 
-        // test button
+//        testButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Recipe recipe = new Recipe("Burger", 20, 3, null, null, null, null);
+//                recipeBook.add(recipe);
+//                recipeBookRef.set(recipeBook).addOnSuccessListener(new OnSuccessListener<Void>() {
+//                    @Override
+//                    public void onSuccess(Void unused) {
+//                        Log.d(TAG, "Data has been added successfully!");
+//                    }
+//                }).addOnFailureListener(new OnFailureListener() {
+//                    @Override
+//                    public void onFailure(@NonNull Exception e) {
+//                        // These are a method which gets executed if there’s any problem
+//                        Log.d(TAG, "Data could not be added!" + e.toString());
+//                    }
+//                });
+//            }
+//        });
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Recipe recipe = new Recipe("Burger", 20, 3, null, null, null, null);
-                recipeBook.add(recipe);
-                recipeBookRef.set(recipeBook).addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(TAG, "Data has been added successfully!");
-                    }
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // These are a method which gets executed if there’s any problem
-                        Log.d(TAG, "Data could not be added!" + e.toString());
-                    }
-                });
+                FragmentManager fragmentManager = getParentFragmentManager();
+                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+                fragmentTransaction.setReorderingAllowed(true);
+                fragmentTransaction.replace(R.id.nav_container, RecipeAddFragment.class, null);
+                fragmentTransaction.addToBackStack(null);
+                fragmentTransaction.commit();
+//                Navigation.findNavController(view).navigate(R.id.action_fragment_recipe_book_to_recipeAddFragment);
             }
         });
+
 
         return view;
     }
