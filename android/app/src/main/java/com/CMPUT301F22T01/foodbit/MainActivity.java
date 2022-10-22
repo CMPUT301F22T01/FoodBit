@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
 
         final NavigationBarView navView = findViewById(R.id.nav_view);
         navView.setOnItemSelectedListener(item -> {
+            // TODO: move this into a controller class
             int itemId = item.getItemId();
             if (itemId == R.id.fragment_ingredient_storage) {
                 getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment_activity_main, ingredientStorageFragment).commit();
