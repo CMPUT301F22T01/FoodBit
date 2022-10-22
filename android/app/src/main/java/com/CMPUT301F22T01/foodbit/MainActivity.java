@@ -13,18 +13,25 @@ import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
+
+    // Access a Cloud Firestore instance
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     IngredientStorageFragment ingredientStorageFragment = IngredientStorageFragment.newInstance("1","2");
     RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance("1","2");
     MealPlanFragment mealPlanFragment = MealPlanFragment.newInstance("1","2");
     ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance("1","2");
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        final String TAG = "Sample";
 
 //        NOTICE: this is the implementation of bottom navigation view without using android navigation components
 //        final NavigationBarView navView = findViewById(R.id.nav_view);
@@ -61,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         // grab NavHostFragment and setup up controller, and nav bar accordingly
         NavHostFragment navHostFragment = (NavHostFragment) supportFragmentManager.findFragmentById(R.id.nav_container);
+        assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.nav_bar);
         NavigationUI.setupWithNavController(bottomNav, navController);
