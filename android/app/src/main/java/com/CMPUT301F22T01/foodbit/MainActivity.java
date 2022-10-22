@@ -1,37 +1,48 @@
 package com.CMPUT301F22T01.foodbit;
 
 import android.os.Bundle;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
 import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class MainActivity extends AppCompatActivity {
 
-    // Access a Cloud Firestore instance
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    // access a Cloud Firestore instance and retrieve data
+    final String TAG = "Sample";
+    static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    RecipeBook recipeBook = getRecipeBook(db);
 
+    // init UI
     IngredientStorageFragment ingredientStorageFragment = IngredientStorageFragment.newInstance("1","2");
-    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance("1","2");
+    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance(recipeBook);
     MealPlanFragment mealPlanFragment = MealPlanFragment.newInstance("1","2");
     ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance("1","2");
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final String TAG = "Sample";
+
 
 //        NOTICE: this is the implementation of bottom navigation view without using android navigation components
 //        final NavigationBarView navView = findViewById(R.id.nav_view);
@@ -43,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 //        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, defaultFragment).commit();
 //
 //        navView.setOnItemSelectedListener(item -> {
-//            // TODO: move this into a controller class
 //            int itemId = item.getItemId();
 //            if (itemId == R.id.fragment_ingredient_storage) {
 //                getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, ingredientStorageFragment).commit();
@@ -74,9 +84,25 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
 
-
-
-
-
+    private RecipeBook getRecipeBook(FirebaseFirestore db) {
+        RecipeBook recipeBook = new RecipeBook();
+        db.collection("recipes")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            RecipeBook recipeBook = new RecipeBook();
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.d(TAG, document.getId() + " => " + document.getData());
+                                recipeBook.add(document.toObject(Recipe.class));
+                            }
+                        } else {
+                            Log.d(TAG, "Error getting documents: ", task.getException());
+                        }
+                    }
+                });
+        return recipeBook;
+    }
 
 }
