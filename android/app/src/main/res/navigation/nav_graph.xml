@@ -35,10 +35,6 @@
         android:id="@+id/recipeAddFragment"
         android:name="com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment"
         android:label="fragment_recipe_add"
-        tools:layout="@layout/fragment_recipe_add" >
-        <action
-            android:id="@+id/action_recipeAddFragment_to_fragment_recipe_book"
-            app:destination="@id/fragment_recipe_book" />
-    </fragment>
+        tools:layout="@layout/fragment_recipe_add" />
 
 </navigation>

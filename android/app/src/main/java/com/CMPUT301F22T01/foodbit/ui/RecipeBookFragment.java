@@ -1,9 +1,11 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +35,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -116,13 +119,22 @@ public class RecipeBookFragment extends Fragment {
         testButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                fragmentTransaction.setReorderingAllowed(true);
-                fragmentTransaction.replace(R.id.nav_container, RecipeAddFragment.class, null);
-                fragmentTransaction.addToBackStack(null);
-                fragmentTransaction.commit();
+
 //                Navigation.findNavController(view).navigate(R.id.action_fragment_recipe_book_to_recipeAddFragment);
+
+                RecipeAddFragment recipeAddFragment = RecipeAddFragment.newInstance(recipeBook);
+                recipeAddFragment.show(getChildFragmentManager(), RecipeAddFragment.TAG);
+//                FragmentManager fragmentManager = getParentFragmentManager();
+//                FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+//                // The device is smaller, so show the fragment fullscreen
+//                FragmentTransaction transaction = fragmentManager.beginTransaction();
+//                // For a little polish, specify a transition animation
+//                transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+//                // To make it fullscreen, use the 'content' root view as the container
+//                // for the fragment, which is always the root view for the activity
+//                transaction.replace(android.R.id.content, recipeAddFragment)
+//                        .addToBackStack(null)
+//                        .commit();
             }
         });
 
@@ -135,6 +147,7 @@ public class RecipeBookFragment extends Fragment {
         super.onResume();
 
         recipeBookRef.addSnapshotListener(new EventListener<DocumentSnapshot>() {
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onEvent(@Nullable DocumentSnapshot snapshot,
                                 @Nullable FirebaseFirestoreException e) {
@@ -147,6 +160,7 @@ public class RecipeBookFragment extends Fragment {
                     Log.d(TAG, "Current data: " + snapshot.getData());
                     recipes.clear();
                     recipeBook = snapshot.toObject(RecipeBook.class);
+                    assert recipeBook != null;
                     recipes.addAll(recipeBook.getRecipes());
                     Log.d(TAG, String.valueOf(recipes));
                     adapter.notifyDataSetChanged();
