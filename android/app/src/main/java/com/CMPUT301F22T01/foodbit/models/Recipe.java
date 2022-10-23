@@ -12,8 +12,6 @@ package com.CMPUT301F22T01.foodbit.models;
 //        Edge Case Behaviour:
 //        Mandatory field not entered -> display an error message and highlight the corresponding field prompting the user to enter
 
-import org.jetbrains.annotations.Contract;
-
 import java.util.ArrayList;
 
 public class Recipe {
@@ -22,18 +20,18 @@ public class Recipe {
      private int numServings;
      private String category;
      private String comments;
-     private String photograph;
+     private String photo;
      private ArrayList<Ingredient> ingredients;
 
      public Recipe() {}
 
-     public Recipe(String title, int prepTime, int numServings, String category, String comments, String photograph, ArrayList<Ingredient> ingredients) {
+     public Recipe(String title, int prepTime, int numServings, String category, String comments, String photo, ArrayList<Ingredient> ingredients) {
         this.title = title;
         this.prepTime = prepTime;
         this.numServings = numServings;
         this.category = category;
         this.comments = comments;
-        this.photograph = photograph;
+        this.photo = photo;
         this.ingredients = ingredients;
     }
 
@@ -77,11 +75,11 @@ public class Recipe {
         this.comments = comments;
     }
 
-    public String getPhotograph() {
-        return photograph;
+    public String getPhoto() {
+        return photo;
     }
 
-    public void setPhotograph(String photograph) {
-        this.photograph = photograph;
+    public void setPhoto(String photo) {
+        this.photo = photo;
     }
 }

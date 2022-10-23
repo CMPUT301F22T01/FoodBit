@@ -11,15 +11,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class RecipeAddFragment extends DialogFragment {
@@ -84,7 +81,7 @@ public class RecipeAddFragment extends DialogFragment {
         prepTimeView = view.findViewById(R.id.recipe_add_edit_text_prep_time);
         numServingsView = view.findViewById(R.id.recipe_add_edit_text_num_servings);
         categoryView = view.findViewById(R.id.recipe_add_edit_text_category);
-        commentView = view.findViewById(R.id.recipe_add_edit_text_comment);
+        commentView = view.findViewById(R.id.recipe_add_edit_text_comments);
 
 
 

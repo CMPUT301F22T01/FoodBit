@@ -12,6 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="?attr/actionBarSize"
         android:minHeight="?attr/actionBarSize"
+        android:paddingEnd="6dp"
         android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +100,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/recipe_add_text_layout_comment"
+        android:id="@+id/recipe_add_text_layout_comments"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -110,7 +111,7 @@
         app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_category">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/recipe_add_edit_text_comment"
+            android:id="@+id/recipe_add_edit_text_comments"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="top|left"
