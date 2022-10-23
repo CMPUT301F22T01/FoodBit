@@ -16,8 +16,8 @@
         android:label="RecipeBookFragment"
         tools:layout="@layout/fragment_recipe_book">
         <action
-            android:id="@+id/action_fragment_recipe_book_to_recipeAddFragment"
-            app:destination="@id/recipeAddFragment" />
+            android:id="@+id/action_fragment_recipe_book_to_fragment_recipe_detail"
+            app:destination="@id/fragment_recipe_detail" />
     </fragment>
 
     <fragment
@@ -31,10 +31,14 @@
         android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment"
         android:label="ShoppingCartFragment"
         tools:layout="@layout/fragment_shopping_cart"/>
-    <fragment
-        android:id="@+id/recipeAddFragment"
-        android:name="com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment"
-        android:label="fragment_recipe_add"
-        tools:layout="@layout/fragment_recipe_add" />
 
+    <fragment
+        android:id="@+id/fragment_recipe_detail"
+        android:name="com.CMPUT301F22T01.foodbit.ui.RecipeDetailFragment"
+        android:label="RecipeDetailFragment"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="recipeBook"
+            app:argType="com.CMPUT301F22T01.foodbit.models.RecipeBook" />
+    </fragment>
 </navigation>

@@ -3,13 +3,8 @@ package com.CMPUT301F22T01.foodbit.ui;
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -25,18 +20,13 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.RecipeAdapter;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +38,7 @@ public class RecipeBookFragment extends Fragment {
     private static final String DATA = "data";
     String TAG = MainActivity.TAG;
 
-    private RecipeBook recipeBook;
+    public static RecipeBook recipeBook;
     private ArrayList<Recipe> recipes = new ArrayList<Recipe>();
     final DocumentReference recipeBookRef = FirebaseFirestore.getInstance().collection("user").document("recipe book");
     RecipeAdapter adapter;
@@ -77,10 +67,7 @@ public class RecipeBookFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
 //            recipeBook = (RecipeBook) getArguments().getSerializable(DATA);
-            // test: before integrating db
-            recipeBook = new RecipeBook();
         }
-        // test: before integrating db
         recipeBook = new RecipeBook();
     }
 
@@ -103,6 +90,7 @@ public class RecipeBookFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
+
 
 //        testButton.setOnClickListener(new View.OnClickListener() {
 //            @Override

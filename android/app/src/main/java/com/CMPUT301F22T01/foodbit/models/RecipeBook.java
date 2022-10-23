@@ -20,8 +20,16 @@ public class RecipeBook implements Serializable {
         recipes = new ArrayList<Recipe>();
     }
 
+    public RecipeBook(ArrayList<Recipe> recipes) {
+        this.recipes = recipes;
+    }
+
     public ArrayList<Recipe> getRecipes() {
         return recipes;
+    }
+
+    public Recipe get(int position) {
+        return recipes.get(position);
     }
 
     public void add(Recipe recipe) {
