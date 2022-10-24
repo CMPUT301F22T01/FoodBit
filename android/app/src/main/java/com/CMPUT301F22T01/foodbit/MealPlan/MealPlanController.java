@@ -1,5 +1,6 @@
 package com.CMPUT301F22T01.foodbit.MealPlan;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -31,6 +32,10 @@ public class MealPlanController {
         model.getALlMeals(mealPlan);
     }
 
+    public ArrayList<MealPlanModel> getArrayList() {
+        return mealPlan;
+    }
+
 //    public void loadMeal() {
 //
 //    }
@@ -38,6 +43,9 @@ public class MealPlanController {
 //    public void editMeal() {
 //
 //    }
-
+    public void update(ArrayList<MealPlanModel> newMealPlan) {
+        mealPlan.clear();
+        mealPlan.addAll(newMealPlan);
+    }
 
 }

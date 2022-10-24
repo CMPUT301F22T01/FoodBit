@@ -127,8 +127,8 @@ public class MealPlanModel {
 //        data.put("date",date);
 //        data.put("ingredientList",ingredientList);
         String id = collectionReference.document().getId();
-        collectionReference.document(id).set(this);
         this.mealID = id;
+        collectionReference.document(id).set(this);
     }
 
     public void getALlMeals(ArrayList<MealPlanModel> mealPlan) {
@@ -146,7 +146,7 @@ public class MealPlanModel {
                         MealPlanModel meal = new MealPlanModel();
                         meal = task.getResult().getDocuments().get(i).toObject(meal.getClass());
                         mealPlan.add(meal);
-                        Log.e("firebase", String.valueOf(task.getResult().getDocuments().get(i)));
+                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
                     }
                 }
             }

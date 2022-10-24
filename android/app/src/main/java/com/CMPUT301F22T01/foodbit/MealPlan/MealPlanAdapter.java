@@ -1,11 +1,14 @@
 package com.CMPUT301F22T01.foodbit.MealPlan;
 
+import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
@@ -31,6 +34,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
 
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
+        Log.e("lol",items.get(position).getName());
         holder.getTextView().setText(items.get(position).getName());
     }
 
@@ -63,8 +67,16 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-            textView = (TextView) view.findViewById(R.id.meal_plan_textView);
+            // Define click listener for the ViewHolder's
+            // Define click listener for items
+            view.setOnClickListener(v -> {
+                // put argument
+                Bundle bundle = new Bundle();
+                bundle.putInt("position",getAdapterPosition());
+
+//                Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
+            });
+            textView = view.findViewById(R.id.meal_plan_textView);
         }
 
         public TextView getTextView() {

@@ -1,66 +1,115 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
+import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanModel;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanAdapter;
+import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanController;
+import com.google.android.material.transition.MaterialElevationScale;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MealPlanFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.ArrayList;
+
 public class MealPlanFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public String TAG = "MealPlan";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // get recipe book from MainActivity
+    private final MealPlanController mealPlan = MainActivity.mealPlan;
+
+    MealPlanAdapter adapter;
 
     public MealPlanFragment() {
         // Required empty public constructor
+//        mealPlan.loadAllMeals();
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MealPlanFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static MealPlanFragment newInstance(String param1, String param2) {
-        MealPlanFragment fragment = new MealPlanFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_meal_plan, container, false);
+        View view = inflater.inflate(R.layout.fragment_meal_plan, container, false);
+
+        // get views
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
+//        Button addButton = view.findViewById(R.id.recipe_book_test_add_button);
+
+        // set RecyclerView
+        mealPlan.loadAllMeals();
+        adapter = new MealPlanAdapter(mealPlan.getArrayList());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+
+        // add borderlines between items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        // add button launches RecipeAddFragment
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                RecipeAddFragment recipeAddFragment = RecipeAddFragment.newInstance(recipeBook);
+//
+//                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+//            }
+//        });
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // real time updates of the recipeBook
+        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Meals");
+        recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.e(TAG, "Listen failed.", error);
+                    return;
+                }
+                ArrayList<MealPlanModel> newRecipes = new ArrayList<MealPlanModel>();
+                assert value != null;
+                for (QueryDocumentSnapshot doc : value) {
+                    newRecipes.add(doc.toObject(MealPlanModel.class));
+                }
+                mealPlan.update(newRecipes);
+                Log.e(TAG, "Current recipes: " + mealPlan.getArrayList());
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
