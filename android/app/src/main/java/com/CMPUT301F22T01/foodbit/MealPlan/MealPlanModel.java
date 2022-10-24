@@ -11,6 +11,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -102,6 +103,8 @@ public class MealPlanModel {
         this.mealID = mealID;
     }
 
+    public MealPlanModel(){};
+
     public MealPlanModel(String name, int servings, int id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
         this.name = name;
         this.servings = servings;
@@ -128,7 +131,7 @@ public class MealPlanModel {
         this.mealID = id;
     }
 
-    public void getALlMeals() {
+    public void getALlMeals(ArrayList<MealPlanModel> mealPlan) {
         //TODO: Figure out how to return all the meals
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Meals");
@@ -140,6 +143,9 @@ public class MealPlanModel {
                 }
                 else {
                     for (int i =0; i< task.getResult().size(); i++) {
+                        MealPlanModel meal = new MealPlanModel();
+                        meal = task.getResult().getDocuments().get(i).toObject(meal.getClass());
+                        mealPlan.add(meal);
                         Log.e("firebase", String.valueOf(task.getResult().getDocuments().get(i)));
                     }
                 }
