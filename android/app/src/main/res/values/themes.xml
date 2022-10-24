@@ -2,15 +2,38 @@
     <!-- Base application theme. -->
     <style name="Theme.FoodBit" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_500</item>
-        <item name="colorPrimaryVariant">@color/purple_700</item>
-        <item name="colorOnPrimary">@color/white</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryVariant">@color/primaryDarkColor</item>
+        <item name="colorOnPrimary">@color/primaryTextColor</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_200</item>
         <item name="colorSecondaryVariant">@color/teal_700</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
         <!-- Customize your theme here. -->
+    </style>
+
+    <style name="Theme.FoodBit.FullScreenDialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+<!--        <item name="colorPrimaryDark">?attr/colorPrimaryDark</item>-->
+<!--        <item name="colorAccent">?attr/colorAccent</item>-->
+<!--        <item name="colorPrimary">?attr/colorPrimary</item>-->
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:statusBarColor">@color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <!--        <item name="actionMenuTextColor">?attr/colorAccent</item>-->
+    </style>
+
+    <style name="Theme.FoodBit.Slide">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+    </style>
+    
+    <style name="Theme.FoodBit.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primaryLightColor</item>
+        <item name="hintTextColor">@color/primaryColor</item>
+        <item name="startIconTint">@color/primaryColor</item>
     </style>
 </resources>
