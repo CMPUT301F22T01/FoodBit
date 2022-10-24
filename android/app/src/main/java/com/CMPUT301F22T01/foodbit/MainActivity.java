@@ -30,58 +30,24 @@ import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     // access a Cloud Firestore instance and retrieve data
-    public final static String TAG = "Sample";
+    public final static String TAG = "MainActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-    final CollectionReference user = db.collection("user");
-//    RecipeBook recipeBook = getRecipeBook(db);
-
-    // init UI
-    IngredientStorageFragment ingredientStorageFragment = IngredientStorageFragment.newInstance("1","2");
-//    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance(recipeBook);
-    MealPlanFragment mealPlanFragment = MealPlanFragment.newInstance("1","2");
-    ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance("1","2");
+    final CollectionReference recipeBookRef = db.collection("recipe book");
+    public static RecipeBook recipeBook = new RecipeBook();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-
-//        NOTICE: this is the implementation of bottom navigation view without using android navigation components
-//        final NavigationBarView navView = findViewById(R.id.nav_view);
-//
-//        // set and init default destination
-//        final Fragment defaultFragment = mealPlanFragment;
-//        final int defaultFragmentLayout = R.id.fragment_meal_plan;
-//        navView.setSelectedItemId(defaultFragmentLayout);
-//        getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, defaultFragment).commit();
-//
-//        navView.setOnItemSelectedListener(item -> {
-//            int itemId = item.getItemId();
-//            if (itemId == R.id.fragment_ingredient_storage) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, ingredientStorageFragment).commit();
-//                return true;
-//            } else if (itemId == R.id.fragment_recipe_book) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, recipeBookFragment).commit();
-//                return true;
-//            } else if (itemId == R.id.fragment_meal_plan) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, mealPlanFragment).commit();
-//                return true;
-//            } else if (itemId == R.id.fragment_shopping_cart) {
-//                getSupportFragmentManager().beginTransaction().replace(R.id.nav_container, shoppingCartFragment).commit();
-//                return true;
-//            }
-//            return false;
-//        });
-
         setUpNavBar();
-
-
     }
+
 
     private void setUpNavBar(){
         FragmentManager supportFragmentManager = getSupportFragmentManager();
@@ -92,7 +58,4 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.nav_bar);
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
-
-
-
 }

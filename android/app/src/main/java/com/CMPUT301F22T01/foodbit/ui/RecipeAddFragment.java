@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
@@ -21,12 +22,13 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class RecipeAddFragment extends DialogFragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String RECIPE_BOOK = "recipe_book";
-    private static final String ARG_PARAM2 = "param2";
-    public final static String TAG = "Add a recipe";
+//    private static final String RECIPE_BOOK = "recipe_book";
+    public final static String TAG = "AddRecipe";
 
+    // get recipe book from MainActivity
+    private RecipeBook recipeBook = MainActivity.recipeBook;
+
+    // views
     MaterialToolbar topBar;
     TextInputEditText titleView;
     TextInputEditText prepTimeView;
@@ -35,39 +37,15 @@ public class RecipeAddFragment extends DialogFragment {
     TextInputEditText commentView;
 
 
-
-    // TODO: Rename and change types of parameters
-    private RecipeBook recipeBook;
-
     public RecipeAddFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param recipeBook Parameter 1.
-     * @return A new instance of fragment RecipeAddFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    @NonNull
-    public static RecipeAddFragment newInstance(RecipeBook recipeBook) {
-        RecipeAddFragment fragment = new RecipeAddFragment();
-        Bundle args = new Bundle();
-        args.putSerializable(RECIPE_BOOK, recipeBook);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setStyle(DialogFragment.STYLE_NORMAL, android.R.style.ThemeOverlay);
-        if (getArguments() != null) {
-            recipeBook = (RecipeBook) getArguments().getSerializable(RECIPE_BOOK);
-        }
+
+        // set the style of the dialog fragment to be full screen
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
     }
 
@@ -76,6 +54,7 @@ public class RecipeAddFragment extends DialogFragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_add, container, false);
 
+        // init views
         topBar = view.findViewById(R.id.recipe_add_top_bar);
         titleView = view.findViewById(R.id.recipe_add_edit_text_title);
         prepTimeView = view.findViewById(R.id.recipe_add_edit_text_prep_time);
@@ -83,15 +62,17 @@ public class RecipeAddFragment extends DialogFragment {
         categoryView = view.findViewById(R.id.recipe_add_edit_text_category);
         commentView = view.findViewById(R.id.recipe_add_edit_text_comments);
 
-
-
+        // set top bar behaviours
+        // close button behaviour
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
         });
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            // TODO: input check!!!
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
+                // done button behaviour
                 if (itemId == R.id.recipe_add_done) {
                     String title = titleView.getText().toString();
                     int prepTime = Integer.parseInt(prepTimeView.getText().toString());
@@ -115,6 +96,7 @@ public class RecipeAddFragment extends DialogFragment {
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
+            // set the style of the dialog fragment to be full screen
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);
@@ -123,6 +105,7 @@ public class RecipeAddFragment extends DialogFragment {
     }
 }
 
+//    TODO: photo support
 //    private void imageChooser() {
 //        // create an instance of the
 //        // intent of the type image

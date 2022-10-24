@@ -18,11 +18,7 @@ import java.util.ArrayList;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
-    public interface OnItemClickListener {
-        void onItemClick(Recipe item);
-    }
-
-    private ArrayList<Recipe> items;
+    private final ArrayList<Recipe> items;
 
     /**
      * Provide a reference to the type of views that you are using
@@ -34,6 +30,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
+
+        // define UI
         private final TextView recipeTitle;
         private final TextView recipePrepTime;
         private final TextView recipeNumServings;
@@ -43,25 +41,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's View
-//            Navigation.findNavController(view).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Bundle bundle = new Bundle();
-                    bundle.putInt("position",getAdapterPosition());
 
-                    Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
-                }
+            // Define click listener for items
+            view.setOnClickListener(v -> {
+                // put argument
+                Bundle bundle = new Bundle();
+                bundle.putInt("position",getAdapterPosition());
+
+                Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
             });
 
-            recipeTitle = (TextView) view.findViewById(R.id.item_recipe_title);
-            recipePrepTime = (TextView) view.findViewById(R.id.item_recipe_prep_time);
-            recipeNumServings = (TextView) view.findViewById(R.id.item_recipe_num_servings);
-            recipePhoto = (ConstraintLayout) view.findViewById(R.id.item_recipe_image);
-            recipeComments = (TextView) view.findViewById(R.id.item_recipe_comments);
+            // init UI
+            recipeTitle = view.findViewById(R.id.item_recipe_title);
+            recipePrepTime = view.findViewById(R.id.item_recipe_prep_time);
+            recipeNumServings = view.findViewById(R.id.item_recipe_num_servings);
+            recipePhoto = view.findViewById(R.id.item_recipe_image);
+            recipeComments = view.findViewById(R.id.item_recipe_comments);
         }
 
+        // view holder's get view methods
         public TextView getRecipeTitleView() {
             return recipeTitle;
         }
@@ -91,11 +89,14 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull RecipeAdapter.ViewHolder holder, int position) {
+        // get value of each fields
         String title = items.get(position).getTitle();
         int prepTime = items.get(position).getPrepTime();
         int numServings = items.get(position).getNumServings();
         String comments = items.get(position).getComments();
         String photo = items.get(position).getPhoto();
+
+        // set each view with value
         holder.getRecipePrepTimeView().setText("Preparation Time: " + prepTime);
         holder.getRecipeTitleView().setText(title);
         holder.getRecipePrepTimeView().setText("Preparation Time: " + prepTime);

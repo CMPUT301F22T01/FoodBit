@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -33,27 +34,30 @@ public class RecipeBook implements Serializable {
     }
 
     public void add(Recipe recipe) {
+        String TAG = RecipeAddFragment.TAG;
         assert !recipes.contains(recipe) : "This recipe is already in the recipe book!";
         recipes.add(recipe);
-        update();
-    }
-
-    private void update() {
+//        update();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
-        DocumentReference docRef = db.collection("user").document("recipe book");
-        docRef.set(this)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
+        CollectionReference recipeBookRef = db.collection("recipe book");
+        recipeBookRef.add(recipe)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
-                    public void onSuccess(Void unused) {
-                        Log.d(RecipeAddFragment.TAG, "Data has been added successfully!");
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        // These are a method which gets executed if there’s any problem
-                        Log.d(RecipeAddFragment.TAG, "Data could not be added!" + e.toString());
+                        Log.w(TAG, "Error adding document", e);
                     }
                 });
     }
+
+    public void update(ArrayList<Recipe> newRecipes) {
+        recipes.clear();
+        recipes.addAll(newRecipes);
+    }
+
 }
