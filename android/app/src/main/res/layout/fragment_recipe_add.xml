@@ -23,15 +23,17 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_text_layout_title"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:helperText="Required"
+        app:helperTextEnabled="true"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_add_text_layout_category"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/recipe_add_edit_text_title"
@@ -42,42 +44,54 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_text_layout_prep_time"
+        style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
-        app:layout_constraintEnd_toStartOf="@+id/recipe_add_text_layout_num_servings"
-        app:layout_constraintHorizontal_bias="0.5"
+        android:layout_marginEnd="16dp"
+        app:errorEnabled="true"
+        app:helperText="Required\nMaximum preparation time: 480 minutes"
+        app:helperTextEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_title"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:startIconDrawable="@drawable/ic_twotone_timer_24"
+        app:suffixText="minutes">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/recipe_add_edit_text_prep_time"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Preparation Time"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxEms="3" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_text_layout_num_servings"
+        style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/recipe_add_text_layout_prep_time"
+        app:errorEnabled="true"
+        app:helperText="required\nMaximum number of servings: 100"
+        app:helperTextEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/recipe_add_text_layout_prep_time"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_prep_time"
+        app:startIconDrawable="@drawable/ic_baseline_numbers_24"
+        app:suffixText="servings">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/recipe_add_edit_text_num_servings"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Number of Servings"
-            android:inputType="number" />
+            android:inputType="number"
+            android:maxEms="3" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -85,12 +99,11 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_prep_time">
+        app:layout_constraintStart_toEndOf="@+id/recipe_add_text_layout_title"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/recipe_add_edit_text_category"
@@ -108,7 +121,7 @@
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_category">
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_num_servings">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/recipe_add_edit_text_comments"

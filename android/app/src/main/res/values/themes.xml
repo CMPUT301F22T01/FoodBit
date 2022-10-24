@@ -30,4 +30,10 @@
         <item name="android:windowEnterAnimation">@anim/slide_up</item>
         <item name="android:windowExitAnimation">@anim/slide_down</item>
     </style>
+    
+    <style name="Theme.FoodBit.TextInputLayout.OutlinedBox" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primaryLightColor</item>
+        <item name="hintTextColor">@color/primaryColor</item>
+        <item name="startIconTint">@color/primaryColor</item>
+    </style>
 </resources>

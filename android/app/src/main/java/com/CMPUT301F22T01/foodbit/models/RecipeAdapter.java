@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.R;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
@@ -99,9 +100,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         // set each view with value
         holder.getRecipePrepTimeView().setText("Preparation Time: " + prepTime);
         holder.getRecipeTitleView().setText(title);
-        holder.getRecipePrepTimeView().setText("Preparation Time: " + prepTime);
-        holder.getRecipeNumServingsView().setText("Number of Servings: " + numServings);
-        if (comments != null) {
+        String min = " minutes"; if (prepTime <= 1) {min = " minute";}
+        holder.getRecipePrepTimeView().setText(prepTime + min);
+        holder.getRecipeNumServingsView().setText("× " + numServings);
+        if (!Objects.equals(comments, "")) {
             holder.getRecipeCommentsView().setText(comments);
         } else {
             holder.getRecipeCommentsView().setText("No comments.");

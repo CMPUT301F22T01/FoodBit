@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
@@ -22,6 +23,7 @@ public class RecipeDetailFragment extends Fragment {
 
     // UI
     Toolbar toolbar;
+    ImageView appBarIamge;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -40,8 +42,16 @@ public class RecipeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // set toolbar
-        toolbar = view.findViewById(R.id.toolbar);
+        toolbar = view.findViewById(R.id.recipe_detail_toolbar);
+        appBarIamge = view.findViewById(R.id.recipe_detail_bar_image);
+
         toolbar.setTitle(recipe.getTitle());
+        String photo = recipe.getPhoto();
+        if (photo != null) {
+            //TODO: photo
+        } else {
+            appBarIamge.setImageResource(android.R.color.transparent);
+        }
 
         return view;
     }
