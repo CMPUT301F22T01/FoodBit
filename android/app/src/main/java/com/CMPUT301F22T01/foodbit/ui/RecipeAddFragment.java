@@ -1,8 +1,16 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import static android.app.Activity.RESULT_OK;
+
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.PickVisualMediaRequest;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
@@ -11,9 +19,12 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
@@ -23,14 +34,17 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Objects;
+
 
 public class RecipeAddFragment extends DialogFragment {
 
-//    private static final String RECIPE_BOOK = "recipe_book";
+    //    private static final String RECIPE_BOOK = "recipe_book";
     public final static String TAG = "AddRecipe";
+    private Context context;
 
     // get recipe book from MainActivity
-    private RecipeBook recipeBook = MainActivity.recipeBook;
+    private final RecipeBook recipeBook = MainActivity.recipeBook;
 
     // views
     MaterialToolbar topBar;
@@ -44,10 +58,19 @@ public class RecipeAddFragment extends DialogFragment {
     TextInputLayout categoryLayout;
     TextInputEditText commentsEditText;
     TextInputLayout commentsLayout;
-
+    ImageView imageView;
+    ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
+    Uri photoUri = null;
 
     public RecipeAddFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
+        Log.d(TAG, "context: "+context);
     }
 
     @Override
@@ -56,6 +79,17 @@ public class RecipeAddFragment extends DialogFragment {
 
         // set the style of the dialog fragment to be full screen
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
+
+        pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
+                    if (uri != null) {
+                        Log.d("PhotoPicker", "Selected URI: " + uri);
+                        photoUri = uri;
+                        context.getApplicationContext().getContentResolver().takePersistableUriPermission(photoUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        imageView.setImageURI(photoUri);
+                    } else {
+                        Log.d("PhotoPicker", "No media selected");
+                    }
+                });
     }
 
     @Override
@@ -66,7 +100,7 @@ public class RecipeAddFragment extends DialogFragment {
         // init views
         topBar = view.findViewById(R.id.recipe_add_top_bar);
         titleEditText = view.findViewById(R.id.recipe_add_edit_text_title);
-        titleLayout= view.findViewById(R.id.recipe_add_text_layout_title);
+        titleLayout = view.findViewById(R.id.recipe_add_text_layout_title);
         prepTimeEditText = view.findViewById(R.id.recipe_add_edit_text_prep_time);
         prepTimeLayout = view.findViewById(R.id.recipe_add_text_layout_prep_time);
         prepTimeEditText.addTextChangedListener(new TextWatcher() {
@@ -80,9 +114,9 @@ public class RecipeAddFragment extends DialogFragment {
                 // remove starting zeros
                 String str = s.toString();
                 Log.d(TAG, str);
-                if (str.length()> 0 && str.charAt(0) == '0') {
+                if (str.length() > 0 && str.charAt(0) == '0') {
                     int i = 0;
-                    while (i< str.length() && str.charAt(i) == '0') {
+                    while (i < str.length() && str.charAt(i) == '0') {
                         i++;
                     }
                     prepTimeEditText.setText(str.substring(i));
@@ -116,9 +150,9 @@ public class RecipeAddFragment extends DialogFragment {
                 // remove starting zeros
                 String str = s.toString();
                 Log.d(TAG, str);
-                if (str.length()> 0 && str.charAt(0) == '0') {
+                if (str.length() > 0 && str.charAt(0) == '0') {
                     int i = 0;
-                    while (i< str.length() && str.charAt(i) == '0') {
+                    while (i < str.length() && str.charAt(i) == '0') {
                         i++;
                     }
                     numServingsEditText.setText(str.substring(i));
@@ -140,9 +174,38 @@ public class RecipeAddFragment extends DialogFragment {
             }
         });
         categoryEditText = view.findViewById(R.id.recipe_add_edit_text_category);
-        categoryLayout= view.findViewById(R.id.recipe_add_text_layout_category);
+        categoryLayout = view.findViewById(R.id.recipe_add_text_layout_category);
         commentsEditText = view.findViewById(R.id.recipe_add_edit_text_comments);
-        commentsLayout= view.findViewById(R.id.recipe_add_text_layout_comments);
+        commentsLayout = view.findViewById(R.id.recipe_add_text_layout_comments);
+        imageView = view.findViewById(R.id.recipe_add_image);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (photoUri == null) {
+                    imageChooser(pickMedia);
+                } else {
+                    PopupMenu popup = new PopupMenu(context, v);
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem item) {
+                            int itemId = item.getItemId();
+                            if (itemId == R.id.recipe_add_photo_remove) {
+                                photoUri = null;
+                                imageView.setImageURI(null);
+                                return true;
+                            } else if (itemId == R.id.recipe_add_photo_select_new) {
+                                imageChooser(pickMedia);
+                                return true;
+                            }
+                            return false;
+                        }
+                    });
+                    MenuInflater inflater = popup.getMenuInflater();
+                    inflater.inflate(R.menu.recipe_add_image_edit, popup.getMenu());
+                    popup.show();
+                }
+            }
+        });
 
         // set top bar behaviours
         // close button behaviour
@@ -150,33 +213,32 @@ public class RecipeAddFragment extends DialogFragment {
             dismiss();
         });
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-            // TODO: input check!!!
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
                 // done button behaviour
                 if (itemId == R.id.recipe_add_done) {
-                    String title = titleEditText.getText().toString();
-                    String prepTime = prepTimeEditText.getText().toString();
-                    String numServings = numServingsEditText.getText().toString();
-                    String category = categoryEditText.getText().toString();
-                    String comment = commentsEditText.getText().toString();
-
+                    String title = Objects.requireNonNull(titleEditText.getText()).toString();
+                    String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
+                    String numServings = Objects.requireNonNull(numServingsEditText.getText()).toString();
+                    String category = Objects.requireNonNull(categoryEditText.getText()).toString(); if (category.equals("")){category = null;}
+                    String comments = Objects.requireNonNull(commentsEditText.getText()).toString(); if (comments.equals("")){comments = null;}
+                    Uri photo = photoUri;
                     // check empty fields
                     boolean requiredFieldEntered = true;
                     if (title.equals("")) {
                         titleLayout.setError("Required");
-                        requiredFieldEntered=false;
+                        requiredFieldEntered = false;
                     }
                     if (prepTime.equals("")) {
                         prepTimeLayout.setError("Required");
-                        requiredFieldEntered=false;
+                        requiredFieldEntered = false;
                     } else if (prepTime.length() > 3 || Integer.parseInt(prepTime) > 480) {
                         requiredFieldEntered = false;
                     }
                     if (numServings.equals("")) {
                         numServingsLayout.setError("Required");
-                        requiredFieldEntered=false;
+                        requiredFieldEntered = false;
                     } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
                         requiredFieldEntered = false;
                     }
@@ -184,8 +246,7 @@ public class RecipeAddFragment extends DialogFragment {
                         Recipe recipe = new Recipe(title,
                                 Integer.parseInt(prepTime),
                                 Integer.parseInt(numServings),
-                                category,
-                                comment, null, null);
+                                category, comments, photo, null);
                         recipeBook.add(recipe);
                         dismiss();
                     }
@@ -210,40 +271,14 @@ public class RecipeAddFragment extends DialogFragment {
             dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
         }
     }
-}
 
-//    TODO: photo support
-//    private void imageChooser() {
-//        // create an instance of the
-//        // intent of the type image
-//        Intent i = new Intent();
-//        i.setType("image/*");
-//        i.setAction(Intent.ACTION_GET_CONTENT);
-//
-//        // pass the constant to compare it
-//        // with the returned requestCode
-//        startActivityForResult(Intent.createChooser(i, "Select Picture"), 200);
-//    }
-//
-//    // this function is triggered when user
-//    // selects the image from the imageChooser
-//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//
-//        if (resultCode == RESULT_OK) {
-//
-//            // compare the resultCode with the
-//            // SELECT_PICTURE constant
-//            if (requestCode == 200) {
-//                // Get the url of the image from data
-//                Uri selectedImageUri = data.getData();
-//                if (null != selectedImageUri) {
-//                    // update the preview image in the layout
-//                    imageButton.setImageURI(selectedImageUri);
-//                }
-//            }
-//        }
-//    }
+
+    private void imageChooser(ActivityResultLauncher<PickVisualMediaRequest> pickMedia) {
+        pickMedia.launch(new PickVisualMediaRequest.Builder()
+                .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE) // False error - actually works fine
+                .build());
+    }
+}
 
 
 

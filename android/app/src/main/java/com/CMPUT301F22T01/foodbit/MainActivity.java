@@ -1,5 +1,8 @@
 package com.CMPUT301F22T01.foodbit;
 
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -33,6 +36,10 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    @Override
+    public ContentResolver getContentResolver() {
+        return super.getContentResolver();
+    }
 
     // access a Cloud Firestore instance and retrieve data
     public final static String TAG = "MainActivity";
@@ -46,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         setUpNavBar();
+
     }
 
 

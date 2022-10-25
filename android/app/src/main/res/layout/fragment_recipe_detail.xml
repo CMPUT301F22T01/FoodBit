@@ -10,17 +10,18 @@
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
 
-        android:layout_height="192dp"
-        android:layout_width="match_parent">
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:toolbarId="@+id/recipe_detail_toolbar"
+
+            app:contentScrim="@color/white"
+            app:expandedTitleTextAppearance="@style/Theme.FoodBit.ExpandedTitleTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-
-            app:contentScrim="?attr/colorPrimary">
+            app:toolbarId="@+id/recipe_detail_toolbar">
 
             <ImageView
                 android:id="@+id/recipe_detail_bar_image"
@@ -34,8 +35,10 @@
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/recipe_detail_toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
-                android:layout_width="match_parent"></androidx.appcompat.widget.Toolbar>
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_arrow_back_24" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -50,7 +53,88 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.RecipeDetailFragment" />
+            tools:context=".ui.RecipeDetailFragment">
+
+            <TextView
+                android:id="@+id/recipe_detail_prep_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:drawableStart="@drawable/ic_twotone_timer_24_colored"
+                android:drawablePadding="6sp"
+                android:gravity="center_vertical"
+                android:text="480 minutes"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/recipe_detail_num_servings"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recipe_detail_num_servings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:drawableStart="@drawable/ic_numbers_24_colored"
+                android:drawablePadding="6sp"
+                android:gravity="center_vertical"
+                android:text="100 servings"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/recipe_detail_prep_time"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/recipe_detail_category_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:text="Category: "
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_prep_time" />
+
+            <TextView
+                android:id="@+id/recipe_detail_comments_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Comments"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_category_field" />
+
+            <TextView
+                android:id="@+id/recipe_detail_comments_content"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginEnd="32dp"
+                android:text="No comments."
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_comments_field" />
+
+            <TextView
+                android:id="@+id/recipe_detail_category_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Lunch"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/recipe_detail_category_field"
+                app:layout_constraintTop_toTopOf="@+id/recipe_detail_category_field" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
