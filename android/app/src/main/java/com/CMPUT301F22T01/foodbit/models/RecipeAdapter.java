@@ -1,10 +1,12 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +17,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.R;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
@@ -95,24 +96,30 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         int prepTime = items.get(position).getPrepTime();
         int numServings = items.get(position).getNumServings();
         String comments = items.get(position).getComments();
-        String photo = items.get(position).getPhoto();
+        Uri photo = items.get(position).getPhoto();
+
+        // get views
+        TextView titleView = holder.getRecipeTitleView();
+        TextView prepTimeView = holder.getRecipePrepTimeView();
+        TextView numServingsView = holder.getRecipeNumServingsView();
+        TextView commentsView = holder.getRecipeCommentsView();
+        ConstraintLayout photoLayout = holder.getRecipePhotoView();
 
         // set each view with value
-        holder.getRecipePrepTimeView().setText("Preparation Time: " + prepTime);
-        holder.getRecipeTitleView().setText(title);
+        titleView.setText(title);
         String min = " minutes"; if (prepTime <= 1) {min = " minute";}
-        holder.getRecipePrepTimeView().setText(prepTime + min);
-        holder.getRecipeNumServingsView().setText("× " + numServings);
-        if (!Objects.equals(comments, "")) {
-            holder.getRecipeCommentsView().setText(comments);
+        prepTimeView.setText(prepTime + min);
+        numServingsView.setText("×" + numServings);
+        if (comments != null) {
+            commentsView.setText(comments);
         } else {
-            holder.getRecipeCommentsView().setText("No comments.");
+            commentsView.setText("No comments.");
         }
-        ConstraintLayout recipePhoto = holder.getRecipePhotoView();
         if (photo != null) {
-            // TODO: how to load photo?
+            ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
+            photoView.setImageURI(photo);
         } else {
-            TextView capLetter = (TextView) recipePhoto.getViewById(R.id.item_recipe_image_text);
+            TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
             capLetter.setText(Character.toString(title.charAt(0)));
         }
     }

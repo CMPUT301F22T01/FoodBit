@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
@@ -21,8 +22,6 @@ import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.RecipeAdapter;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -30,6 +29,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Objects;
 
 public class RecipeBookFragment extends Fragment {
 
@@ -101,7 +102,20 @@ public class RecipeBookFragment extends Fragment {
                 ArrayList<Recipe> newRecipes = new ArrayList<Recipe>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    newRecipes.add(doc.toObject(Recipe.class));
+//                    newRecipes.add(doc.toObject(Recipe.class));
+                    Map<String, Object> data = doc.getData();
+                    String title = (String) data.get("title");
+                    int prepTime = (int) (long) data.get("prepTime");
+                    int numServings = (int) (long) data.get("numServings");
+                    String category = (String) data.get("category");
+                    String comments = (String) data.get("comments");
+                    Uri photo;
+                    if (data.get("photo") != null) {
+                        photo = Uri.parse((String) data.get("photo"));
+                    } else {photo = null;}
+                    newRecipes.add(
+                            new Recipe(title, prepTime, numServings, category, comments, photo,null)
+                    );
                 }
                 recipeBook.update(newRecipes);
                 Log.d(TAG, "Current recipes: " + recipeBook.getRecipes());

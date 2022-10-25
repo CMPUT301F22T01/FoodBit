@@ -17,7 +17,9 @@
         tools:layout="@layout/fragment_recipe_book">
         <action
             android:id="@+id/action_fragment_recipe_book_to_fragment_recipe_detail"
-            app:destination="@id/fragment_recipe_detail" />
+            app:destination="@id/fragment_recipe_detail"
+            app:enterAnim="@anim/slide_left_enter"
+            app:popExitAnim="@anim/slide_right_exit" />
     </fragment>
 
     <fragment

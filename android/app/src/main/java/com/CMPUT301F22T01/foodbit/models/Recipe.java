@@ -12,6 +12,8 @@ package com.CMPUT301F22T01.foodbit.models;
 //        Edge Case Behaviour:
 //        Mandatory field not entered -> display an error message and highlight the corresponding field prompting the user to enter
 
+import android.net.Uri;
+
 import java.util.ArrayList;
 
 public class Recipe {
@@ -20,12 +22,14 @@ public class Recipe {
      private int numServings;
      private String category;
      private String comments;
-     private String photo;
+     private Uri photo;
      private ArrayList<Ingredient> ingredients;
 
-     public Recipe() {}
+    public Recipe() {
+        // required empty constructor
+    }
 
-     public Recipe(String title, int prepTime, int numServings, String category, String comments, String photo, ArrayList<Ingredient> ingredients) {
+    public Recipe(String title, int prepTime, int numServings, String category, String comments, Uri photo, ArrayList<Ingredient> ingredients) {
         this.title = title;
         this.prepTime = prepTime;
         this.numServings = numServings;
@@ -75,11 +79,11 @@ public class Recipe {
         this.comments = comments;
     }
 
-    public String getPhoto() {
+    public Uri getPhoto() {
         return photo;
     }
 
-    public void setPhoto(String photo) {
+    public void setPhoto(Uri photo) {
         this.photo = photo;
     }
 }
