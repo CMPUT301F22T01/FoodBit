@@ -9,6 +9,8 @@ package com.CMPUT301F22T01.foodbit.models;
 //  - the cancel button can be pressed on the pop up to cancel the addition of the new ingredient
 //  - finalization of the addition is done by pressing the add button on the pop up which will then add the new ingredient to the list
 
+import java.util.Date;
+
 public class Ingredient {
     private String description;
     private Date bestBefore;
