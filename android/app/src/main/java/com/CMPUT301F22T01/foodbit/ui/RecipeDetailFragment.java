@@ -72,11 +72,13 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
         Uri photo = recipe.getPhoto();
-        if (photo != null) {
-            appBarImage.setImageURI(photo);
-        } else {
-            appBarImage.setImageResource(android.R.color.transparent);
-        }
+        // todo: enable photo feature before release
+        appBarImage.setImageResource(android.R.color.transparent);
+//        if (photo != null) {
+//            appBarImage.setImageURI(photo);
+//        } else {
+//            appBarImage.setImageResource(android.R.color.transparent);
+//        }
 
         return view;
     }

@@ -127,9 +127,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         } else {
             commentsView.setText("No comments.");
         }
+        // todo: enable photo feature before release
         if (photo != null) {
             ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
-            // todo: photo stuff
             photoView.setImageURI(photo);
         } else {
             TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
