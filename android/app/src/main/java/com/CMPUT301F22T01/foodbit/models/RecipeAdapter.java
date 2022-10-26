@@ -1,8 +1,15 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.content.Intent;
+import android.content.UriPermission;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,18 +24,23 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
 
+    private final static String TAG = "RecipeAdapter";
     private final ArrayList<Recipe> items;
+    private final Context context;
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
 
-    public RecipeAdapter(ArrayList<Recipe> items) {
+    public RecipeAdapter(ArrayList<Recipe> items, Context context) {
         this.items = items;
+        this.context = context;
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -117,7 +129,8 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         }
         if (photo != null) {
             ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
-            photoView.setImageURI(photo);
+            // todo: photo stuff
+//            photoView.setImageURI(photo);
         } else {
             TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
             capLetter.setText(Character.toString(title.charAt(0)));
