@@ -1,5 +1,6 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
