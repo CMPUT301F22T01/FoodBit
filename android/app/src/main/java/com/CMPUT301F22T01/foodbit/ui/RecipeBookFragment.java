@@ -21,7 +21,6 @@ import android.widget.Button;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.models.RecipeAdapter;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -32,7 +31,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Objects;
 
 public class RecipeBookFragment extends Fragment {
 
@@ -72,7 +70,7 @@ public class RecipeBookFragment extends Fragment {
 
         // set RecyclerView
 //        recipes.addAll(recipeBook.getRecipes());
-        adapter = new RecipeAdapter(recipeBook.getRecipes(), context);
+        adapter = new RecipeAdapter(recipeBook.getRecipes());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -123,11 +121,13 @@ public class RecipeBookFragment extends Fragment {
                     if (data.get("photo") != null) {
                         photo = Uri.parse((String) data.get("photo"));
                     } else {photo = null;}
-                    newRecipes.add(
-                            new Recipe(doc.getId(), title, prepTime, numServings, category, comments, photo,null)
-                    );
+                    Recipe newRecipe = new Recipe(
+                            doc.getId(), title, prepTime, numServings, category, comments, photo,null);
+                    newRecipes.add(newRecipe);
+                    Log.d(TAG, "recipe id: "+newRecipe.getId());
                 }
                 recipeBook.update(newRecipes);
+                Log.d(TAG, "current recipe book: "+recipeBook);
                 Log.d(TAG, "Current recipes: " + recipeBook.getRecipes());
                 adapter.notifyDataSetChanged();
             }

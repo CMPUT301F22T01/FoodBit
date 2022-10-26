@@ -16,14 +16,21 @@ public class Ingredient {
     private Date bestBefore;
     private String location;
     private Integer amount;
-    private Integer unit;
+    private String unit;
     private String category;
 
     public Ingredient(){
         // Empty constructor
     }
 
-    public Ingredient(String description, Date bestBefore, String location, Integer amount, Integer unit, String category) {
+    public Ingredient(String description, Integer amount, String unit, String category) {
+        this.description = description;
+        this.amount = amount;
+        this.unit = unit;
+        this.category = category;
+    }
+
+    public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) {
         this.description = description;
         this.bestBefore = bestBefore;
         this.location = location;
@@ -48,7 +55,7 @@ public class Ingredient {
         return amount;
     }
 
-    public Integer getUnit() {
+    public String getUnit() {
         return unit;
     }
 
@@ -60,7 +67,7 @@ public class Ingredient {
         this.description = newDescription;
     }
 
-    public void setBestBefoe(Date newBestBefore) {
+    public void setBestBefore(Date newBestBefore) {
         this.bestBefore = newBestBefore;
     }
 
@@ -72,7 +79,7 @@ public class Ingredient {
         this.amount = newAmount;
     }
 
-    public void setUnit(Integer newUnit) {
+    public void setUnit(String newUnit) {
         this.unit = newUnit;
     }
 

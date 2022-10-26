@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.IRecipe;
 import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -13,6 +14,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class RecipeBook implements Serializable {
     private final ArrayList<Recipe> recipes;
@@ -29,8 +33,17 @@ public class RecipeBook implements Serializable {
         return recipes;
     }
 
-    public Recipe get(int position) {
+    public Recipe getRecipeByPosition(int position) {
         return recipes.get(position);
+    }
+
+    public Recipe getRecipeById(String id) {
+        for (Recipe recipe : recipes) {
+            if (Objects.equals(id, recipe.getId())) {
+                return recipe;
+            }
+        }
+        return null;
     }
 
     public void add(Recipe recipe) {

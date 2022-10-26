@@ -33,6 +33,7 @@ import android.widget.PopupMenu;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -43,10 +44,11 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Objects;
 
 
-public class RecipeAddFragment extends DialogFragment {
+public class RecipeAddFragment extends DialogFragment implements RecipeAddIngredientAddFragment.OnIngredientAddListener{
 
     //    private static final String RECIPE_BOOK = "recipe_book";
     public final static String TAG = "AddRecipe";
@@ -54,6 +56,9 @@ public class RecipeAddFragment extends DialogFragment {
 
     // get recipe book from MainActivity
     private final RecipeBook recipeBook = MainActivity.recipeBook;
+
+    // an ingredient list to obtain from the RecipeAddIngredientAddFragment
+    ArrayList<Ingredient> ingredients = new ArrayList<>();
 
     // views
     MaterialToolbar topBar;
@@ -68,9 +73,10 @@ public class RecipeAddFragment extends DialogFragment {
     TextInputEditText commentsEditText;
     TextInputLayout commentsLayout;
     ImageView imageView;
+    MaterialToolbar ingredientsBar;
+
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Uri photoUri = null;
-    Bitmap photoBitmap = null;
 
     public RecipeAddFragment() {
         // Required empty public constructor
@@ -93,15 +99,10 @@ public class RecipeAddFragment extends DialogFragment {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     if (uri != null) {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
-                        // todo: test photo
                         int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
                         getContext().getApplicationContext().getContentResolver().takePersistableUriPermission(uri, flag);
                         photoUri = uri;
                         imageView.setImageURI(uri);
-//                    Log.d(TAG, "uri: "+uri);
-//                    Log.d(TAG, "uri path: "+uri.getPath());
-                    Log.d(TAG, "context content resolver: "+getContext().getContentResolver());
-                    Log.d(TAG, "app context content resolver: "+getContext().getApplicationContext().getContentResolver());
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
@@ -194,84 +195,85 @@ public class RecipeAddFragment extends DialogFragment {
         commentsEditText = view.findViewById(R.id.recipe_add_edit_text_comments);
         commentsLayout = view.findViewById(R.id.recipe_add_text_layout_comments);
         imageView = view.findViewById(R.id.recipe_add_image);
-        // todo: photo stuff
-        imageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (photoUri == null) {
-                    imageChooser(pickMedia);
-                } else {
-                    PopupMenu popup = new PopupMenu(context, v);
-                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            int itemId = item.getItemId();
-                            if (itemId == R.id.recipe_add_photo_remove) {
-                                photoUri = null;
-                                imageView.setImageURI(null);
-                                return true;
-                            } else if (itemId == R.id.recipe_add_photo_select_new) {
-                                imageChooser(pickMedia);
-                                return true;
-                            }
-                            return false;
-                        }
-                    });
-                    MenuInflater inflater = popup.getMenuInflater();
-                    inflater.inflate(R.menu.recipe_add_image_edit, popup.getMenu());
-                    popup.show();
-                }
+        imageView.setOnClickListener(v -> {
+            if (photoUri == null) {
+                imageChooser(pickMedia);
+            } else {
+                PopupMenu popup = new PopupMenu(context, v);
+                popup.setOnMenuItemClickListener(item -> {
+                    int itemId = item.getItemId();
+                    if (itemId == R.id.recipe_add_photo_remove) {
+                        photoUri = null;
+                        imageView.setImageURI(null);
+                        return true;
+                    } else if (itemId == R.id.recipe_add_photo_select_new) {
+                        imageChooser(pickMedia);
+                        return true;
+                    }
+                    return false;
+                });
+                MenuInflater inflater1 = popup.getMenuInflater();
+                inflater1.inflate(R.menu.recipe_add_image_edit, popup.getMenu());
+                popup.show();
             }
         });
+        ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
 
         // set top bar behaviours
         // close button behaviour
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
         });
-        topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+        topBar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            // done button behaviour
+            if (itemId == R.id.recipe_add_done) {
+                String title = Objects.requireNonNull(titleEditText.getText()).toString();
+                String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
+                String numServings = Objects.requireNonNull(numServingsEditText.getText()).toString();
+                String category = Objects.requireNonNull(categoryEditText.getText()).toString(); if (category.equals("")){category = null;}
+                String comments = Objects.requireNonNull(commentsEditText.getText()).toString(); if (comments.equals("")){comments = null;}
+                Uri photo = photoUri;
+                // check empty fields
+                boolean requiredFieldEntered = true;
+                if (title.equals("")) {
+                    titleLayout.setError("Required");
+                    requiredFieldEntered = false;
+                }
+                if (prepTime.equals("")) {
+                    prepTimeLayout.setError("Required");
+                    requiredFieldEntered = false;
+                } else if (prepTime.length() > 3 || Integer.parseInt(prepTime) > 480) {
+                    requiredFieldEntered = false;
+                }
+                if (numServings.equals("")) {
+                    numServingsLayout.setError("Required");
+                    requiredFieldEntered = false;
+                } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
+                    requiredFieldEntered = false;
+                }
+                if (requiredFieldEntered) {
+                    Recipe recipe = new Recipe(title,
+                            Integer.parseInt(prepTime),
+                            Integer.parseInt(numServings),
+                            category, comments, photoUri, null);
+                    recipeBook.add(recipe);
+                    dismiss();
+                }
+            }
+            return false;
+        });
+
+        ingredientsBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
-                // done button behaviour
-                if (itemId == R.id.recipe_add_done) {
-                    String title = Objects.requireNonNull(titleEditText.getText()).toString();
-                    String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
-                    String numServings = Objects.requireNonNull(numServingsEditText.getText()).toString();
-                    String category = Objects.requireNonNull(categoryEditText.getText()).toString(); if (category.equals("")){category = null;}
-                    String comments = Objects.requireNonNull(commentsEditText.getText()).toString(); if (comments.equals("")){comments = null;}
-                    Uri photo = photoUri;
-                    // check empty fields
-                    boolean requiredFieldEntered = true;
-                    if (title.equals("")) {
-                        titleLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    }
-                    if (prepTime.equals("")) {
-                        prepTimeLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    } else if (prepTime.length() > 3 || Integer.parseInt(prepTime) > 480) {
-                        requiredFieldEntered = false;
-                    }
-                    if (numServings.equals("")) {
-                        numServingsLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
-                        requiredFieldEntered = false;
-                    }
-                    if (requiredFieldEntered) {
-                        Recipe recipe = new Recipe(title,
-                                Integer.parseInt(prepTime),
-                                Integer.parseInt(numServings),
-                                category, comments, photoUri, null);
-                        recipeBook.add(recipe);
-                        dismiss();
-                    }
+                if (itemId == R.id.recipe_add_ingredient_add) {
+                    new RecipeAddIngredientAddFragment().show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
                 }
                 return false;
             }
         });
-
 
         return view;
     }
@@ -297,69 +299,10 @@ public class RecipeAddFragment extends DialogFragment {
 
     }
 
-//    private void imageChooser()
-//    {
-//        Intent i = new Intent();
-//        i.setType("image/*");
-//        i.setAction(Intent.ACTION_OPEN_DOCUMENT);
-//        i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
-//        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-//
-//
-//        launchSomeActivity.launch(i);
-//    }
-//
-//    ActivityResultLauncher<Intent> launchSomeActivity
-//            = registerForActivityResult(
-//            new ActivityResultContracts
-//                    .StartActivityForResult(),
-//            result -> {
-//                if (result.getResultCode()
-//                        == RESULT_OK) {
-//                    Intent data = result.getData();
-//                    // do your operation from here....
-//                    if (data != null
-//                            && data.getData() != null) {
-//                        photoUri = data.getData();
-//
-//                        Bitmap selectedImageBitmap = null;
-//                        try {
-//                            selectedImageBitmap
-//                                    = MediaStore.Images.Media.getBitmap(
-//                                    context.getContentResolver(),
-//                                    photoUri);}
-//                        catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                        photoBitmap = selectedImageBitmap;
-//                        imageView.setImageBitmap(
-//                                selectedImageBitmap);
-//                        // todo: store in internal storage
-//
-//                    }
-//                }
-//            });
-
-//    private void SaveImage(Bitmap finalBitmap) {
-//
-////        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
-//        String root = context.getApplicationContext().getFilesDir().getAbsolutePath();
-//        File myDir = new File(root + "/saved_images");
-//
-//        String filename = "Image-"+ o +".jpg";
-//        File file = new File (myDir, filename);
-//        if (file.exists ()) file.delete();
-//        try {
-//            FileOutputStream out = new FileOutputStream(file);
-//            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
-//            out.flush();
-//            out.close();
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
-
+    @Override
+    public void onIngredientAdd(Ingredient newIngredient) {
+        ingredients.add(newIngredient);
+    }
 }
 
 

@@ -1,6 +1,5 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -87,7 +86,7 @@ public class RecipeDetailFragment extends Fragment {
     private void getRecipe() {
         assert getArguments() != null;
         int position = getArguments().getInt("position");
-        recipe = MainActivity.recipeBook.get(position);
+        recipe = MainActivity.recipeBook.getRecipeByPosition(position);
         Log.d(TAG, String.valueOf(recipe));
     }
 }

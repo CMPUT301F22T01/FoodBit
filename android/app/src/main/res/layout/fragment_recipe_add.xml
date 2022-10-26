@@ -1,184 +1,254 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
 
 
+    android:id="@+id/coordinatorLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <com.google.android.material.appbar.MaterialToolbar
+        android:id="@+id/recipe_add_top_bar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:paddingEnd="6dp"
+        android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:menu="@menu/recipe_add_top_app_bar"
+        app:navigationIcon="@drawable/ic_close_24"
+        app:title="Add a recipe"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="411dp" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?android:windowBackground"
-        tools:context=".ui.RecipeAddFragment">
+        android:id="@+id/recipe_add_image_layout"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/recipe_add_text_layout_category"
+        app:layout_constraintEnd_toStartOf="@+id/recipe_add_text_layout_title"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar"
+        tools:layout_conversion_absoluteHeight="175dp"
+        tools:layout_conversion_absoluteWidth="178dp">
+
+        <TextView
+            android:id="@+id/recipe_add_image_prompt"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/teal_200"
+            android:gravity="center"
+            android:text="click to add a photo..."
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="175dp"
+            tools:layout_conversion_absoluteWidth="178dp" />
+
+        <ImageView
+            android:id="@+id/recipe_add_image"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_conversion_absoluteHeight="175dp"
+            tools:layout_conversion_absoluteWidth="178dp" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/recipe_add_text_layout_title"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        app:helperText="Required"
+        app:helperTextEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/recipe_add_image_layout"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar"
+        tools:layout_conversion_absoluteHeight="82dp"
+        tools:layout_conversion_absoluteWidth="178dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/recipe_add_edit_text_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title"
+            android:maxLines="1"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="178dp"
+            tools:layout_editor_absoluteX="218dp"
+            tools:layout_editor_absoluteY="77dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/recipe_add_text_layout_category"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/recipe_add_text_layout_title"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_title"
+        tools:layout_conversion_absoluteHeight="61dp"
+        tools:layout_conversion_absoluteWidth="178dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/recipe_add_edit_text_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category"
+            android:maxLines="1"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="178dp"
+            tools:layout_editor_absoluteX="218dp"
+            tools:layout_editor_absoluteY="191dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/recipe_add_text_layout_prep_time"
+        style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:errorEnabled="true"
+        app:helperText="Required\nMaximum preparation time: 480 minutes"
+        app:helperTextEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_category"
+        app:startIconDrawable="@drawable/ic_twotone_timer_24"
+        app:suffixText="minutes"
+        tools:layout_conversion_absoluteHeight="96dp"
+        tools:layout_conversion_absoluteWidth="379dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/recipe_add_edit_text_prep_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Preparation Time"
+            android:inputType="number"
+            android:maxLines="1"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="379dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="285dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/recipe_add_text_layout_num_servings"
+        style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:errorEnabled="true"
+        app:helperText="required\nMaximum number of servings: 100"
+        app:helperTextEnabled="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_prep_time"
+        app:startIconDrawable="@drawable/ic_numbers_24"
+        app:suffixText="servings"
+        tools:layout_conversion_absoluteHeight="96dp"
+        tools:layout_conversion_absoluteWidth="379dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/recipe_add_edit_text_num_servings"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Number of Servings"
+            android:inputType="number"
+            android:maxEms="3"
+            android:maxLines="1"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="379dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="412dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/recipe_add_text_layout_comments"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_num_servings"
+        tools:layout_conversion_absoluteHeight="56dp"
+        tools:layout_conversion_absoluteWidth="379dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/recipe_add_edit_text_comments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="top|start"
+            android:hint="Comment..."
+            android:inputType="text"
+            android:maxLines="1"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="379dp"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="535dp" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/recipe_add_ingredients_layout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_comments"
+        tools:layout_conversion_absoluteHeight="891dp"
+        tools:layout_conversion_absoluteWidth="411dp">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/recipe_add_top_bar"
+            android:id="@+id/recipe_add_ingredients_bar"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:minHeight="?attr/actionBarSize"
-            android:paddingEnd="6dp"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:minHeight="@android:dimen/app_icon_size"
             android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/recipe_add_top_app_bar"
-            app:navigationIcon="@drawable/ic_close_24"
-            app:title="Add a recipe" />
+            app:menu="@menu/recipe_add_ingredient"
+            app:title="Ingredients" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/recipe_add_text_layout_title"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipe_add_ingredients_list"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="16dp"
-            app:helperText="Required"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/constraintLayout"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/recipe_add_edit_text_title"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Title"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/recipe_add_text_layout_prep_time"
-            style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            app:errorEnabled="true"
-            app:helperText="Required\nMaximum preparation time: 480 minutes"
-            app:helperTextEnabled="true"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@color/teal_200"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-            app:startIconDrawable="@drawable/ic_twotone_timer_24"
-            app:suffixText="minutes">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/recipe_add_edit_text_prep_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Preparation Time"
-                android:inputType="number"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/recipe_add_text_layout_num_servings"
-            style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            app:errorEnabled="true"
-            app:helperText="required\nMaximum number of servings: 100"
-            app:helperTextEnabled="true"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_prep_time"
-            app:startIconDrawable="@drawable/ic_numbers_24"
-            app:suffixText="servings">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/recipe_add_edit_text_num_servings"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Number of Servings"
-                android:inputType="number"
-                android:maxEms="3"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/recipe_add_text_layout_category"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/recipe_add_text_layout_title"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_title">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/recipe_add_edit_text_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Category"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/recipe_add_text_layout_comments"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="16dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_num_servings">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/recipe_add_edit_text_comments"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="top|start"
-                android:hint="Comment..."
-                android:inputType="text"
-                android:maxLines="1" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayout"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="24dp"
-            app:layout_constraintBottom_toBottomOf="@+id/recipe_add_text_layout_category"
-            app:layout_constraintEnd_toStartOf="@+id/recipe_add_text_layout_title"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recipe_add_text_layout_title">
-
-            <TextView
-                android:id="@+id/recipe_add_image_prompt"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:background="@color/teal_200"
-                android:gravity="center"
-                android:text="click to add a photo..."
-                app:layout_constraintBottom_toBottomOf="@+id/recipe_add_image"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/recipe_add_image"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:scaleType="centerCrop"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
+            app:layout_constraintTop_toBottomOf="@+id/recipe_add_ingredients_bar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

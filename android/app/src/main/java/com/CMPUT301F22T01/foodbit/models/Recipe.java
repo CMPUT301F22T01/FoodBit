@@ -13,10 +13,15 @@ package com.CMPUT301F22T01.foodbit.models;
 //        Mandatory field not entered -> display an error message and highlight the corresponding field prompting the user to enter
 
 import android.net.Uri;
+import android.util.Pair;
+
+import com.CMPUT301F22T01.foodbit.IRecipe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Recipe {
+public class Recipe implements IRecipe {
     private String id;
     private String title;
     private int prepTime;
@@ -31,6 +36,7 @@ public class Recipe {
     }
 
     public Recipe(String title, int prepTime, int numServings, String category, String comments, Uri photo, ArrayList<Ingredient> ingredients) {
+        this.id = null;
         this.title = title;
         this.prepTime = prepTime;
         this.numServings = numServings;
@@ -97,5 +103,29 @@ public class Recipe {
 
     public void setPhoto(Uri photo) {
         this.photo = photo;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    /**
+     * Get ingredient list of a recipe
+     *
+     * @return map of ingredient id's and the number of ingredients you need to make this recipe
+     */
+    @Override
+    public Map<Pair<String, String>, Integer> getIngredientList() {
+        Map<Pair<String, String>, Integer> list = new HashMap<>();
+        for (Ingredient ingredient : ingredients) {
+            Pair<String, String> key = new Pair<>(ingredient.getDescription(), ingredient.getUnit());
+            int value = ingredient.getAmount();
+            list.put(key, value);
+        }
+        return list;
     }
 }
