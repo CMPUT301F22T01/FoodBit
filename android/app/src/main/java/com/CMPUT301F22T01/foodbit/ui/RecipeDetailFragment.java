@@ -73,7 +73,7 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
         Uri photo = recipe.getPhoto();
         if (photo != null) {
-            appBarImage.setImageURI(photo);
+//            appBarImage.setImageURI(photo);
         } else {
             appBarImage.setImageResource(android.R.color.transparent);
         }
