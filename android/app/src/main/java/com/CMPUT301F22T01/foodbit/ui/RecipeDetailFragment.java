@@ -66,14 +66,14 @@ public class RecipeDetailFragment extends Fragment {
             }
         });
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minutes";}
-        prepTimeView.setText(String.valueOf(recipe.getPrepTime()) + prepTimeSuffix);
+        prepTimeView.setText(recipe.getPrepTime() + prepTimeSuffix);
         String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
-        numServingsView.setText(String.valueOf(recipe.getNumServings()) + numServingsSuffix);
+        numServingsView.setText(recipe.getNumServings() + numServingsSuffix);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
         Uri photo = recipe.getPhoto();
         if (photo != null) {
-//            appBarImage.setImageURI(photo);
+            appBarImage.setImageURI(photo);
         } else {
             appBarImage.setImageResource(android.R.color.transparent);
         }

@@ -130,7 +130,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         if (photo != null) {
             ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
             // todo: photo stuff
-//            photoView.setImageURI(photo);
+            photoView.setImageURI(photo);
         } else {
             TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
             capLetter.setText(Character.toString(title.charAt(0)));

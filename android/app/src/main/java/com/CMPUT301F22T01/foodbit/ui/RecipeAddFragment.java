@@ -95,11 +95,13 @@ public class RecipeAddFragment extends DialogFragment {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
                         // todo: test photo
                         int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
-                        context.getContentResolver().takePersistableUriPermission(uri, flag);
+                        getContext().getApplicationContext().getContentResolver().takePersistableUriPermission(uri, flag);
                         photoUri = uri;
                         imageView.setImageURI(uri);
-                    Log.d(TAG, "uri: "+uri);
-                    Log.d(TAG, "uri path: "+uri.getPath());
+//                    Log.d(TAG, "uri: "+uri);
+//                    Log.d(TAG, "uri path: "+uri.getPath());
+                    Log.d(TAG, "context content resolver: "+getContext().getContentResolver());
+                    Log.d(TAG, "app context content resolver: "+getContext().getApplicationContext().getContentResolver());
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
