@@ -3,6 +3,9 @@ package com.CMPUT301F22T01.foodbit;
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -34,13 +37,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    @Override
-    public ContentResolver getContentResolver() {
-        return super.getContentResolver();
-    }
-
     // access a Cloud Firestore instance and retrieve data
     public final static String TAG = "MainActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();

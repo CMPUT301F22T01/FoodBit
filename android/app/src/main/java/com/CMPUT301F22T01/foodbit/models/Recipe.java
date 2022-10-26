@@ -17,19 +17,31 @@ import android.net.Uri;
 import java.util.ArrayList;
 
 public class Recipe {
-     private String title;
-     private int prepTime;
-     private int numServings;
-     private String category;
-     private String comments;
-     private Uri photo;
-     private ArrayList<Ingredient> ingredients;
+    private String id;
+    private String title;
+    private int prepTime;
+    private int numServings;
+    private String category;
+    private String comments;
+    private Uri photo;
+    private ArrayList<Ingredient> ingredients;
 
     public Recipe() {
         // required empty constructor
     }
 
     public Recipe(String title, int prepTime, int numServings, String category, String comments, Uri photo, ArrayList<Ingredient> ingredients) {
+        this.title = title;
+        this.prepTime = prepTime;
+        this.numServings = numServings;
+        this.category = category;
+        this.comments = comments;
+        this.photo = photo;
+        this.ingredients = ingredients;
+    }
+
+    public Recipe(String id, String title, int prepTime, int numServings, String category, String comments, Uri photo, ArrayList<Ingredient> ingredients) {
+        this.id = id;
         this.title = title;
         this.prepTime = prepTime;
         this.numServings = numServings;
