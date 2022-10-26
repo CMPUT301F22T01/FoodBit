@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -60,7 +63,7 @@ public class MealPlanFragment extends Fragment {
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
-//        Button addButton = view.findViewById(R.id.recipe_book_test_add_button);
+        Button addButton = view.findViewById(R.id.btn_meal_plan_add);
 
         // set RecyclerView
         mealPlan.loadAllMeals();
@@ -74,15 +77,13 @@ public class MealPlanFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        // add button launches RecipeAddFragment
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                RecipeAddFragment recipeAddFragment = RecipeAddFragment.newInstance(recipeBook);
-//
-//                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-//            }
-//        });
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(getChildFragmentManager(), "datePicker");
+            }
+        });
 
         return view;
     }
