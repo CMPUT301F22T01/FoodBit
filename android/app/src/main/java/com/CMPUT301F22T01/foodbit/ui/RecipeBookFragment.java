@@ -20,8 +20,9 @@ import android.widget.Button;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.models.RecipeBook;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -30,6 +31,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class RecipeBookFragment extends Fragment {
@@ -69,12 +72,10 @@ public class RecipeBookFragment extends Fragment {
         Button addButton = view.findViewById(R.id.recipe_book_test_add_button);
 
         // set RecyclerView
-//        recipes.addAll(recipeBook.getRecipes());
         adapter = new RecipeAdapter(recipeBook.getRecipes());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
-
         // add borderlines between items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 linearLayoutManager.getOrientation());
@@ -121,8 +122,20 @@ public class RecipeBookFragment extends Fragment {
                     if (data.get("photo") != null) {
                         photo = Uri.parse((String) data.get("photo"));
                     } else {photo = null;}
+                    ArrayList<HashMap> ingredientsData = (ArrayList<HashMap>) data.get("ingredients");
+                    ArrayList<Ingredient> ingredients = new ArrayList<>();
+                    for (HashMap ingredientData : ingredientsData) {
+                        ingredients.add(new Ingredient(
+                                (String) ingredientData.get("description"),
+                                (Date) ingredientData.get("bestBefore"),
+                                (String) ingredientData.get("location"),
+                                (int) (long) ingredientData.get("amount"),
+                                (String) ingredientData.get("unit"),
+                                (String) ingredientData.get("category")
+                        ));
+                    }
                     Recipe newRecipe = new Recipe(
-                            doc.getId(), title, prepTime, numServings, category, comments, photo,null);
+                            doc.getId(), title, prepTime, numServings, category, comments, photo, ingredients);
                     newRecipes.add(newRecipe);
                     Log.d(TAG, "recipe id: "+newRecipe.getId());
                 }

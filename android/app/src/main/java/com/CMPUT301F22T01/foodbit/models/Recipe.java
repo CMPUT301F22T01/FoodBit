@@ -113,13 +113,21 @@ public class Recipe implements IRecipe {
         this.id = id;
     }
 
+    public ArrayList<Ingredient> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     /**
      * Get ingredient list of a recipe
      *
      * @return map of ingredient id's and the number of ingredients you need to make this recipe
      */
     @Override
-    public Map<Pair<String, String>, Integer> getIngredientList() {
+    public Map<Pair<String, String>, Integer> doGetIngredientList() {
         Map<Pair<String, String>, Integer> list = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
             Pair<String, String> key = new Pair<>(ingredient.getDescription(), ingredient.getUnit());

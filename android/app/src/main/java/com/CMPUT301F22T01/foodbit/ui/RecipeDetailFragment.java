@@ -6,6 +6,9 @@ import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import android.widget.TextView;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.google.api.Distribution;
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -30,7 +34,8 @@ public class RecipeDetailFragment extends Fragment {
     TextView numServingsView;
     TextView categoryView;
     TextView commentsView;
-    ImageView appBarImage;
+    ImageView appBarImageView;
+    RecyclerView ingredientsRecyclerView;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -54,7 +59,8 @@ public class RecipeDetailFragment extends Fragment {
         numServingsView = view.findViewById(R.id.recipe_detail_num_servings);
         categoryView = view.findViewById(R.id.recipe_detail_category_content);
         commentsView = view.findViewById(R.id.recipe_detail_comments_content);
-        appBarImage = view.findViewById(R.id.recipe_detail_bar_image);
+        appBarImageView = view.findViewById(R.id.recipe_detail_bar_image);
+        ingredientsRecyclerView = view.findViewById(R.id.recipe_detail_ingredient_list);
 
         toolbar.setTitle(recipe.getTitle());
         // back button behaviour
@@ -64,20 +70,28 @@ public class RecipeDetailFragment extends Fragment {
                 Navigation.findNavController(v).popBackStack();
             }
         });
-        String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minutes";}
+        String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
         prepTimeView.setText(recipe.getPrepTime() + prepTimeSuffix);
         String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
         numServingsView.setText(recipe.getNumServings() + numServingsSuffix);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
-        Uri photo = recipe.getPhoto();
+
         // todo: enable photo feature before release
-        appBarImage.setImageResource(android.R.color.transparent);
+        Uri photo = recipe.getPhoto();
+        appBarImageView.setImageResource(android.R.color.transparent);
 //        if (photo != null) {
 //            appBarImage.setImageURI(photo);
 //        } else {
 //            appBarImage.setImageResource(android.R.color.transparent);
 //        }
+
+        IngredientAdapter ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
+        ingredientsRecyclerView.setAdapter(ingredientAdapter);
+        // add borderlines between items
+        ingredientsRecyclerView.addItemDecoration(new DividerItemDecoration(ingredientsRecyclerView.getContext(), linearLayoutManager.getOrientation()));
 
         return view;
     }

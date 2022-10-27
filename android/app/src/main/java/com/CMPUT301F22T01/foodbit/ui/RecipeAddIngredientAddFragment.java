@@ -50,7 +50,7 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
             Log.d(TAG, String.valueOf(parentFragment));
             assert parentFragment != null;
             throw new RuntimeException(
-                    parentFragment.toString() + " must implement OnIngredientAddListener"
+                    parentFragment + " must implement OnIngredientAddListener"
             );
         }
     }

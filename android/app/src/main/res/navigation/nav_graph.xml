@@ -41,6 +41,6 @@
         tools:layout="@layout/fragment_recipe_detail">
         <argument
             android:name="recipeBook"
-            app:argType="com.CMPUT301F22T01.foodbit.models.RecipeBook" />
+            app:argType="com.CMPUT301F22T01.foodbit.controllers.RecipeBook" />
     </fragment>
 </navigation>
