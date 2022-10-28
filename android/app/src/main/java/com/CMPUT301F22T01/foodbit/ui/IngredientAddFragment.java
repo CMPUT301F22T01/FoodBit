@@ -124,7 +124,7 @@ public class IngredientAddFragment extends DialogFragment {
                         requiredFieldEntered = false;
                     }
                     if (requiredFieldEntered) {
-                        Ingredient ingredient = new Ingredient(description, bestBefore, location, Integer.parseInt(amount), Integer.parseInt(unit), category);
+                        Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
                         ingredientStorage.add(ingredient);
                         dismiss();
                     }

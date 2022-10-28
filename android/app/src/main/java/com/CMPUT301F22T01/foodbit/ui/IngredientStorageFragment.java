@@ -91,10 +91,10 @@ public class IngredientStorageFragment extends Fragment {
                     String bestBefore = (String) data.get("bestBefore");
                     String location = (String) data.get("location");
                     Long amount = (Long) data.get("amount");
-                    Long unit = (Long) data.get("unit");
+                    String unit = (String) data.get("unit");
                     String category = (String) data.get("category");
                     if (amount != null){
-                        newIngredient.add(new Ingredient(description, bestBefore, location, amount.intValue(), unit.intValue(), category));
+                        newIngredient.add(new Ingredient(description, bestBefore, location, amount, unit, category));
                     }
                 }
                     ingredientStorage.update(newIngredient);

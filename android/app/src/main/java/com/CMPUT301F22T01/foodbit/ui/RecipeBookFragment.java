@@ -130,7 +130,7 @@ public class RecipeBookFragment extends Fragment {
                     for (HashMap ingredientData : ingredientsData) {
                         ingredients.add(new Ingredient(
                                 (String) ingredientData.get("description"),
-                                (Date) ingredientData.get("bestBefore"),
+                                (String) ingredientData.get("bestBefore"),
                                 (String) ingredientData.get("location"),
                                 ((Double) ingredientData.get("amount")).floatValue(),
                                 (String) ingredientData.get("unit"),
