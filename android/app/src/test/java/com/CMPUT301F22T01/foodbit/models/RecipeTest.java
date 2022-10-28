@@ -95,6 +95,19 @@ class RecipeTest {
     }
 
     @Test
+    void getPhoto() {
+        assertEquals(Uri.parse("https://www.google.com"), mockRecipe().getPhoto());
+    }
+
+    @Test
+    void setPhoto() {
+        Recipe recipe = mockRecipe();
+        assertEquals(Uri.parse("https://www.google.com"), recipe.getPhoto());
+        recipe.setPhoto(Uri.parse("https://github.com"));
+        assertSame(Uri.parse("https://github.com"), recipe.getPhoto());
+    }
+
+    @Test
     void getId() {
         assertEquals("id", mockRecipe().getId());
     }
