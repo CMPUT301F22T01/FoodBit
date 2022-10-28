@@ -69,7 +69,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_text_layout_title"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -97,7 +97,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_text_layout_category"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -177,7 +177,6 @@
             android:layout_height="wrap_content"
             android:hint="Number of Servings"
             android:inputType="number"
-            android:maxEms="3"
             android:maxLines="1"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="379dp"
@@ -187,6 +186,7 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_text_layout_comments"
+        style="@style/Theme.FoodBit.TextInputLayout.FilledBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -215,10 +215,12 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recipe_add_ingredients_layout"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_comments"
@@ -241,10 +243,10 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipe_add_ingredients_list"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
-            android:background="@color/teal_200"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/recipe_add_ingredients_bar" />

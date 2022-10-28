@@ -16,7 +16,7 @@ public class Ingredient implements Serializable {
     private String description;
     private Date bestBefore;
     private String location;
-    private Integer amount;
+    private float amount;
     private String unit;
     private String category;
 
@@ -24,14 +24,14 @@ public class Ingredient implements Serializable {
         // Empty constructor
     }
 
-    public Ingredient(String description, Integer amount, String unit, String category) {
+    public Ingredient(String description, float amount, String unit, String category) {
         this.description = description;
         this.amount = amount;
         this.unit = unit;
         this.category = category;
     }
 
-    public Ingredient(String description, Date bestBefore, String location, Integer amount, String unit, String category) {
+    public Ingredient(String description, Date bestBefore, String location, float amount, String unit, String category) {
         this.description = description;
         this.bestBefore = bestBefore;
         this.location = location;
@@ -52,7 +52,7 @@ public class Ingredient implements Serializable {
         return location;
     }
 
-    public Integer getAmount() {
+    public float getAmount() {
         return amount;
     }
 
@@ -76,7 +76,7 @@ public class Ingredient implements Serializable {
         this.location = newLocation;
     }
 
-    public void setAmount(Integer newAmount) {
+    public void setAmount(float newAmount) {
         this.amount = newAmount;
     }
 

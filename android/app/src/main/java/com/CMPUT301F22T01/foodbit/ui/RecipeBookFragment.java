@@ -129,7 +129,7 @@ public class RecipeBookFragment extends Fragment {
                                 (String) ingredientData.get("description"),
                                 (Date) ingredientData.get("bestBefore"),
                                 (String) ingredientData.get("location"),
-                                (int) (long) ingredientData.get("amount"),
+                                ((Double) ingredientData.get("amount")).floatValue(),
                                 (String) ingredientData.get("unit"),
                                 (String) ingredientData.get("category")
                         ));

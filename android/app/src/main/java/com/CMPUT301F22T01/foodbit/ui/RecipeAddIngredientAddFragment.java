@@ -96,7 +96,7 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
                 String category = String.valueOf(categoryEditText.getText());
                 if (category.equals("")) {category = null;}
                 if(canAddIngredient) {
-                    listener.onIngredientAdd(new Ingredient(description, Integer.parseInt(amountStr), unit, category));
+                    listener.onIngredientAdd(new Ingredient(description, Float.parseFloat(amountStr), unit, category));
                     dialog.dismiss();
                 }
             });

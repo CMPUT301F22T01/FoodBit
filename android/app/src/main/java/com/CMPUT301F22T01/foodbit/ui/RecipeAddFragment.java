@@ -275,11 +275,8 @@ public class RecipeAddFragment extends DialogFragment implements RecipeAddIngred
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
-        // add borderlines between items
-        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(ingredientsRecyclerView.getContext(),
-                linearLayoutManager.getOrientation());
-        ingredientsRecyclerView.addItemDecoration(dividerItemDecoration);
-
+        // todo: add borderlines between items
+//        ingredientsRecyclerView.addItemDecoration(new DividerItemDecoration(ingredientsRecyclerView.getContext(), linearLayoutManager.getOrientation()));
         return view;
     }
 

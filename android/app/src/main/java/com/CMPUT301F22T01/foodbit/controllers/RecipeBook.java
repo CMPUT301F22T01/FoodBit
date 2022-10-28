@@ -47,18 +47,32 @@ public class RecipeBook implements Serializable {
         return null;
     }
 
-    public void add(Recipe recipe) {
+    public String add(Recipe recipe) {
         String TAG = RecipeAddFragment.TAG;
+        final String[] id = {null};
         assert !recipes.contains(recipe) : "This recipe is already in the recipe book!";
         recipes.add(recipe);
-//        update();
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         CollectionReference recipeBookRef = db.collection("recipe book");
         recipeBookRef.add(recipe)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        id[0] = documentReference.getId();
+                        Log.d(TAG, "DocumentSnapshot written with ID: " + id[0]);
+                        documentReference.update("id", id[0])
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error updating document", e);
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -67,6 +81,7 @@ public class RecipeBook implements Serializable {
                         Log.w(TAG, "Error adding document", e);
                     }
                 });
+        return id[0];
     }
 
     public void update(ArrayList<Recipe> newRecipes) {

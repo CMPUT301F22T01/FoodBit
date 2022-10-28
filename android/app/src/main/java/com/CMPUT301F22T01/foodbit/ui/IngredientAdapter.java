@@ -92,7 +92,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         Log.d("IngredientAdapter", String.valueOf(items));
         Log.d("IngredientAdapter", items.getClass().getName());
         String description = items.get(position).getDescription();
-        int amount = items.get(position).getAmount();
+        float amount = items.get(position).getAmount();
         String unit = items.get(position).getUnit();
 
         // get UI

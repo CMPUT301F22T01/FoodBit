@@ -127,11 +127,11 @@ public class Recipe implements IRecipe {
      * @return map of ingredient id's and the number of ingredients you need to make this recipe
      */
     @Override
-    public Map<Pair<String, String>, Integer> doGetIngredientList() {
-        Map<Pair<String, String>, Integer> list = new HashMap<>();
+    public Map<String, Float> doGetIngredientList() {
+        Map<String, Float> list = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
-            Pair<String, String> key = new Pair<>(ingredient.getDescription(), ingredient.getUnit());
-            int value = ingredient.getAmount();
+            String key = ingredient.getDescription();
+            float value = ingredient.getAmount();
             list.put(key, value);
         }
         return list;
