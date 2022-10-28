@@ -8,6 +8,16 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.CMPUT301F22T01.foodbit.models.RecipeBook;
+import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
+import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
+import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
+import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
@@ -19,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference recipeBookRef = db.collection("recipe book");
     public static RecipeBook recipeBook = new RecipeBook();
+    final CollectionReference ingredientStorageRef = db.collection("ingredient list");
+    public static IngredientStorage ingredientStorage = new IngredientStorage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

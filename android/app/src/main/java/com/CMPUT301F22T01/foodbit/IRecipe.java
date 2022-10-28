@@ -1,7 +1,5 @@
 package com.CMPUT301F22T01.foodbit;
 
-import android.util.Pair;
-
 import java.util.Map;
 
 public interface IRecipe {
