@@ -10,7 +10,6 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
 import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
