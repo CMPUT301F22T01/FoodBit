@@ -17,6 +17,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.RecipeBook;
 import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
@@ -45,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     final CollectionReference recipeBookRef = db.collection("recipe book");
     public static RecipeBook recipeBook = new RecipeBook();
+    final CollectionReference ingredientStorageRef = db.collection("ingredient list");
+    public static IngredientStorage ingredientStorage = new IngredientStorage();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
