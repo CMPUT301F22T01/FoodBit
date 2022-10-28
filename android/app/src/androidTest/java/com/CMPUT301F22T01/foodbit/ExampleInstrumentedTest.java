@@ -23,4 +23,6 @@ public class ExampleInstrumentedTest {
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
         assertEquals("com.CMPUT301F22T01.foodbit", appContext.getPackageName());
     }
+
+
 }

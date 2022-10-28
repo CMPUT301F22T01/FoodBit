@@ -35,6 +35,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The recipe book page.
+ */
 public class RecipeBookFragment extends Fragment {
 
     public String TAG = "RecipeBook";
@@ -139,7 +142,7 @@ public class RecipeBookFragment extends Fragment {
                     newRecipes.add(newRecipe);
                     Log.d(TAG, "recipe id: "+newRecipe.getId());
                 }
-                recipeBook.update(newRecipes);
+                recipeBook.setRecipes(newRecipes);
                 Log.d(TAG, "current recipe book: "+recipeBook);
                 Log.d(TAG, "Current recipes: " + recipeBook.getRecipes());
                 adapter.notifyDataSetChanged();

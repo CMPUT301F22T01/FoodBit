@@ -20,13 +20,17 @@ import com.CMPUT301F22T01.foodbit.models.Recipe;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * Provides a binding from a set of recipes to views that are displayed with in the
+ * <code>RecyclerView</code> in the recipe book page.
+ */
+
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
     private final static String TAG = "RecipeAdapter";
     private final ArrayList<Recipe> items;
 
     /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
+     * Provide a reference to the type of views that are used.
      */
     public RecipeAdapter(ArrayList<Recipe> items) {
         this.items = items;

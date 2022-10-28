@@ -15,6 +15,11 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
 
+/**
+ * Provides a binding from a set of ingredients to views that are displayed with in the
+ * <code>RecyclerView</code> in either the ingredient storage page, add recipe page or
+ * recipe detail page.
+ */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
     public final static int INGREDIENT_STORAGE = 0;
     public final static int RECIPE_ADD = 1;
@@ -28,8 +33,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     }
 
     /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
+     * Provide a reference to the type of views that are used.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final static int INGREDIENT_STORAGE = 0;

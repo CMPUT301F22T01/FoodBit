@@ -24,6 +24,7 @@
         tools:layout_conversion_absoluteHeight="56dp"
         tools:layout_conversion_absoluteWidth="411dp" />
 
+<!--    todo: enable photo feature-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recipe_add_image_layout"
         android:layout_width="0dp"
@@ -31,6 +32,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recipe_add_text_layout_category"
         app:layout_constraintEnd_toStartOf="@+id/recipe_add_text_layout_title"
         app:layout_constraintHorizontal_bias="0.5"
@@ -220,6 +222,7 @@
         android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

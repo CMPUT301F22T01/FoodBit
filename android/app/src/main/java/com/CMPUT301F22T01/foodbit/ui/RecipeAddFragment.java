@@ -27,6 +27,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
@@ -236,6 +237,9 @@ public class RecipeAddFragment extends DialogFragment implements RecipeAddIngred
                 if (title.equals("")) {
                     titleLayout.setError("Required");
                     requiredFieldEntered = false;
+                } else if (recipeBook.getTitles().contains(title)) {
+                    titleLayout.setError("This title already exists");
+                    requiredFieldEntered = false;
                 }
                 if (prepTime.equals("")) {
                     prepTimeLayout.setError("Required");
@@ -256,6 +260,8 @@ public class RecipeAddFragment extends DialogFragment implements RecipeAddIngred
                             category, comments, photoUri, ingredients);
                     recipeBook.add(recipe);
                     dismiss();
+                } else {
+                    Toast.makeText(context, "Invalid input value(s) - check all fields", Toast.LENGTH_SHORT).show();
                 }
             }
             return false;

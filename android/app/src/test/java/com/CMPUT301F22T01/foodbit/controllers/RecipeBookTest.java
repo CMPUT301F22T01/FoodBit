@@ -2,14 +2,14 @@ package com.CMPUT301F22T01.foodbit.controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import androidx.core.app.OnPictureInPictureModeChangedProvider;
-
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
 class RecipeBookTest {
     private Recipe mockRecipe(int choice) {
@@ -42,7 +42,7 @@ class RecipeBookTest {
     }
 
     @Test
-    void testGetRecipes() {
+    void getRecipes() {
         RecipeBook recipeBook1 = mockRecipeBook(1);
         assert recipeBook1 != null;
         ArrayList<Recipe> recipes1 = recipeBook1.getRecipes();
@@ -84,7 +84,14 @@ class RecipeBookTest {
     void update() {
         RecipeBook recipeBook = mockRecipeBook(1);
         assert recipeBook != null;
-        recipeBook.update(new ArrayList<>(Arrays.asList(mockRecipe(3), mockRecipe(4))));
+        recipeBook.setRecipes(new ArrayList<>(Arrays.asList(mockRecipe(3), mockRecipe(4))));
         assertEquals("id3", recipeBook.getRecipeByPosition(0).getId());
+    }
+
+    @Test
+    void getTitles() {
+        List<String> names = Objects.requireNonNull(mockRecipeBook(1)).getTitles();
+        assertTrue(names.contains("title1"));
+        assertTrue(names.contains("title2"));
     }
 }
