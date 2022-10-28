@@ -1,5 +1,6 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -72,7 +73,7 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
         Uri photo = recipe.getPhoto();
         if (photo != null) {
-            appBarImage.setImageURI(photo);
+//            appBarImage.setImageURI(photo);
         } else {
             appBarImage.setImageResource(android.R.color.transparent);
         }

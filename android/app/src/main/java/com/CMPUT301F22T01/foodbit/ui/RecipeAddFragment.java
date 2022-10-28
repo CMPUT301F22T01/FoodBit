@@ -2,10 +2,13 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import static android.app.Activity.RESULT_OK;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -15,6 +18,8 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -34,6 +39,10 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Objects;
 
 
@@ -61,6 +70,7 @@ public class RecipeAddFragment extends DialogFragment {
     ImageView imageView;
     ActivityResultLauncher<PickVisualMediaRequest> pickMedia;
     Uri photoUri = null;
+    Bitmap photoBitmap = null;
 
     public RecipeAddFragment() {
         // Required empty public constructor
@@ -83,9 +93,13 @@ public class RecipeAddFragment extends DialogFragment {
         pickMedia = registerForActivityResult(new ActivityResultContracts.PickVisualMedia(), uri -> {
                     if (uri != null) {
                         Log.d("PhotoPicker", "Selected URI: " + uri);
+                        // todo: test photo
+                        int flag = Intent.FLAG_GRANT_READ_URI_PERMISSION;
+                        context.getContentResolver().takePersistableUriPermission(uri, flag);
                         photoUri = uri;
-                        context.getApplicationContext().getContentResolver().takePersistableUriPermission(photoUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                        imageView.setImageURI(photoUri);
+                        imageView.setImageURI(uri);
+                    Log.d(TAG, "uri: "+uri);
+                    Log.d(TAG, "uri path: "+uri.getPath());
                     } else {
                         Log.d("PhotoPicker", "No media selected");
                     }
@@ -178,6 +192,7 @@ public class RecipeAddFragment extends DialogFragment {
         commentsEditText = view.findViewById(R.id.recipe_add_edit_text_comments);
         commentsLayout = view.findViewById(R.id.recipe_add_text_layout_comments);
         imageView = view.findViewById(R.id.recipe_add_image);
+        // todo: photo stuff
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,7 +261,7 @@ public class RecipeAddFragment extends DialogFragment {
                         Recipe recipe = new Recipe(title,
                                 Integer.parseInt(prepTime),
                                 Integer.parseInt(numServings),
-                                category, comments, photo, null);
+                                category, comments, photoUri, null);
                         recipeBook.add(recipe);
                         dismiss();
                     }
@@ -277,7 +292,72 @@ public class RecipeAddFragment extends DialogFragment {
         pickMedia.launch(new PickVisualMediaRequest.Builder()
                 .setMediaType(ActivityResultContracts.PickVisualMedia.ImageOnly.INSTANCE) // False error - actually works fine
                 .build());
+
     }
+
+//    private void imageChooser()
+//    {
+//        Intent i = new Intent();
+//        i.setType("image/*");
+//        i.setAction(Intent.ACTION_OPEN_DOCUMENT);
+//        i.addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+//        i.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//
+//
+//        launchSomeActivity.launch(i);
+//    }
+//
+//    ActivityResultLauncher<Intent> launchSomeActivity
+//            = registerForActivityResult(
+//            new ActivityResultContracts
+//                    .StartActivityForResult(),
+//            result -> {
+//                if (result.getResultCode()
+//                        == RESULT_OK) {
+//                    Intent data = result.getData();
+//                    // do your operation from here....
+//                    if (data != null
+//                            && data.getData() != null) {
+//                        photoUri = data.getData();
+//
+//                        Bitmap selectedImageBitmap = null;
+//                        try {
+//                            selectedImageBitmap
+//                                    = MediaStore.Images.Media.getBitmap(
+//                                    context.getContentResolver(),
+//                                    photoUri);}
+//                        catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                        photoBitmap = selectedImageBitmap;
+//                        imageView.setImageBitmap(
+//                                selectedImageBitmap);
+//                        // todo: store in internal storage
+//
+//                    }
+//                }
+//            });
+
+//    private void SaveImage(Bitmap finalBitmap) {
+//
+////        String root = Environment.getExternalStorageDirectory().getAbsolutePath();
+//        String root = context.getApplicationContext().getFilesDir().getAbsolutePath();
+//        File myDir = new File(root + "/saved_images");
+//
+//        String filename = "Image-"+ o +".jpg";
+//        File file = new File (myDir, filename);
+//        if (file.exists ()) file.delete();
+//        try {
+//            FileOutputStream out = new FileOutputStream(file);
+//            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+//            out.flush();
+//            out.close();
+//
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
 }
 
 

@@ -1,9 +1,11 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -36,6 +38,8 @@ public class RecipeBookFragment extends Fragment {
 
     public String TAG = "RecipeBook";
 
+    private Context context;
+
     // get recipe book from MainActivity
     private final RecipeBook recipeBook = MainActivity.recipeBook;
 
@@ -43,6 +47,12 @@ public class RecipeBookFragment extends Fragment {
 
     public RecipeBookFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -62,7 +72,7 @@ public class RecipeBookFragment extends Fragment {
 
         // set RecyclerView
 //        recipes.addAll(recipeBook.getRecipes());
-        adapter = new RecipeAdapter(recipeBook.getRecipes());
+        adapter = new RecipeAdapter(recipeBook.getRecipes(), context);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -114,7 +124,7 @@ public class RecipeBookFragment extends Fragment {
                         photo = Uri.parse((String) data.get("photo"));
                     } else {photo = null;}
                     newRecipes.add(
-                            new Recipe(title, prepTime, numServings, category, comments, photo,null)
+                            new Recipe(doc.getId(), title, prepTime, numServings, category, comments, photo,null)
                     );
                 }
                 recipeBook.update(newRecipes);
