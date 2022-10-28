@@ -1,29 +1,18 @@
 package com.CMPUT301F22T01.foodbit.models;
 
-// User Story 01.01.01
-// As a meal planner, I want to add an ingredient, with a brief description, best before date, location, amount, unit, and ingredient category
-//
-// Expected behaviour;
-//  - an ingredient can be added with the use of the add button
-//  - when button is pressed a screen will pop up asking the user to input the details of the ingredient being added, including the description, best before date, location, amount, unit, and ingredient category
-//  - the cancel button can be pressed on the pop up to cancel the addition of the new ingredient
-//  - finalization of the addition is done by pressing the add button on the pop up which will then add the new ingredient to the list
-
-import java.util.Date;
-
 public class Ingredient {
     private String description;
-    private Date bestBefore;
+    private String bestBefore;
     private String location;
     private Integer amount;
     private Integer unit;
     private String category;
 
-    public Ingredient(){
+    public Ingredient() {
         // Empty constructor
     }
 
-    public Ingredient(String description, Date bestBefore, String location, Integer amount, Integer unit, String category) {
+    public Ingredient(String description, String bestBefore, String location, Integer amount, Integer unit, String category) {
         this.description = description;
         this.bestBefore = bestBefore;
         this.location = location;
@@ -36,7 +25,7 @@ public class Ingredient {
         return description;
     }
 
-    public Date getBestBefore() {
+    public String getBestBefore() {
         return bestBefore;
     }
 
@@ -60,7 +49,7 @@ public class Ingredient {
         this.description = newDescription;
     }
 
-    public void setBestBefoe(Date newBestBefore) {
+    public void setBestBefore(String newBestBefore) {
         this.bestBefore = newBestBefore;
     }
 
