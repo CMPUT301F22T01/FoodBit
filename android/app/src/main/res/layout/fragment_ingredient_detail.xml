@@ -48,9 +48,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_twotone_timer_24"
                 android:drawablePadding="6sp"
-                android:drawableTint="@color/primaryColor"
                 android:gravity="center_vertical"
                 android:text="480 minutes"
                 android:textColor="@color/primaryTextColor"
@@ -58,7 +56,10 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:drawableStartCompat="@drawable/ic_twotone_timer_24"
+                app:drawableTint="@color/primaryColor"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/ingredient_detail_best_before"
@@ -67,9 +68,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:drawableStart="@drawable/ic_numbers_24"
                 android:drawablePadding="6sp"
-                android:drawableTint="@color/primaryColor"
                 android:gravity="center_vertical"
                 android:text="100 servings"
                 android:textColor="@color/primaryTextColor"
@@ -78,7 +77,10 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_description" />
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_description"
+                app:drawableStartCompat="@drawable/ic_numbers_24"
+                app:drawableTint="@color/primaryColor"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/ingredient_detail_location"
@@ -92,7 +94,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_best_before" />
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_best_before"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/ingredient_detail_amount"
@@ -106,7 +109,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_location" />
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_location"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/ingredient_detail_unit"
@@ -118,7 +122,8 @@
                 android:text="No comments."
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_amount" />
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_amount"
+                tools:ignore="HardcodedText" />
 
             <TextView
                 android:id="@+id/ingredient_detail_category"
@@ -131,7 +136,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_unit" />
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_unit"
+                tools:ignore="HardcodedText" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

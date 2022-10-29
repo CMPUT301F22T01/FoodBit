@@ -35,25 +35,27 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.lang.annotation.Repeatable;
-
+/**
+ * This instrumented test checks if it successfully adds a recipe, if the recipe is presented with
+ * the correct information in the <code>recipe book screen</code>, if the <code>recipe detail screen
+ * </code> displays the details correctly, and if it successfully deletes the recipe.
+ */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class RecipeAddTest {
-
+public class RecipeBookTest {
     @Rule
     public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void repeat() throws InterruptedException {
-        for (int i = 0; i < 10; i++) {
-            recipeAddTest();
+    public void repeatTest() throws InterruptedException {
+        int iterateCycles = 5;
+        for (int i = 0; i < iterateCycles; i++) {
+            recipeBookTest();
         }
     }
 
-//    @Test
-    public void recipeAddTest() throws InterruptedException {
+    public void recipeBookTest() throws InterruptedException {
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"),
                         childAtPosition(
@@ -80,8 +82,6 @@ public class RecipeAddTest {
                                 1),
                         isDisplayed()));
         materialButton.perform(click());
-
-        Thread.sleep(200);
 
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.recipe_add_edit_text_title),
@@ -341,7 +341,7 @@ public class RecipeAddTest {
         ViewInteraction textView19 = onView(
                 allOf(withId(R.id.item_recipe_photo_text), withText("T"),
                         withParent(allOf(withId(R.id.item_recipe_image),
-                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                                withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
                         isDisplayed()));
         textView19.check(matches(withText("T")));
 

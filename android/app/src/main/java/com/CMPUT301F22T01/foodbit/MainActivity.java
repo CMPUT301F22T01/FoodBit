@@ -14,6 +14,9 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+/**
+ * The main activity of the app.
+ */
 public class MainActivity extends AppCompatActivity {
     // access a Cloud Firestore instance and retrieve data
     public final static String TAG = "MainActivity";

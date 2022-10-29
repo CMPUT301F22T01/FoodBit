@@ -24,7 +24,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/ingredient_add_top_app_bar"
             app:navigationIcon="@drawable/ic_close_24"
-            app:title="Add an ingredient" />
+            app:title="Add an ingredient"
+            tools:ignore="RtlSymmetry" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/ingredient_add_text_layout_description"
@@ -46,7 +47,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Description"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -69,7 +71,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Best Before Date"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -92,7 +95,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Location"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +119,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Amount"
                 android:inputType="number"
-                android:maxLines="1" />
+                android:maxLines="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -138,7 +143,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Unit"
                 android:inputType="number"
-                android:maxLines="1" />
+                android:maxLines="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -161,7 +167,8 @@
                 android:layout_height="wrap_content"
                 android:hint="Category"
                 android:inputType="text"
-                android:maxLines="1" />
+                android:maxLines="1"
+                tools:ignore="HardcodedText" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
