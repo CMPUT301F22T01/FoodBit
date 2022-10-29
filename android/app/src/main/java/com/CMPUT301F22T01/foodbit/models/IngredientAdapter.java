@@ -13,12 +13,26 @@ import com.CMPUT301F22T01.foodbit.R;
 import java.util.ArrayList;
 
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder> {
-
+    private final static String TAG = "IngredientAdapter";
     private final ArrayList<Ingredient> items;
+    //private final Context context;
+
+    /**
+     * Provide a reference to the type of views that you are using
+     * (custom ViewHolder).
+     */
 
     public IngredientAdapter(ArrayList<Ingredient> items) {
         this.items = items;
+        //this.context = context;
+
     }
+
+    //private final ArrayList<Ingredient> items;
+
+    //public IngredientAdapter(ArrayList<Ingredient> items) {
+        //this.items = items;
+    //}
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
@@ -29,7 +43,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public ViewHolder(View view) {
             super(view);
 
-            // Define click listener for items
             //TODO:on click listener
 
             ingredientDescription = view.findViewById(R.id.item_ingredient_description);

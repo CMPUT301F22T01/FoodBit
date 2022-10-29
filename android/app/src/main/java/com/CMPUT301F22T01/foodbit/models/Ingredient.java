@@ -4,7 +4,7 @@ public class Ingredient {
     private String description;
     private String bestBefore;
     private String location;
-    private float amount;
+    private Float amount;
     private String unit;
     private String category;
 
@@ -12,7 +12,7 @@ public class Ingredient {
         // Empty constructor
     }
 
-    public Ingredient(String description, String bestBefore, String location, float amount, String unit, String category) {
+    public Ingredient(String description, String bestBefore, String location, Float amount, String unit, String category) {
         this.description = description;
         this.bestBefore = bestBefore;
         this.location = location;
@@ -20,7 +20,7 @@ public class Ingredient {
         this.unit = unit;
         this.category = category;
     }
-    public Ingredient(String description, float amount, String unit, String category) {
+    public Ingredient(String description, Float amount, String unit, String category) {
         this.description = description;
         this.amount = amount;
         this.unit = unit;
@@ -63,7 +63,7 @@ public class Ingredient {
         this.location = newLocation;
     }
 
-    public void setAmount(float newAmount) {
+    public void setAmount(Float newAmount) {
         this.amount = newAmount;
     }
 
