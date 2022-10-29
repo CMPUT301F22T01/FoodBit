@@ -102,7 +102,7 @@ public class RecipeBookFragment extends Fragment {
         super.onResume();
 
         // real time updates of the recipeBook
-        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("recipe book");
+        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Recipe Book");
         recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -130,9 +130,7 @@ public class RecipeBookFragment extends Fragment {
                     for (HashMap ingredientData : ingredientsData) {
                         ingredients.add(new Ingredient(
                                 (String) ingredientData.get("description"),
-                                (String) ingredientData.get("bestBefore"),
-                                (String) ingredientData.get("location"),
-                                ((Double) ingredientData.get("amount")).floatValue(),
+                                ((float) (double) ingredientData.get("amount")),
                                 (String) ingredientData.get("unit"),
                                 (String) ingredientData.get("category")
                         ));

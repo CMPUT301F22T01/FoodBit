@@ -6,6 +6,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -34,6 +35,8 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.lang.annotation.Repeatable;
+
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class RecipeAddTest {
@@ -43,7 +46,14 @@ public class RecipeAddTest {
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void recipeAddTest() {
+    public void repeat() throws InterruptedException {
+        for (int i = 0; i < 10; i++) {
+            recipeAddTest();
+        }
+    }
+
+//    @Test
+    public void recipeAddTest() throws InterruptedException {
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"),
                         childAtPosition(
@@ -59,7 +69,7 @@ public class RecipeAddTest {
                         withParent(allOf(withId(com.google.android.material.R.id.navigation_bar_item_labels_group),
                                 withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"))))),
                         isDisplayed()));
-        textView.check(matches(withText("Recipes")));
+        textView.check(matches(isDisplayed()));
 
         ViewInteraction materialButton = onView(
                 allOf(withId(R.id.recipe_book_test_add_button), withText("add"),
@@ -71,6 +81,8 @@ public class RecipeAddTest {
                         isDisplayed()));
         materialButton.perform(click());
 
+        Thread.sleep(200);
+
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.recipe_add_edit_text_title),
                         childAtPosition(
@@ -79,9 +91,29 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText.perform(replaceText("test title"), closeSoftKeyboard());
+        textInputEditText.perform(click());
 
         ViewInteraction textInputEditText2 = onView(
+                allOf(withId(R.id.recipe_add_edit_text_title),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_add_text_layout_title),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText2.perform(click());
+
+        ViewInteraction textInputEditText3 = onView(
+                allOf(withId(R.id.recipe_add_edit_text_title),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_add_text_layout_title),
+                                        0),
+                                0),
+                        isDisplayed()));
+        textInputEditText3.perform(replaceText("test title"), closeSoftKeyboard());
+
+        ViewInteraction textInputEditText4 = onView(
                 allOf(withId(R.id.recipe_add_edit_text_category),
                         childAtPosition(
                                 childAtPosition(
@@ -89,9 +121,9 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText2.perform(replaceText("test category"), closeSoftKeyboard());
+        textInputEditText4.perform(replaceText("test category"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText3 = onView(
+        ViewInteraction textInputEditText5 = onView(
                 allOf(withId(R.id.recipe_add_edit_text_prep_time),
                         childAtPosition(
                                 childAtPosition(
@@ -99,9 +131,9 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText3.perform(replaceText("10"), closeSoftKeyboard());
+        textInputEditText5.perform(replaceText("240"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText4 = onView(
+        ViewInteraction textInputEditText6 = onView(
                 allOf(withId(R.id.recipe_add_edit_text_num_servings),
                         childAtPosition(
                                 childAtPosition(
@@ -109,9 +141,9 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText4.perform(replaceText("10"), closeSoftKeyboard());
+        textInputEditText6.perform(replaceText("50"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText5 = onView(
+        ViewInteraction textInputEditText7 = onView(
                 allOf(withId(R.id.recipe_add_edit_text_comments),
                         childAtPosition(
                                 childAtPosition(
@@ -119,7 +151,7 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText5.perform(replaceText("test comment"), closeSoftKeyboard());
+        textInputEditText7.perform(replaceText("test comment"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.recipe_add_ingredient_add), withContentDescription("Add an ingredient"),
@@ -131,7 +163,7 @@ public class RecipeAddTest {
                         isDisplayed()));
         actionMenuItemView.perform(click());
 
-        ViewInteraction textInputEditText6 = onView(
+        ViewInteraction textInputEditText8 = onView(
                 allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description),
                         childAtPosition(
                                 childAtPosition(
@@ -139,9 +171,9 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText6.perform(replaceText("test ingredient description"), closeSoftKeyboard());
+        textInputEditText8.perform(replaceText("test description"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText7 = onView(
+        ViewInteraction textInputEditText9 = onView(
                 allOf(withId(R.id.recipe_add_ingredient_add_edit_text_amount),
                         childAtPosition(
                                 childAtPosition(
@@ -149,9 +181,9 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText7.perform(replaceText("1.5"), closeSoftKeyboard());
+        textInputEditText9.perform(replaceText("1.5"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText8 = onView(
+        ViewInteraction textInputEditText10 = onView(
                 allOf(withId(R.id.recipe_add_ingredient_add_edit_text_unit),
                         childAtPosition(
                                 childAtPosition(
@@ -159,9 +191,9 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText8.perform(replaceText("test unit"), closeSoftKeyboard());
+        textInputEditText10.perform(replaceText("test unit"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText9 = onView(
+        ViewInteraction textInputEditText11 = onView(
                 allOf(withId(R.id.recipe_add_ingredient_add_edit_text_category),
                         childAtPosition(
                                 childAtPosition(
@@ -169,47 +201,7 @@ public class RecipeAddTest {
                                         0),
                                 0),
                         isDisplayed()));
-        textInputEditText9.perform(replaceText("test category"), closeSoftKeyboard());
-
-        ViewInteraction textInputEditText10 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description), withText("test ingredient description"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText10.perform(click());
-
-        ViewInteraction textInputEditText11 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description), withText("test ingredient description"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText11.perform(click());
-
-        ViewInteraction textInputEditText12 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description), withText("test ingredient description"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText12.perform(replaceText("test description"));
-
-        ViewInteraction textInputEditText13 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description), withText("test description"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText13.perform(closeSoftKeyboard());
+        textInputEditText11.perform(replaceText("test category"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(android.R.id.button1), withText("Add"),
@@ -254,29 +246,32 @@ public class RecipeAddTest {
                         isDisplayed()));
         actionMenuItemView2.perform(click());
 
+        Thread.sleep(500);
+
         ViewInteraction textView6 = onView(
+                allOf(withId(com.google.android.material.R.id.navigation_bar_item_large_label_view), withText("Recipes"),
+                        withParent(allOf(withId(com.google.android.material.R.id.navigation_bar_item_labels_group),
+                                withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"))))),
+                        isDisplayed()));
+        textView6.check(matches(isDisplayed()));
+
+        ViewInteraction textView7 = onView(
                 allOf(withId(R.id.item_recipe_title), withText("test title"),
                         withParent(withParent(withId(R.id.recyclerView_recipe_book))),
                         isDisplayed()));
-        textView6.check(matches(withText("test title")));
-
-        ViewInteraction textView7 = onView(
-                allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
-                        isDisplayed()));
-        textView7.check(matches(withText("10 minutes")));
+        textView7.check(matches(withText("test title")));
 
         ViewInteraction textView8 = onView(
-                allOf(withId(R.id.item_recipe_num_servings), withText("×10"),
+                allOf(withId(R.id.item_recipe_prep_time), withText("240 minutes"),
                         withParent(withParent(withId(R.id.recyclerView_recipe_book))),
                         isDisplayed()));
-        textView8.check(matches(withText("×10")));
+        textView8.check(matches(withText("240 minutes")));
 
         ViewInteraction textView9 = onView(
-                allOf(withId(R.id.item_recipe_comments), withText("test comment"),
+                allOf(withId(R.id.item_recipe_num_servings), withText("×50"),
                         withParent(withParent(withId(R.id.recyclerView_recipe_book))),
                         isDisplayed()));
-        textView9.check(matches(withText("test comment")));
+        textView9.check(matches(withText("×50")));
 
         ViewInteraction textView10 = onView(
                 allOf(withId(R.id.item_recipe_comments), withText("test comment"),
@@ -291,15 +286,17 @@ public class RecipeAddTest {
                                 0)));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
+        Thread.sleep(200);
+
         ViewInteraction textView11 = onView(
-                allOf(withId(R.id.recipe_detail_prep_time), withText("10 minutes"),
+                allOf(withId(R.id.recipe_detail_prep_time), withText("240 minutes"),
                         isDisplayed()));
-        textView11.check(matches(withText("10 minutes")));
+        textView11.check(matches(withText("240 minutes")));
 
         ViewInteraction textView12 = onView(
-                allOf(withId(R.id.recipe_detail_num_servings), withText("10 servings"),
+                allOf(withId(R.id.recipe_detail_num_servings), withText("50 servings"),
                         isDisplayed()));
-        textView12.check(matches(withText("10 servings")));
+        textView12.check(matches(withText("50 servings")));
 
         ViewInteraction textView13 = onView(
                 allOf(withId(R.id.recipe_detail_category_content), withText("test category"),
@@ -329,18 +326,6 @@ public class RecipeAddTest {
                         isDisplayed()));
         textView17.check(matches(withText("test unit")));
 
-        ViewInteraction frameLayout = onView(
-                allOf(withId(R.id.nav_bar),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        frameLayout.check(matches(isDisplayed()));
-
-        ViewInteraction frameLayout2 = onView(
-                allOf(withId(R.id.nav_bar),
-                        withParent(withParent(withId(android.R.id.content))),
-                        isDisplayed()));
-        frameLayout2.check(matches(isDisplayed()));
-
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
                                 allOf(withId(R.id.recipe_detail_toolbar),
@@ -351,17 +336,48 @@ public class RecipeAddTest {
                         isDisplayed()));
         appCompatImageButton.perform(click());
 
+        Thread.sleep(200);
+
+        ViewInteraction textView19 = onView(
+                allOf(withId(R.id.item_recipe_photo_text), withText("T"),
+                        withParent(allOf(withId(R.id.item_recipe_image),
+                                withParent(IsInstanceOf.<View>instanceOf(android.view.ViewGroup.class)))),
+                        isDisplayed()));
+        textView19.check(matches(withText("T")));
+
         ViewInteraction recyclerView2 = onView(
                 allOf(withId(R.id.recyclerView_recipe_book),
-                        withParent(withParent(withId(R.id.nav_container))),
-                        isDisplayed()));
-        recyclerView2.check(matches(isDisplayed()));
+                        childAtPosition(
+                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                0)));
+        recyclerView2.perform(actionOnItemAtPosition(0, click()));
 
-        ViewInteraction recyclerView3 = onView(
-                allOf(withId(R.id.recyclerView_recipe_book),
-                        withParent(withParent(withId(R.id.nav_container))),
+        Thread.sleep(200);
+
+        ViewInteraction button = onView(
+                allOf(withId(R.id.recipe_detail_temp_delete), withText("DELETE"),
                         isDisplayed()));
-        recyclerView3.check(matches(isDisplayed()));
+        button.check(matches(isDisplayed()));
+
+        ViewInteraction materialButton3 = onView(
+                allOf(withId(R.id.recipe_detail_temp_delete), withText("delete"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.core.widget.NestedScrollView")),
+                                        0),
+                                8),
+                        isDisplayed()));
+        materialButton3.perform(click());
+
+        Thread.sleep(500);
+
+        ViewInteraction textView20 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("test title"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView20.check(doesNotExist());
+
+
     }
 
     private static Matcher<View> childAtPosition(

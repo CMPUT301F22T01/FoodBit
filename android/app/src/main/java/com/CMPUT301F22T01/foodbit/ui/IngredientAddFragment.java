@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;

@@ -72,15 +72,6 @@ class RecipeBookTest {
     }
 
     @Test
-    void addException() {
-        Recipe recipe = new Recipe("id", null, 0, 0, null, null, null, null);
-        ArrayList<Recipe> recipes = new ArrayList<>();
-        recipes.add(recipe);
-        RecipeBook recipeBook = new RecipeBook(recipes);
-        assertThrows(AssertionError.class, () -> recipeBook.add(recipe), "This recipe is already in the recipe book!");
-    }
-
-    @Test
     void update() {
         RecipeBook recipeBook = mockRecipeBook(1);
         assert recipeBook != null;
@@ -93,5 +84,32 @@ class RecipeBookTest {
         List<String> names = Objects.requireNonNull(mockRecipeBook(1)).getTitles();
         assertTrue(names.contains("title1"));
         assertTrue(names.contains("title2"));
+    }
+
+    @Test
+    void contains() {
+        Recipe recipe1 = mockRecipe(1);
+        Recipe recipe2 = mockRecipe(2);
+        RecipeBook recipeBook = new RecipeBook(new ArrayList<>(Arrays.asList(recipe1, recipe2)));
+        assertTrue(recipeBook.contains(recipe1));
+        assertTrue(recipeBook.contains(recipe2));
+    }
+
+    @Test
+    void addException() {
+        Recipe recipe = new Recipe("id", null, 0, 0, null, null, null, null);
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        recipes.add(recipe);
+        RecipeBook recipeBook = new RecipeBook(recipes);
+        assertThrows(AssertionError.class, () -> recipeBook.add(recipe), "This recipe is already in the recipe book!");
+    }
+
+    @Test
+    void deleteException() {
+        RecipeBook recipeBook = mockRecipeBook(1);
+        assertThrows(AssertionError.class, () -> {
+            assert recipeBook != null;
+            recipeBook.delete(mockRecipe(3));
+        }, "this recipe is not found in the recipe book!");
     }
 }

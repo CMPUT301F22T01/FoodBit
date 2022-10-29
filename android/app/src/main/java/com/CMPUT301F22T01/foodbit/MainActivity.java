@@ -8,15 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
-import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
-import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
-import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
-import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;

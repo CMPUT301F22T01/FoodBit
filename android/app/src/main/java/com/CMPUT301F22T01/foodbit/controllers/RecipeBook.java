@@ -22,6 +22,7 @@ import java.util.Objects;
  * Provide controls to a list of <code>Recipe</code> class objects.
  */
 public class RecipeBook implements Serializable {
+    private FirebaseFirestore db;
     private final ArrayList<Recipe> recipes;
 
     /**
@@ -79,16 +80,20 @@ public class RecipeBook implements Serializable {
         return list;
     }
 
+    public boolean contains(Recipe recipe) {
+        return recipes.contains(recipe);
+    }
+
     /**
      * Add a recipe to the recipe book and add the recipe data to the Firestore database.
      * @param recipe the recipe to be added
      */
     public void add(Recipe recipe) {
         String TAG = RecipeAddFragment.TAG;
-        assert !recipes.contains(recipe) : "This recipe is already in the recipe book!";
-        recipes.add(recipe);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference recipeBookRef = db.collection("recipe book");
+        assert !contains(recipe) : "This recipe is already in the recipe book!";
+//        recipes.add(recipe);
+        db = FirebaseFirestore.getInstance();
+        CollectionReference recipeBookRef = db.collection("Recipe Book");
         recipeBookRef.add(recipe)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -117,4 +122,23 @@ public class RecipeBook implements Serializable {
                 });
     }
 
+    public void delete(Recipe recipe) {
+        String TAG = "RecipeBookDeleteRecipe";
+        assert contains(recipe) : "this recipe is not found in the recipe book!";
+        db = FirebaseFirestore.getInstance();
+        db.collection("Recipe Book").document(recipe.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
 }

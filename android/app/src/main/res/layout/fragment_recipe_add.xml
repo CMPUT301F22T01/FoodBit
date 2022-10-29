@@ -24,7 +24,7 @@
         tools:layout_conversion_absoluteHeight="56dp"
         tools:layout_conversion_absoluteWidth="411dp" />
 
-<!--    todo: enable photo feature-->
+    <!--    todo: enable photo feature-->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/recipe_add_image_layout"
         android:layout_width="0dp"

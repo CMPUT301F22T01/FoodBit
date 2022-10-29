@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -36,6 +37,7 @@ public class RecipeDetailFragment extends Fragment {
     TextView commentsView;
     ImageView appBarImageView;
     RecyclerView ingredientsRecyclerView;
+    Button tempDeleteButton;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -61,15 +63,19 @@ public class RecipeDetailFragment extends Fragment {
         commentsView = view.findViewById(R.id.recipe_detail_comments_content);
         appBarImageView = view.findViewById(R.id.recipe_detail_bar_image);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_detail_ingredient_list);
-
-        toolbar.setTitle(recipe.getTitle());
-        // back button behaviour
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
+        // todo: Temporary delete button. Will be replaced by a delete button in the action bar in the recipe book screen.
+        tempDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.recipeBook.delete(recipe);
                 Navigation.findNavController(v).popBackStack();
             }
         });
+
+        toolbar.setTitle(recipe.getTitle());
+        // back button behaviour
+        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
         prepTimeView.setText(recipe.getPrepTime() + prepTimeSuffix);
         String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
