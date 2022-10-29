@@ -1,9 +1,10 @@
-package com.CMPUT301F22T01.foodbit.models;
+package com.CMPUT301F22T01.foodbit.controllers;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;

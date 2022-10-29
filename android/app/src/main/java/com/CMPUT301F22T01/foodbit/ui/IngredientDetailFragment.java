@@ -63,7 +63,7 @@ public class IngredientDetailFragment extends Fragment {
         descriptionView.setText(ingredient.getDescription());
         bestBeforeView.setText(ingredient.getBestBefore());
         locationView.setText(ingredient.getLocation());
-        amountView.setText(ingredient.getAmount());
+        amountView.setText(String.valueOf(ingredient.getAmount()));
         unitView.setText(ingredient.getUnit());
         categoryView.setText(ingredient.getCategory());
         return view;

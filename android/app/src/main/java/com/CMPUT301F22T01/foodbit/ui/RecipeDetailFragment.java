@@ -1,23 +1,27 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.google.api.Distribution;
 
 public class RecipeDetailFragment extends Fragment {
 
@@ -31,7 +35,9 @@ public class RecipeDetailFragment extends Fragment {
     TextView numServingsView;
     TextView categoryView;
     TextView commentsView;
-    ImageView appBarImage;
+    ImageView appBarImageView;
+    RecyclerView ingredientsRecyclerView;
+    Button tempDeleteButton;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -55,28 +61,43 @@ public class RecipeDetailFragment extends Fragment {
         numServingsView = view.findViewById(R.id.recipe_detail_num_servings);
         categoryView = view.findViewById(R.id.recipe_detail_category_content);
         commentsView = view.findViewById(R.id.recipe_detail_comments_content);
-        appBarImage = view.findViewById(R.id.recipe_detail_bar_image);
-
-        toolbar.setTitle(recipe.getTitle());
-        // back button behaviour
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        appBarImageView = view.findViewById(R.id.recipe_detail_bar_image);
+        ingredientsRecyclerView = view.findViewById(R.id.recipe_detail_ingredient_list);
+        tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
+        // todo: Temporary delete button. Will be replaced by a delete button in the action bar in the recipe book screen.
+        tempDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                MainActivity.recipeBook.delete(recipe);
                 Navigation.findNavController(v).popBackStack();
             }
         });
-        String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minutes";}
-        prepTimeView.setText(String.valueOf(recipe.getPrepTime()) + prepTimeSuffix);
+
+        toolbar.setTitle(recipe.getTitle());
+        // back button behaviour
+        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+        String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
+        prepTimeView.setText(recipe.getPrepTime() + prepTimeSuffix);
         String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
-        numServingsView.setText(String.valueOf(recipe.getNumServings()) + numServingsSuffix);
+        numServingsView.setText(recipe.getNumServings() + numServingsSuffix);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
+
+        // todo: enable photo feature before release
         Uri photo = recipe.getPhoto();
-        if (photo != null) {
+        appBarImageView.setImageResource(android.R.color.transparent);
+//        if (photo != null) {
 //            appBarImage.setImageURI(photo);
-        } else {
-            appBarImage.setImageResource(android.R.color.transparent);
-        }
+//        } else {
+//            appBarImage.setImageResource(android.R.color.transparent);
+//        }
+
+        IngredientAdapter ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
+        ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
+        ingredientsRecyclerView.setAdapter(ingredientAdapter);
+        // add borderlines between items
+        ingredientsRecyclerView.addItemDecoration(new DividerItemDecoration(ingredientsRecyclerView.getContext(), linearLayoutManager.getOrientation()));
 
         return view;
     }
@@ -85,7 +106,7 @@ public class RecipeDetailFragment extends Fragment {
     private void getRecipe() {
         assert getArguments() != null;
         int position = getArguments().getInt("position");
-        recipe = MainActivity.recipeBook.get(position);
+        recipe = MainActivity.recipeBook.getRecipeByPosition(position);
         Log.d(TAG, String.valueOf(recipe));
     }
 }

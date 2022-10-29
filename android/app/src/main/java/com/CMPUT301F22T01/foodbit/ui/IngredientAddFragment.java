@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -124,7 +124,7 @@ public class IngredientAddFragment extends DialogFragment {
                         requiredFieldEntered = false;
                     }
                     if (requiredFieldEntered) {
-                        Ingredient ingredient = new Ingredient(description, bestBefore, location, Integer.parseInt(amount), Integer.parseInt(unit), category);
+                        Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
                         ingredientStorage.add(ingredient);
                         dismiss();
                     }

@@ -19,7 +19,7 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientAdapter;
-import com.CMPUT301F22T01.foodbit.models.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -90,11 +90,11 @@ public class IngredientStorageFragment extends Fragment {
                     String description = (String) data.get("description");
                     String bestBefore = (String) data.get("bestBefore");
                     String location = (String) data.get("location");
-                    Long amount = (Long) data.get("amount");
-                    Long unit = (Long) data.get("unit");
+                    float amount = (float) (double) data.get("amount");
+                    String unit = (String) data.get("unit");
                     String category = (String) data.get("category");
-                    if (amount != null){
-                        newIngredient.add(new Ingredient(description, bestBefore, location, amount.intValue(), unit.intValue(), category));
+                    if (description != null){
+                        newIngredient.add(new Ingredient(description, bestBefore, location, amount, unit, category));
                     }
                 }
                     ingredientStorage.update(newIngredient);
