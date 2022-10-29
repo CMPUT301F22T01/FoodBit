@@ -1,15 +1,8 @@
-package com.CMPUT301F22T01.foodbit.models;
+package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
-import android.content.Intent;
-import android.content.UriPermission;
-import android.content.pm.PackageManager;
-import android.content.pm.ResolveInfo;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,36 +15,34 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
+
+/**
+ * Provides a binding from a set of recipes to views that are displayed with in the
+ * <code>RecyclerView</code> in the recipe book page.
+ */
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
-
     private final static String TAG = "RecipeAdapter";
     private final ArrayList<Recipe> items;
-    private final Context context;
 
     /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
+     * Provide a reference to the type of views that are used.
      */
-
-    public RecipeAdapter(ArrayList<Recipe> items, Context context) {
+    public RecipeAdapter(ArrayList<Recipe> items) {
         this.items = items;
-        this.context = context;
-
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-
         // define UI
         private final TextView recipeTitle;
         private final TextView recipePrepTime;
         private final TextView recipeNumServings;
         private final ConstraintLayout recipePhoto;
         private final TextView recipeComments;
-
 
         public ViewHolder(View view) {
             super(view);
@@ -60,7 +51,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
             view.setOnClickListener(v -> {
                 // put argument
                 Bundle bundle = new Bundle();
-                bundle.putInt("position",getAdapterPosition());
+                bundle.putInt("position", getAdapterPosition());
 
                 Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
             });
@@ -110,31 +101,27 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         String comments = items.get(position).getComments();
         Uri photo = items.get(position).getPhoto();
 
-        // get views
+        // get UI
         TextView titleView = holder.getRecipeTitleView();
         TextView prepTimeView = holder.getRecipePrepTimeView();
         TextView numServingsView = holder.getRecipeNumServingsView();
         TextView commentsView = holder.getRecipeCommentsView();
         ConstraintLayout photoLayout = holder.getRecipePhotoView();
 
-        // set each view with value
+        // set up UI
         titleView.setText(title);
         String min = " minutes"; if (prepTime <= 1) {min = " minute";}
         prepTimeView.setText(prepTime + min);
         numServingsView.setText("×" + numServings);
-        if (comments != null) {
-            commentsView.setText(comments);
-        } else {
-            commentsView.setText("No comments.");
-        }
-        if (photo != null) {
-            ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
-            // todo: photo stuff
+        commentsView.setText(Objects.requireNonNullElse(comments, "No comments."));
+        // todo: enable photo feature before release
+//        if (photo != null) {
+//            ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
 //            photoView.setImageURI(photo);
-        } else {
+//        } else {
             TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
             capLetter.setText(Character.toString(title.charAt(0)));
-        }
+//        }
     }
 
     @Override

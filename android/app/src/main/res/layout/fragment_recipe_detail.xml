@@ -47,6 +47,7 @@
         android:layout_height="match_parent"
 
 
+        android:background="@color/white"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         tools:ignore="SpeakableTextPresentCheck">
 
@@ -55,13 +56,25 @@
             android:layout_height="match_parent"
             tools:context=".ui.RecipeDetailFragment">
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recipe_detail_ingredient_list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="32dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_ingredients_field" />
+
             <TextView
                 android:id="@+id/recipe_detail_prep_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:drawableStart="@drawable/ic_twotone_timer_24_colored"
+                android:drawableStart="@drawable/ic_twotone_timer_24"
                 android:drawablePadding="6sp"
+                android:drawableTint="@color/primaryColor"
                 android:gravity="center_vertical"
                 android:text="480 minutes"
                 android:textColor="@color/primaryTextColor"
@@ -77,8 +90,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="32dp"
-                android:drawableStart="@drawable/ic_numbers_24_colored"
+                android:drawableStart="@drawable/ic_numbers_24"
                 android:drawablePadding="6sp"
+                android:drawableTint="@color/primaryColor"
                 android:gravity="center_vertical"
                 android:text="100 servings"
                 android:textColor="@color/primaryTextColor"
@@ -114,6 +128,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/recipe_detail_category_field" />
 
             <TextView
+                android:id="@+id/recipe_detail_ingredients_field"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="16dp"
+                android:text="Ingredients"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_comments_content" />
+
+            <TextView
                 android:id="@+id/recipe_detail_comments_content"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -133,6 +159,17 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/recipe_detail_category_field"
                 app:layout_constraintTop_toTopOf="@+id/recipe_detail_category_field" />
+
+            <Button
+                android:id="@+id/recipe_detail_temp_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recipe_detail_ingredient_list" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

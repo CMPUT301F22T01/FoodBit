@@ -37,6 +37,12 @@
         <item name="startIconTint">@color/primaryColor</item>
     </style>
 
+    <style name="Theme.FoodBit.TextInputLayout.FilledBox" parent="Widget.MaterialComponents.TextInputLayout.FilledBox">
+        <item name="boxStrokeColor">@color/primaryLightColor</item>
+        <item name="hintTextColor">@color/primaryColor</item>
+        <item name="startIconTint">@color/primaryColor</item>
+    </style>
+
     <style name="Theme.FoodBit.ExpandedTitleTextAppearance" parent="@style/TextAppearance.AppCompat.Display1">
         <item name="android:textColor">@color/black</item>
         <item name="android:shadowColor">@color/white</item>
