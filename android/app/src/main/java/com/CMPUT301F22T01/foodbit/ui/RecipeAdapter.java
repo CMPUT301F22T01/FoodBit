@@ -115,13 +115,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         numServingsView.setText("×" + numServings);
         commentsView.setText(Objects.requireNonNullElse(comments, "No comments."));
         // todo: enable photo feature before release
-//        if (photo != null) {
-//            ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
-//            photoView.setImageURI(photo);
-//        } else {
+        if (photo != null) {
+            ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
+            photoView.setImageURI(photo);
+        } else {
             TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
             capLetter.setText(Character.toString(title.charAt(0)));
-//        }
+        }
     }
 
     @Override

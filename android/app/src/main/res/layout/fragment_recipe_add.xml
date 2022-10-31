@@ -33,7 +33,6 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/recipe_add_text_layout_category"
         app:layout_constraintEnd_toStartOf="@+id/recipe_add_text_layout_title"
         app:layout_constraintHorizontal_bias="0.5"
@@ -53,9 +52,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="175dp"
-            tools:layout_conversion_absoluteWidth="178dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_conversion_absoluteWidth="178dp" />
 
         <ImageView
             android:id="@+id/recipe_add_image"
@@ -66,9 +65,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
             tools:layout_conversion_absoluteHeight="175dp"
-            tools:layout_conversion_absoluteWidth="178dp"
-            tools:ignore="ContentDescription" />
+            tools:layout_conversion_absoluteWidth="178dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

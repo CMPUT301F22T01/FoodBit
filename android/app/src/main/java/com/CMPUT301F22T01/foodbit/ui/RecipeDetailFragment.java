@@ -92,11 +92,11 @@ public class RecipeDetailFragment extends Fragment {
         // todo: enable photo feature before release
         Uri photo = recipe.getPhoto();
         appBarImageView.setImageResource(android.R.color.transparent);
-//        if (photo != null) {
-//            appBarImage.setImageURI(photo);
-//        } else {
-//            appBarImage.setImageResource(android.R.color.transparent);
-//        }
+        if (photo != null) {
+            appBarImageView.setImageURI(photo);
+        } else {
+            appBarImageView.setImageResource(android.R.color.transparent);
+        }
 
         IngredientAdapter ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
