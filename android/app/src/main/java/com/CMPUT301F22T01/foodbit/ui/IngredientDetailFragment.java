@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 public class IngredientDetailFragment extends Fragment {
@@ -66,13 +67,15 @@ public class IngredientDetailFragment extends Fragment {
         amountView.setText(String.valueOf(ingredient.getAmount()));
         unitView.setText(ingredient.getUnit());
         categoryView.setText(ingredient.getCategory());
+
+        //IngredientAdapter ingredientAdapter = new IngredientAdapter(Ingredient, IngredientAdapter.INGREDIENT_STORAGE);
         return view;
     }
 
     private void getIngredient() {
         assert getArguments() != null;
         int position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientStorage.get(position);
+        ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
     }
 }
