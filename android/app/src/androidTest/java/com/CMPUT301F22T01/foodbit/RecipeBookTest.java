@@ -286,7 +286,7 @@ public class RecipeBookTest {
                                 0)));
         recyclerView.perform(actionOnItemAtPosition(0, click()));
 
-        Thread.sleep(200);
+        Thread.sleep(500);
 
         ViewInteraction textView11 = onView(
                 allOf(withId(R.id.recipe_detail_prep_time), withText("240 minutes"),
