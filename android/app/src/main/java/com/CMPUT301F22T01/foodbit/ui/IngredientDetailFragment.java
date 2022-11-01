@@ -78,7 +78,6 @@ public class IngredientDetailFragment extends Fragment {
             public void onClick(View v) {
                 MainActivity.ingredientStorage.delete(ingredient);
                 Navigation.findNavController(v).popBackStack();
-                //new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
         });
 
