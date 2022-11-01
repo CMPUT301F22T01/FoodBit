@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     // access a Cloud Firestore instance and retrieve data
-    public final static String TAG = "MainActivity";
     final CollectionReference mealPlanRef = db.collection("Meals");
     public static MealPlanController mealPlan = new MealPlanController();
 
