@@ -54,9 +54,6 @@ public class IngredientStorage implements Serializable {
     public void add(Ingredient ingredient) {
         String TAG = IngredientAddFragment.TAG;
         assert !ingredients.contains(ingredient) : "This ingredient is already in the list!";
-        //ingredients.add(ingredient);
-        //update(ingredients);
-        //FirebaseFirestore db = FirebaseFirestore.getInstance();
         db = FirebaseFirestore.getInstance();
         CollectionReference ingredientStorageRef = db.collection("Ingredient List");
         ingredientStorageRef.add(ingredient)
@@ -86,11 +83,23 @@ public class IngredientStorage implements Serializable {
                     }
                 });
     }
-
-
-    //public void update(ArrayList<Ingredient> newIngredient) {
-    //    ingredients.clear();
-    //    ingredients.addAll(newIngredient);
-    //}
-
+    public void delete(Ingredient ingredient) {
+        String TAG = "DeleteIngredient";
+        assert ingredients.contains(ingredient) : "this ingredient is not in the list";
+        db = FirebaseFirestore.getInstance();
+        db.collection("Ingredient List").document(ingredient.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
+    }
 }

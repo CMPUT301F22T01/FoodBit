@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/ingredient_add_done"
-        android:icon="@drawable/ic_check_24"
-        android:title="ADD"
+        android:icon="@drawable/ic_add_24"
+        android:title="ADD/EDIT"
         app:showAsAction="ifRoom" />
 </menu>
