@@ -8,25 +8,31 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
-import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
-import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
-import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
-import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+//import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
+//import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
+//import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
+//import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
-
-    // Access a Cloud Firestore instance
+    // access a Cloud Firestore instance and retrieve data
+    public final static String TAG = "MainActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    final CollectionReference recipeBookRef = db.collection("recipe book");
+    public static RecipeBook recipeBook = new RecipeBook();
+    final CollectionReference ingredientStorageRef = db.collection("ingredient list");
+    public static IngredientStorage ingredientStorage = new IngredientStorage();
 
-    IngredientStorageFragment ingredientStorageFragment = IngredientStorageFragment.newInstance("1","2");
-    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance("1","2");
+//    IngredientStorageFragment ingredientStorageFragment = IngredientStorageFragment.newInstance("1","2");
+//    RecipeBookFragment recipeBookFragment = RecipeBookFragment.newInstance("1","2");
 //    MealPlanFragment mealPlanFragment = MealPlanFragment.newInstance("1","2");
-    MealPlanFragment mealPlanFragment = new MealPlanFragment();
-    ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance("1","2");
+//    MealPlanFragment mealPlanFragment = new MealPlanFragment();
+//    ShoppingCartFragment shoppingCartFragment = ShoppingCartFragment.newInstance("1","2");
 
 
     // access a Cloud Firestore instance and retrieve data
@@ -39,7 +45,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final String TAG = "Sample";
+        setUpNavBar();
+
+//        final String TAG = "Sample";
 
 //        NOTICE: this is the implementation of bottom navigation view without using android navigation components
 //        final NavigationBarView navView = findViewById(R.id.nav_view);
@@ -75,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
          */
 
 
-        setUpNavBar();
+//        setUpNavBar();
 
         //Uncomment this to add items to your local db...
 //        MealPlanController test = new MealPlanController();
@@ -86,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     private void setUpNavBar(){
         FragmentManager supportFragmentManager = getSupportFragmentManager();
         // grab NavHostFragment and setup up controller, and nav bar accordingly
@@ -95,10 +104,4 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.nav_bar);
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
-
-
-
-
-
-
 }

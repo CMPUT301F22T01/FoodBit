@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Remove photo"
+        android:id="@+id/recipe_add_photo_remove"/>
+    <item android:title="Select new photo"
+        android:id="@+id/recipe_add_photo_select_new" />
+</menu>

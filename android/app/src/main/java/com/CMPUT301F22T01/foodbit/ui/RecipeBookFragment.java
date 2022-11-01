@@ -1,66 +1,150 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link RecipeBookFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * The recipe book page.
  */
 public class RecipeBookFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    public String TAG = "RecipeBook";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Context context;
+
+    // get recipe book from MainActivity
+    private final RecipeBook recipeBook = MainActivity.recipeBook;
+
+    RecipeAdapter adapter;
 
     public RecipeBookFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecipeBookFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecipeBookFragment newInstance(String param1, String param2) {
-        RecipeBookFragment fragment = new RecipeBookFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recipe_book, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_book, container, false);
+
+        // get views
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+        Button addButton = view.findViewById(R.id.recipe_book_test_add_button);
+
+        // set RecyclerView
+        adapter = new RecipeAdapter(recipeBook.getRecipes());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+        // add borderlines between items
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
+                linearLayoutManager.getOrientation());
+        recyclerView.addItemDecoration(dividerItemDecoration);
+
+        // add button launches RecipeAddFragment
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                RecipeAddFragment recipeAddFragment = RecipeAddFragment.newInstance(recipeBook);
+
+                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+            }
+        });
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        // real time updates of the recipeBook
+        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Recipe Book");
+        recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @SuppressLint("NotifyDataSetChanged")
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                if (error != null) {
+                    Log.w(TAG, "Listen failed.", error);
+                    return;
+                }
+                ArrayList<Recipe> newRecipes = new ArrayList<Recipe>();
+                assert value != null;
+                for (QueryDocumentSnapshot doc : value) {
+//                    newRecipes.add(doc.toObject(Recipe.class));
+                    Map<String, Object> data = doc.getData();
+                    String title = (String) data.get("title");
+                    int prepTime = (int) (long) data.get("prepTime");
+                    int numServings = (int) (long) data.get("numServings");
+                    String category = (String) data.get("category");
+                    String comments = (String) data.get("comments");
+                    Uri photo;
+                    if (data.get("photo") != null) {
+                        photo = Uri.parse((String) data.get("photo"));
+                    } else {photo = null;}
+                    ArrayList<HashMap> ingredientsData = (ArrayList<HashMap>) data.get("ingredients");
+                    ArrayList<Ingredient> ingredients = new ArrayList<>();
+                    for (HashMap ingredientData : ingredientsData) {
+                        ingredients.add(new Ingredient(
+                                (String) ingredientData.get("description"),
+                                ((float) (double) ingredientData.get("amount")),
+                                (String) ingredientData.get("unit"),
+                                (String) ingredientData.get("category")
+                        ));
+                    }
+                    Recipe newRecipe = new Recipe(
+                            doc.getId(), title, prepTime, numServings, category, comments, photo, ingredients);
+                    newRecipes.add(newRecipe);
+                    Log.d(TAG, "recipe id: "+newRecipe.getId());
+                }
+                recipeBook.setRecipes(newRecipes);
+                Log.d(TAG, "current recipe book: "+recipeBook);
+                Log.d(TAG, "Current recipes: " + recipeBook.getRecipes());
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 }
