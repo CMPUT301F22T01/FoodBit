@@ -1,4 +1,4 @@
-package com.CMPUT301F22T01.foodbit.MealPlan;
+package com.CMPUT301F22T01.foodbit.ui;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.R;
 
 import java.util.ArrayList;
@@ -44,17 +44,17 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
     }
 
     public interface OnItemClickListener {
-        void onItemClick(MealPlanModel item);
+        void onItemClick(MealPlan item);
     }
 
-    private ArrayList<MealPlanModel> items;
+    private ArrayList<MealPlan> items;
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
 
-    public MealPlanAdapter(ArrayList<MealPlanModel> items) {
+    public MealPlanAdapter(ArrayList<MealPlan> items) {
         this.items = items;
     }
 

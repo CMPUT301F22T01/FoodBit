@@ -1,4 +1,4 @@
-package com.CMPUT301F22T01.foodbit.MealPlan;
+package com.CMPUT301F22T01.foodbit.models;
 
 
 import android.util.Log;
@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-public class MealPlanModel {
+public class MealPlan {
     /**
      *Looking to model MealPlans as Collections
      * MealPlan (Collection)
@@ -103,9 +103,9 @@ public class MealPlanModel {
         this.mealID = mealID;
     }
 
-    public MealPlanModel(){};
+    public MealPlan(){};
 
-    public MealPlanModel(String name, int servings, int id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
+    public MealPlan(String name, int servings, int id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
         this.name = name;
         this.servings = servings;
         this.id = id;
@@ -131,8 +131,7 @@ public class MealPlanModel {
         collectionReference.document(id).set(this);
     }
 
-    public void getALlMeals(ArrayList<MealPlanModel> mealPlan) {
-        //TODO: Figure out how to return all the meals
+    public void getAllMeals(ArrayList<MealPlan> mealPlan) {
         FirebaseFirestore db = FirebaseFirestore.getInstance();
         final CollectionReference collectionReference = db.collection("Meals");
         collectionReference.orderBy("date").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -143,7 +142,7 @@ public class MealPlanModel {
                 }
                 else {
                     for (int i =0; i< task.getResult().size(); i++) {
-                        MealPlanModel meal = new MealPlanModel();
+                        MealPlan meal = new MealPlan();
                         meal = task.getResult().getDocuments().get(i).toObject(meal.getClass());
                         mealPlan.add(meal);
                         Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));

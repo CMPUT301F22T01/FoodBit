@@ -1,7 +1,6 @@
 package com.CMPUT301F22T01.foodbit;
 
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -9,7 +8,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
-import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
 import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
@@ -17,8 +16,6 @@ import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 

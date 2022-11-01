@@ -1,6 +1,7 @@
-package com.CMPUT301F22T01.foodbit.MealPlan;
+package com.CMPUT301F22T01.foodbit.controllers;
 
-import java.lang.reflect.Array;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
@@ -11,39 +12,33 @@ public class MealPlanController {
      * appropriate updates to the shopping list
      */
 
-    private ArrayList<MealPlanModel> mealPlan;
+    private ArrayList<MealPlan> mealPlan;
 
     public MealPlanController(){
-        mealPlan = new ArrayList<MealPlanModel>();
+        mealPlan = new ArrayList<MealPlan>();
     }
     public void addMeal(String name, int servings, int id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList){
         /**
          * Add a new ingredient meal to the DB from the UI
          */
-        MealPlanModel model;
-        model = new MealPlanModel(name,servings,id,isIngredient,date,null);
+        MealPlan model;
+        model = new MealPlan(name,servings,id,isIngredient,date,null);
         mealPlan.add(model);
         model.commit();
     }
 
     public void loadAllMeals() {
-//        List<MealPlanModel> = this.model.getALlMeals();
-        MealPlanModel model = new MealPlanModel();
-        model.getALlMeals(mealPlan);
+//        List<MealPlan> = this.model.getALlMeals();
+        MealPlan model = new MealPlan();
+        model.getAllMeals(mealPlan);
     }
 
-    public ArrayList<MealPlanModel> getArrayList() {
+    public ArrayList<MealPlan> getArrayList() {
         return mealPlan;
     }
 
-//    public void loadMeal() {
-//
-//    }
-//
-//    public void editMeal() {
-//
-//    }
-    public void update(ArrayList<MealPlanModel> newMealPlan) {
+
+    public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlan.clear();
         mealPlan.addAll(newMealPlan);
     }

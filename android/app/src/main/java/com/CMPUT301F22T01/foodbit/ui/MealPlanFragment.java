@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
@@ -19,14 +17,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
-import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanModel;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanAdapter;
-import com.CMPUT301F22T01.foodbit.MealPlan.MealPlanController;
-import com.google.android.material.transition.MaterialElevationScale;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
@@ -102,10 +96,10 @@ public class MealPlanFragment extends Fragment {
                     Log.e(TAG, "Listen failed.", error);
                     return;
                 }
-                ArrayList<MealPlanModel> newRecipes = new ArrayList<MealPlanModel>();
+                ArrayList<MealPlan> newRecipes = new ArrayList<MealPlan>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    newRecipes.add(doc.toObject(MealPlanModel.class));
+                    newRecipes.add(doc.toObject(MealPlan.class));
                 }
                 mealPlan.update(newRecipes);
                 Log.e(TAG, "Current recipes: " + mealPlan.getArrayList());
