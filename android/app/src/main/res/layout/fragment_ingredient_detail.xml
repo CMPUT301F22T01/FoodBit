@@ -57,7 +57,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:drawableStartCompat="@drawable/ic_twotone_timer_24"
                 app:drawableTint="@color/primaryColor"
                 tools:ignore="HardcodedText" />
 
@@ -78,7 +77,6 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_description"
-                app:drawableStartCompat="@drawable/ic_numbers_24"
                 app:drawableTint="@color/primaryColor"
                 tools:ignore="HardcodedText" />
 
