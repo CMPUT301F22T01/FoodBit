@@ -15,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
-public class MealPlan {
+public class MealPlan implements dbObject {
     /**
      *Looking to model MealPlans as Collections
      * MealPlan (Collection)
@@ -41,7 +41,7 @@ public class MealPlan {
      */
     private String name;
     private int servings;
-    private int id;
+    private String id;
     private boolean isIngredient;
     private Date date;
     private Map<Integer,Integer> ingredientList;
@@ -63,12 +63,12 @@ public class MealPlan {
         this.servings = servings;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return mealID;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setId(String id) {
+        this.mealID = id;
     }
 
     public boolean isIngredient() {
@@ -96,16 +96,17 @@ public class MealPlan {
     }
 
     public String getMealID() {
-        return mealID;
+        return id;
     }
 
     public void setMealID(String mealID) {
-        this.mealID = mealID;
+        this.id = mealID;
     }
 
-    public MealPlan(){};
+    public MealPlan(){
+    };
 
-    public MealPlan(String name, int servings, int id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
         this.name = name;
         this.servings = servings;
         this.id = id;
@@ -114,43 +115,35 @@ public class MealPlan {
         this.ingredientList = ingredientList;
     }
 
-
-    public void commit() {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Meals");
-
-//        Map<String, Object> data = new HashMap<>();
-//        data.put("name",name);
-//        data.put("servings",servings);
-//        data.put("id",id);
-//        data.put("isIngredient",isIngredient);
-//        data.put("date",date);
-//        data.put("ingredientList",ingredientList);
-        String id = collectionReference.document().getId();
-        this.mealID = id;
-        collectionReference.document(id).set(this);
-    }
-
-    public void getAllMeals(ArrayList<MealPlan> mealPlan) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection("Meals");
-        collectionReference.orderBy("date").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    for (int i =0; i< task.getResult().size(); i++) {
-                        MealPlan meal = new MealPlan();
-                        meal = task.getResult().getDocuments().get(i).toObject(meal.getClass());
-                        mealPlan.add(meal);
-                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
-                    }
-                }
-            }
-        });
-    }
+//
+//    public void commit() {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        final CollectionReference collectionReference = db.collection("Meals");
+//        String id = collectionReference.document().getId();
+//        this.mealID = id;
+//        collectionReference.document(id).set(this);
+//    }
+//
+//    public void getAllMeals(ArrayList<MealPlan> mealPlan) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        final CollectionReference collectionReference = db.collection("Meals");
+//        collectionReference.orderBy("date").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+//                if (!task.isSuccessful()) {
+//                    Log.e("firebase", "Error getting data", task.getException());
+//                }
+//                else {
+//                    for (int i =0; i< task.getResult().size(); i++) {
+//                        MealPlan meal = new MealPlan();
+//                        meal = task.getResult().getDocuments().get(i).toObject(meal.getClass());
+//                        mealPlan.add(meal);
+//                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
+//                    }
+//                }
+//            }
+//        });
+//    }
 
 
 

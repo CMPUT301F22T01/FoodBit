@@ -18,14 +18,24 @@ import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreSettings;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.List;
 
 /**
  * The main activity of the app.
  */
 public class MainActivity extends AppCompatActivity {
     // access a Cloud Firestore instance and retrieve data
+    FirebaseFirestoreSettings settings = new FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(false)
+            .build();
+
     public final static String TAG = "MainActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     final CollectionReference recipeBookRef = db.collection("recipe book");
     public static RecipeBook recipeBook = new RecipeBook();
     final CollectionReference ingredientStorageRef = db.collection("ingredient list");
@@ -106,4 +116,5 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.nav_bar);
         NavigationUI.setupWithNavController(bottomNav, navController);
     }
+
 }

@@ -1,6 +1,8 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -13,24 +15,25 @@ public class MealPlanController {
      */
 
     private ArrayList<MealPlan> mealPlan;
-
+    private DatabaseController db = new DatabaseController("Meals");
     public MealPlanController(){
         mealPlan = new ArrayList<MealPlan>();
     }
-    public void addMeal(String name, int servings, int id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList){
+    public void addMeal(MealPlan meal){
         /**
          * Add a new ingredient meal to the DB from the UI
          */
-        MealPlan model;
-        model = new MealPlan(name,servings,id,isIngredient,date,null);
-        mealPlan.add(model);
-        model.commit();
+//        MealPlan model;
+//        model = new MealPlan(name,servings,id,isIngredient,date,null);
+
+        mealPlan.add(meal);
+        db.addToDB(meal);
     }
 
     public void loadAllMeals() {
 //        List<MealPlan> = this.model.getALlMeals();
-        MealPlan model = new MealPlan();
-        model.getAllMeals(mealPlan);
+        db.getAllItems(mealPlan);
+
     }
 
     public ArrayList<MealPlan> getArrayList() {
@@ -42,5 +45,13 @@ public class MealPlanController {
         mealPlan.clear();
         mealPlan.addAll(newMealPlan);
     }
+
+//    public void commit(MealPlan meal) {
+//        FirebaseFirestore db = FirebaseFirestore.getInstance();
+//        final CollectionReference collectionReference = db.collection("Meals");
+//        String id = collectionReference.document().getId();
+//        meal.setId(id);
+//        collectionReference.document(id).set(meal);
+//    }
 
 }
