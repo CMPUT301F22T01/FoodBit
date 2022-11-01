@@ -14,11 +14,12 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        tools:srcCompat="@tools:sample/avatars" />
+        app:srcCompat="@mipmap/ic_launcher"
+        />
 
     <TextView
-        android:id="@+id/shopping_ingredient_name"
-        android:layout_width="50dp"
+        android:id="@+id/shopping_ingredient_description"
+        android:layout_width="100dp"
         android:layout_height="30dp"
         android:layout_marginStart="5dp"
         android:gravity="center"
@@ -28,23 +29,12 @@
         app:layout_constraintStart_toEndOf="@+id/image_shopping_item"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/shopping_ingredient_description"
-        android:layout_width="80dp"
-        android:layout_height="30dp"
-        android:layout_marginStart="20dp"
-        android:gravity="center"
-        android:text="This is beef patties description..."
-        android:textSize="6sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/shopping_ingredient_name"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/shopping_ingredient_amount"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="50dp"
         android:gravity="center"
         android:text="1"
         android:textSize="12sp"
@@ -68,7 +58,7 @@
         android:id="@+id/shopping_ingredient_category"
         android:layout_width="50dp"
         android:layout_height="30dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
         android:gravity="center"
         android:text="Meat"

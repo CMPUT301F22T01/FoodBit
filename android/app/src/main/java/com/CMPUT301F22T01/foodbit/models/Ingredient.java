@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 public class Ingredient {
+    private String id;
     private String description;
     private String bestBefore;
     private String location;
@@ -22,6 +23,15 @@ public class Ingredient {
     }
     public Ingredient(String description, float amount, String unit, String category) {
         this.description = description;
+        this.amount = amount;
+        this.unit = unit;
+        this.category = category;
+    }
+    public Ingredient(String id, String description, String bestBefore, String location, float amount, String unit, String category) {
+        this.id = id;
+        this.description = description;
+        this.bestBefore = bestBefore;
+        this.location = location;
         this.amount = amount;
         this.unit = unit;
         this.category = category;
@@ -51,6 +61,10 @@ public class Ingredient {
         return category;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public void setDescription(String newDescription) {
         this.description = newDescription;
     }
@@ -73,5 +87,9 @@ public class Ingredient {
 
     public void setCategory(String newCategory) {
         this.category = newCategory;
+    }
+
+    public void setId(String newId) {
+        this.id = newId;
     }
 }

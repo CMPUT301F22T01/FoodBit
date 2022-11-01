@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
@@ -47,8 +48,14 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public ViewHolder(View view, int mode) {
             super(view);
             // todo: Define click listener for the ViewHolder's View
+            //view.setOnClickListener();
             switch(mode) {
                 case INGREDIENT_STORAGE: {
+                    view.setOnClickListener(v -> {
+                        Bundle bundle = new Bundle();
+                        bundle.putInt("position", getAdapterPosition());
+                        Navigation.findNavController(v).navigate(R.id.action_fragment_ingredient_storage_to_fragment_ingredient_detail, bundle);
+                    });
 
                 }
                 case RECIPE_ADD: {

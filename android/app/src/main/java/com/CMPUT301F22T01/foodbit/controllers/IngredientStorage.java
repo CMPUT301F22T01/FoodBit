@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -14,8 +15,10 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class IngredientStorage implements Serializable {
+    private FirebaseFirestore db;
     private final ArrayList<Ingredient> ingredients;
 
     public IngredientStorage() {
@@ -30,22 +33,47 @@ public class IngredientStorage implements Serializable {
         return ingredients;
     }
 
-    public Ingredient get(int position) {
+    public void setIngredients(ArrayList<Ingredient> ingredients) {
+        this.ingredients.clear();
+        this.ingredients.addAll(ingredients);
+    }
+
+    public Ingredient getIngredientByPosition(int position) {
         return ingredients.get(position);
+    }
+
+    public Ingredient getIngredientById(String id) {
+        for (Ingredient ingredient : ingredients) {
+            if (Objects.equals(id, ingredient.getId())) {
+                return ingredient;
+            }
+        }
+        return null;
     }
 
     public void add(Ingredient ingredient) {
         String TAG = IngredientAddFragment.TAG;
         assert !ingredients.contains(ingredient) : "This ingredient is already in the list!";
-        ingredients.add(ingredient);
-        update(ingredients);
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        CollectionReference ingredientStorageRef = db.collection("ingredient list");
+        db = FirebaseFirestore.getInstance();
+        CollectionReference ingredientStorageRef = db.collection("Ingredient List");
         ingredientStorageRef.add(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
+                        documentReference.update("id", documentReference.getId())
+                                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                                    }
+                                })
+                                .addOnFailureListener(new OnFailureListener() {
+                                    @Override
+                                    public void onFailure(@NonNull Exception e) {
+                                        Log.w(TAG, "Error adding document", e);
+                                    }
+                                });
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
@@ -55,10 +83,23 @@ public class IngredientStorage implements Serializable {
                     }
                 });
     }
-
-    public void update(ArrayList<Ingredient> newIngredient) {
-        ingredients.clear();
-        ingredients.addAll(newIngredient);
+    public void delete(Ingredient ingredient) {
+        String TAG = "DeleteIngredient";
+        assert ingredients.contains(ingredient) : "this ingredient is not in the list";
+        db = FirebaseFirestore.getInstance();
+        db.collection("Ingredient List").document(ingredient.getId())
+                .delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error deleting document", e);
+                    }
+                });
     }
-
 }
