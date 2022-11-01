@@ -24,6 +24,7 @@ public class DatabaseController {
     private CollectionReference collectionReference;
     private String mode;
     private Object model;
+
     public DatabaseController(String mode){
         this.mode = mode;
 

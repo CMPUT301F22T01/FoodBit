@@ -96,10 +96,10 @@ public class MealAddFragment extends DialogFragment {
         //For now just get ingredients
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         String[] items;
-        if (ingredientList.size() == 0 ){ // Ingredient list isn't hitting DB.
-            Log.e("MealAdd","Ingredient size is 0");
+        if (ingredientList.size() == 0 ){ // TODO: Ingredient list isn't hitting DB.
+            Log.e("MealAdd","Ingredient size is 0 so we're not hitting DB?");
             items = new String [] {"test1", "test2", "test3", "test4","test5"};
-        } else {
+        } else { // TODO: Add Recipe list to the spinner
             items = new String[ingredientList.size()];
 
             for (int i = 0; i<ingredientList.size(); i ++) {
@@ -134,7 +134,7 @@ public class MealAddFragment extends DialogFragment {
         addMealButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Add meal.
+                //Add meal that has been entered. TODO: Add input checking. And make the page pretier
                 meal.setServings(1);
                 mealPlanController.addMeal(meal);
                 getActivity().onBackPressed();

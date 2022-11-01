@@ -17,21 +17,20 @@ public class MealPlanController {
     private ArrayList<MealPlan> mealPlan;
     private DatabaseController db = new DatabaseController("Meals");
     public MealPlanController(){
+
         mealPlan = new ArrayList<MealPlan>();
+        this.loadAllMeals();
     }
     public void addMeal(MealPlan meal){
         /**
          * Add a new ingredient meal to the DB from the UI
          */
-//        MealPlan model;
-//        model = new MealPlan(name,servings,id,isIngredient,date,null);
-
         mealPlan.add(meal);
         db.addToDB(meal);
     }
 
     public void loadAllMeals() {
-//        List<MealPlan> = this.model.getALlMeals();
+        //Load mealPlans from database into local array
         db.getAllItems(mealPlan);
 
     }
@@ -46,12 +45,5 @@ public class MealPlanController {
         mealPlan.addAll(newMealPlan);
     }
 
-//    public void commit(MealPlan meal) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        final CollectionReference collectionReference = db.collection("Meals");
-//        String id = collectionReference.document().getId();
-//        meal.setId(id);
-//        collectionReference.document(id).set(meal);
-//    }
 
 }

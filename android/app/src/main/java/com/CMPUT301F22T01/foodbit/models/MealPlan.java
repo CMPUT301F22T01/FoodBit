@@ -37,7 +37,7 @@ public class MealPlan implements dbObject {
      * MealPlanController should be able to then query the recipe controller for the appropriate
      * ingredients for recipes and provide shopping list with the required ingredients
      *
-     *
+     * TODO: Keep in mind ID and mealID are flipped for now
      */
     private String name;
     private int servings;
@@ -114,40 +114,5 @@ public class MealPlan implements dbObject {
         this.date = date;
         this.ingredientList = ingredientList;
     }
-
-//
-//    public void commit() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        final CollectionReference collectionReference = db.collection("Meals");
-//        String id = collectionReference.document().getId();
-//        this.mealID = id;
-//        collectionReference.document(id).set(this);
-//    }
-//
-//    public void getAllMeals(ArrayList<MealPlan> mealPlan) {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//        final CollectionReference collectionReference = db.collection("Meals");
-//        collectionReference.orderBy("date").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                if (!task.isSuccessful()) {
-//                    Log.e("firebase", "Error getting data", task.getException());
-//                }
-//                else {
-//                    for (int i =0; i< task.getResult().size(); i++) {
-//                        MealPlan meal = new MealPlan();
-//                        meal = task.getResult().getDocuments().get(i).toObject(meal.getClass());
-//                        mealPlan.add(meal);
-//                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
-//                    }
-//                }
-//            }
-//        });
-//    }
-
-
-
-
-
 
 }
