@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:title="Remove photo"
-        android:id="@+id/recipe_add_photo_remove"/>
+        android:id="@+id/recipe_add_photo_remove"
+        tools:ignore="HardcodedText" />
     <item android:title="Select new photo"
-        android:id="@+id/recipe_add_photo_select_new" />
+        android:id="@+id/recipe_add_photo_select_new"
+        tools:ignore="HardcodedText" />
 </menu>

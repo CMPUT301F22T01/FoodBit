@@ -109,7 +109,7 @@ class RecipeBookTest {
         RecipeBook recipeBook = mockRecipeBook(1);
         assertThrows(AssertionError.class, () -> {
             assert recipeBook != null;
-            recipeBook.delete(mockRecipe(3));
+            recipeBook.remove(mockRecipe(3));
         }, "this recipe is not found in the recipe book!");
     }
 }
