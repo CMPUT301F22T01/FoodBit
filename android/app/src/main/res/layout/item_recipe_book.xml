@@ -17,7 +17,8 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/item_recipe_image"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/item_recipe_prep_time"
@@ -25,13 +26,15 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="3dp"
-        android:drawableStart="@drawable/ic_twotone_timer_12"
         android:drawablePadding="3dp"
         android:text="Prep Time"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/item_recipe_image"
-        app:layout_constraintTop_toBottomOf="@+id/item_recipe_title" />
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_title"
+        app:drawableTint="@android:color/secondary_text_light"
+        app:drawableStartCompat="@drawable/ic_twotone_timer_12"
+        tools:ignore="HardcodedText" />
 
     <TextView
         android:id="@+id/item_recipe_num_servings"
@@ -39,11 +42,15 @@
         android:layout_height="19dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:drawablePadding="3dp"
         android:text="× Servings"
         android:textSize="12sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:drawableTint="@android:color/secondary_text_light"
+        app:drawableStartCompat="@drawable/ic_numbers_12"
+        tools:ignore="HardcodedText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/item_recipe_image"
@@ -69,7 +76,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintVertical_bias="0.0"
+            tools:ignore="HardcodedText" />
 
         <ImageView
             android:id="@+id/item_recipe_photo_image"
@@ -79,7 +87,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -97,6 +106,7 @@
         android:textSize="12sp"
         app:layout_constraintEnd_toStartOf="@+id/item_recipe_num_servings"
         app:layout_constraintStart_toEndOf="@+id/item_recipe_image"
-        app:layout_constraintTop_toBottomOf="@+id/item_recipe_prep_time" />
+        app:layout_constraintTop_toBottomOf="@+id/item_recipe_prep_time"
+        tools:ignore="HardcodedText" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
