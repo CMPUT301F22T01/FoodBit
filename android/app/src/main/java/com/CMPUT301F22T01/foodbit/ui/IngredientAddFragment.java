@@ -22,6 +22,9 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
 public class IngredientAddFragment extends DialogFragment {
@@ -104,12 +107,16 @@ public class IngredientAddFragment extends DialogFragment {
                     if (bestBefore.equals("")) {
                         bestBeforeLayout.setError("Required");
                         requiredFieldEntered = false;
-                        //TODO: Add check for if ingredient is expired and make sure date is entered properly
+                    } else if (!bestBefore.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                        bestBeforeLayout.setError("Format for date is yyyy-mm-dd");
+                        requiredFieldEntered = false;
                     }
                     if (location.equals("")) {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
-                        //TODO: Add check for if location is valid
+                    } else if (!location.equals("pantry") && !location.equals("freezer") && !location.equals("fridge")) {
+                        locationLayout.setError("Options are pantry, freezer, or fridge!");
+                        requiredFieldEntered = false;
                     }
                     if (amount.equals("")) {
                         amountLayout.setError("Required");
@@ -118,9 +125,15 @@ public class IngredientAddFragment extends DialogFragment {
                     if (unit.equals("")) {
                         unitLayout.setError("Required");
                         requiredFieldEntered = false;
+                    } else if (!unit.equals("lbs") && !unit.equals("kg") && !unit.equals("oz") && !unit.equals("g")) {
+                        unitLayout.setError("Options are lbs, kg, oz, or g!");
+                        requiredFieldEntered = false;
                     }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    } else if (!category.equals("vegetables") && !category.equals("fruits") && !category.equals("meat") && !category.equals("grains") && !category.equals("dairy") && !category.equals("snacks") && !category.equals("seasonings")) {
+                        categoryLayout.setError("Options are vegetables, fruits, meat, grains, dairy, snacks, or spices!");
                         requiredFieldEntered = false;
                     }
                     if (requiredFieldEntered) {
