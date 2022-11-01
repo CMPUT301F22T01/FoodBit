@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_menu"
     app:startDestination="@id/fragment_recipe_book">
+
     <fragment
         android:id="@+id/fragment_ingredient_storage"
         android:name="com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment"
@@ -61,4 +62,5 @@
             app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientStorage" />
 
     </fragment>
+
 </navigation>
