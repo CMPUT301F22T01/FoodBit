@@ -9,7 +9,7 @@ public class Ingredient {
     private String description;
     private String bestBefore;
     private String location;
-    private float amount;
+    private Float amount;
     private String unit;
     private String category;
 
@@ -109,7 +109,7 @@ public class Ingredient {
         this.location = newLocation;
     }
 
-    public void setAmount(float newAmount) {
+    public void setAmount(Float newAmount) {
         this.amount = newAmount;
     }
 
