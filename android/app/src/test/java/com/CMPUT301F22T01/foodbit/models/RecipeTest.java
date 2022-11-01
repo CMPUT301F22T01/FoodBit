@@ -16,7 +16,7 @@ import java.util.Map;
 
 class RecipeTest {
     private Ingredient mockIngredient() {
-        return new Ingredient("bread", 2, "slice", "pantry");
+        return new Ingredient("bread", 2F, "slice", "pantry");
     }
 
     private ArrayList<Ingredient> mockIngredientList() {
@@ -127,7 +127,7 @@ class RecipeTest {
 
     @Test
     void setIngredients() {
-        ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(new Ingredient("new ingredient", 0, null, null)));
+        ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(new Ingredient("new ingredient", (float) 0, null, null)));
         Recipe recipe = mockRecipe();
         assertEquals("bread", recipe.getIngredients().get(0).getDescription());
         recipe.setIngredients(ingredients);
