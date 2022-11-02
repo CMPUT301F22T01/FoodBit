@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
@@ -28,8 +29,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-public class MealPlanFragment extends Fragment {
+public class MealPlanFragment extends Fragment implements DatePickerFragment.NoticeDialogListener {
 
     public String TAG = "MealPlan";
 
@@ -71,15 +73,29 @@ public class MealPlanFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+
+        boolean test = false;
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getChildFragmentManager(), "datePicker");
+                //Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
+                DatePickerFragment newFragment = new DatePickerFragment();
+                newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
             }
         });
 
         return view;
+    }
+
+    // User has clicked the ok from the date picker
+    @Override
+    public void onDialogPositiveClick(DatePickerFragment dialog) {
+        MealPlan newMeal = new MealPlan();
+        newMeal.setDate(dialog.getDate());
+        MealAddFragment newFragment = new MealAddFragment(newMeal);
+        newFragment.show(getChildFragmentManager(), "AddMeal");
+
+
     }
 
     @Override

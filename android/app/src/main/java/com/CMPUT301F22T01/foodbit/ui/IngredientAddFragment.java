@@ -24,10 +24,14 @@ import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Objects;
 
+/**
+ * Fragment for adding new Ingredient items
+ */
 public class IngredientAddFragment extends DialogFragment {
     public final static String TAG = "AddIngredient";
     private Context context;
 
+    //getting ingredientStorage from the main activity
     private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
 
     MaterialToolbar topBar;
@@ -62,9 +66,19 @@ public class IngredientAddFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
     }
 
+    /**
+     * Inflates the view and allows for user input for ingredient details to be added
+     * Input is checked for validity and all fields are required for ingredient to be added
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // inflating the view
         View view = inflater.inflate(R.layout.fragment_ingredient_add, container, false);
+
         topBar = view.findViewById(R.id.ingredient_add_top_bar);
         descriptionEditText = view.findViewById(R.id.ingredient_add_edit_text_description);
         descriptionLayout = view.findViewById(R.id.ingredient_add_text_layout_description);
@@ -79,10 +93,12 @@ public class IngredientAddFragment extends DialogFragment {
         categoryEditText = view.findViewById(R.id.ingredient_add_edit_text_category);
         categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
 
+        // back button
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
         });
 
+        // allowing for user input
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -96,6 +112,7 @@ public class IngredientAddFragment extends DialogFragment {
                     String unit = Objects.requireNonNull(unitEditText.getText()).toString();
                     String category = Objects.requireNonNull(categoryEditText.getText()).toString();
 
+                    // checking if inputs are valid, will display an error message if not
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
                         descriptionLayout.setError("Required");
@@ -104,12 +121,16 @@ public class IngredientAddFragment extends DialogFragment {
                     if (bestBefore.equals("")) {
                         bestBeforeLayout.setError("Required");
                         requiredFieldEntered = false;
-                        //TODO: Add check for if ingredient is expired and make sure date is entered properly
+                    } else if (!bestBefore.matches("\\d{4}-\\d{2}-\\d{2}")) {
+                        bestBeforeLayout.setError("Format for date is yyyy-mm-dd");
+                        requiredFieldEntered = false;
                     }
                     if (location.equals("")) {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
-                        //TODO: Add check for if location is valid
+                    } else if (!location.equals("pantry") && !location.equals("freezer") && !location.equals("fridge")) {
+                        locationLayout.setError("Options are pantry, freezer, or fridge!");
+                        requiredFieldEntered = false;
                     }
                     if (amount.equals("")) {
                         amountLayout.setError("Required");
@@ -118,9 +139,15 @@ public class IngredientAddFragment extends DialogFragment {
                     if (unit.equals("")) {
                         unitLayout.setError("Required");
                         requiredFieldEntered = false;
+                    } else if (!unit.equals("lbs") && !unit.equals("kg") && !unit.equals("oz") && !unit.equals("g")) {
+                        unitLayout.setError("Options are lbs, kg, oz, or g!");
+                        requiredFieldEntered = false;
                     }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    } else if (!category.equals("vegetables") && !category.equals("fruits") && !category.equals("meat") && !category.equals("grains") && !category.equals("dairy") && !category.equals("snacks") && !category.equals("seasonings")) {
+                        categoryLayout.setError("Options are vegetables, fruits, meat, grains, dairy, snacks, or spices!");
                         requiredFieldEntered = false;
                     }
                     if (requiredFieldEntered) {
@@ -134,6 +161,10 @@ public class IngredientAddFragment extends DialogFragment {
         });
         return view;
     }
+
+    /**
+     * Setting the layout
+     */
     @Override
     public void onStart() {
         super.onStart();
