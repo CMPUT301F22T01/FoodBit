@@ -100,9 +100,10 @@ public class MealAddFragment extends DialogFragment {
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;
-        if (ingredientList.size() + recipeList.size() == 0 ){ // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
+        if (ingredientList.size() + recipeList.size() == 0 ){
+            // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
             Log.e("MealAdd","Ingredient and recipe size is 0 so we're not hitting DB?");
-            items = new String [] {"test1", "test2", "test3", "test4","test5"};
+            items = new String [] {"test1", "test2", "test3", "test4", "test5"};
         } else {
             items = new String[ingredientList.size() + recipeList.size()];
             int j = ingredientList.size();
@@ -119,7 +120,8 @@ public class MealAddFragment extends DialogFragment {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_dropdown_item, items);
 
-        //Get spinner
+        // Get spinner
+        // TODO: replace spinner with a page (?)
         ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
 
 
@@ -128,7 +130,7 @@ public class MealAddFragment extends DialogFragment {
         ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                //TODO: Based on position we should know if this is an ingredient or recipe and how to handle
+                // TODO: Based on position we should know if this is an ingredient or recipe and how to handle
                 Log.e("mealAdd", (String) parent.getItemAtPosition(position) );
                 meal.setName((String) parent.getItemAtPosition(position));
             }
@@ -147,6 +149,8 @@ public class MealAddFragment extends DialogFragment {
                 meal.setServings(1);
                 mealPlanController.addMeal(meal);
                 getActivity().onBackPressed(); //TODO: This causes us to return to the page BEFORE mealplan list..
+
+
             }
         });
         return view;
