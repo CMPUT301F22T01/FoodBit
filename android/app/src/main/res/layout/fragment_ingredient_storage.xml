@@ -17,7 +17,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText">
 
     </TextView>
 
@@ -31,7 +32,8 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
         app:layout_constraintStart_toEndOf="@+id/ingredient_description"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText">
 
     </TextView>
 
@@ -46,7 +48,8 @@
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ingredient_best_before"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText">
 
     </TextView>
 
@@ -67,5 +70,6 @@
         android:text="add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

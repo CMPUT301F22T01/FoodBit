@@ -20,6 +20,9 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+/**
+ * A pop up dialog in the <code>recipe add screen</code> that allows users to enter required and optional information to add a ingredient to the recipe.
+ */
 public class RecipeAddIngredientAddFragment extends DialogFragment {
 
     public static final String TAG = "RecipeAddIngredientAdd";
@@ -80,6 +83,10 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
     @Override
     public void onResume() {
         super.onResume();
+        setDialogButtons();
+    }
+
+    private void setDialogButtons() {
         final AlertDialog dialog = (AlertDialog) getDialog();
         if(dialog != null)
         {
