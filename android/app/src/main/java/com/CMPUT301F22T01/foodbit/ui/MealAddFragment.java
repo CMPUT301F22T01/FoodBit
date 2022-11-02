@@ -51,7 +51,6 @@ public class MealAddFragment extends DialogFragment {
     MaterialToolbar topBar;
     Spinner ingredientRecipeSpinner;
     TextInputEditText servingsEditText;
-//    Button addMealButton;
 
     public MealAddFragment() {
         // Required empty public constructor
