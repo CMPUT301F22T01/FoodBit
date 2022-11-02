@@ -90,7 +90,6 @@ public class IngredientDetailFragment extends Fragment {
                 new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
         });
-
         return view;
     }
 
