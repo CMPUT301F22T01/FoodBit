@@ -21,8 +21,10 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
 
@@ -40,6 +42,7 @@ public class MealAddFragment extends DialogFragment {
     Button addMealButton;
     private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
     private final MealPlanController mealPlanController = MainActivity.mealPlan;
+    private final RecipeBook recipeBook = MainActivity.recipeBook;
     private MealPlan meal;
 
     // TODO: Rename and change types of parameters
@@ -93,17 +96,22 @@ public class MealAddFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meal_add, container, false);
 
-        //For now just get ingredients
+        //Populate dropdown with ingredients and recipes
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
+        ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;
-        if (ingredientList.size() == 0 ){ // TODO: Ingredient list isn't hitting DB.
-            Log.e("MealAdd","Ingredient size is 0 so we're not hitting DB?");
+        if (ingredientList.size() + recipeList.size() == 0 ){ // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
+            Log.e("MealAdd","Ingredient and recipe size is 0 so we're not hitting DB?");
             items = new String [] {"test1", "test2", "test3", "test4","test5"};
-        } else { // TODO: Add Recipe list to the spinner
-            items = new String[ingredientList.size()];
-
-            for (int i = 0; i<ingredientList.size(); i ++) {
+        } else {
+            items = new String[ingredientList.size() + recipeList.size()];
+            int j = ingredientList.size();
+            for (int i = 0; i<j; i++) {
                 items[i] = ingredientList.get(i).getDescription();
+            }
+            for (int i =0; i<recipeList.size(); i++ ) {
+                items[j] = recipeList.get(i).getTitle();
+                j+=1;
             }
         }
 
@@ -120,6 +128,7 @@ public class MealAddFragment extends DialogFragment {
         ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                //TODO: Based on position we should know if this is an ingredient or recipe and how to handle
                 Log.e("mealAdd", (String) parent.getItemAtPosition(position) );
                 meal.setName((String) parent.getItemAtPosition(position));
             }

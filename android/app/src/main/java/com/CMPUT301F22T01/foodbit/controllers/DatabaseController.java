@@ -52,6 +52,7 @@ public class DatabaseController {
     }
 
     public <T> void getAllItems(ArrayList<T> items) {
+        //TODO: Add optional 'order by'
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
