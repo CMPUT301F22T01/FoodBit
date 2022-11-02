@@ -1,5 +1,6 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -21,8 +22,10 @@ import android.widget.TextView;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.google.api.Distribution;
 
+/**
+ * A <code>recipe detail screen</code> that displays the details of a recipe.
+ */
 public class RecipeDetailFragment extends Fragment {
 
     private static final String TAG = "Recipe Detail Fragment";
@@ -49,6 +52,7 @@ public class RecipeDetailFragment extends Fragment {
         getRecipe();
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -68,7 +72,7 @@ public class RecipeDetailFragment extends Fragment {
         tempDeleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.recipeBook.delete(recipe);
+                MainActivity.recipeBook.remove(recipe);
                 Navigation.findNavController(v).popBackStack();
             }
         });
@@ -77,9 +81,11 @@ public class RecipeDetailFragment extends Fragment {
         // back button behaviour
         toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
-        prepTimeView.setText(recipe.getPrepTime() + prepTimeSuffix);
-        String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
-        numServingsView.setText(recipe.getNumServings() + numServingsSuffix);
+        String prepTimeText = recipe.getPrepTime() + prepTimeSuffix;
+        prepTimeView.setText(prepTimeText);
+        String numServingsSuffix = " servings"; if (recipe.getNumServings() == 1) {numServingsSuffix = " serving";}
+        String numServingsText = recipe.getNumServings() + numServingsSuffix;
+        numServingsView.setText(numServingsText);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
 
