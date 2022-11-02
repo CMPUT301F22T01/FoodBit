@@ -106,7 +106,6 @@ public class IngredientDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
-
             }
         });
         return view;
