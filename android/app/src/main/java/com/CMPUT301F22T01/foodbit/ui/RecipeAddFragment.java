@@ -155,7 +155,11 @@ public class RecipeAddFragment extends DialogFragment implements RecipeAddIngred
             public boolean onMenuItemClick(MenuItem item) {
                 int itemId = item.getItemId();
                 if (itemId == R.id.recipe_add_ingredient_add) {
-                    new RecipeAddIngredientAddFragment().show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
+                    ArrayList<String> titleList = new ArrayList<>();
+                    for (Ingredient ingredient : ingredients) {
+                        titleList.add(ingredient.getDescription());
+                    }
+                    RecipeAddIngredientAddFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
                 }
                 return false;
             }

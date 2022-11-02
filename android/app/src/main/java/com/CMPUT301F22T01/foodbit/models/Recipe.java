@@ -25,7 +25,7 @@ import java.util.Map;
  * Represents a recipe with an id, a title, preparation time, number of servings,
  * a category, comments, a photo, and a list of ingredients.
  */
-public class Recipe implements IRecipe {
+public class Recipe implements IRecipe, dbObject {
     private String id;
     private String title;
     private int prepTime;

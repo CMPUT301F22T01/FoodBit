@@ -20,6 +20,9 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A pop up dialog in the <code>recipe add screen</code> that allows users to enter required and optional information to add a ingredient to the recipe.
  */
@@ -42,6 +45,15 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
     private TextInputLayout categoryLayout;
     private TextInputEditText categoryEditText;
 
+    private ArrayList<String> titleList;
+
+    public static RecipeAddIngredientAddFragment newInstance(ArrayList<String> titleList) {
+        Bundle args = new Bundle();
+        args.putStringArrayList("title list", titleList);
+        RecipeAddIngredientAddFragment fragment = new RecipeAddIngredientAddFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -56,6 +68,8 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
                     parentFragment + " must implement OnIngredientAddListener"
             );
         }
+        assert getArguments() != null;
+        titleList = getArguments().getStringArrayList("title list");
     }
 
     @NonNull
@@ -96,6 +110,7 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
                 boolean canAddIngredient = true;
                 String description = String.valueOf(descriptionEditText.getText());
                 if (description.equals("")) {canAddIngredient =false; descriptionLayout.setError("Required");}
+                else if (titleList.contains(description)) {canAddIngredient =false; descriptionLayout.setError("Description already exists");}
                 String amountStr = String.valueOf(amountEditText.getText());
                 if (amountStr.equals("")) {canAddIngredient =false; amountLayout.setError("Required");}
                 String unit = String.valueOf(unitEditText.getText());

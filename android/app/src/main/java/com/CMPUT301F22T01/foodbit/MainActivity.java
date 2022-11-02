@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
     public final static String TAG = "MainActivity";
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    final CollectionReference recipeBookRef = db.collection("recipe book");
+    final CollectionReference recipeBookRef = db.collection("Recipe Book");
     public static RecipeBook recipeBook = new RecipeBook();
     final CollectionReference ingredientStorageRef = db.collection("ingredient list");
     public static IngredientStorage ingredientStorage = new IngredientStorage();
