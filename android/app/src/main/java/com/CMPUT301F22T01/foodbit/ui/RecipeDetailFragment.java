@@ -83,7 +83,7 @@ public class RecipeDetailFragment extends Fragment {
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
         String prepTimeText = recipe.getPrepTime() + prepTimeSuffix;
         prepTimeView.setText(prepTimeText);
-        String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
+        String numServingsSuffix = " servings"; if (recipe.getNumServings() == 1) {numServingsSuffix = " serving";}
         String numServingsText = recipe.getNumServings() + numServingsSuffix;
         numServingsView.setText(numServingsText);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}

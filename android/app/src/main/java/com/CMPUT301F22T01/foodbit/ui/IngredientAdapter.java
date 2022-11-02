@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -27,6 +28,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     public final static int RECIPE_DETAIL = 2;
     private final ArrayList<Ingredient> items;
     private final int mode;
+
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+    private OnItemClickListener itemClickListener;
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
 
     /**
      * Adapter for the ingredient items
@@ -139,6 +149,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         descriptionView.setText(description);
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);
+
+        // define ingredient item's behaviour on click in recipe add page
+        if (mode == RECIPE_ADD) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onItemClick(v, holder.getAdapterPosition());
+                }
+            });
+        }
+
     }
 
     /**
