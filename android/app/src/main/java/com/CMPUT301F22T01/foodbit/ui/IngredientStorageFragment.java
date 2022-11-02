@@ -118,11 +118,6 @@ public class IngredientStorageFragment extends Fragment {
         });
     }
 }
-                    //if (description != null){
-                        //newIngredient.add(new Ingredient(description, bestBefore, location, amount, unit, category));
-                    //}
-                    //ingredientStorage.update(newIngredient);
-                    //Log.d(TAG, "Current ingredients: " + ingredientStorage.getIngredients());
-                    //adapter.notifyDataSetChanged();
+
 
 

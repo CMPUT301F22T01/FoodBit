@@ -102,4 +102,23 @@ public class IngredientStorage implements Serializable {
                     }
                 });
     }
+    public void edit(Ingredient ingredient) {
+        String TAG = "EditIngredient";
+        assert ingredients.contains(ingredient) : "this ingredient is not in the list";
+        db = FirebaseFirestore.getInstance();
+        db.collection("Ingredient List").document(ingredient.getId())
+                .set(ingredient)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
 }

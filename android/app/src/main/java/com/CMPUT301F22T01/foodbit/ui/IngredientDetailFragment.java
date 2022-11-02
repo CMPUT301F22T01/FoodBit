@@ -33,6 +33,7 @@ public class IngredientDetailFragment extends Fragment {
     TextView unitView;
     TextView categoryView;
     Button deleteButton;
+    Button editButton;
 
     public IngredientDetailFragment() {
         // Required empty public constructor
@@ -78,7 +79,15 @@ public class IngredientDetailFragment extends Fragment {
             public void onClick(View v) {
                 MainActivity.ingredientStorage.delete(ingredient);
                 Navigation.findNavController(v).popBackStack();
-                //new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+            }
+        });
+
+        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
         });
 
