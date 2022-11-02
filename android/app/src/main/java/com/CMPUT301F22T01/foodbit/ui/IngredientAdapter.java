@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +29,20 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private final ArrayList<Ingredient> items;
     private final int mode;
 
+    public interface OnItemClickListener {
+        void onItemClick(View v, int position);
+    }
+    private OnItemClickListener itemClickListener;
+
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    /**
+     * Adapter for the ingredient items
+     * @param items list of ingredient items
+     * @param mode view to be used
+     */
     public IngredientAdapter(ArrayList<Ingredient> items, int mode) {
         this.items = items;
         this.mode = mode;
@@ -45,11 +60,17 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         private final TextView ingredientAmount;
         private final TextView ingredientUnit;
 
+        /**
+         * Choosing which view to use
+         * @param view the view to be used
+         * @param mode deciding which view to be used
+         */
         public ViewHolder(View view, int mode) {
             super(view);
             // todo: Define click listener for the ViewHolder's View
             //view.setOnClickListener();
             switch(mode) {
+                // used to view ingredient details when an item in ingredient storage is clicked on
                 case INGREDIENT_STORAGE: {
                     view.setOnClickListener(v -> {
                         Bundle bundle = new Bundle();
@@ -89,6 +110,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         }
     }
 
+    /**
+     * Inflating the layout
+     * @param parent context from parent
+     * @param viewType the view to be displayed
+     * @return
+     */
     @NonNull
     @Override
     public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -97,6 +124,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         return new IngredientAdapter.ViewHolder(view, mode);
     }
 
+    /**
+     * Setting the views for ingredient details that are initially shown
+     * Includes the ingredients description, amount, and unit
+     * If more details want to be viewed, the ingredient must be clicked on
+     * @param holder holder for the view
+     * @param position ingredient details to be presented
+     */
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
         // get value of each fields
@@ -115,8 +149,23 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         descriptionView.setText(description);
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);
+
+        // define ingredient item's behaviour on click in recipe add page
+        if (mode == RECIPE_ADD) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onItemClick(v, holder.getAdapterPosition());
+                }
+            });
+        }
+
     }
 
+    /**
+     * Amount of items determined by the size
+     * @return number of items
+     */
     @Override
     public int getItemCount() {
         return items.size();

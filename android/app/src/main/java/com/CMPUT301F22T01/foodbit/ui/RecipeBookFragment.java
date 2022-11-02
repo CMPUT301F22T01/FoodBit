@@ -57,7 +57,7 @@ public class RecipeBookFragment extends Fragment {
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
-        Button addButton = view.findViewById(R.id.recipe_book_test_add_button);
+        Button addButton = view.findViewById(R.id.recipe_book_add_button);
 
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
