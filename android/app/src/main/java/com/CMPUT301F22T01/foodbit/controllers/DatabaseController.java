@@ -30,7 +30,6 @@ public class DatabaseController {
 
         switch(mode) {
             case "Meals":
-                // code block
                 collectionReference = mealPlanRef;
                 this.model = new MealPlan();
                 break;
@@ -43,13 +42,10 @@ public class DatabaseController {
                 this.model  = new Recipe();
                 break;
             default:
-                // code block
         }
     }
 
     public void addToDB(dbObject newItem) {
-        FirebaseFirestore db = FirebaseFirestore.getInstance();
-        final CollectionReference collectionReference = db.collection(mode);
         String id = collectionReference.document().getId();
         newItem.setId(id);
         collectionReference.document(id).set(newItem);
