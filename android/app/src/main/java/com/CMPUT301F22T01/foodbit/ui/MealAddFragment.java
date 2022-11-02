@@ -137,7 +137,7 @@ public class MealAddFragment extends DialogFragment {
                 //Add meal that has been entered. TODO: Add input checking. And make the page pretier
                 meal.setServings(1);
                 mealPlanController.addMeal(meal);
-                getActivity().onBackPressed();
+                getActivity().onBackPressed(); //TODO: This causes us to return to the page BEFORE mealplan list..
             }
         });
         return view;
