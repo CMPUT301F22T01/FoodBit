@@ -65,6 +65,7 @@ public class DatePickerFragment extends DialogFragment
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         // send date back to the target fragment
+        // TODO: works for now but Date constructor deprecated, GregorianCalendar or something else
         date = new Date(year,month,day);
         listener.onDialogPositiveClick(this);
 
