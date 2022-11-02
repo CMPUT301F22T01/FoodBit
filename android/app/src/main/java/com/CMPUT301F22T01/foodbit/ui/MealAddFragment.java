@@ -5,11 +5,13 @@ import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -25,8 +27,11 @@ import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.textfield.TextInputEditText;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,16 +43,15 @@ public class MealAddFragment extends DialogFragment {
     public final static String TAG = "AddMeal";
     private Context context;
 
-    Spinner ingredientRecipeSpinner;
-    Button addMealButton;
     private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
     private final MealPlanController mealPlanController = MainActivity.mealPlan;
     private final RecipeBook recipeBook = MainActivity.recipeBook;
     private MealPlan meal;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    MaterialToolbar topBar;
+    Spinner ingredientRecipeSpinner;
+    TextInputEditText servingsEditText;
+//    Button addMealButton;
 
     public MealAddFragment() {
         // Required empty public constructor
@@ -86,8 +90,7 @@ public class MealAddFragment extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // set the style of the dialog fragment to be full screen
-//        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
-
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
     }
 
     @Override
@@ -96,12 +99,16 @@ public class MealAddFragment extends DialogFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meal_add, container, false);
 
+        topBar = view.findViewById(R.id.meal_add_top_bar);
+        servingsEditText = view.findViewById(R.id.meal_add_serving_size);
+
         //Populate dropdown with ingredients and recipes
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;
         if (ingredientList.size() + recipeList.size() == 0 ){
             // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
+            // sometimes works?
             Log.e("MealAdd","Ingredient and recipe size is 0 so we're not hitting DB?");
             items = new String [] {"test1", "test2", "test3", "test4", "test5"};
         } else {
@@ -116,16 +123,12 @@ public class MealAddFragment extends DialogFragment {
             }
         }
 
-
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_dropdown_item, items);
 
         // Get spinner
         // TODO: replace spinner with a page (?)
         ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
-
-
-
         ingredientRecipeSpinner.setAdapter(adapter);
         ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -141,18 +144,25 @@ public class MealAddFragment extends DialogFragment {
             }
         });
 
-        addMealButton = (Button) view.findViewById(R.id.meal_add_btn);
-        addMealButton.setOnClickListener(new View.OnClickListener() {
+        topBar.setNavigationOnClickListener(v -> {
+            dismiss();
+        });
+
+        topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public void onClick(View v) {
-                //Add meal that has been entered. TODO: Add input checking. And make the page pretier
-                meal.setServings(1);
-                mealPlanController.addMeal(meal);
-                getActivity().onBackPressed(); //TODO: This causes us to return to the page BEFORE mealplan list..
-
-
+            public boolean onMenuItemClick(MenuItem item) {
+                String servings = Objects.requireNonNull(servingsEditText.getText().toString());
+                if (servings.equals("")) {
+                    // TODO: do some error handling
+                } else {
+                    meal.setServings(Integer.valueOf(servings));
+                    mealPlanController.addMeal(meal);
+                    dismiss();
+                }
+                return false;
             }
         });
+
         return view;
     }
 
