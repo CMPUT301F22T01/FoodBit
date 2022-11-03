@@ -9,6 +9,8 @@ import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.dbObject;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -45,7 +47,7 @@ public class DatabaseController {
         }
     }
 
-    public void addToDB(dbObject newItem) {
+    public void addItem(dbObject newItem) {
         String id = collectionReference.document().getId();
         newItem.setId(id);
         collectionReference.document(id).set(newItem);
@@ -69,6 +71,25 @@ public class DatabaseController {
             }
         });
     }
+
+    public void editItem(dbObject editItem) {
+        collectionReference.document(editItem.getId())
+                .set(editItem)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("Edit Database", "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("Edit Database", "Error updating document", e);
+                    }
+                });
+    }
+
+//    public void
 
 
 
