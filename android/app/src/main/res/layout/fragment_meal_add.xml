@@ -33,36 +33,32 @@
 
         <Spinner
             android:id="@+id/meal_spinner"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
             android:contentDescription="meal spinner"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/meal_select_textview" />
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/meal_add_serving_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:hint="Serving Size"
-            android:inputType="number"
-            android:maxLines="1"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_spinner"
-            tools:ignore="HardcodedText" />
-
-<!--        <Button-->
-<!--            android:id="@+id/meal_add_btn"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginEnd="16dp"-->
-<!--            android:layout_marginBottom="16dp"-->
-<!--            android:text="Add"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent" />-->
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/meal_add_serving_size"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="24dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:hint="Serving Size"-->
+<!--                android:inputType="number"-->
+<!--                android:maxLines="1"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/meal_spinner"-->
+<!--                tools:ignore="HardcodedText" />-->
+<!--        </com.google.android.material.textfield.TextInputEditText>-->
 
         <TextView
             android:id="@+id/meal_select_textview"
@@ -71,9 +67,41 @@
             android:layout_marginStart="24dp"
             android:layout_marginTop="76dp"
             android:text="Select a Meal:"
-            android:textSize="16sp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/meal_add_layout_serving_size"
+            style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/meal_spinner"
+            app:startIconDrawable="@drawable/ic_numbers_24"
+            tools:layout_conversion_absoluteHeight="90dp"
+            tools:layout_conversion_absoluteWidth="379dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/meal_add_serving_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Serving Size"
+                android:inputType="number"
+                android:maxLines="1"
+                tools:ignore="HardcodedText"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="379dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="412dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

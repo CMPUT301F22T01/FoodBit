@@ -29,6 +29,7 @@ import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -51,6 +52,7 @@ public class MealAddFragment extends DialogFragment {
     MaterialToolbar topBar;
     Spinner ingredientRecipeSpinner;
     TextInputEditText servingsEditText;
+    TextInputLayout servingsLayout;
 
     public MealAddFragment() {
         // Required empty public constructor
@@ -100,14 +102,14 @@ public class MealAddFragment extends DialogFragment {
 
         topBar = view.findViewById(R.id.meal_add_top_bar);
         servingsEditText = view.findViewById(R.id.meal_add_serving_size);
+        servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
 
         //Populate dropdown with ingredients and recipes
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;
-        if (ingredientList.size() + recipeList.size() == 0 ){
+        if (ingredientList.size() + recipeList.size() == 0 ) {
             // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
-            // sometimes works?
             Log.e("MealAdd","Ingredient and recipe size is 0 so we're not hitting DB?");
             items = new String [] {"test1", "test2", "test3", "test4", "test5"};
         } else {
@@ -126,7 +128,6 @@ public class MealAddFragment extends DialogFragment {
                 android.R.layout.simple_spinner_dropdown_item, items);
 
         // Get spinner
-        // TODO: replace spinner with a page (?)
         ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
         ingredientRecipeSpinner.setAdapter(adapter);
         ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -152,7 +153,7 @@ public class MealAddFragment extends DialogFragment {
             public boolean onMenuItemClick(MenuItem item) {
                 String servings = Objects.requireNonNull(servingsEditText.getText().toString());
                 if (servings.equals("")) {
-                    // TODO: do some error handling
+                    servingsLayout.setError("Required");
                 } else {
                     meal.setServings(Integer.valueOf(servings));
                     mealPlanController.addMeal(meal);
