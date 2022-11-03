@@ -19,17 +19,17 @@ public class MealPlan implements dbObject {
     /**
      *Looking to model MealPlans as Collections
      * MealPlan (Collection)
-     *        --mealID1 (Document - Ingredient, ID#20)
+     *        --ID1 (Document - Ingredient, ID#20)
      *              --name: "Apple"
      *              --servingSize: "2"
-     *              --ID: "20"
+     *              --recipeID: "20"
      *              --isIngredient: "1"
      *              --Date: "2022-10-23"
-     *        --mealID2 (Document - Recipe, ID#3)
+     *        --ID2 (Document - Recipe, ID#3)
      *              --name: "Pie"
      *              --servings: "1"
      *              --Date: "2022-10-23"
-     *              --ID: "3"
+     *              --recipeID: "3"
      *              --isIngredient: "0"
      *              --ingredientList: {"231":3, "23":5} //Need 3 of ingredient 231s and 5 of ingredient 23
      *
@@ -43,8 +43,11 @@ public class MealPlan implements dbObject {
     private String id;
     private boolean isIngredient;
     private Date date;
+
     private Map<String,Integer> ingredientList;
-    private String mealID = null;
+    private String recipeID;
+    private Map<Integer,Integer> ingredientList;
+
 
     public String getName() {
         return name;
@@ -94,12 +97,13 @@ public class MealPlan implements dbObject {
         this.ingredientList = ingredientList;
     }
 
-    public String getMealID() {
-        return mealID;
+
+    public String getRecipeID() {
+        return recipeID;
     }
 
-    public void setMealID(String mealID) {
-        this.mealID = mealID;
+    public void setRecipeID(String recipeID) {
+        this.recipeID = recipeID;
     }
 
     public MealPlan(){};

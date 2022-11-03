@@ -28,8 +28,8 @@ public class MealPlanController {
         /**
          * Add a new ingredient meal to the DB from the UI
          */
+        db.addItem(meal);
         mealPlan.add(meal);
-        db.addToDB(meal);
     }
 
     public void loadAllMeals() {
