@@ -46,8 +46,6 @@ public class MealPlan implements dbObject {
 
     private Map<String,Integer> ingredientList;
     private String recipeID;
-    private Map<Integer,Integer> ingredientList;
-
 
     public String getName() {
         return name;
