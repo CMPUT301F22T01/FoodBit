@@ -45,7 +45,7 @@ public class UITest {
 
     @Test
     // The following tests are meant to be run together
-    public void test() throws InterruptedException {
+    public void recipeTests() throws InterruptedException {
         // Test adding a recipe (US 02.01.01.01, US 02.07.01)
         recipeAddTest();
         // Test viewing details of a recipe (US 02.04.01.01)
