@@ -71,6 +71,10 @@ public class RecipeBook implements Serializable {
         return null;
     }
 
+    /**
+     * Get a list of titles of all the recipes in the recipe book.
+     * @return a list of titles of all the recipes in the recipe book
+     */
     public List<String> getTitles() {
         List<String> list = new ArrayList<>();
         for (Recipe recipe : recipes) {
