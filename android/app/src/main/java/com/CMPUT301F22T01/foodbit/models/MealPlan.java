@@ -44,7 +44,7 @@ public class MealPlan implements dbObject {
     private boolean isIngredient;
     private Date date;
 
-    private Map<String,Integer> ingredientList;
+    private Map<String,Float> ingredientList;
     private String recipeID;
 
     public String getName() {
@@ -87,11 +87,11 @@ public class MealPlan implements dbObject {
         this.date = date;
     }
 
-    public Map<String, Integer> getIngredientList() {
+    public Map<String, Float> getIngredientList() {
         return ingredientList;
     }
 
-    public void setIngredientList(Map<String, Integer> ingredientList) {
+    public void setIngredientList(Map<String, Float> ingredientList) {
         this.ingredientList = ingredientList;
     }
 
@@ -106,7 +106,7 @@ public class MealPlan implements dbObject {
 
     public MealPlan(){};
 
-    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<String, Integer> ingredientList) {
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<String, Float> ingredientList) {
         this.name = name;
         this.servings = servings;
         this.id = id;
