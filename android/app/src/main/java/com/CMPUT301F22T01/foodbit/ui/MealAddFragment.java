@@ -136,7 +136,7 @@ public class MealAddFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 // TODO: Based on position we should know if this is an ingredient or recipe and how to handle
-                Log.e("mealAdd", (String) parent.getItemAtPosition(position) );
+                Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
                 meal.setName((String) parent.getItemAtPosition(position));
                 positionSelected = position;
 
@@ -154,12 +154,23 @@ public class MealAddFragment extends DialogFragment {
 
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
+            public boolean onMenuItemClick(MenuItem item) { //Check button is clicked!
                 String servings = Objects.requireNonNull(servingsEditText.getText().toString());
                 if (servings.equals("")) {
                     servingsLayout.setError("Required");
                 } else {
                     meal.setServings(Integer.valueOf(servings));
+                    int ingredientSize = ingredientList.size();
+                    if (positionSelected < ingredientSize) {
+                        meal.setRecipeID(ingredientList.get(positionSelected).getId());
+                        meal.setIngredient(true);
+                        Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
+                    } else {
+                        meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
+                        meal.setIngredient(false);
+                        meal.setIngredientList(recipeList.get(positionSelected-ingredientSize).doGetIngredientList());
+                        Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
+                    }
                     mealPlanController.addMeal(meal);
                     dismiss();
                 }
