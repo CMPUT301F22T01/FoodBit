@@ -28,6 +28,7 @@ public class DatePickerFragment extends DialogFragment
     private Date date;
     // Use this instance of the interface to deliver action events
     NoticeDialogListener listener;
+
     public Date getDate() {
         return date;
     }
@@ -47,12 +48,10 @@ public class DatePickerFragment extends DialogFragment
     public void onAttach(Context context) {
         super.onAttach(context);
         listener = (NoticeDialogListener) getParentFragment();
-
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-
         // Create a new instance of DatePickerDialog and return it
         final Calendar c = Calendar.getInstance();
         int year = c.get(Calendar.YEAR);
@@ -61,12 +60,11 @@ public class DatePickerFragment extends DialogFragment
         return new DatePickerDialog(requireContext(), this, year, month, day);
     }
 
-
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Do something with the date chosen by the user
         // send date back to the target fragment
+        // TODO: works for now but Date constructor deprecated, GregorianCalendar or something else
         date = new Date(year,month,day);
         listener.onDialogPositiveClick(this);
-
     }
 }
