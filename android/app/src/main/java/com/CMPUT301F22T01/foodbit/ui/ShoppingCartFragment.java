@@ -35,6 +35,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * provide a fragment show shopping cart ingredients
+ */
 public class ShoppingCartFragment extends Fragment {
 
     public String TAG = "shoppingCartFragment";
