@@ -37,14 +37,13 @@ public class MealPlan implements dbObject {
      * MealPlanController should be able to then query the recipe controller for the appropriate
      * ingredients for recipes and provide shopping list with the required ingredients
      *
-     * TODO: Keep in mind ID and mealID are flipped for now. Fix by friday.
      */
     private String name;
     private int servings;
     private String id;
     private boolean isIngredient;
     private Date date;
-    private Map<Integer,Integer> ingredientList;
+    private Map<String,Integer> ingredientList;
     private String mealID = null;
 
     public String getName() {
@@ -64,11 +63,11 @@ public class MealPlan implements dbObject {
     }
 
     public String getId() {
-        return mealID;
+        return id;
     }
 
     public void setId(String id) {
-        this.mealID = id;
+        this.id = id;
     }
 
     public boolean isIngredient() {
@@ -87,25 +86,25 @@ public class MealPlan implements dbObject {
         this.date = date;
     }
 
-    public Map<Integer, Integer> getIngredientList() {
+    public Map<String, Integer> getIngredientList() {
         return ingredientList;
     }
 
-    public void setIngredientList(Map<Integer, Integer> ingredientList) {
+    public void setIngredientList(Map<String, Integer> ingredientList) {
         this.ingredientList = ingredientList;
     }
 
     public String getMealID() {
-        return id;
+        return mealID;
     }
 
     public void setMealID(String mealID) {
-        this.id = mealID;
+        this.mealID = mealID;
     }
 
     public MealPlan(){};
 
-    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<String, Integer> ingredientList) {
         this.name = name;
         this.servings = servings;
         this.id = id;
