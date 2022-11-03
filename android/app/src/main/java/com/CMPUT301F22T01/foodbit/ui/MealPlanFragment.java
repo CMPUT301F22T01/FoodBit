@@ -78,7 +78,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
+                // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
                 DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
             }
@@ -94,8 +94,6 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
         newMeal.setDate(dialog.getDate());
         MealAddFragment newFragment = new MealAddFragment(newMeal);
         newFragment.show(getChildFragmentManager(), "AddMeal");
-
-
     }
 
     @Override
