@@ -43,6 +43,7 @@ public class MealAddFragment extends DialogFragment {
     private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
     private final MealPlanController mealPlanController = MainActivity.mealPlan;
     private final RecipeBook recipeBook = MainActivity.recipeBook;
+    private int positionSelected;
     private MealPlan meal;
 
     // TODO: Rename and change types of parameters
@@ -105,7 +106,8 @@ public class MealAddFragment extends DialogFragment {
             items = new String [] {"test1", "test2", "test3", "test4","test5"};
         } else {
             items = new String[ingredientList.size() + recipeList.size()];
-            int j = ingredientList.size();
+            int ingredientSize = ingredientList.size();
+            int j = ingredientSize;
             for (int i = 0; i<j; i++) {
                 items[i] = ingredientList.get(i).getDescription();
             }
@@ -131,6 +133,8 @@ public class MealAddFragment extends DialogFragment {
                 //TODO: Based on position we should know if this is an ingredient or recipe and how to handle
                 Log.e("mealAdd", (String) parent.getItemAtPosition(position) );
                 meal.setName((String) parent.getItemAtPosition(position));
+                positionSelected = position;
+
             }
 
             @Override
