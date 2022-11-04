@@ -44,24 +44,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //declaring and initializing the action bar
         ActionBar actionBar;
         actionBar = getSupportActionBar();
+        //changing the color to match
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#ff9d3f"));
         actionBar.setBackgroundDrawable(colorDrawable);
-        //actionBar.setTitle("Changed Name");
 
         setUpNavBar();
 
 
     }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater =  getMenuInflater();
-//        inflater.inflate(R.menu.recipe_add_top_app_bar, menu);
-//        return true;
-//    }
 
 
 
