@@ -38,9 +38,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link MealAddFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragment for adding new MealPlan items
  */
 public class MealAddFragment extends DialogFragment {
 
@@ -63,6 +61,10 @@ public class MealAddFragment extends DialogFragment {
         // Required empty public constructor
     }
 
+    /**
+     * Constructor with the meal as a parameter
+     * @param meal
+     */
     public MealAddFragment(MealPlan meal) {
         this.meal = meal;
     }
@@ -75,19 +77,12 @@ public class MealAddFragment extends DialogFragment {
     }
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * Use this factory method to create a new instance of this fragment.
      * @return A new instance of fragment MealAddFragment.
      */
-    // TODO: Rename and change types and number of parameters
-    public static MealAddFragment newInstance(String param1, String param2) {
+    public static MealAddFragment newInstance() {
         MealAddFragment fragment = new MealAddFragment();
         Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -99,6 +94,13 @@ public class MealAddFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
     }
 
+    /**
+     * Inflates the view and allows for user input for meal details to be added
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,12 +149,10 @@ public class MealAddFragment extends DialogFragment {
                 Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
                 meal.setName((String) parent.getItemAtPosition(position));
                 positionSelected = position;
-
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
 
@@ -181,7 +181,6 @@ public class MealAddFragment extends DialogFragment {
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
                     }
-
                     mealPlanController.addMeal(meal);
                     dismiss();
                 }
@@ -192,12 +191,14 @@ public class MealAddFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * Sets the layout
+     */
     @Override
     public void onStart() {
         super.onStart();
         Dialog dialog = getDialog();
         if (dialog != null) {
-
             int width = ViewGroup.LayoutParams.MATCH_PARENT;
             int height = ViewGroup.LayoutParams.MATCH_PARENT;
             dialog.getWindow().setLayout(width, height);

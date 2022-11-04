@@ -1,23 +1,15 @@
 package com.CMPUT301F22T01.foodbit.models;
 
-
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
+/**
+ * A class to represent a MealPlan with a name, number of servings, id,
+ * a boolean indicating whether it is an ingredient, a date, an a list of ingredients.
+ */
 public class MealPlan implements dbObject {
     /**
-     *Looking to model MealPlans as Collections
+     * Looking to model MealPlans as Collections
      * MealPlan (Collection)
      *        --ID1 (Document - Ingredient, ID#20)
      *              --name: "Apple"
@@ -43,7 +35,6 @@ public class MealPlan implements dbObject {
     private String id;
     private boolean isIngredient;
     private Date date;
-
     private Map<String,Float> ingredientList;
     private String recipeID;
 
@@ -95,7 +86,6 @@ public class MealPlan implements dbObject {
         this.ingredientList = ingredientList;
     }
 
-
     public String getRecipeID() {
         return recipeID;
     }
@@ -106,6 +96,16 @@ public class MealPlan implements dbObject {
 
     public MealPlan(){};
 
+    /**
+     * Creates a new MealPlan type with a name, number of servings, id, a boolean indicating whether it is an ingredient,
+     * a date, an a list of ingredients
+     * @param name the name of the MealPlan
+     * @param servings the amount of servings for the MealPlan
+     * @param id the id of the MealPlan
+     * @param isIngredient true if an ingredient, false otherwise
+     * @param date the date of the MealPlan
+     * @param ingredientList the list of ingredients
+     */
     public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<String, Float> ingredientList) {
         this.name = name;
         this.servings = servings;
