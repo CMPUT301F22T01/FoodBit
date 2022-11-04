@@ -2,25 +2,25 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.DatePicker;
-
 import com.CMPUT301F22T01.foodbit.MainActivity;
-import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,7 +29,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class MealPlanFragment extends Fragment implements DatePickerFragment.NoticeDialogListener {
 
@@ -49,6 +48,37 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Meal Plan");
+
+        //This fragment has options menu for the action bar
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        // Inflating the menu resource file for this fragment
+        inflater.inflate(R.menu.mealplan_actionbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //Actions performed by the Action Bar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {   //Adding a Meal Plan
+            case R.id.meal_plan_add:
+                //launches newFragment
+                // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
+                DatePickerFragment newFragment = new DatePickerFragment();
+                newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
     }
 
     @Override
@@ -59,7 +89,9 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
-        Button addButton = view.findViewById(R.id.btn_meal_plan_add);
+
+        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
+        //Button addButton = view.findViewById(R.id.btn_meal_plan_add);
 
         // set RecyclerView
         this.mealPlan = MainActivity.mealPlan;
@@ -76,15 +108,18 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
 
 
         boolean test = false;
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
-                DatePickerFragment newFragment = new DatePickerFragment();
-                newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
-            }
-        });
 
+        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
+//        addButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
+//                DatePickerFragment newFragment = new DatePickerFragment();
+//                newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
+//            }
+//        });
+
+        getActivity().setTitle("Meal Plan");
         return view;
     }
 

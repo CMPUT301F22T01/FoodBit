@@ -1,7 +1,12 @@
 package com.CMPUT301F22T01.foodbit;
 
+//import android.app.FragmentManager;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.MutableLiveData;
@@ -10,8 +15,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 //import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
 //import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 //import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
@@ -46,8 +51,21 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //declaring and initializing the action bar
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+
+        //changing the color to match
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#ff9d3f"));
+        actionBar.setBackgroundDrawable(colorDrawable);
+
+
+
         setUpNavBar();
     }
+
 
 
     private void setUpNavBar(){

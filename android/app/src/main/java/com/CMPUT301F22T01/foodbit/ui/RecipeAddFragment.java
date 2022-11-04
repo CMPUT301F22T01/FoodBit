@@ -85,8 +85,7 @@ public class RecipeAddFragment extends DialogFragment
         // set the style of the dialog fragment to be full screen
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
 
-        // photo picker contract register
-//        registerPhotoPicker();
+        setHasOptionsMenu(false);
     }
 
     @Override
@@ -112,10 +111,10 @@ public class RecipeAddFragment extends DialogFragment
         ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_add_ingredients_list);
 
-        // set top bar behaviours
-        // close button behaviour
+        //close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
-        topBar.setOnMenuItemClickListener(item -> {
+        topBar.setOnMenuItemClickListener(item ->
+        {
             int itemId = item.getItemId();
             // done button behaviour
             if (itemId == R.id.recipe_add_done) {
@@ -123,6 +122,10 @@ public class RecipeAddFragment extends DialogFragment
             }
             return false;
         });
+
+
+
+
 
         ingredientsBar.setOnMenuItemClickListener(AddIngredientsButtonClicked());
         setUpRecyclerView();
@@ -302,7 +305,7 @@ public class RecipeAddFragment extends DialogFragment
     }
 
     @Override
-    public void onItemClick(View v, int position) {
+    public void onIngredientItemClick(View v, int position) {
         RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
     }
 }

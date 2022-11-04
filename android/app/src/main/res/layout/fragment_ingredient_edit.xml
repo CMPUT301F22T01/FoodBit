@@ -22,7 +22,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/ingredient_add_top_app_bar"
+            app:menu="@menu/ingredient_storage_top_app_bar"
             app:navigationIcon="@drawable/ic_close_24"
             app:title="Edit an ingredient" />
 
