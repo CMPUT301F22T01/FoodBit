@@ -3,18 +3,44 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_menu"
-    app:startDestination="@id/fragment_meal_plan">
+    app:startDestination="@id/fragment_recipe_book">
+    <fragment
+        android:id="@+id/fragment_ingredient_edit"
+        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment"
+        android:label="IngredientEditFragment"
+        tools:layout="@layout/fragment_ingredient_edit">
+        <action
+            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_storage"
+            app:destination="@+id/fragment_ingredient_storage"
+            app:enterAnim="@anim/slide_left_enter"
+            app:popEnterAnim="@anim/slide_right_exit"/>
+    </fragment>
+
+
     <fragment
         android:id="@+id/fragment_ingredient_storage"
         android:name="com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment"
         android:label="IngredientStorageFragment"
-        tools:layout="@layout/fragment_ingredient_storage"/>
+        tools:layout="@layout/fragment_ingredient_storage">
+        <action
+            android:id="@+id/action_fragment_ingredient_storage_to_fragment_ingredient_detail"
+            app:destination="@+id/fragment_ingredient_detail"
+            app:enterAnim="@anim/slide_left_enter"
+            app:popEnterAnim="@anim/slide_right_exit"/>
+    </fragment>
+
 
     <fragment
         android:id="@+id/fragment_recipe_book"
         android:name="com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment"
         android:label="RecipeBookFragment"
-        tools:layout="@layout/fragment_recipe_book"/>
+        tools:layout="@layout/fragment_recipe_book">
+        <action
+            android:id="@+id/action_fragment_recipe_book_to_fragment_recipe_detail"
+            app:destination="@id/fragment_recipe_detail"
+            app:enterAnim="@anim/slide_left_enter"
+            app:popExitAnim="@anim/slide_right_exit" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_meal_plan"
@@ -27,5 +53,26 @@
         android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment"
         android:label="ShoppingCartFragment"
         tools:layout="@layout/fragment_shopping_cart"/>
+
+    <fragment
+        android:id="@+id/fragment_recipe_detail"
+        android:name="com.CMPUT301F22T01.foodbit.ui.RecipeDetailFragment"
+        android:label="RecipeDetailFragment"
+        tools:layout="@layout/fragment_recipe_detail">
+        <argument
+            android:name="recipeBook"
+            app:argType="com.CMPUT301F22T01.foodbit.controllers.RecipeBook" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/fragment_ingredient_detail"
+        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientDetailFragment"
+        android:label="IngredientDetailFragment"
+        tools:layout="@layout/fragment_ingredient_detail">
+        <argument
+            android:name="ingredientStorage"
+            app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientStorage" />
+
+    </fragment>
 
 </navigation>
