@@ -37,9 +37,9 @@ import java.util.Objects;
  * There is a false error reported by the IDE which actually works fine.
  */
 public class RecipeAddFragment extends DialogFragment
-        implements RecipeAddIngredientAddFragment.OnIngredientAddListener,
-        RecipeAddIngredientAddFragment.OnIngredientEditListener,
-        RecipeAddIngredientAddFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener{
+        implements RecipeAddIngredientFragment.OnIngredientAddListener,
+        RecipeAddIngredientFragment.OnIngredientEditListener,
+        RecipeAddIngredientFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener{
 
     //    private static final String RECIPE_BOOK = "recipe_book";
     public final static String TAG = "AddRecipe";
@@ -48,7 +48,7 @@ public class RecipeAddFragment extends DialogFragment
     // get recipe book from MainActivity
     private final RecipeBook recipeBook = MainActivity.recipeBook;
 
-    // an ingredient list to obtain from the RecipeAddIngredientAddFragment
+    // an ingredient list to obtain from the RecipeAddIngredientFragment
     public ArrayList<Ingredient> ingredients = new ArrayList<>();
     IngredientAdapter ingredientAdapter;
 
@@ -137,7 +137,7 @@ public class RecipeAddFragment extends DialogFragment
                 for (Ingredient ingredient : ingredients) {
                     titleList.add(ingredient.getDescription());
                 }
-                RecipeAddIngredientAddFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
+                RecipeAddIngredientFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
             }
             return false;
         };
@@ -302,7 +302,7 @@ public class RecipeAddFragment extends DialogFragment
 
     @Override
     public void onItemClick(View v, int position) {
-        RecipeAddIngredientAddFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
+        RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
     }
 }
 
