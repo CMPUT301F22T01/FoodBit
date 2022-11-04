@@ -27,19 +27,26 @@ public class MealPlanController {
         this.loadAllMeals();
     }
 
+    /**
+     * Add meal to the database
+     * @param meal
+     */
     public void addMeal(MealPlan meal){
-        /**
-         * Add a new ingredient meal to the DB from the UI
-         */
         db.addItem(meal);
         mealPlan.add(meal);
     }
 
+    /**
+     * Update local cache
+     */
     public void loadAllMeals() {
-        //Load mealPlans from database into local array
         db.getAllItems(mealPlan);
     }
 
+    /**
+     * Return cache of meals
+     * @return ArrayList<MealPlan>
+     */
     public ArrayList<MealPlan> getArrayList() {
         // sort MealPlan by date
         Collections.sort(mealPlan, new Comparator<MealPlan>() {
@@ -50,12 +57,19 @@ public class MealPlanController {
         return mealPlan;
     }
 
+    /**
+     * Update cache with new meals
+     * @param newMealPlan
+     */
     public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlan.clear();
         mealPlan.addAll(newMealPlan);
     }
 
-
+    /**
+     * Generate string of ID's of meals in cache
+     * @return String strings
+     */
     public String toString() {
         String t = "";
         for (int i =0; i < mealPlan.size(); i++) {
