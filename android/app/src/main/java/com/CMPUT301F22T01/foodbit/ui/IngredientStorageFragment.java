@@ -139,7 +139,7 @@ public class IngredientStorageFragment extends Fragment {
 //            }
 //        });
 
-
+        getActivity().setTitle("Ingredient Storage");
         return view;
     }
 
