@@ -41,7 +41,7 @@ public class IngredientStorageFragment extends Fragment {
     private Context context;
 
     // getting ingredientStorage from main activity
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
+    private  IngredientStorage ingredientStorage;
 
     IngredientAdapter adapter;
 
@@ -77,6 +77,7 @@ public class IngredientStorageFragment extends Fragment {
         Button addButton = view.findViewById(R.id.ingredient_storage_add_button);
 
         int mode = 0;
+        ingredientStorage = MainActivity.ingredientStorage;
         adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
@@ -101,7 +102,7 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CollectionReference ingredientStorageRef = FirebaseFirestore.getInstance().collection("Ingredient List");
+        CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
         ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @SuppressLint("NotifyDataSetChanged")

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -78,7 +79,7 @@ public class IngredientStorage implements Serializable {
         String TAG = IngredientAddFragment.TAG;
         assert !ingredients.contains(ingredient) : "This ingredient is already in the list!";
         db = FirebaseFirestore.getInstance();
-        CollectionReference ingredientStorageRef = db.collection("Ingredient List");
+        CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
         ingredientStorageRef.add(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -114,8 +115,7 @@ public class IngredientStorage implements Serializable {
     public void delete(Ingredient ingredient) {
         String TAG = "DeleteIngredient";
         assert ingredients.contains(ingredient) : "this ingredient is not in the list";
-        db = FirebaseFirestore.getInstance();
-        db.collection("Ingredient List").document(ingredient.getId())
+        MainActivity.ingredientStorageRef.document(ingredient.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -133,8 +133,7 @@ public class IngredientStorage implements Serializable {
     public void edit(Ingredient ingredient) {
         String TAG = "EditIngredient";
         assert ingredients.contains(ingredient) : "this ingredient is not in the list";
-        db = FirebaseFirestore.getInstance();
-        db.collection("Ingredient List").document(ingredient.getId())
+        MainActivity.ingredientStorageRef.document(ingredient.getId())
                 .set(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
