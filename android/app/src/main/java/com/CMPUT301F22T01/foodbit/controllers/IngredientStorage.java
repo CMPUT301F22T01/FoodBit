@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -18,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -32,6 +34,10 @@ public class IngredientStorage implements Serializable {
      */
     public IngredientStorage() {
         ingredients = new ArrayList<Ingredient>();
+    }
+
+    public IngredientStorage(List<Ingredient> ingredients) {
+        this.ingredients = (ArrayList<Ingredient>) ingredients;
     }
 
     /**
@@ -72,6 +78,17 @@ public class IngredientStorage implements Serializable {
             }
         }
         return null;
+    }
+    public List<String> getDescriptions() {
+        List<String> list = new ArrayList<>();
+        for (Ingredient ingredient : ingredients) {
+            list.add(ingredient.getDescription());
+        }
+        return list;
+    }
+
+    public boolean contains(Ingredient ingredient) {
+        return ingredients.contains(ingredient);
     }
 
     /**
