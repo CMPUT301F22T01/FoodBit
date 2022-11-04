@@ -1,7 +1,6 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,15 +20,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
-import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * The recipe book screen that displays a list of recipes in the recipe book.
@@ -53,8 +49,6 @@ public class RecipeBookFragment extends Fragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Recipe Book");
 
-
-
         // This fragment has options menu for the action bar
         setHasOptionsMenu(true);
     }
@@ -62,23 +56,24 @@ public class RecipeBookFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //MenuInflater inflater =  getMenuInflater();
+
         // Inflating the menu resource file for this fragment
-        inflater.inflate(R.menu.recipe_add_top_app_bar, menu);
+        inflater.inflate(R.menu.recipe_book_top_app_bar, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    //Actions performed by the Action Bar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         switch(item.getItemId())
         {   //Adding a Recipe
             case R.id.recipe_add:
-
-                Toast.makeText(getActivity(), "Adding a Recipe", Toast.LENGTH_SHORT).show();
                 //launches RecipeAddFragment
                 new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
                 return true;
+
+            // Sorting the Recipes accordingly
             case R.id.filter1:
                 Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
@@ -105,15 +100,19 @@ public class RecipeBookFragment extends Fragment {
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
 
+        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
         //Button addButton = view.findViewById(R.id.recipe_book_add_button);
 
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
 
+
+        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
         // add button launches RecipeAddFragment
         //addButton.setOnClickListener(addButtonClicked());
 
 
+        getActivity().setTitle("Recipe Book");
         return view;
     }
 
@@ -127,10 +126,14 @@ public class RecipeBookFragment extends Fragment {
         recipeBookUpdate();
     }
 
+
+// Changed from addButton to adding by clicking the add icon on the Top Action Bar
 //    @NonNull
 //    private View.OnClickListener addButtonClicked() {
 //        return v -> new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
 //    }
+
+
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
         adapter = new RecipeAdapter(recipeBook.getRecipes());

@@ -24,7 +24,7 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/mealplan_add_top_app_bar"
+            app:menu="@menu/mealplan_top_app_bar"
             app:navigationIcon="@drawable/ic_close_24"
             app:title="Add a Meal"
             tools:ignore="RtlSymmetry"
