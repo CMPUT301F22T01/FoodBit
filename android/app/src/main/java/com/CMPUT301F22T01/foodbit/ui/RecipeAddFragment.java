@@ -119,15 +119,15 @@ public class RecipeAddFragment extends DialogFragment
 
         //close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
-//        topBar.setOnMenuItemClickListener(item ->
-//        {
-//            int itemId = item.getItemId();
-//            // done button behaviour
-//            if (itemId == R.id.AddRecipe) {
-//                doneButtonClicked();
-//            }
-//            return false;
-//        });
+        topBar.setOnMenuItemClickListener(item ->
+        {
+            int itemId = item.getItemId();
+            // done button behaviour
+            if (itemId == R.id.recipe_done) {
+                doneButtonClicked();
+            }
+            return false;
+        });
 
 
 
