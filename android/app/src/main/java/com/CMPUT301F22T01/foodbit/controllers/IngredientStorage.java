@@ -7,11 +7,14 @@ import androidx.annotation.NonNull;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -154,7 +157,22 @@ public class IngredientStorage implements Serializable {
 
     public void loadAllFromDB() {
         //Load mealPlans from database into local array
-        DatabaseController databaseController = new DatabaseController("Ingredients");
-        databaseController.getAllItems(ingredients);
+        ingredients.clear();
+        CollectionReference collectionReference = MainActivity.ingredientStorageRef;
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
+                    for (int i =0; i< task.getResult().size(); i++) {
+                        Ingredient model = task.getResult().getDocuments().get(i).toObject(Ingredient.class);
+                        ingredients.add(model);
+                    }
+                }
+            }
+        });
     }
 }

@@ -62,9 +62,10 @@ public class DatabaseController {
         collectionReference.document(id).set(newItem);
     }
 
-    public <T> void getAllItems(ArrayList<T> items) {
+    public <T extends dbObject> void getAllItems(ArrayList<T> items) {
         //TODO: Add optional 'order by'
         CollectionReference collectionReference = getCollectionReference();
+        Log.e("LOAD MODE: ", getCollectionReference().getPath());
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
