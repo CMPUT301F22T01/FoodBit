@@ -101,34 +101,6 @@ public class RecipeBook implements Serializable {
     public void add(Recipe recipe) {
         String TAG = RecipeAddFragment.TAG;
         assert !contains(recipe) : "This recipe is already in the recipe book!";
-//        db = FirebaseFirestore.getInstance();
-//        CollectionReference recipeBookRef = db.collection("Recipe Book");
-//        recipeBookRef.add(recipe)
-//                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-//                    @Override
-//                    public void onSuccess(DocumentReference documentReference) {
-//                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-//                        documentReference.update("id", documentReference.getId())
-//                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                                    @Override
-//                                    public void onSuccess(Void unused) {
-//                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-//                                    }
-//                                })
-//                                .addOnFailureListener(new OnFailureListener() {
-//                                    @Override
-//                                    public void onFailure(@NonNull Exception e) {
-//                                        Log.w(TAG, "Error updating document", e);
-//                                    }
-//                                });
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        Log.w(TAG, "Error adding document", e);
-//                    }
-//                });
         db.addItem(recipe);
     }
 
