@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -40,6 +41,7 @@ public class RecipeDetailFragment extends Fragment {
     TextView commentsView;
     ImageView appBarImageView;
     RecyclerView ingredientsRecyclerView;
+    TextView ingredientEmptyView;
     Button tempDeleteButton;
 
     public RecipeDetailFragment() {
@@ -50,6 +52,7 @@ public class RecipeDetailFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getRecipe();
+
     }
 
     @SuppressLint("SetTextI18n")
@@ -67,45 +70,47 @@ public class RecipeDetailFragment extends Fragment {
         commentsView = view.findViewById(R.id.recipe_detail_comments_content);
         appBarImageView = view.findViewById(R.id.recipe_detail_bar_image);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_detail_ingredient_list);
+        ingredientEmptyView = view.findViewById(R.id.recipe_detail_ingredients_empty);
         tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
-        // todo: Temporary delete button. Will be replaced by a delete button in the action bar in the recipe book screen.
-        tempDeleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.recipeBook.remove(recipe);
-                Navigation.findNavController(v).popBackStack();
-            }
-        });
+        tempDeleteButton.setOnClickListener(deleteButtonClicked());
 
         toolbar.setTitle(recipe.getTitle());
         // back button behaviour
         toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
         String prepTimeText = recipe.getPrepTime() + prepTimeSuffix;
         prepTimeView.setText(prepTimeText);
-        String numServingsSuffix = " servings"; if (recipe.getPrepTime() == 1) {numServingsSuffix = " serving";}
+        String numServingsSuffix = " servings"; if (recipe.getNumServings() == 1) {numServingsSuffix = " serving";}
         String numServingsText = recipe.getNumServings() + numServingsSuffix;
         numServingsView.setText(numServingsText);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
 
-        // todo: enable photo feature before release
-        Uri photo = recipe.getPhoto();
         appBarImageView.setImageResource(android.R.color.transparent);
-//        if (photo != null) {
-//            appBarImage.setImageURI(photo);
-//        } else {
-//            appBarImage.setImageResource(android.R.color.transparent);
-//        }
 
+        setUpRecyclerView();
+
+        if (recipe.getIngredients().isEmpty()) {ingredientEmptyView.setVisibility(View.VISIBLE);}
+
+        return view;
+    }
+
+    private void setUpRecyclerView() {
         IngredientAdapter ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
         // add borderlines between items
         ingredientsRecyclerView.addItemDecoration(new DividerItemDecoration(ingredientsRecyclerView.getContext(), linearLayoutManager.getOrientation()));
+    }
 
-        return view;
+    @NonNull
+    private View.OnClickListener deleteButtonClicked() {
+        return v -> {
+            MainActivity.recipeBook.remove(recipe);
+            Navigation.findNavController(v).popBackStack();
+        };
     }
 
     // get recipe from recipe book obtained from MainActivity and position given by the adapter

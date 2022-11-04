@@ -21,7 +21,8 @@ import java.util.Objects;
  * Provide controls to a list of <code>Recipe</code> class objects.
  */
 public class RecipeBook implements Serializable {
-    private FirebaseFirestore db;
+//    private FirebaseFirestore db;
+    private DatabaseController db = new DatabaseController("Recipe Book");
     private final ArrayList<Recipe> recipes;
 
     /**
@@ -71,6 +72,10 @@ public class RecipeBook implements Serializable {
         return null;
     }
 
+    /**
+     * Get a list of titles of all the recipes in the recipe book.
+     * @return a list of titles of all the recipes in the recipe book
+     */
     public List<String> getTitles() {
         List<String> list = new ArrayList<>();
         for (Recipe recipe : recipes) {
@@ -96,35 +101,7 @@ public class RecipeBook implements Serializable {
     public void add(Recipe recipe) {
         String TAG = RecipeAddFragment.TAG;
         assert !contains(recipe) : "This recipe is already in the recipe book!";
-//        recipes.add(recipe);
-        db = FirebaseFirestore.getInstance();
-        CollectionReference recipeBookRef = db.collection("Recipe Book");
-        recipeBookRef.add(recipe)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                        documentReference.update("id", documentReference.getId())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error updating document", e);
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        db.addItem(recipe);
     }
 
     /**
@@ -135,20 +112,6 @@ public class RecipeBook implements Serializable {
     public void remove(Recipe recipe) {
         String TAG = "RecipeBookDeleteRecipe";
         assert contains(recipe) : "this recipe is not found in the recipe book!";
-        db = FirebaseFirestore.getInstance();
-        db.collection("Recipe Book").document(recipe.getId())
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+        db.deleteItem(recipe);
     }
 }

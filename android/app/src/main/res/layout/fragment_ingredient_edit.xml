@@ -10,10 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?android:windowBackground"
-        tools:context=".ui.IngredientAddFragment">
+        tools:context=".ui.IngredientEditFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/ingredient_add_top_bar"
+            android:id="@+id/ingredient_edit_top_bar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:minHeight="?attr/actionBarSize"
@@ -24,11 +24,10 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/ingredient_storage_top_app_bar"
             app:navigationIcon="@drawable/ic_close_24"
-            app:title="Add an ingredient"
-            tools:ignore="RtlSymmetry" />
+            app:title="Edit an ingredient" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ingredient_add_text_layout_description"
+            android:id="@+id/ingredient_edit_text_layout_description"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -38,21 +37,20 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredient_add_top_bar"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_edit_top_bar"
             app:startIconDrawable="@drawable/ic_twotone_timer_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingredient_add_edit_text_description"
+                android:id="@+id/ingredient_edit_edit_text_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Description"
                 android:inputType="text"
-                android:maxLines="1"
-                tools:ignore="HardcodedText" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ingredient_add_text_layout_best_before"
+            android:id="@+id/ingredient_edit_text_layout_best_before"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -62,21 +60,20 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_description"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_edit_text_layout_description"
             app:startIconDrawable="@drawable/ic_twotone_timer_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingredient_add_edit_text_best_before"
+                android:id="@+id/ingredient_edit_edit_text_best_before"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Best Before Date"
                 android:inputType="text"
-                android:maxLines="1"
-                tools:ignore="HardcodedText" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ingredient_add_text_layout_location"
+            android:id="@+id/ingredient_edit_text_layout_location"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -86,21 +83,20 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_best_before"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_edit_text_layout_best_before"
             app:startIconDrawable="@drawable/ic_twotone_timer_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingredient_add_edit_text_location"
+                android:id="@+id/ingredient_edit_edit_text_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Location"
                 android:inputType="text"
-                android:maxLines="1"
-                tools:ignore="HardcodedText" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ingredient_add_text_layout_amount"
+            android:id="@+id/ingredient_edit_text_layout_amount"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -110,21 +106,20 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_location"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_edit_text_layout_location"
             app:startIconDrawable="@drawable/ic_twotone_timer_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingredient_add_edit_text_amount"
+                android:id="@+id/ingredient_edit_edit_text_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Amount"
                 android:inputType="number"
-                android:maxLines="1"
-                tools:ignore="HardcodedText" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ingredient_add_text_layout_unit"
+            android:id="@+id/ingredient_edit_text_layout_unit"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -134,21 +129,20 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_amount"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_edit_text_layout_amount"
             app:startIconDrawable="@drawable/ic_twotone_timer_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingredient_add_edit_text_unit"
+                android:id="@+id/ingredient_edit_edit_text_unit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Unit"
                 android:inputType="text"
-                android:maxLines="1"
-                tools:ignore="HardcodedText" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/ingredient_add_text_layout_category"
+            android:id="@+id/ingredient_edit_text_layout_category"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -158,17 +152,16 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_unit"
+            app:layout_constraintTop_toBottomOf="@+id/ingredient_edit_text_layout_unit"
             app:startIconDrawable="@drawable/ic_twotone_timer_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/ingredient_add_edit_text_category"
+                android:id="@+id/ingredient_edit_edit_text_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Category"
                 android:inputType="text"
-                android:maxLines="1"
-                tools:ignore="HardcodedText" />
+                android:maxLines="1" />
         </com.google.android.material.textfield.TextInputLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

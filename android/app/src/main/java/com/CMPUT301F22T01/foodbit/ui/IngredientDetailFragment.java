@@ -35,6 +35,7 @@ public class IngredientDetailFragment extends Fragment {
     TextView unitView;
     TextView categoryView;
     Button deleteButton;
+    Button editButton;
 
     public IngredientDetailFragment() {
         // Required empty constructor
@@ -99,6 +100,14 @@ public class IngredientDetailFragment extends Fragment {
             }
         });
 
+        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+            }
+        });
         return view;
     }
 

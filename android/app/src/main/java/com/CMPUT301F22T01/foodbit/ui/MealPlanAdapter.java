@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.R;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHolder> {
@@ -23,7 +24,7 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
         View view = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.meal_list_item, viewGroup, false);
+                .inflate(R.layout.item_meal_list, viewGroup, false);
 
         return new ViewHolder(view);
     }
@@ -35,7 +36,10 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Log.e("lol",items.get(position).getName());
-        holder.getTextView().setText(items.get(position).getName());
+        holder.getMealPlanTitleView().setText(items.get(position).getName());
+        SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
+        holder.getMealPlanDateView().setText(sf.format(items.get(position).getDate()));
+        holder.getMealPlanServings().setText(String.valueOf(items.get(position).getServings()));
     }
 
     @Override
@@ -57,13 +61,18 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
     public MealPlanAdapter(ArrayList<MealPlan> items) {
         this.items = items;
     }
+    public void updateItems(ArrayList<MealPlan> items) {
+        this.items = items;
+    }
 
     /**
      * Provide a reference to the type of views that you are using
      * (custom ViewHolder).
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final TextView textView;
+        private final TextView mealPlanTitle;
+        private final TextView mealPlanDate;
+        private final TextView mealPlanServings;
 
         public ViewHolder(View view) {
             super(view);
@@ -76,12 +85,16 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
 
 //                Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
             });
-            textView = view.findViewById(R.id.meal_plan_textView);
+            mealPlanTitle = view.findViewById(R.id.meal_plan_title);
+            mealPlanDate = view.findViewById(R.id.meal_plan_date);
+            mealPlanServings = view.findViewById(R.id.meal_plan_servings);
         }
 
-        public TextView getTextView() {
-            return textView;
+        public TextView getMealPlanTitleView() {
+            return mealPlanTitle;
         }
+        public TextView getMealPlanDateView() { return mealPlanDate; }
+        public TextView getMealPlanServings() { return mealPlanServings; }
     }
 }
 

@@ -4,16 +4,22 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -28,6 +34,10 @@ public class IngredientStorage implements Serializable {
      */
     public IngredientStorage() {
         ingredients = new ArrayList<Ingredient>();
+    }
+
+    public IngredientStorage(List<Ingredient> ingredients) {
+        this.ingredients = (ArrayList<Ingredient>) ingredients;
     }
 
     /**
@@ -69,6 +79,17 @@ public class IngredientStorage implements Serializable {
         }
         return null;
     }
+    public List<String> getDescriptions() {
+        List<String> list = new ArrayList<>();
+        for (Ingredient ingredient : ingredients) {
+            list.add(ingredient.getDescription());
+        }
+        return list;
+    }
+
+    public boolean contains(Ingredient ingredient) {
+        return ingredients.contains(ingredient);
+    }
 
     /**
      * Allows for an ingredient to be added
@@ -78,7 +99,8 @@ public class IngredientStorage implements Serializable {
         String TAG = IngredientAddFragment.TAG;
         assert !ingredients.contains(ingredient) : "This ingredient is already in the list!";
         db = FirebaseFirestore.getInstance();
-        CollectionReference ingredientStorageRef = db.collection("Ingredient List");
+
+        CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
         ingredientStorageRef.add(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -114,8 +136,8 @@ public class IngredientStorage implements Serializable {
     public void delete(Ingredient ingredient) {
         String TAG = "DeleteIngredient";
         assert ingredients.contains(ingredient) : "this ingredient is not in the list";
-        db = FirebaseFirestore.getInstance();
-        db.collection("Ingredient List").document(ingredient.getId())
+
+        MainActivity.ingredientStorageRef.document(ingredient.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -129,5 +151,45 @@ public class IngredientStorage implements Serializable {
                         Log.w(TAG, "Error deleting document", e);
                     }
                 });
+    }
+    public void edit(Ingredient ingredient) {
+        String TAG = "EditIngredient";
+        assert ingredients.contains(ingredient) : "this ingredient is not in the list";
+
+        MainActivity.ingredientStorageRef.document(ingredient.getId())
+                .set(ingredient)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d(TAG, "DocumentSnapshot successfully updated!");
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "Error updating document", e);
+                    }
+                });
+    }
+
+    public void loadAllFromDB() {
+        //Load mealPlans from database into local array
+        ingredients.clear();
+        CollectionReference collectionReference = MainActivity.ingredientStorageRef;
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
+                    for (int i =0; i< task.getResult().size(); i++) {
+                        Ingredient model = task.getResult().getDocuments().get(i).toObject(Ingredient.class);
+                        ingredients.add(model);
+                    }
+                }
+            }
+        });
     }
 }
