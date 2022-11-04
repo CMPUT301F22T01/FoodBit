@@ -68,27 +68,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             super(view);
             // todo: Define click listener for the ViewHolder's View
             //view.setOnClickListener();
-            switch(mode) {
-                // used to view ingredient details when an item in ingredient storage is clicked on
-                case INGREDIENT_STORAGE: {
-                    view.setOnClickListener(v -> {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("position", getAdapterPosition());
-                        Navigation.findNavController(v).navigate(R.id.action_fragment_ingredient_storage_to_fragment_ingredient_detail, bundle);
-                    });
-
-                }
-                case RECIPE_ADD: {
-                    // todo: recipe_add_ingredient_edit
-//                    view.setOnClickListener(v -> {
-//                        // put argument
-//                        Bundle bundle = new Bundle();
-//                        bundle.putInt("position", getAdapterPosition());
-//                    });
-                }
-                case RECIPE_DETAIL: {
-
-                }
+            // used to view ingredient details when an item in ingredient storage is clicked on
+            if (mode == INGREDIENT_STORAGE) {
+                view.setOnClickListener(v -> {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("position", getAdapterPosition());
+                    Navigation.findNavController(v).navigate(R.id.action_fragment_ingredient_storage_to_fragment_ingredient_detail, bundle);
+                });
             }
 
             // init UI
@@ -146,17 +132,15 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
         // set up UI
         descriptionView.setText(description);
+        if (mode == RECIPE_ADD || mode == RECIPE_DETAIL) {
+            descriptionView.setTextSize(14);
+        }
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);
 
         // define ingredient item's behaviour on click in recipe add page
         if (mode == RECIPE_ADD) {
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
-                }
-            });
+            holder.itemView.setOnClickListener(v -> itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition()));
         }
 
     }
