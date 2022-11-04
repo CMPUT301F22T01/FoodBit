@@ -49,8 +49,6 @@ public class RecipeBookFragment extends Fragment {
         super.onCreate(savedInstanceState);
         getActivity().setTitle("Recipe Book");
 
-
-
         // This fragment has options menu for the action bar
         setHasOptionsMenu(true);
     }
@@ -107,10 +105,13 @@ public class RecipeBookFragment extends Fragment {
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
 
+
+        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
         // add button launches RecipeAddFragment
         //addButton.setOnClickListener(addButtonClicked());
 
 
+        getActivity().setTitle("Recipe Book");
         return view;
     }
 
@@ -124,10 +125,14 @@ public class RecipeBookFragment extends Fragment {
         recipeBookUpdate();
     }
 
+
+// Changed from addButton to adding by clicking the add icon on the Top Action Bar
 //    @NonNull
 //    private View.OnClickListener addButtonClicked() {
 //        return v -> new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
 //    }
+
+
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
         adapter = new RecipeAdapter(recipeBook.getRecipes());
