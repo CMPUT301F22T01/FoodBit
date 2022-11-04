@@ -123,7 +123,7 @@ public class RecipeAddFragment extends DialogFragment
         {
             int itemId = item.getItemId();
             // done button behaviour
-            if (itemId == R.id.recipe_done) {
+            if (itemId == R.id.recipe_add_done) {
                 doneButtonClicked();
             }
             return false;

@@ -60,7 +60,7 @@ public class RecipeBookFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         //MenuInflater inflater =  getMenuInflater();
         // Inflating the menu resource file for this fragment
-        inflater.inflate(R.menu.recipe_add_top_app_bar, menu);
+        inflater.inflate(R.menu.recipe_book_top_app_bar, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
