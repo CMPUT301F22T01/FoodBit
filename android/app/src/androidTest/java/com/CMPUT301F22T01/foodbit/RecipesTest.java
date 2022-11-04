@@ -39,7 +39,7 @@ import org.junit.runner.RunWith;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
-public class UITest {
+public class RecipesTest {
 
     @Rule
     public ActivityScenarioRule<LoadingPageActivity> mActivityScenarioRule =
@@ -94,7 +94,7 @@ public class UITest {
                 allOf(childAtPosition(
                                 allOf(withId(R.id.recipe_add_top_bar),
                                         childAtPosition(
-                                                withId(R.id.coordinatorLayout),
+                                                withId(R.id.constraintLayout),
                                                 0)),
                                 1),
                         isDisplayed()));
