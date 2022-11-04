@@ -103,6 +103,7 @@ public class ShoppingCartFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
+        getActivity().setTitle("Shopping Cart");
         return view;
     }
 
