@@ -33,7 +33,6 @@ public class IngredientEditFragment extends DialogFragment {
     private Ingredient ingredient;
     private Context context;
 
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;

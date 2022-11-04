@@ -31,8 +31,6 @@ public class IngredientAddFragment extends DialogFragment {
     public final static String TAG = "AddIngredient";
     private Context context;
 
-    //getting ingredientStorage from the main activity
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;
@@ -152,7 +150,7 @@ public class IngredientAddFragment extends DialogFragment {
                     }
                     if (requiredFieldEntered) {
                         Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
-                        ingredientStorage.add(ingredient);
+                        MainActivity.ingredientStorage.add(ingredient);
                         dismiss();
                     }
                 }

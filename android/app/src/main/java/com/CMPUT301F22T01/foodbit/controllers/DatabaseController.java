@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -43,11 +44,11 @@ public class DatabaseController {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
             case "Meals":
-                return db.collection("Meals");
+                return MainActivity.mealPlanRef;
             case "Ingredients":
-                return db.collection("ingredient list");
+                return MainActivity.ingredientStorageRef;
             case "Recipe Book":
-                return db.collection("Recipe Book");
+                return MainActivity.recipeBookRef;
             default:
                 return null;
         }
@@ -57,6 +58,7 @@ public class DatabaseController {
         CollectionReference collectionReference = getCollectionReference();
         String id = collectionReference.document().getId();
         newItem.setId(id);
+        Log.e("db is adding: ",  id + "   " + collectionReference.getId() + collectionReference.getPath().toString());
         collectionReference.document(id).set(newItem);
     }
 
@@ -70,6 +72,7 @@ public class DatabaseController {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
                     for (int i =0; i< task.getResult().size(); i++) {
                         model = task.getResult().getDocuments().get(i).toObject(model.getClass());
                         items.add((T)model);
@@ -113,4 +116,5 @@ public class DatabaseController {
                     }
                 });
     }
+
 }
