@@ -23,7 +23,7 @@ public class MealPlanController {
 
     public MealPlanController(){
         mealPlan = new ArrayList<MealPlan>();
-         db = new DatabaseController("Meals");
+        db = new DatabaseController("Meals");
         this.loadAllMeals();
     }
 

@@ -36,7 +36,7 @@ public class RecipeBookFragment extends Fragment {
     public String TAG = "RecipeBook";
 
     // get recipe book from MainActivity
-    private final RecipeBook recipeBook = MainActivity.recipeBook;
+    private RecipeBook recipeBook;
 
     RecipeAdapter adapter;
 
@@ -52,8 +52,9 @@ public class RecipeBookFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+        // Inflate the layout for this fragment and initialize recipeBook
         View view = inflater.inflate(R.layout.fragment_recipe_book, container, false);
+        recipeBook = MainActivity.recipeBook;
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
@@ -94,7 +95,7 @@ public class RecipeBookFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void recipeBookUpdate() {
-        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Recipe Book");
+        CollectionReference recipeBookRef = MainActivity.recipeBookRef;
         recipeBookRef.addSnapshotListener((value, error) -> {
             if (error != null) {
                 Log.w(TAG, "Listen failed.", error);
