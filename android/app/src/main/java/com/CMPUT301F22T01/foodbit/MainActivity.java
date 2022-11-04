@@ -1,12 +1,18 @@
 package com.CMPUT301F22T01.foodbit;
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
 import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
@@ -35,24 +41,39 @@ public class MainActivity extends AppCompatActivity {
 
     public final static String TAG = "MainActivity";
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static String FID = "empty";
 
-    static CollectionReference recipeBookRef = db.collection("Recipe Book");
+
+    static CollectionReference recipeBookRef = db.collection(FID).document().collection("Recipe Book");
     public static RecipeBook recipeBook = new RecipeBook();
-    static CollectionReference ingredientStorageRef = db.collection("ingredient list");
+    static CollectionReference ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
     public static IngredientStorage ingredientStorage = new IngredientStorage();
 
 
     // access a Cloud Firestore instance and retrieve data
-    static CollectionReference mealPlanRef = db.collection("Meals");
+    static CollectionReference mealPlanRef = db.collection(FID).document().collection("Meals");
     public static MealPlanController mealPlan = new MealPlanController();
 
-    static String FID;
+    static MutableLiveData<String> listen = new MutableLiveData<>();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        listen.setValue("empty"); //Facilitate getting User DB
+        listen.observe(this,new Observer<String>() {
+            @Override
+            public void onChanged(String changedValue) {//assignUserDB has finished getting the DB
+                FID = listen.getValue();
+                recipeBookRef = db.collection(FID).document().collection("Recipe Book");
+                ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
+                mealPlanRef = db.collection(FID).document().collection("Meals");
+                Log.e("HELLLOOOO",FID);
+            }
+        });
+        assignUserDB();
         setUpNavBar();
 
 
@@ -65,38 +86,24 @@ public class MainActivity extends AppCompatActivity {
         NavHostFragment navHostFragment = (NavHostFragment) supportFragmentManager.findFragmentById(R.id.nav_container);
         assert navHostFragment != null;
         NavController navController = navHostFragment.getNavController();
-//        NavController.OnDestinationChangedListener(new On)
         BottomNavigationView bottomNav = findViewById(R.id.nav_bar);
         NavigationUI.setupWithNavController(bottomNav, navController);
 
     }
 
     private void assignUserDB() {
-        // [START get_installation_id]
-        moveTaskToBack(true);
         FirebaseInstallations.getInstance().getId()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override
                     public void onComplete(@NonNull Task<String> task) {
                         if (task.isSuccessful()) {
                             Log.e("Installations", "Installation ID: " + task.getResult());
-                            FID = task.getResult();
-//                            dbConnected = true;
-//                            notifyAll();
-                            recipeBookRef = db.collection(FID).document().collection("Recipe Book");
-                            ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
-                            mealPlanRef = db.collection(FID).document().collection("Meals");
-//                            mealPlan = new MealPlanController();
+                            listen.setValue(task.getResult());
                         } else {
                             Log.e("Installations", "Unable to get Installation ID");
-//                            recipeBookRef = db.collection(FID).document().collection("Recipe Book");
-//                            ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
-//                            mealPlanRef = db.collection(FID).document().collection("Meals");
-//                            mealPlan =
                         }
                     }
                 });
-        // [END get_installation_id]
     }
 
 }
