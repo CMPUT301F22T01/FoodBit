@@ -106,13 +106,6 @@ public class IngredientStorageFragment extends Fragment {
 
     }
 
-    /**
-     * Inflating the view and showing items in ingredient list(storage)
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return the view
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflating the view
@@ -133,22 +126,10 @@ public class IngredientStorageFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
-//            }
-//        });
-
         getActivity().setTitle("Ingredient Storage");
         return view;
     }
 
-    /**
-     * Updating the ingredient storage database
-     */
     @Override
     public void onResume() {
         super.onResume();

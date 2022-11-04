@@ -28,11 +28,18 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private final ArrayList<Ingredient> items;
     private final int mode;
 
+    /**
+     * Item click listener for ingredients
+     */
     public interface OnItemClickListener {
         void onIngredientItemClick(View v, int position);
     }
     private OnItemClickListener itemClickListener;
 
+    /**
+     * setting the item click listener
+     * @param itemClickListener the listener for item clicks
+     */
     public void setItemClickListener(OnItemClickListener itemClickListener) {
         this.itemClickListener = itemClickListener;
     }
@@ -95,12 +102,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         }
     }
 
-    /**
-     * Inflating the layout
-     * @param parent context from parent
-     * @param viewType the view to be displayed
-     * @return
-     */
     @NonNull
     @Override
     public IngredientAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -109,13 +110,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         return new IngredientAdapter.ViewHolder(view, mode);
     }
 
-    /**
-     * Setting the views for ingredient details that are initially shown
-     * Includes the ingredients description, amount, and unit
-     * If more details want to be viewed, the ingredient must be clicked on
-     * @param holder holder for the view
-     * @param position ingredient details to be presented
-     */
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
         // get value of each fields
@@ -145,10 +139,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
     }
 
-    /**
-     * Amount of items determined by the size
-     * @return number of items
-     */
     @Override
     public int getItemCount() {
         return items.size();
