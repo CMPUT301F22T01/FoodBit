@@ -47,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
         //declaring and initializing the action bar
         ActionBar actionBar;
         actionBar = getSupportActionBar();
+
         //changing the color to match
         ColorDrawable colorDrawable
                 = new ColorDrawable(Color.parseColor("#ff9d3f"));
         actionBar.setBackgroundDrawable(colorDrawable);
+
 
         setUpNavBar();
 
