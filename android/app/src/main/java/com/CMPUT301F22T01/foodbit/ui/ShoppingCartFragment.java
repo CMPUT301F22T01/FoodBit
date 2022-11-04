@@ -65,7 +65,7 @@ public class ShoppingCartFragment extends Fragment {
     {
         switch(item.getItemId())
         {
-            // Sorting the Recipes accordingly
+            // Sorting the Shopping List accordingly
             case R.id.filter1:
                 Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
