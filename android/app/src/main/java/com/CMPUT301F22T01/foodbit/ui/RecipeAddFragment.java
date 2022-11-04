@@ -87,6 +87,8 @@ public class RecipeAddFragment extends DialogFragment
 
         // photo picker contract register
 //        registerPhotoPicker();
+
+        setHasOptionsMenu(false);
     }
 
     @Override
@@ -111,17 +113,25 @@ public class RecipeAddFragment extends DialogFragment
         ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_add_ingredients_list);
 
+
         // set top bar behaviours
-        // close button behaviour
+        //topBar.setTitle("Recipe Book");
+
+        //close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
-        topBar.setOnMenuItemClickListener(item -> {
-            int itemId = item.getItemId();
-            // done button behaviour
-            if (itemId == R.id.recipe_add_done) {
-                doneButtonClicked();
-            }
-            return false;
-        });
+//        topBar.setOnMenuItemClickListener(item ->
+//        {
+//            int itemId = item.getItemId();
+//            // done button behaviour
+//            if (itemId == R.id.AddRecipe) {
+//                doneButtonClicked();
+//            }
+//            return false;
+//        });
+
+
+
+
 
         ingredientsBar.setOnMenuItemClickListener(AddIngredientsButtonClicked());
         setUpRecyclerView();

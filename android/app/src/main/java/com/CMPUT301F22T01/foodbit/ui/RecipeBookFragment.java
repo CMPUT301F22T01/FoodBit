@@ -5,9 +5,12 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -45,28 +48,76 @@ public class RecipeBookFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Recipe Book");
+
+
+
+        // This fragment has options menu for the action bar
+        setHasOptionsMenu(true);
+    }
+
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //MenuInflater inflater =  getMenuInflater();
+        // Inflating the menu resource file for this fragment
+        inflater.inflate(R.menu.recipe_add_top_app_bar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {   //Adding a Recipe
+            case R.id.recipe_add:
+
+                Toast.makeText(getActivity(), "Adding a Recipe", Toast.LENGTH_SHORT).show();
+                //launches RecipeAddFragment
+                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+                return true;
+            case R.id.filter1:
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            case R.id.filter2:
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            case R.id.filter3:
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            case R.id.filter4:
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+
+    @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState)
+    {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_recipe_book, container, false);
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
-        Button addButton = view.findViewById(R.id.recipe_book_add_button);
+
+        //Button addButton = view.findViewById(R.id.recipe_book_add_button);
 
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
 
         // add button launches RecipeAddFragment
-        addButton.setOnClickListener(addButtonClicked());
+        //addButton.setOnClickListener(addButtonClicked());
+
 
         return view;
     }
+
+
 
     @Override
     public void onResume() {
@@ -76,10 +127,10 @@ public class RecipeBookFragment extends Fragment {
         recipeBookUpdate();
     }
 
-    @NonNull
-    private View.OnClickListener addButtonClicked() {
-        return v -> new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-    }
+//    @NonNull
+//    private View.OnClickListener addButtonClicked() {
+//        return v -> new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+//    }
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
         adapter = new RecipeAdapter(recipeBook.getRecipes());
