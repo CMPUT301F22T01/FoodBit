@@ -1,8 +1,11 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -16,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.ArrayList;
 
@@ -114,6 +118,22 @@ public class DatabaseController {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w("delete", "Error deleting document", e);
+                    }
+                });
+    }
+
+    public void assignUserDB(MutableLiveData<String> listen) {
+        //Query firebase for our installation ID.
+        FirebaseInstallations.getInstance().getId()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            Log.e("Installations", "Installation ID: " + task.getResult());
+                            listen.setValue(task.getResult());
+                        } else {
+                            Log.e("Installations", "Unable to get Installation ID");
+                        }
                     }
                 });
     }
