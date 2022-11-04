@@ -78,7 +78,7 @@ public class IngredientStorage implements Serializable {
         String TAG = IngredientAddFragment.TAG;
         assert !ingredients.contains(ingredient) : "This ingredient is already in the list!";
         db = FirebaseFirestore.getInstance();
-        CollectionReference ingredientStorageRef = db.collection("Ingredient List");
+        CollectionReference ingredientStorageRef = db.collection("ingredient list");
         ingredientStorageRef.add(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
@@ -115,7 +115,7 @@ public class IngredientStorage implements Serializable {
         String TAG = "DeleteIngredient";
         assert ingredients.contains(ingredient) : "this ingredient is not in the list";
         db = FirebaseFirestore.getInstance();
-        db.collection("Ingredient List").document(ingredient.getId())
+        db.collection("ingredient list").document(ingredient.getId())
                 .delete()
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
@@ -134,7 +134,7 @@ public class IngredientStorage implements Serializable {
         String TAG = "EditIngredient";
         assert ingredients.contains(ingredient) : "this ingredient is not in the list";
         db = FirebaseFirestore.getInstance();
-        db.collection("Ingredient List").document(ingredient.getId())
+        db.collection("ingredient list").document(ingredient.getId())
                 .set(ingredient)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override

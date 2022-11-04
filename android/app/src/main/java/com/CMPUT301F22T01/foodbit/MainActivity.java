@@ -1,7 +1,12 @@
 package com.CMPUT301F22T01.foodbit;
 
+//import android.app.FragmentManager;
+
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.NavController;
@@ -9,18 +14,11 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
-//import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
-//import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
-//import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
-//import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-
-
-import java.util.List;
 
 /**
  * The main activity of the app.
@@ -46,10 +44,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        ActionBar actionBar;
+        actionBar = getSupportActionBar();
+        ColorDrawable colorDrawable
+                = new ColorDrawable(Color.parseColor("#ff9d3f"));
+        actionBar.setBackgroundDrawable(colorDrawable);
+        //actionBar.setTitle("Changed Name");
+
         setUpNavBar();
 
 
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater =  getMenuInflater();
+//        inflater.inflate(R.menu.recipe_add_top_app_bar, menu);
+//        return true;
+//    }
+
 
 
     private void setUpNavBar(){
