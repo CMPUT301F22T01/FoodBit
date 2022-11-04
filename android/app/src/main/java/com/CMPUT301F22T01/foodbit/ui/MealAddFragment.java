@@ -45,9 +45,10 @@ public class MealAddFragment extends DialogFragment {
     private Context context;
 
     private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
-    private final MealPlanController mealPlanController = MainActivity.mealPlan;
+    private MealPlanController mealPlanController;
     private final RecipeBook recipeBook = MainActivity.recipeBook;
     private int positionSelected;
+    private Boolean notRealItem = false;
     private MealPlan meal;
 
     MaterialToolbar topBar;
@@ -106,6 +107,7 @@ public class MealAddFragment extends DialogFragment {
         servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
 
         //Populate dropdown with ingredients and recipes
+         mealPlanController = MainActivity.mealPlan;
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;
@@ -113,6 +115,7 @@ public class MealAddFragment extends DialogFragment {
             // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
             Log.e("MealAdd","Ingredient and recipe size is 0 so we're not hitting DB?");
             items = new String [] {"test1", "test2", "test3", "test4", "test5"};
+            notRealItem = true;
         } else {
             items = new String[ingredientList.size() + recipeList.size()];
             int ingredientSize = ingredientList.size();
@@ -161,16 +164,19 @@ public class MealAddFragment extends DialogFragment {
                 } else {
                     meal.setServings(Integer.valueOf(servings));
                     int ingredientSize = ingredientList.size();
-                    if (positionSelected < ingredientSize) {
-                        meal.setRecipeID(ingredientList.get(positionSelected).getId());
-                        meal.setIngredient(true);
-                        Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
-                    } else {
-                        meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
-                        meal.setIngredient(false);
-                        meal.setIngredientList(recipeList.get(positionSelected-ingredientSize).doGetIngredientList());
-                        Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
+                    if (!notRealItem) { // Is a real item. Fixed DB Issues basically
+                        if (positionSelected < ingredientSize) {
+                            meal.setRecipeID(ingredientList.get(positionSelected).getId());
+                            meal.setIngredient(true);
+                            Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
+                        } else {
+                            meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
+                            meal.setIngredient(false);
+                            meal.setIngredientList(recipeList.get(positionSelected-ingredientSize).doGetIngredientList());
+                            Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
+                        }
                     }
+
                     mealPlanController.addMeal(meal);
                     dismiss();
                 }

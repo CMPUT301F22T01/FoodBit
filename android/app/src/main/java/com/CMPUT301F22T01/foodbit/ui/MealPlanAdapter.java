@@ -61,6 +61,9 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
     public MealPlanAdapter(ArrayList<MealPlan> items) {
         this.items = items;
     }
+    public void updateItems(ArrayList<MealPlan> items) {
+        this.items = items;
+    }
 
     /**
      * Provide a reference to the type of views that you are using

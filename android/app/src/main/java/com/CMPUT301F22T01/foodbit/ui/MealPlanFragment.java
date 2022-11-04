@@ -36,7 +36,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
     public String TAG = "MealPlan";
 
     // get recipe book from MainActivity
-    private final MealPlanController mealPlan = MainActivity.mealPlan;
+    private MealPlanController mealPlan;
 
     MealPlanAdapter adapter;
 
@@ -62,8 +62,9 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
         Button addButton = view.findViewById(R.id.btn_meal_plan_add);
 
         // set RecyclerView
-        mealPlan.loadAllMeals();
+        this.mealPlan = MainActivity.mealPlan;
         adapter = new MealPlanAdapter(mealPlan.getArrayList());
+        Log.e(TAG,"init = " + mealPlan.getArrayList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -99,9 +100,8 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
     @Override
     public void onResume() {
         super.onResume();
-
         // real time updates of the recipeBook
-        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Meals");
+        CollectionReference recipeBookRef = MainActivity.mealPlanRef;
         recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -116,7 +116,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
                     newRecipes.add(doc.toObject(MealPlan.class));
                 }
                 mealPlan.update(newRecipes);
-                Log.e(TAG, "Current recipes: " + mealPlan.getArrayList());
+                Log.e(TAG, "Current recipes: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
                 adapter.notifyDataSetChanged();
             }
         });
