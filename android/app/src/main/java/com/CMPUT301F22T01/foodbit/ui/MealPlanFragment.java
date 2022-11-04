@@ -75,6 +75,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
                 //launches newFragment if there are ingredients/recipes
                 RecipeBook recipeBook = MainActivity.recipeBook;
                 IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
+                ingredientStorage.loadAllFromDB();
 
                 if (ingredientStorage.getIngredients().size() + recipeBook.getRecipes().size() == 0 ) {
                     Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
