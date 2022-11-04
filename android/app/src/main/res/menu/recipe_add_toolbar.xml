@@ -4,10 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/recipe_done"
+        android:id="@+id/recipe_add_done"
         android:icon="@drawable/ic_check_24"
-        android:title="AddRecipe"
-        app:showAsAction = "ifRoom"
-        />
+        android:title="ADD"
+        app:showAsAction="ifRoom" />
 
 </menu>
