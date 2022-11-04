@@ -311,7 +311,7 @@ public class RecipeAddFragment extends DialogFragment
     }
 
     @Override
-    public void onItemClick(View v, int position) {
+    public void onIngredientItemClick(View v, int position) {
         RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
     }
 }

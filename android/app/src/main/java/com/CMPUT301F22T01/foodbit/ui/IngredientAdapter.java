@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -30,7 +29,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     private final int mode;
 
     public interface OnItemClickListener {
-        void onItemClick(View v, int position);
+        void onIngredientItemClick(View v, int position);
     }
     private OnItemClickListener itemClickListener;
 
@@ -155,7 +154,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    itemClickListener.onItemClick(v, holder.getAdapterPosition());
+                    itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
                 }
             });
         }
