@@ -19,17 +19,17 @@ public class MealPlan implements dbObject {
     /**
      *Looking to model MealPlans as Collections
      * MealPlan (Collection)
-     *        --mealID1 (Document - Ingredient, ID#20)
+     *        --ID1 (Document - Ingredient, ID#20)
      *              --name: "Apple"
      *              --servingSize: "2"
-     *              --ID: "20"
+     *              --recipeID: "20"
      *              --isIngredient: "1"
      *              --Date: "2022-10-23"
-     *        --mealID2 (Document - Recipe, ID#3)
+     *        --ID2 (Document - Recipe, ID#3)
      *              --name: "Pie"
      *              --servings: "1"
      *              --Date: "2022-10-23"
-     *              --ID: "3"
+     *              --recipeID: "3"
      *              --isIngredient: "0"
      *              --ingredientList: {"231":3, "23":5} //Need 3 of ingredient 231s and 5 of ingredient 23
      *
@@ -37,15 +37,15 @@ public class MealPlan implements dbObject {
      * MealPlanController should be able to then query the recipe controller for the appropriate
      * ingredients for recipes and provide shopping list with the required ingredients
      *
-     * TODO: Keep in mind ID and mealID are flipped for now. Fix by friday.
      */
     private String name;
     private int servings;
     private String id;
     private boolean isIngredient;
     private Date date;
-    private Map<Integer,Integer> ingredientList;
-    private String mealID = null;
+
+    private Map<String,Float> ingredientList;
+    private String recipeID;
 
     public String getName() {
         return name;
@@ -64,11 +64,11 @@ public class MealPlan implements dbObject {
     }
 
     public String getId() {
-        return mealID;
+        return id;
     }
 
     public void setId(String id) {
-        this.mealID = id;
+        this.id = id;
     }
 
     public boolean isIngredient() {
@@ -87,25 +87,26 @@ public class MealPlan implements dbObject {
         this.date = date;
     }
 
-    public Map<Integer, Integer> getIngredientList() {
+    public Map<String, Float> getIngredientList() {
         return ingredientList;
     }
 
-    public void setIngredientList(Map<Integer, Integer> ingredientList) {
+    public void setIngredientList(Map<String, Float> ingredientList) {
         this.ingredientList = ingredientList;
     }
 
-    public String getMealID() {
-        return id;
+
+    public String getRecipeID() {
+        return recipeID;
     }
 
-    public void setMealID(String mealID) {
-        this.id = mealID;
+    public void setRecipeID(String recipeID) {
+        this.recipeID = recipeID;
     }
 
     public MealPlan(){};
 
-    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<Integer, Integer> ingredientList) {
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, Map<String, Float> ingredientList) {
         this.name = name;
         this.servings = servings;
         this.id = id;

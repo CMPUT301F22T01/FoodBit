@@ -154,32 +154,34 @@ public class RecipeBookFragment extends Fragment {
             ArrayList<Recipe> newRecipes = new ArrayList<>();
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
-//                    newRecipes.add(doc.toObject(Recipe.class));
-                Map<String, Object> data = doc.getData();
-                String title = (String) data.get("title");
-                int prepTime = (int) (long) data.get("prepTime");
-                int numServings = (int) (long) data.get("numServings");
-                String category = (String) data.get("category");
-                String comments = (String) data.get("comments");
-                Uri photo;
-                if (data.get("photo") != null) {
-                    photo = Uri.parse((String) data.get("photo"));
-                } else {photo = null;}
-                ArrayList<HashMap<String, Object>> ingredientsData = (ArrayList<HashMap<String, Object>>) data.get("ingredients");
-                ArrayList<Ingredient> ingredients = new ArrayList<>();
-                assert ingredientsData != null;
-                for (HashMap<String, Object> ingredientData : ingredientsData) {
-                    ingredients.add(new Ingredient(
-                            (String) ingredientData.get("description"),
-                            ((float) (double) ingredientData.get("amount")),
-                            (String) ingredientData.get("unit"),
-                            (String) ingredientData.get("category")
-                    ));
-                }
-                Recipe newRecipe = new Recipe(
-                        doc.getId(), title, prepTime, numServings, category, comments, photo, ingredients);
+                Recipe newRecipe = doc.toObject(Recipe.class);
+                newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
-                Log.d(TAG, "recipe id: "+newRecipe.getId());
+//                Map<String, Object> data = doc.getData();
+//                String title = (String) data.get("title");
+//                int prepTime = (int) (long) data.get("prepTime");
+//                int numServings = (int) (long) data.get("numServings");
+//                String category = (String) data.get("category");
+//                String comments = (String) data.get("comments");
+//                Uri photo;
+//                if (data.get("photo") != null) {
+//                    photo = Uri.parse((String) data.get("photo"));
+//                } else {photo = null;}
+//                ArrayList<HashMap<String, Object>> ingredientsData = (ArrayList<HashMap<String, Object>>) data.get("ingredients");
+//                ArrayList<Ingredient> ingredients = new ArrayList<>();
+//                assert ingredientsData != null;
+//                for (HashMap<String, Object> ingredientData : ingredientsData) {
+//                    ingredients.add(new Ingredient(
+//                            (String) ingredientData.get("description"),
+//                            ((float) (double) ingredientData.get("amount")),
+//                            (String) ingredientData.get("unit"),
+//                            (String) ingredientData.get("category")
+//                    ));
+//                }
+//                Recipe newRecipe = new Recipe(
+//                        doc.getId(), title, prepTime, numServings, category, comments, photo, ingredients);
+//                newRecipes.add(newRecipe);
+//                Log.d(TAG, "recipe id: "+newRecipe.getId());
             }
             recipeBook.setRecipes(newRecipes);
             Log.d(TAG, "current recipe book: "+recipeBook);
