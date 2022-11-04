@@ -1,6 +1,5 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,7 +13,6 @@ import androidx.fragment.app.Fragment;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -26,7 +24,7 @@ import java.util.ArrayList;
 /**
  * A pop up dialog in the <code>recipe add screen</code> that allows users to enter required and optional information to add a ingredient to the recipe.
  */
-public class RecipeAddIngredientAddFragment extends DialogFragment {
+public class RecipeAddIngredientFragment extends DialogFragment {
 
     public static final String TAG = "RecipeAddIngredientAdd";
     public static final int MODE_ADD = 0;
@@ -62,34 +60,34 @@ public class RecipeAddIngredientAddFragment extends DialogFragment {
     private int position;
 
     /**
-     * When adding a new ingredient, instantiate a <code>RecipeAddIngredientAddFragment</code> to
+     * When adding a new ingredient, instantiate a <code>RecipeAddIngredientFragment</code> to
      * pass in the list of all titles of added ingredients (to avoid duplicate names).
      * @param titleList the list of all titles of added ingredients
-     * @return an instance of <code>RecipeAddIngredientAddFragment</code>
+     * @return an instance of <code>RecipeAddIngredientFragment</code>
      */
-    public static RecipeAddIngredientAddFragment newInstance(ArrayList<String> titleList) {
+    public static RecipeAddIngredientFragment newInstance(ArrayList<String> titleList) {
         Bundle args = new Bundle();
         args.putStringArrayList("title list", titleList);
         args.putInt("mode", MODE_ADD);
-        RecipeAddIngredientAddFragment fragment = new RecipeAddIngredientAddFragment();
+        RecipeAddIngredientFragment fragment = new RecipeAddIngredientFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
     /**
-     * When editing an ingredient, instantiate a <code>RecipeAddIngredientAddFragment</code> to pass
+     * When editing an ingredient, instantiate a <code>RecipeAddIngredientFragment</code> to pass
      * in the ingredient to edit and its position in the adapter to update/delete the edited
      * ingredients.
      * @param oldIngredient the edited ingredient
      * @param position the position of the ingredient in the adapter
-     * @return an instance of <code>RecipeAddIngredientAddFragment</code>
+     * @return an instance of <code>RecipeAddIngredientFragment</code>
      */
-    public static RecipeAddIngredientAddFragment newInstance(Ingredient oldIngredient, int position) {
+    public static RecipeAddIngredientFragment newInstance(Ingredient oldIngredient, int position) {
         Bundle args = new Bundle();
         args.putSerializable("ingredient", oldIngredient);
         args.putInt("mode", MODE_EDIT);
         args.putInt("position", position);
-        RecipeAddIngredientAddFragment fragment = new RecipeAddIngredientAddFragment();
+        RecipeAddIngredientFragment fragment = new RecipeAddIngredientFragment();
         fragment.setArguments(args);
         return fragment;
     }

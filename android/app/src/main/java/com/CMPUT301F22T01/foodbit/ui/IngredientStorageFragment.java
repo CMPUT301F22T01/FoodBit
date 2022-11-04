@@ -102,6 +102,7 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+
         CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
         ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 

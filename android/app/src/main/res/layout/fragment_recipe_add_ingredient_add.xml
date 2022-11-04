@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.RecipeAddIngredientAddFragment" >
+    tools:context=".ui.RecipeAddIngredientFragment" >
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipe_add_ingredient_add_layout_description"

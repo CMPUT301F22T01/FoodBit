@@ -20,30 +20,42 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class DatabaseController {
-    private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private CollectionReference collectionReference;
+    private FirebaseFirestore db;
+    private String mode;
     private Object model;
 
     public DatabaseController(String mode){
-
+        this.mode = mode;
         switch(mode) {
             case "Meals":
-                collectionReference = MainActivity.mealPlanRef;
                 this.model = new MealPlan();
                 break;
             case "Ingredients":
-                collectionReference =  MainActivity.ingredientStorageRef;
                 this.model  = new Ingredient();
                 break;
-            case "Recipes":
-                collectionReference = MainActivity.recipeBookRef;
+            case "Recipe Book":
                 this.model  = new Recipe();
                 break;
             default:
         }
     }
 
+    private CollectionReference getCollectionReference() {
+        db = FirebaseFirestore.getInstance();
+        switch (mode) {
+            case "Meals":
+                return MainActivity.mealPlanRef;
+            case "Ingredients":
+                return MainActivity.ingredientStorageRef;
+            case "Recipe Book":
+                return MainActivity.recipeBookRef;
+            default:
+                return null;
+        }
+    }
+
     public void addItem(dbObject newItem) {
+        CollectionReference collectionReference = getCollectionReference();
         String id = collectionReference.document().getId();
         newItem.setId(id);
         Log.e("db is adding: ",  id + "   " + collectionReference.getId() + collectionReference.getPath().toString());
@@ -52,6 +64,7 @@ public class DatabaseController {
 
     public <T> void getAllItems(ArrayList<T> items) {
         //TODO: Add optional 'order by'
+        CollectionReference collectionReference = getCollectionReference();
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -71,6 +84,7 @@ public class DatabaseController {
     }
 
     public void editItem(dbObject editItem) {
+        CollectionReference collectionReference = getCollectionReference();
         collectionReference.document(editItem.getId())
                 .set(editItem)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -87,7 +101,20 @@ public class DatabaseController {
                 });
     }
 
-
-
+    public void deleteItem(dbObject item) {
+        CollectionReference collectionReference = getCollectionReference();
+        collectionReference.document(item.getId()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("delete", "DocumentSnapshot successfully deleted!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("delete", "Error deleting document", e);
+                    }
+                });
+    }
 
 }
