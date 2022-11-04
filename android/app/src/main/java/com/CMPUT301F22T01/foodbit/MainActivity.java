@@ -9,6 +9,7 @@ import android.os.Bundle;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.MutableLiveData;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
@@ -16,6 +17,11 @@ import androidx.navigation.ui.NavigationUI;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+//import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
+//import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
+//import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
+//import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+import com.CMPUT301F22T01.foodbit.ui.MealPlanAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -27,17 +33,19 @@ public class MainActivity extends AppCompatActivity {
 
 
     public final static String TAG = "MainActivity";
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-
-    final CollectionReference recipeBookRef = db.collection("Recipe Book");
-    public static RecipeBook recipeBook = new RecipeBook();
-    final CollectionReference ingredientStorageRef = db.collection("ingredient list");
-    public static IngredientStorage ingredientStorage = new IngredientStorage();
-
+    static FirebaseFirestore db = FirebaseFirestore.getInstance();
+    static String FID = LoadingPageActivity.FID;
 
     // access a Cloud Firestore instance and retrieve data
-    final CollectionReference mealPlanRef = db.collection("Meals");
-    public static MealPlanController mealPlan = new MealPlanController();
+    public static CollectionReference recipeBookRef;
+    public static RecipeBook recipeBook;
+    public static CollectionReference ingredientStorageRef;
+    public static IngredientStorage ingredientStorage;
+    public static CollectionReference mealPlanRef;
+    public static MealPlanController mealPlan;
+
+    public static MutableLiveData<String> listen = new MutableLiveData<>(); //Listener for FID from firebase
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,9 +62,8 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
 
 
+
         setUpNavBar();
-
-
     }
 
 
@@ -69,6 +76,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = navHostFragment.getNavController();
         BottomNavigationView bottomNav = findViewById(R.id.nav_bar);
         NavigationUI.setupWithNavController(bottomNav, navController);
+
     }
 
+
+
 }
+

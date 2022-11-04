@@ -41,9 +41,12 @@ import org.junit.runner.RunWith;
 @RunWith(AndroidJUnit4.class)
 public class UITest {
 
+//    @Rule
+//    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
+//            new ActivityScenarioRule<>(MainActivity.class);
     @Rule
-    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityScenarioRule<LoadingPageActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(LoadingPageActivity.class);
 
     @Test
     // The following tests are meant to be run together
