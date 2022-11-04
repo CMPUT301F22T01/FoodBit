@@ -1,7 +1,5 @@
 package com.CMPUT301F22T01.foodbit;
 
-//import android.app.FragmentManager;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
