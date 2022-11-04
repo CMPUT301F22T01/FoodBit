@@ -20,7 +20,7 @@ import java.util.ArrayList;
 
 public class DatabaseController {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    final CollectionReference recipeBookRef = db.collection("recipe book");
+    final CollectionReference recipeBookRef = db.collection("Recipe Book");
     final CollectionReference ingredientStorageRef = db.collection("ingredient list");
     final CollectionReference mealPlanRef = db.collection("Meals");
     private CollectionReference collectionReference;
@@ -39,7 +39,7 @@ public class DatabaseController {
                 collectionReference = ingredientStorageRef;
                 this.model  = new Ingredient();
                 break;
-            case "Recipes":
+            case "Recipe Book":
                 collectionReference = recipeBookRef;
                 this.model  = new Recipe();
                 break;
@@ -89,7 +89,20 @@ public class DatabaseController {
                 });
     }
 
-//    public void
+    public void deleteItem(dbObject item) {
+        collectionReference.document(item.getId()).delete()
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void unused) {
+                        Log.d("delete", "DocumentSnapshot successfully deleted!");
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("delete", "Error deleting document", e);
+                    }
+                });
+    }
 
 
 

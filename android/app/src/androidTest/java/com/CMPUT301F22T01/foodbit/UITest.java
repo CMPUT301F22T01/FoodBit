@@ -8,7 +8,9 @@ import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -66,6 +68,8 @@ public class UITest {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        Thread.sleep(2000);
+
         // check if navigated to the recipe book screen
         ViewInteraction textView = onView(
                 allOf(withId(com.google.android.material.R.id.navigation_bar_item_large_label_view), withText("Recipes"),
@@ -73,8 +77,6 @@ public class UITest {
                                 withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"))))),
                         isDisplayed()));
         textView.check(matches(isDisplayed()));
-
-        Thread.sleep(2000);
 
         // click on add button on recipe book screen
         ViewInteraction materialButton = onView(
@@ -527,16 +529,19 @@ public class UITest {
         ViewInteraction textView20 = onView(
                 allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
                         withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView20.check(matches(withText("10 minutes")));
         ViewInteraction textView21 = onView(
                 allOf(withId(R.id.item_recipe_num_servings), withText("×1"),
                         withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView21.check(matches(withText("×1")));
         ViewInteraction textView22 = onView(
                 allOf(withId(R.id.item_recipe_comments), withText("A simple lunch."),
                         withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView22.check(matches(withText("A simple lunch.")));
     }
@@ -549,7 +554,7 @@ public class UITest {
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
         Thread.sleep(2000);
-        recyclerView.perform(actionOnItemAtPosition(0, click()));
+        recyclerView.perform(actionOnItem(hasDescendant(withText("Sandwich")),click()));
 
         // check title
         ViewInteraction viewGroup = onView(
@@ -612,27 +617,27 @@ public class UITest {
                         isDisplayed()));
         appCompatImageButton.perform(click());
 
-        // check item information in the recipe book screen
-        ViewInteraction textView9 = onView(
-                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
-                        isDisplayed()));
-        textView9.check(matches(withText("Sandwich")));
-        ViewInteraction textView10 = onView(
-                allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
-                        isDisplayed()));
-        textView10.check(matches(withText("10 minutes")));
-        ViewInteraction textView11 = onView(
-                allOf(withId(R.id.item_recipe_num_servings), withText("×1"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
-                        isDisplayed()));
-        textView11.check(matches(withText("×1")));
-        ViewInteraction textView12 = onView(
-                allOf(withId(R.id.item_recipe_comments), withText("A simple lunch."),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
-                        isDisplayed()));
-        textView12.check(matches(withText("A simple lunch.")));
+//        // check item information in the recipe book screen
+//        ViewInteraction textView9 = onView(
+//                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+//                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+//                        isDisplayed()));
+//        textView9.check(matches(withText("Sandwich")));
+//        ViewInteraction textView10 = onView(
+//                allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
+//                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+//                        isDisplayed()));
+//        textView10.check(matches(withText("10 minutes")));
+//        ViewInteraction textView11 = onView(
+//                allOf(withId(R.id.item_recipe_num_servings), withText("×1"),
+//                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+//                        isDisplayed()));
+//        textView11.check(matches(withText("×1")));
+//        ViewInteraction textView12 = onView(
+//                allOf(withId(R.id.item_recipe_comments), withText("A simple lunch."),
+//                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+//                        isDisplayed()));
+//        textView12.check(matches(withText("A simple lunch.")));
     }
 
     public void recipeDeleteTest() {
@@ -640,6 +645,7 @@ public class UITest {
         ViewInteraction viewGroup = onView(
                 allOf(withParent(allOf(withId(R.id.recyclerView_recipe_book),
                                 withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                        hasDescendant(withText("Sandwich")),
                         isDisplayed()));
         viewGroup.check(matches(isDisplayed()));
 
@@ -649,7 +655,7 @@ public class UITest {
                         childAtPosition(
                                 withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
                                 0)));
-        recyclerView.perform(actionOnItemAtPosition(0, click()));
+        recyclerView.perform(actionOnItem(hasDescendant(withText("Sandwich")),click()));
 
         // click on the delete button
         ViewInteraction materialButton = onView(
@@ -666,6 +672,7 @@ public class UITest {
         ViewInteraction viewGroup2 = onView(
                 allOf(withParent(allOf(withId(R.id.recyclerView_recipe_book),
                                 withParent(IsInstanceOf.instanceOf(android.view.ViewGroup.class)))),
+                        hasDescendant(withText("Sandwich")),
                         isDisplayed()));
         viewGroup2.check(doesNotExist());
     }
