@@ -34,14 +34,14 @@ public class MealPlanController {
     }
 
     /**
-     * Loads the MealPlan array from the database into the local array
+     * Loads the local cache of the meal plan from the database into the local array
      */
     public void loadAllMeals() {
         db.getAllItems(mealPlan);
     }
 
     /**
-     * Sorts the mealPlan array by date
+     * Sort and return a cache of the mealPlan by date
      * @return the sorted array of MealPlans
      */
     public ArrayList<MealPlan> getArrayList() {
@@ -54,8 +54,8 @@ public class MealPlanController {
     }
 
     /**
-     * Updates the array of MealPlans
-     * @param newMealPlan the array of MealPlans
+     * Update cache with new meals
+     * @param newMealPlan
      */
     public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlan.clear();
@@ -63,7 +63,7 @@ public class MealPlanController {
     }
 
     /**
-     * Converts the array of MealPlans to a string
+     * Converts the array of MealPlans to a string of their IDs
      * @return
      */
     public String toString() {
