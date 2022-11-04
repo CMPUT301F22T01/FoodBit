@@ -5,18 +5,15 @@ import static org.junit.jupiter.api.Assertions.*;
 import android.net.Uri;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.net.URI;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
 class RecipeTest {
     private Ingredient mockIngredient() {
-        return new Ingredient("bread", 2, "slice", "pantry");
+        return new Ingredient("bread", 2F, "slice", "pantry");
     }
 
     private ArrayList<Ingredient> mockIngredientList() {
@@ -127,7 +124,7 @@ class RecipeTest {
 
     @Test
     void setIngredients() {
-        ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(new Ingredient("new ingredient", 0, null, null)));
+        ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(new Ingredient("new ingredient", (float) 0, null, null)));
         Recipe recipe = mockRecipe();
         assertEquals("bread", recipe.getIngredients().get(0).getDescription());
         recipe.setIngredients(ingredients);

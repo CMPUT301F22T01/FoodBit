@@ -5,6 +5,19 @@
     android:id="@+id/nav_menu"
     app:startDestination="@id/fragment_recipe_book">
     <fragment
+        android:id="@+id/fragment_ingredient_edit"
+        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment"
+        android:label="IngredientEditFragment"
+        tools:layout="@layout/fragment_ingredient_edit">
+        <action
+            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_storage"
+            app:destination="@+id/fragment_ingredient_storage"
+            app:enterAnim="@anim/slide_left_enter"
+            app:popEnterAnim="@anim/slide_right_exit"/>
+    </fragment>
+
+
+    <fragment
         android:id="@+id/fragment_ingredient_storage"
         android:name="com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment"
         android:label="IngredientStorageFragment"
@@ -61,4 +74,5 @@
             app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientStorage" />
 
     </fragment>
+
 </navigation>
