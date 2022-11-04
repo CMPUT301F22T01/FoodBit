@@ -101,7 +101,7 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        CollectionReference ingredientStorageRef = FirebaseFirestore.getInstance().collection("Ingredient List");
+        CollectionReference ingredientStorageRef = FirebaseFirestore.getInstance().collection("ingredient list");
         ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @SuppressLint("NotifyDataSetChanged")
