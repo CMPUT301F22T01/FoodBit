@@ -45,7 +45,7 @@ public class MealAddFragment extends DialogFragment {
     private Context context;
 
     private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
-    private final MealPlanController mealPlanController = MainActivity.mealPlan;
+    private MealPlanController mealPlanController;
     private final RecipeBook recipeBook = MainActivity.recipeBook;
     private int positionSelected;
     private Boolean notRealItem = false;
@@ -107,6 +107,7 @@ public class MealAddFragment extends DialogFragment {
         servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
 
         //Populate dropdown with ingredients and recipes
+         mealPlanController = MainActivity.mealPlan;
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;

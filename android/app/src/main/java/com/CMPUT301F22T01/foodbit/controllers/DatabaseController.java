@@ -23,17 +23,14 @@ public class DatabaseController {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     static CollectionReference recipeBookRef = MainActivity.recipeBookRef;
     static CollectionReference ingredientStorageRef =  MainActivity.ingredientStorageRef;
-    static CollectionReference mealPlanRef =  MainActivity.mealPlanRef;
     private CollectionReference collectionReference;
-    private String mode;
     private Object model;
 
     public DatabaseController(String mode){
-        this.mode = mode;
 
         switch(mode) {
             case "Meals":
-                collectionReference = mealPlanRef;
+                collectionReference = MainActivity.mealPlanRef;
                 this.model = new MealPlan();
                 break;
             case "Ingredients":
@@ -51,6 +48,7 @@ public class DatabaseController {
     public void addItem(dbObject newItem) {
         String id = collectionReference.document().getId();
         newItem.setId(id);
+        Log.e("db is adding: ",  id + "   " + collectionReference.getId() + collectionReference.getPath().toString());
         collectionReference.document(id).set(newItem);
     }
 
@@ -63,6 +61,7 @@ public class DatabaseController {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
                     for (int i =0; i< task.getResult().size(); i++) {
                         model = task.getResult().getDocuments().get(i).toObject(model.getClass());
                         items.add((T)model);

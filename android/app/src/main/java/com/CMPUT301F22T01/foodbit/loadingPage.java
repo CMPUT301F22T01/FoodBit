@@ -2,6 +2,8 @@ package com.CMPUT301F22T01.foodbit;
 
 import static com.CMPUT301F22T01.foodbit.MainActivity.db;
 import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
+import static com.CMPUT301F22T01.foodbit.MainActivity.mealPlan;
+
 import com.CMPUT301F22T01.foodbit.MainActivity;
 
 import androidx.annotation.NonNull;
@@ -32,11 +34,13 @@ public class loadingPage extends AppCompatActivity {
             public void onChanged(String changedValue) {//assignUserDB has finished getting the DB
                 Log.e("HELLLOOOO",listen.getValue());
                 FID = listen.getValue();
+                MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
+                MainActivity.mealPlan = new MealPlanController();
+                mealPlan.loadAllMeals();
+                MainActivity.mealPlanAdapter = new MealPlanAdapter(MainActivity.mealPlan.getArrayList());
+
                 Intent myIntent = new Intent(loadingPage.this, MainActivity.class );
                 loadingPage.this.startActivity(myIntent);
-                MainActivity.mealPlanRef = db.collection(FID).document().collection("Meals");
-                MainActivity.mealPlan = new MealPlanController();
-                MainActivity.mealPlanAdapter = new MealPlanAdapter(MainActivity.mealPlan.getArrayList());
             }
         });
 //        try {

@@ -1,5 +1,7 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import android.util.Log;
+
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -17,10 +19,11 @@ public class MealPlanController {
      */
 
     private ArrayList<MealPlan> mealPlan;
-    private DatabaseController db = new DatabaseController("Meals");
+    private DatabaseController db;
 
     public MealPlanController(){
         mealPlan = new ArrayList<MealPlan>();
+         db = new DatabaseController("Meals");
         this.loadAllMeals();
     }
 
@@ -50,5 +53,14 @@ public class MealPlanController {
     public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlan.clear();
         mealPlan.addAll(newMealPlan);
+    }
+
+
+    public String toString() {
+        String t = "";
+        for (int i =0; i < mealPlan.size(); i++) {
+            t = t + mealPlan.get(i).getId();
+        }
+        return t;
     }
 }
