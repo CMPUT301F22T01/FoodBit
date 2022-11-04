@@ -1,5 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientStorage;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;

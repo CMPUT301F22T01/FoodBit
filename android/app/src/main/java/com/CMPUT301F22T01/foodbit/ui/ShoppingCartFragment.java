@@ -28,7 +28,7 @@ public class ShoppingCartFragment extends Fragment {
     private Context context;
 
     // get ingredient storage from MainActivity
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
+    private IngredientStorage ingredientStorage;
 
     ShoppingCartAdapter adapter;
 
@@ -83,6 +83,7 @@ public class ShoppingCartFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
+        ingredientStorage = MainActivity.ingredientStorage;
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);

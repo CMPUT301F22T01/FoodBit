@@ -151,4 +151,10 @@ public class IngredientStorage implements Serializable {
                     }
                 });
     }
+
+    public void loadAllFromDB() {
+        //Load mealPlans from database into local array
+        DatabaseController databaseController = new DatabaseController("Ingredients");
+        databaseController.getAllItems(ingredients);
+    }
 }

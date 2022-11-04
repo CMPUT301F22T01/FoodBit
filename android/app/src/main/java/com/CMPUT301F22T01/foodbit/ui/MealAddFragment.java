@@ -18,6 +18,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
@@ -44,9 +45,9 @@ public class MealAddFragment extends DialogFragment {
     public final static String TAG = "AddMeal";
     private Context context;
 
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
+    private IngredientStorage ingredientStorage;
     private MealPlanController mealPlanController;
-    private final RecipeBook recipeBook = MainActivity.recipeBook;
+    private RecipeBook recipeBook;
     private int positionSelected;
     private Boolean notRealItem = false;
     private MealPlan meal;
@@ -107,13 +108,15 @@ public class MealAddFragment extends DialogFragment {
         servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
 
         //Populate dropdown with ingredients and recipes
-         mealPlanController = MainActivity.mealPlan;
+        recipeBook = MainActivity.recipeBook;
+        ingredientStorage = MainActivity.ingredientStorage;
+        mealPlanController = MainActivity.mealPlan;
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
         ArrayList<Recipe> recipeList = recipeBook.getRecipes();
         String[] items;
         if (ingredientList.size() + recipeList.size() == 0 ) {
             // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
-            Log.e("MealAdd","Ingredient and recipe size is 0 so we're not hitting DB?");
+            Log.e("MealAdd","Ingredient and recipe size is 0");
             items = new String [] {"test1", "test2", "test3", "test4", "test5"};
             notRealItem = true;
         } else {
