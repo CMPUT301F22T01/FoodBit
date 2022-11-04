@@ -44,17 +44,17 @@ public class MainActivity extends AppCompatActivity {
     static String FID = "empty";
 
 
-    static CollectionReference recipeBookRef = db.collection(FID).document().collection("Recipe Book");
+    public static CollectionReference recipeBookRef = db.collection(FID).document().collection("Recipe Book");
     public static RecipeBook recipeBook = new RecipeBook();
-    static CollectionReference ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
+    public static CollectionReference ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
     public static IngredientStorage ingredientStorage = new IngredientStorage();
 
 
     // access a Cloud Firestore instance and retrieve data
-    static CollectionReference mealPlanRef = db.collection(FID).document().collection("Meals");
+    public static CollectionReference mealPlanRef = db.collection(FID).document().collection("Meals");
     public static MealPlanController mealPlan = new MealPlanController();
 
-    static MutableLiveData<String> listen = new MutableLiveData<>();
+    private static MutableLiveData<String> listen = new MutableLiveData<>();
 
 
     @Override

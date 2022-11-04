@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -20,9 +21,9 @@ import java.util.ArrayList;
 
 public class DatabaseController {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    final CollectionReference recipeBookRef = db.collection("recipe book");
-    final CollectionReference ingredientStorageRef = db.collection("ingredient list");
-    final CollectionReference mealPlanRef = db.collection("Meals");
+    static CollectionReference recipeBookRef = MainActivity.recipeBookRef;
+    static CollectionReference ingredientStorageRef =  MainActivity.ingredientStorageRef;
+    static CollectionReference mealPlanRef =  MainActivity.mealPlanRef;
     private CollectionReference collectionReference;
     private String mode;
     private Object model;
