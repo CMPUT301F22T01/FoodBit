@@ -1,11 +1,14 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import static com.CMPUT301F22T01.foodbit.MainActivity.mealPlanRef;
+
 import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -38,7 +41,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
     // get recipe book from MainActivity
     private final MealPlanController mealPlan = MainActivity.mealPlan;
 
-    MealPlanAdapter adapter;
+    MealPlanAdapter adapter = MainActivity.mealPlanAdapter;
 
     public MealPlanFragment() {
         // Required empty public constructor
@@ -63,7 +66,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
 
         // set RecyclerView
         mealPlan.loadAllMeals();
-        adapter = new MealPlanAdapter(mealPlan.getArrayList());
+//        adapter = new MealPlanAdapter(mealPlan.getArrayList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -99,10 +102,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
     @Override
     public void onResume() {
         super.onResume();
-
-        // real time updates of the recipeBook
-        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Meals");
-        recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        mealPlanRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -115,10 +115,32 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
                 for (QueryDocumentSnapshot doc : value) {
                     newRecipes.add(doc.toObject(MealPlan.class));
                 }
+                Log.e(TAG, "Current meals before update: " + mealPlan.getArrayList());
                 mealPlan.update(newRecipes);
-                Log.e(TAG, "Current recipes: " + mealPlan.getArrayList());
-                adapter.notifyDataSetChanged();
+                Log.e(TAG, "Current meals: " + mealPlan.getArrayList());
+                MainActivity.mealPlanAdapter.notifyDataSetChanged();
             }
         });
+            }
+
+//         real time updates of the recipeBook
+//         MainActivity.mealPlanRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+//            @SuppressLint("NotifyDataSetChanged")
+//            @Override
+//            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+//                if (error != null) {
+//                    Log.e(TAG, "Listen failed.", error);
+//                    return;
+//                }
+//                ArrayList<MealPlan> newRecipes = new ArrayList<MealPlan>();
+//                assert value != null;
+//                for (QueryDocumentSnapshot doc : value) {
+//                    newRecipes.add(doc.toObject(MealPlan.class));
+//                }
+//                Log.e(TAG, "Current meals before update: " + mealPlan.getArrayList());
+//                mealPlan.update(newRecipes);
+//                Log.e(TAG, "Current meals: " + mealPlan.getArrayList());
+//                adapter.notifyDataSetChanged();
+//            }
+//        });
     }
-}
