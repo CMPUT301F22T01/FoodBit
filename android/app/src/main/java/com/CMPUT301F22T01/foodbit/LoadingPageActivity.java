@@ -4,8 +4,6 @@ import static com.CMPUT301F22T01.foodbit.MainActivity.db;
 import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
 import static com.CMPUT301F22T01.foodbit.MainActivity.mealPlan;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -20,7 +18,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.installations.FirebaseInstallations;
 
-public class loadingPage extends AppCompatActivity {
+public class LoadingPageActivity extends AppCompatActivity {
     static String FID = "empty";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,15 +37,11 @@ public class loadingPage extends AppCompatActivity {
                 mealPlan.loadAllMeals();
                 MainActivity.mealPlanAdapter = new MealPlanAdapter(MainActivity.mealPlan.getArrayList());
 
-                Intent myIntent = new Intent(loadingPage.this, MainActivity.class );
-                loadingPage.this.startActivity(myIntent);
+                Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
+                LoadingPageActivity.this.startActivity(myIntent);
             }
         });
-//        try {
-//            wait(10000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
+//
 
     }
 
