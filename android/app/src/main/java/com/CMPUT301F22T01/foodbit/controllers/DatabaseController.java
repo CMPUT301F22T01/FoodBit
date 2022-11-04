@@ -1,9 +1,13 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.lifecycle.MutableLiveData;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -15,6 +19,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.ArrayList;
 
@@ -43,11 +48,11 @@ public class DatabaseController {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
             case "Meals":
-                return db.collection("Meals");
+                return MainActivity.mealPlanRef;
             case "Ingredients":
-                return db.collection("ingredient list");
+                return MainActivity.ingredientStorageRef;
             case "Recipe Book":
-                return db.collection("Recipe Book");
+                return MainActivity.recipeBookRef;
             default:
                 return null;
         }
@@ -57,12 +62,14 @@ public class DatabaseController {
         CollectionReference collectionReference = getCollectionReference();
         String id = collectionReference.document().getId();
         newItem.setId(id);
+        Log.e("db is adding: ",  id + "   " + collectionReference.getId() + collectionReference.getPath().toString());
         collectionReference.document(id).set(newItem);
     }
 
-    public <T> void getAllItems(ArrayList<T> items) {
+    public <T extends dbObject> void getAllItems(ArrayList<T> items) {
         //TODO: Add optional 'order by'
         CollectionReference collectionReference = getCollectionReference();
+        Log.e("LOAD MODE: ", getCollectionReference().getPath());
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -70,6 +77,7 @@ public class DatabaseController {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
                     for (int i =0; i< task.getResult().size(); i++) {
                         model = task.getResult().getDocuments().get(i).toObject(model.getClass());
                         items.add((T)model);
@@ -113,4 +121,21 @@ public class DatabaseController {
                     }
                 });
     }
+
+    public void assignUserDB(MutableLiveData<String> listen) {
+        //Query firebase for our installation ID.
+        FirebaseInstallations.getInstance().getId()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            Log.e("Installations", "Installation ID: " + task.getResult());
+                            listen.setValue(task.getResult());
+                        } else {
+                            Log.e("Installations", "Unable to get Installation ID");
+                        }
+                    }
+                });
+    }
+
 }

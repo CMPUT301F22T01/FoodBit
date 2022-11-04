@@ -42,8 +42,8 @@ import org.junit.runner.RunWith;
 public class UITest {
 
     @Rule
-    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
+    public ActivityScenarioRule<LoadingPageActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(LoadingPageActivity.class);
 
     @Test
     // The following tests are meant to be run together
@@ -89,16 +89,6 @@ public class UITest {
                         isDisplayed()));
         actionMenuItemView.perform(click());
 
-//    ViewInteraction materialButton = onView(
-//                allOf(withId(R.id.recipe_book_add_button), withText("add"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.nav_container),
-//                                        0),
-//                                1),
-//                        isDisplayed()));
-//        materialButton.perform(click());
-
         // click on close button on recipe add screen
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
@@ -127,16 +117,6 @@ public class UITest {
                                 0),
                         isDisplayed()));
         actionMenuItemView2.perform(click());
-
-//    ViewInteraction materialButton5 = onView(
-//                allOf(withId(R.id.recipe_book_add_button), withText("add"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.nav_container),
-//                                        0),
-//                                1),
-//                        isDisplayed()));
-//        materialButton5.perform(click());
 
         // click on add button (with a tick icon on top-right) on recipe add screen
         ViewInteraction actionMenuItemView3 = onView(

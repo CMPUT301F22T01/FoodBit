@@ -46,7 +46,7 @@ public class RecipeAddFragment extends DialogFragment
     private Context context;
 
     // get recipe book from MainActivity
-    private final RecipeBook recipeBook = MainActivity.recipeBook;
+    private RecipeBook recipeBook;
 
     // an ingredient list to obtain from the RecipeAddIngredientFragment
     public ArrayList<Ingredient> ingredients = new ArrayList<>();
@@ -92,6 +92,7 @@ public class RecipeAddFragment extends DialogFragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_add, container, false);
+        recipeBook = MainActivity.recipeBook;
 
         // init views
         topBar = view.findViewById(R.id.recipe_add_top_bar);

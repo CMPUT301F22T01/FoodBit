@@ -1,8 +1,8 @@
 package com.CMPUT301F22T01.foodbit.models;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 class IngredientTest {
     private Ingredient mockIngredient() {
@@ -83,7 +83,7 @@ class IngredientTest {
     void setCategory() {
         Ingredient ingredient = mockIngredient();
         assertEquals("grains", ingredient.getCategory());
-        ingredient.setUnit("new category");
+        ingredient.setCategory("new category");
         assertEquals("new category", ingredient.getCategory());
     }
 
@@ -96,7 +96,7 @@ class IngredientTest {
     void setId() {
         Ingredient ingredient = mockIngredient();
         assertEquals("id", ingredient.getId());
-        ingredient.setUnit("new id");
+        ingredient.setId("new id");
         assertEquals("new id", ingredient.getId());
     }
 }
