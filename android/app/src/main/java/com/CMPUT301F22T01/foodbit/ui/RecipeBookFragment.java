@@ -58,23 +58,24 @@ public class RecipeBookFragment extends Fragment {
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        //MenuInflater inflater =  getMenuInflater();
+
         // Inflating the menu resource file for this fragment
         inflater.inflate(R.menu.recipe_book_top_app_bar, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
+    //Actions performed by the Action Bar
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
         switch(item.getItemId())
         {   //Adding a Recipe
             case R.id.recipe_add:
-
-                Toast.makeText(getActivity(), "Adding a Recipe", Toast.LENGTH_SHORT).show();
                 //launches RecipeAddFragment
                 new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
                 return true;
+
+            // Sorting the Recipes accordingly
             case R.id.filter1:
                 Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
