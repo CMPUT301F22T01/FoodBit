@@ -16,10 +16,13 @@ import com.CMPUT301F22T01.foodbit.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * Provides a binding from a set of meal plans to views that are displayed with in the
+ * <code>RecyclerView</code> in the main MealPlan page.
+ */
 public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHolder> {
 
     @NonNull
-    // Create new views (invoked by the layout manager)
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         // Create a new view, which defines the UI of the list item
@@ -29,10 +32,8 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
         return new ViewHolder(view);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(@NonNull MealPlanAdapter.ViewHolder holder, final int position) {
-
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
         Log.e("lol",items.get(position).getName());
@@ -52,11 +53,6 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
     }
 
     private ArrayList<MealPlan> items;
-
-    /**
-     * Provide a reference to the type of views that you are using
-     * (custom ViewHolder).
-     */
 
     public MealPlanAdapter(ArrayList<MealPlan> items) {
         this.items = items;

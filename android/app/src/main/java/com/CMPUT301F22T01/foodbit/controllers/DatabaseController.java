@@ -23,6 +23,10 @@ import com.google.firebase.installations.FirebaseInstallations;
 
 import java.util.ArrayList;
 
+/**
+ * Receive requests from LoadingPageActivity and other Controllers to communicate with Firebase and
+ * establish which user DB to use
+ */
 public class DatabaseController {
     private FirebaseFirestore db;
     private String mode;
@@ -44,6 +48,10 @@ public class DatabaseController {
         }
     }
 
+    /**
+     * Finds the correct database for the controller based on mode set in constructor
+     * @return collectionReference with the appropriate database
+     */
     private CollectionReference getCollectionReference() {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
@@ -58,6 +66,10 @@ public class DatabaseController {
         }
     }
 
+    /**
+     * Add an item to the appropriate database
+     * @param newItem
+     */
     public void addItem(dbObject newItem) {
         CollectionReference collectionReference = getCollectionReference();
         String id = collectionReference.document().getId();
@@ -66,6 +78,12 @@ public class DatabaseController {
         collectionReference.document(id).set(newItem);
     }
 
+    /**
+     * Pass in an arrayList<T> to be updated with information from the database.
+     * <T> should implement the dbObject interface
+     * @param items
+     * @param <T>
+     */
     public <T extends dbObject> void getAllItems(ArrayList<T> items) {
         //TODO: Add optional 'order by'
         CollectionReference collectionReference = getCollectionReference();
@@ -88,6 +106,10 @@ public class DatabaseController {
         });
     }
 
+    /**
+     * Edit dbObject within Firebase
+     * @param editItem - updated object with the appropriate ID.
+     */
     public void editItem(dbObject editItem) {
         CollectionReference collectionReference = getCollectionReference();
         collectionReference.document(editItem.getId())
@@ -106,6 +128,10 @@ public class DatabaseController {
                 });
     }
 
+    /**
+     * Delete dbObject item from Firebase
+     * @param item
+     */
     public void deleteItem(dbObject item) {
         CollectionReference collectionReference = getCollectionReference();
         collectionReference.document(item.getId()).delete()
@@ -122,6 +148,10 @@ public class DatabaseController {
                 });
     }
 
+    /**
+     * Populate listener value with Firebase Instance ID
+     * @param listen
+     */
     public void assignUserDB(MutableLiveData<String> listen) {
         //Query firebase for our installation ID.
         FirebaseInstallations.getInstance().getId()
