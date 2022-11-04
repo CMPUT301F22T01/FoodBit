@@ -12,7 +12,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 import com.CMPUT301F22T01.foodbit.ui.MealPlanAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -30,12 +32,15 @@ public class LoadingPageActivity extends AppCompatActivity {
         listen.observe(this,new Observer<String>() {
             @Override
             public void onChanged(String changedValue) {//assignUserDB has finished getting the DB
-                Log.e("HELLLOOOO",listen.getValue());
                 FID = listen.getValue();
                 MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
                 MainActivity.mealPlan = new MealPlanController();
-                mealPlan.loadAllMeals();
-                MainActivity.mealPlanAdapter = new MealPlanAdapter(MainActivity.mealPlan.getArrayList());
+
+                MainActivity.recipeBookRef = db.collection(FID).document(FID).collection("Recipe Book");
+                MainActivity.recipeBook = new RecipeBook();
+
+                MainActivity.ingredientStorageRef = db.collection(FID).document(FID).collection("ingredient list");
+                MainActivity.ingredientStorage = new IngredientStorage();
 
                 Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
                 LoadingPageActivity.this.startActivity(myIntent);
@@ -47,6 +52,7 @@ public class LoadingPageActivity extends AppCompatActivity {
 
 
     private void assignUserDB() {
+        //Query firebase for our installation ID.
         FirebaseInstallations.getInstance().getId()
                 .addOnCompleteListener(new OnCompleteListener<String>() {
                     @Override

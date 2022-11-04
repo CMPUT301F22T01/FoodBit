@@ -31,32 +31,22 @@ public class MainActivity extends AppCompatActivity {
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
     static String FID = LoadingPageActivity.FID;
 
-//    public static CollectionReference recipeBookRef;
-    public static CollectionReference recipeBookRef = db.collection(FID).document().collection("Recipe Book");
-    public static RecipeBook recipeBook = new RecipeBook();
-    public static CollectionReference ingredientStorageRef = db.collection(FID).document().collection("ingredient list");
-    public static IngredientStorage ingredientStorage = new IngredientStorage();
-
-
     // access a Cloud Firestore instance and retrieve data
+    public static CollectionReference recipeBookRef;
+    public static RecipeBook recipeBook;
+    public static CollectionReference ingredientStorageRef;
+    public static IngredientStorage ingredientStorage;
     public static CollectionReference mealPlanRef;
-//    public static CollectionReference mealPlanRef = db.collection(FID).document().collection("Meals");
     public static MealPlanController mealPlan;
-//    public static MealPlanController mealPlan = new MealPlanController();
-    public static MealPlanAdapter mealPlanAdapter;
-//    public static MealPlanAdapter mealPlanAdapter = new MealPlanAdapter(mealPlan.getArrayList());
 
-    public static MutableLiveData<String> listen = new MutableLiveData<>();
+    public static MutableLiveData<String> listen = new MutableLiveData<>(); //Listener for FID from firebase
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         setUpNavBar();
-
-
     }
 
 

@@ -63,7 +63,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
 
         // set RecyclerView
         this.mealPlan = MainActivity.mealPlan;
-        adapter = MainActivity.mealPlanAdapter;
+        adapter = new MealPlanAdapter(mealPlan.getArrayList());
         Log.e(TAG,"init = " + mealPlan.getArrayList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);

@@ -21,8 +21,6 @@ import java.util.ArrayList;
 
 public class DatabaseController {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
-    static CollectionReference recipeBookRef = MainActivity.recipeBookRef;
-    static CollectionReference ingredientStorageRef =  MainActivity.ingredientStorageRef;
     private CollectionReference collectionReference;
     private Object model;
 
@@ -34,11 +32,11 @@ public class DatabaseController {
                 this.model = new MealPlan();
                 break;
             case "Ingredients":
-                collectionReference = ingredientStorageRef;
+                collectionReference =  MainActivity.ingredientStorageRef;
                 this.model  = new Ingredient();
                 break;
             case "Recipes":
-                collectionReference = recipeBookRef;
+                collectionReference = MainActivity.recipeBookRef;
                 this.model  = new Recipe();
                 break;
             default:
@@ -89,7 +87,6 @@ public class DatabaseController {
                 });
     }
 
-//    public void
 
 
 
