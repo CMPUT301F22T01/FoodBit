@@ -46,10 +46,6 @@ public class MainActivity extends AppCompatActivity {
 
         ActionBar actionBar;
         actionBar = getSupportActionBar();
-        ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#ff9d3f"));
-        actionBar.setBackgroundDrawable(colorDrawable);
-        //actionBar.setTitle("Changed Name");
 
         setUpNavBar();
 
