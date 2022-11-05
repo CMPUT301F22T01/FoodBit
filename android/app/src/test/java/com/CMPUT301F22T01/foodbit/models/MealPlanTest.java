@@ -134,16 +134,15 @@ public class MealPlanTest {
 
     @Test
     void setDate() {
-        Date date = mockDate();
         Date newDate = new Date();
 
         MealPlan mealPlanIngredient = mockMealPlanIngredient();
-        assertEquals(date, mealPlanIngredient.getDate());
+        assertEquals(mockDate(), mealPlanIngredient.getDate());
         mealPlanIngredient.setDate(newDate);
         assertEquals(newDate, mealPlanIngredient.getDate());
 
         MealPlan mealPlanRecipe = mockMealPlanRecipe();
-        assertEquals(date, mealPlanRecipe.getDate());
+        assertEquals(mockDate(), mealPlanRecipe.getDate());
         mealPlanRecipe.setDate(newDate);
         assertEquals(newDate, mealPlanRecipe.getDate());
     }
