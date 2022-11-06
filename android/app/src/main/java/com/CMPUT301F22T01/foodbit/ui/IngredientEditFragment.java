@@ -28,12 +28,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
 
+
+/**
+ * Fragment for editing current ingredients
+ * drop down boxes added in pt 4
+ */
 public class IngredientEditFragment extends DialogFragment {
     public final static String TAG = "EditIngredient";
     private Ingredient ingredient;
     private Context context;
 
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;
@@ -53,6 +57,10 @@ public class IngredientEditFragment extends DialogFragment {
         // Required empty public constructor
     }
 
+    /**
+     * sets ingredient to be edited
+     * @param ingredient ingredient to be editied
+     */
     public IngredientEditFragment(Ingredient ingredient) {
         this.ingredient = ingredient;
     }

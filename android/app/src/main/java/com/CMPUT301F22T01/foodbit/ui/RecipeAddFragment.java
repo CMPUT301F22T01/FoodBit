@@ -37,18 +37,18 @@ import java.util.Objects;
  * There is a false error reported by the IDE which actually works fine.
  */
 public class RecipeAddFragment extends DialogFragment
-        implements RecipeAddIngredientAddFragment.OnIngredientAddListener,
-        RecipeAddIngredientAddFragment.OnIngredientEditListener,
-        RecipeAddIngredientAddFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener{
+        implements RecipeAddIngredientFragment.OnIngredientAddListener,
+        RecipeAddIngredientFragment.OnIngredientEditListener,
+        RecipeAddIngredientFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener{
 
     //    private static final String RECIPE_BOOK = "recipe_book";
     public final static String TAG = "AddRecipe";
     private Context context;
 
     // get recipe book from MainActivity
-    private final RecipeBook recipeBook = MainActivity.recipeBook;
+    private RecipeBook recipeBook;
 
-    // an ingredient list to obtain from the RecipeAddIngredientAddFragment
+    // an ingredient list to obtain from the RecipeAddIngredientFragment
     public ArrayList<Ingredient> ingredients = new ArrayList<>();
     IngredientAdapter ingredientAdapter;
 
@@ -85,14 +85,14 @@ public class RecipeAddFragment extends DialogFragment
         // set the style of the dialog fragment to be full screen
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
 
-        // photo picker contract register
-//        registerPhotoPicker();
+        setHasOptionsMenu(false);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recipe_add, container, false);
+        recipeBook = MainActivity.recipeBook;
 
         // init views
         topBar = view.findViewById(R.id.recipe_add_top_bar);
@@ -111,10 +111,10 @@ public class RecipeAddFragment extends DialogFragment
         ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_add_ingredients_list);
 
-        // set top bar behaviours
-        // close button behaviour
+        //close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
-        topBar.setOnMenuItemClickListener(item -> {
+        topBar.setOnMenuItemClickListener(item ->
+        {
             int itemId = item.getItemId();
             // done button behaviour
             if (itemId == R.id.recipe_add_done) {
@@ -122,6 +122,10 @@ public class RecipeAddFragment extends DialogFragment
             }
             return false;
         });
+
+
+
+
 
         ingredientsBar.setOnMenuItemClickListener(AddIngredientsButtonClicked());
         setUpRecyclerView();
@@ -137,7 +141,7 @@ public class RecipeAddFragment extends DialogFragment
                 for (Ingredient ingredient : ingredients) {
                     titleList.add(ingredient.getDescription());
                 }
-                RecipeAddIngredientAddFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
+                RecipeAddIngredientFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
             }
             return false;
         };
@@ -301,8 +305,8 @@ public class RecipeAddFragment extends DialogFragment
     }
 
     @Override
-    public void onItemClick(View v, int position) {
-        RecipeAddIngredientAddFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientAddFragment.TAG);
+    public void onIngredientItemClick(View v, int position) {
+        RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
     }
 }
 

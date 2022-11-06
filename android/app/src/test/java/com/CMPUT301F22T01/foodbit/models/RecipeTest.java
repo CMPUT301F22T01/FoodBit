@@ -1,7 +1,6 @@
 package com.CMPUT301F22T01.foodbit.models;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.*;
 
 import android.net.Uri;
 

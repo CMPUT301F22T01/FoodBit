@@ -26,13 +26,12 @@ import java.util.Objects;
 
 /**
  * Fragment for adding new Ingredient items
+ * drop down boxes to be added in part 4
  */
 public class IngredientAddFragment extends DialogFragment {
     public final static String TAG = "AddIngredient";
     private Context context;
 
-    //getting ingredientStorage from the main activity
-    private final IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;
@@ -66,14 +65,6 @@ public class IngredientAddFragment extends DialogFragment {
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
     }
 
-    /**
-     * Inflates the view and allows for user input for ingredient details to be added
-     * Input is checked for validity and all fields are required for ingredient to be added
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return the view
-     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflating the view
@@ -152,7 +143,7 @@ public class IngredientAddFragment extends DialogFragment {
                     }
                     if (requiredFieldEntered) {
                         Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
-                        ingredientStorage.add(ingredient);
+                        MainActivity.ingredientStorage.add(ingredient);
                         dismiss();
                     }
                 }
@@ -162,9 +153,6 @@ public class IngredientAddFragment extends DialogFragment {
         return view;
     }
 
-    /**
-     * Setting the layout
-     */
     @Override
     public void onStart() {
         super.onStart();

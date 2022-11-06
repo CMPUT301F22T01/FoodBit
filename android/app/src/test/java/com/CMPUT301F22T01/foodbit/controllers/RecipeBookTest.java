@@ -56,6 +56,18 @@ class RecipeBookTest {
     }
 
     @Test
+    public void setRecipes() {
+        RecipeBook recipeBook = mockRecipeBook(1);
+        Recipe newRecipe1 = mockRecipe(3);
+        Recipe newRecipe2 = mockRecipe(4);
+        ArrayList<Recipe> newRecipes = new ArrayList<>(Arrays.asList(newRecipe1, newRecipe2));
+        assert recipeBook != null;
+        recipeBook.setRecipes(newRecipes);
+        assertTrue(recipeBook.contains(newRecipe1));
+        assertTrue(recipeBook.contains(newRecipe2));
+    }
+
+    @Test
     void getRecipeByPosition() {
         RecipeBook recipeBook = mockRecipeBook(1);
         assert recipeBook != null;
@@ -69,14 +81,6 @@ class RecipeBookTest {
         assert recipeBook != null;
         assertEquals("id3", recipeBook.getRecipeById("id3").getId());
         assertEquals("id4", recipeBook.getRecipeById("id4").getId());
-    }
-
-    @Test
-    void update() {
-        RecipeBook recipeBook = mockRecipeBook(1);
-        assert recipeBook != null;
-        recipeBook.setRecipes(new ArrayList<>(Arrays.asList(mockRecipe(3), mockRecipe(4))));
-        assertEquals("id3", recipeBook.getRecipeByPosition(0).getId());
     }
 
     @Test
@@ -105,7 +109,7 @@ class RecipeBookTest {
     }
 
     @Test
-    void deleteException() {
+    void removeException() {
         RecipeBook recipeBook = mockRecipeBook(1);
         assertThrows(AssertionError.class, () -> {
             assert recipeBook != null;

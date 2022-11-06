@@ -1,39 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<!-- TODO: this is ugly -->
 
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MealAddFragment">
-
-    <Spinner
-        android:id="@+id/meal_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="61dp"
-        android:contentDescription="meal spinner"/>
-
-    <com.google.android.material.textfield.TextInputEditText
-        android:id="@+id/meal_add_serving_size"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Serving Size"
-        android:inputType="number"
-        android:maxLines="1"
-        tools:ignore="HardcodedText"
-        android:layout_gravity="center_vertical"/>
+        android:layout_height="match_parent"
+        tools:context=".ui.MealAddFragment">
 
-    <Button
-        android:id="@+id/meal_add_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add"
-        android:layout_gravity="bottom|end"/>
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/meal_add_top_bar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:minHeight="?attr/actionBarSize"
+            android:paddingEnd="6dp"
+            android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:menu="@menu/mealplan_top_app_bar"
+            app:navigationIcon="@drawable/ic_close_24"
+            app:title="Add a Meal"
+            tools:ignore="RtlSymmetry"
+            tools:layout_conversion_absoluteHeight="56dp"
+            tools:layout_conversion_absoluteWidth="411dp" />
+
+        <Spinner
+            android:id="@+id/meal_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:contentDescription="meal spinner"
+            android:minHeight="48dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/meal_select_textview" />
+
+<!--            <com.google.android.material.textfield.TextInputEditText-->
+<!--                android:id="@+id/meal_add_serving_size"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="24dp"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:layout_marginEnd="24dp"-->
+<!--                android:hint="Serving Size"-->
+<!--                android:inputType="number"-->
+<!--                android:maxLines="1"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/meal_spinner"-->
+<!--                tools:ignore="HardcodedText" />-->
+<!--        </com.google.android.material.textfield.TextInputEditText>-->
+
+        <TextView
+            android:id="@+id/meal_select_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="76dp"
+            android:text="Select a Meal:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/meal_add_layout_serving_size"
+            style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="24dp"
+            app:errorEnabled="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/meal_spinner"
+            app:startIconDrawable="@drawable/ic_numbers_24"
+            tools:layout_conversion_absoluteHeight="90dp"
+            tools:layout_conversion_absoluteWidth="379dp">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/meal_add_serving_size"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Serving Size"
+                android:inputType="number"
+                android:maxLines="1"
+                tools:ignore="HardcodedText"
+                tools:layout_conversion_absoluteHeight="48dp"
+                tools:layout_conversion_absoluteWidth="379dp"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="412dp" />
+        </com.google.android.material.textfield.TextInputLayout>
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 
 

@@ -8,7 +8,7 @@ import java.io.Serializable;
  * Class to represent ingredients
  * Ingredients can have an id, description, bestBefore date, location, amount, unit, and category
  */
-public class Ingredient implements Serializable {
+public class Ingredient implements Serializable, dbObject {
     private String id;
     private String description;
     private String bestBefore;
