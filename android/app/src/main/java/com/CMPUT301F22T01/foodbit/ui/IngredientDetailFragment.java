@@ -35,28 +35,18 @@ public class IngredientDetailFragment extends Fragment {
     TextView unitView;
     TextView categoryView;
     Button deleteButton;
+    Button editButton;
 
     public IngredientDetailFragment() {
         // Required empty constructor
     }
 
-    /**
-     * Saved state of the activity
-     * @param savedInstanceState saved state
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getIngredient();
     }
 
-    /**
-     * Inflates the view for visualizing ingredient details
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     * @return
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -99,6 +89,14 @@ public class IngredientDetailFragment extends Fragment {
             }
         });
 
+        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+            }
+        });
         return view;
     }
 

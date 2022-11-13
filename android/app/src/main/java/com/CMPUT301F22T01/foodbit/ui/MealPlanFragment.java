@@ -2,24 +2,29 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-
 import com.CMPUT301F22T01.foodbit.MainActivity;
-import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -29,24 +34,64 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
-public class MealPlanFragment extends Fragment {
+/**
+ * The main Meal Plan page that displays the list of MealPlans
+ */
+public class MealPlanFragment extends Fragment implements DatePickerFragment.NoticeDialogListener {
 
     public String TAG = "MealPlan";
 
     // get recipe book from MainActivity
-    private final MealPlanController mealPlan = MainActivity.mealPlan;
+    private MealPlanController mealPlan;
 
     MealPlanAdapter adapter;
 
     public MealPlanFragment() {
         // Required empty public constructor
-//        mealPlan.loadAllMeals();
     }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActivity().setTitle("Meal Plan");
+
+        //This fragment has options menu for the action bar
+        setHasOptionsMenu(true);
+    }
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // Inflating the menu resource file for this fragment
+        inflater.inflate(R.menu.mealplan_actionbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //Actions performed by the Action Bar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {   //Adding a Meal Plan
+            case R.id.meal_plan_add:
+                //launches newFragment if there are ingredients/recipes
+                RecipeBook recipeBook = MainActivity.recipeBook;
+                IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
+                ingredientStorage.loadAllFromDB();
+
+                if (ingredientStorage.getIngredients().size() + recipeBook.getRecipes().size() == 0 ) {
+                    Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
+                            "Add an ingredient or recipe first!", Snackbar.LENGTH_SHORT);
+                    snackbar.setAnchorView(R.id.nav_bar).show();
+
+                } else {
+                    // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
+                    DatePickerFragment newFragment = new DatePickerFragment();
+                    newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
+                    return true;
+                }
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -57,11 +102,11 @@ public class MealPlanFragment extends Fragment {
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
-        Button addButton = view.findViewById(R.id.btn_meal_plan_add);
 
         // set RecyclerView
-        mealPlan.loadAllMeals();
+        this.mealPlan = MainActivity.mealPlan;
         adapter = new MealPlanAdapter(mealPlan.getArrayList());
+        Log.e(TAG,"init = " + mealPlan.getArrayList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -71,23 +116,24 @@ public class MealPlanFragment extends Fragment {
                 linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(getChildFragmentManager(), "datePicker");
-            }
-        });
-
+        getActivity().setTitle("Meal Plan");
         return view;
+    }
+
+    // User has clicked the ok from the date picker
+    @Override
+    public void onDialogPositiveClick(DatePickerFragment dialog) {
+        MealPlan newMeal = new MealPlan();
+        newMeal.setDate(dialog.getDate());
+        MealAddFragment newFragment = new MealAddFragment(newMeal);
+        newFragment.show(getChildFragmentManager(), "AddMeal");
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         // real time updates of the recipeBook
-        CollectionReference recipeBookRef = FirebaseFirestore.getInstance().collection("Meals");
+        CollectionReference recipeBookRef = MainActivity.mealPlanRef;
         recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -102,7 +148,7 @@ public class MealPlanFragment extends Fragment {
                     newRecipes.add(doc.toObject(MealPlan.class));
                 }
                 mealPlan.update(newRecipes);
-                Log.e(TAG, "Current recipes: " + mealPlan.getArrayList());
+                Log.e(TAG, "Current recipes: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
                 adapter.notifyDataSetChanged();
             }
         });

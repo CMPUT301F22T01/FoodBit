@@ -1,15 +1,19 @@
 package com.CMPUT301F22T01.foodbit.models;
 
+import androidx.annotation.NonNull;
+
+import java.io.Serializable;
+
 /**
  * Class to represent ingredients
  * Ingredients can have an id, description, bestBefore date, location, amount, unit, and category
  */
-public class Ingredient {
+public class Ingredient implements Serializable, dbObject {
     private String id;
     private String description;
     private String bestBefore;
     private String location;
-    private float amount;
+    private Float amount;
     private String unit;
     private String category;
 
@@ -109,7 +113,7 @@ public class Ingredient {
         this.location = newLocation;
     }
 
-    public void setAmount(float newAmount) {
+    public void setAmount(Float newAmount) {
         this.amount = newAmount;
     }
 
@@ -123,5 +127,19 @@ public class Ingredient {
 
     public void setId(String newId) {
         this.id = newId;
+    }
+
+    /**
+     * Updates the information of this ingredient with information from another ingredient.
+     * @param newIngredient the ingredient containing the new information
+     */
+    public void update(@NonNull Ingredient newIngredient) {
+        id = newIngredient.getId();
+        description = newIngredient.getDescription();
+        bestBefore = newIngredient.getBestBefore();
+        location = newIngredient.getLocation();
+        amount = newIngredient.getAmount();
+        unit = newIngredient.getUnit();
+        category = newIngredient.getCategory();
     }
 }

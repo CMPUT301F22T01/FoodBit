@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,14 +23,19 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Objects;
 
+
 /**
- * Fragment for adding new Ingredient items
- * drop down boxes to be added in part 4
+ * Fragment for editing current ingredients
+ * drop down boxes added in pt 4
  */
-public class IngredientAddFragment extends DialogFragment {
-    public final static String TAG = "AddIngredient";
+public class IngredientEditFragment extends DialogFragment {
+    public final static String TAG = "EditIngredient";
+    private Ingredient ingredient;
     private Context context;
 
 
@@ -47,8 +53,16 @@ public class IngredientAddFragment extends DialogFragment {
     TextInputEditText categoryEditText;
     TextInputLayout categoryLayout;
 
-    public IngredientAddFragment() {
+    public IngredientEditFragment() {
         // Required empty public constructor
+    }
+
+    /**
+     * sets ingredient to be edited
+     * @param ingredient ingredient to be editied
+     */
+    public IngredientEditFragment(Ingredient ingredient) {
+        this.ingredient = ingredient;
     }
 
     @Override
@@ -67,29 +81,32 @@ public class IngredientAddFragment extends DialogFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // inflating the view
-        View view = inflater.inflate(R.layout.fragment_ingredient_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_edit, container, false);
+        topBar = view.findViewById(R.id.ingredient_edit_top_bar);
+        descriptionEditText = view.findViewById(R.id.ingredient_edit_edit_text_description);
+        descriptionLayout = view.findViewById(R.id.ingredient_edit_text_layout_description);
+        bestBeforeEditText = view.findViewById(R.id.ingredient_edit_edit_text_best_before);
+        bestBeforeLayout = view.findViewById(R.id.ingredient_edit_text_layout_best_before);
+        locationEditText = view.findViewById(R.id.ingredient_edit_edit_text_location);
+        locationLayout = view.findViewById(R.id.ingredient_edit_text_layout_location);
+        amountEditText = view.findViewById(R.id.ingredient_edit_edit_text_amount);
+        amountLayout = view.findViewById(R.id.ingredient_edit_text_layout_amount);
+        unitEditText = view.findViewById(R.id.ingredient_edit_edit_text_unit);
+        unitLayout = view.findViewById(R.id.ingredient_edit_text_layout_unit);
+        categoryEditText = view.findViewById(R.id.ingredient_edit_edit_text_category);
+        categoryLayout = view.findViewById(R.id.ingredient_edit_text_layout_category);
 
-        topBar = view.findViewById(R.id.ingredient_add_top_bar);
-        descriptionEditText = view.findViewById(R.id.ingredient_add_edit_text_description);
-        descriptionLayout = view.findViewById(R.id.ingredient_add_text_layout_description);
-        bestBeforeEditText = view.findViewById(R.id.ingredient_add_edit_text_best_before);
-        bestBeforeLayout = view.findViewById(R.id.ingredient_add_text_layout_best_before);
-        locationEditText = view.findViewById(R.id.ingredient_add_edit_text_location);
-        locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
-        amountEditText = view.findViewById(R.id.ingredient_add_edit_text_amount);
-        amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
-        unitEditText = view.findViewById(R.id.ingredient_add_edit_text_unit);
-        unitLayout = view.findViewById(R.id.ingredient_add_text_layout_unit);
-        categoryEditText = view.findViewById(R.id.ingredient_add_edit_text_category);
-        categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
-
-        // back button
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
         });
 
-        // allowing for user input
+        descriptionEditText.setText(ingredient.getDescription());
+        bestBeforeEditText.setText(ingredient.getBestBefore());
+        locationEditText.setText(ingredient.getLocation());
+        amountEditText.setText(String.valueOf(ingredient.getAmount()));
+        unitEditText.setText(ingredient.getUnit());
+        categoryEditText.setText(ingredient.getCategory());
+
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -103,7 +120,6 @@ public class IngredientAddFragment extends DialogFragment {
                     String unit = Objects.requireNonNull(unitEditText.getText()).toString();
                     String category = Objects.requireNonNull(categoryEditText.getText()).toString();
 
-                    // checking if inputs are valid, will display an error message if not
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
                         descriptionLayout.setError("Required");
@@ -142,8 +158,13 @@ public class IngredientAddFragment extends DialogFragment {
                         requiredFieldEntered = false;
                     }
                     if (requiredFieldEntered) {
-                        Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
-                        MainActivity.ingredientStorage.add(ingredient);
+                        ingredient.setDescription(description);
+                        ingredient.setBestBefore(bestBefore);
+                        ingredient.setLocation(location);
+                        ingredient.setAmount(Float.parseFloat(amount));
+                        ingredient.setUnit(unit);
+                        ingredient.setCategory(category);
+                        MainActivity.ingredientStorage.edit(ingredient);
                         dismiss();
                     }
                 }
@@ -152,7 +173,6 @@ public class IngredientAddFragment extends DialogFragment {
         });
         return view;
     }
-
     @Override
     public void onStart() {
         super.onStart();
@@ -166,4 +186,3 @@ public class IngredientAddFragment extends DialogFragment {
         }
     }
 }
-

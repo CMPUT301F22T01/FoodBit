@@ -4,14 +4,20 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
+import com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment;
+import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,7 +28,8 @@ import java.util.Objects;
  * Stores each ingredient created
  */
 public class IngredientStorage implements Serializable {
-    private FirebaseFirestore db;
+    //private FirebaseFirestore db;
+    private DatabaseController db = new DatabaseController("Ingredients");
     private final ArrayList<Ingredient> ingredients;
 
     /**
@@ -32,6 +39,10 @@ public class IngredientStorage implements Serializable {
         ingredients = new ArrayList<Ingredient>();
     }
 
+    /**
+     * Creates new array list of ingredients
+     * @param ingredients an array list of ingredients
+     */
     public IngredientStorage(List<Ingredient> ingredients) {
         this.ingredients = (ArrayList<Ingredient>) ingredients;
     }
@@ -75,6 +86,11 @@ public class IngredientStorage implements Serializable {
         }
         return null;
     }
+
+    /**
+     * Gets all the descriptions from the ingredients in teh list
+     * @return list of the descriptions
+     */
     public List<String> getDescriptions() {
         List<String> list = new ArrayList<>();
         for (Ingredient ingredient : ingredients) {
@@ -83,68 +99,68 @@ public class IngredientStorage implements Serializable {
         return list;
     }
 
+    /**
+     * Checking if an ingredient is in the list
+     * @param ingredient the ingredient to be checked
+     * @return true or false, if the container is or is not in the list respectively
+     */
     public boolean contains(Ingredient ingredient) {
         return ingredients.contains(ingredient);
     }
 
     /**
-     * Allows for an ingredient to be added
-     * @param ingredient ingredient to be added
+     * Adds an ingredient to the ingredient storage
+     * Makes sure there are no duplicates
+     * @param ingredient the ingredient to be added
      */
     public void add(Ingredient ingredient) {
         String TAG = IngredientAddFragment.TAG;
-        assert !ingredients.contains(ingredient) : "This ingredient is already in the list!";
-        db = FirebaseFirestore.getInstance();
-        CollectionReference ingredientStorageRef = db.collection("Ingredient List");
-        ingredientStorageRef.add(ingredient)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        Log.d(TAG, "DocumentSnapshot written with ID: " + documentReference.getId());
-                        documentReference.update("id", documentReference.getId())
-                                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                                    @Override
-                                    public void onSuccess(Void unused) {
-                                        Log.d(TAG, "DocumentSnapshot successfully updated!");
-                                    }
-                                })
-                                .addOnFailureListener(new OnFailureListener() {
-                                    @Override
-                                    public void onFailure(@NonNull Exception e) {
-                                        Log.w(TAG, "Error adding document", e);
-                                    }
-                                });
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error adding document", e);
-                    }
-                });
+        assert !contains(ingredient) : "This ingredient is already in the ingredient list!";
+        db.addItem(ingredient);
     }
 
     /**
-     * Allows for an ingredient to be deleted
-     * @param ingredient ingredient to be deleted
+     * Deletes an ingredient from ingredient storage
+     * Makes sure the ingredient is in the ingredient storage first
+     * @param ingredient the ingredient to be deleted
      */
     public void delete(Ingredient ingredient) {
-        String TAG = "DeleteIngredient";
-        assert ingredients.contains(ingredient) : "this ingredient is not in the list";
-        db = FirebaseFirestore.getInstance();
-        db.collection("Ingredient List").document(ingredient.getId())
-                .delete()
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        Log.d(TAG, "DocumentSnapshot successfully deleted!");
+        String TAG = "IngredientStorageDeleteIngredient";
+        assert contains(ingredient) : "this ingredient is not found in the ingredient list!";
+        db.deleteItem(ingredient);
+    }
+
+    /**
+     * Edits an ingredient in ingredient storage
+     * Makes sure the ingredient is in the ingredient storage first
+     * @param ingredient the ingredient to be edited
+     */
+    public void edit(Ingredient ingredient) {
+        String TAG = IngredientEditFragment.TAG;
+        assert contains(ingredient) : "This ingredient is not found int the ingredient list";
+        db.editItem(ingredient);
+    }
+
+    /**
+     * Loads ingredients from the database
+     */
+    public void loadAllFromDB() {
+        ingredients.clear();
+        CollectionReference collectionReference = MainActivity.ingredientStorageRef;
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
+                    for (int i =0; i< task.getResult().size(); i++) {
+                        Ingredient model = task.getResult().getDocuments().get(i).toObject(Ingredient.class);
+                        ingredients.add(model);
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.w(TAG, "Error deleting document", e);
-                    }
-                });
+                }
+            }
+        });
     }
 }

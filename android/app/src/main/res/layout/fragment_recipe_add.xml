@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
 
 
-    android:id="@+id/coordinatorLayout"
+    android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -18,12 +18,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:menu="@menu/recipe_add_top_app_bar"
+        app:menu="@menu/recipe_add_toolbar"
         app:navigationIcon="@drawable/ic_close_24"
         app:title="Add a recipe"
+        tools:ignore="RtlSymmetry"
         tools:layout_conversion_absoluteHeight="56dp"
-        tools:layout_conversion_absoluteWidth="411dp"
-        tools:ignore="RtlSymmetry" />
+        tools:layout_conversion_absoluteWidth="411dp" />
 
     <!--    todo: enable photo feature-->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -53,9 +53,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="175dp"
-            tools:layout_conversion_absoluteWidth="178dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_conversion_absoluteWidth="178dp" />
 
         <ImageView
             android:id="@+id/recipe_add_image"
@@ -66,9 +66,9 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="ContentDescription"
             tools:layout_conversion_absoluteHeight="175dp"
-            tools:layout_conversion_absoluteWidth="178dp"
-            tools:ignore="ContentDescription" />
+            tools:layout_conversion_absoluteWidth="178dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -94,11 +94,11 @@
             android:layout_height="wrap_content"
             android:hint="Title"
             android:maxLines="1"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="178dp"
             tools:layout_editor_absoluteX="218dp"
-            tools:layout_editor_absoluteY="77dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_editor_absoluteY="77dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -120,11 +120,11 @@
             android:layout_height="wrap_content"
             android:hint="Category"
             android:maxLines="1"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="178dp"
             tools:layout_editor_absoluteX="218dp"
-            tools:layout_editor_absoluteY="191dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_editor_absoluteY="191dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -153,11 +153,11 @@
             android:hint="Preparation Time"
             android:inputType="number"
             android:maxLines="1"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="379dp"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="285dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_editor_absoluteY="285dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -186,11 +186,11 @@
             android:hint="Number of Servings"
             android:inputType="number"
             android:maxLines="1"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="379dp"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="412dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_editor_absoluteY="412dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -215,11 +215,11 @@
             android:hint="Comment..."
             android:inputType="text"
             android:maxLines="1"
+            tools:ignore="HardcodedText"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="379dp"
             tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="535dp"
-            tools:ignore="HardcodedText" />
+            tools:layout_editor_absoluteY="535dp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout

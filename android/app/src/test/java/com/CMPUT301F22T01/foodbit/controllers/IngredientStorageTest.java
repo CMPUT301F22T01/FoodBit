@@ -1,13 +1,11 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +16,7 @@ class IngredientStorageTest {
     private Ingredient mockIngredient(int choice) {
         switch (choice) {
             case 1:
-                return new Ingredient("id", "description", "best before", "location", 1.0F, "unit", "category");
+                return new Ingredient("id1", "description1", "best before1", "location1", 1.0F, "unit1", "category1");
             case 2:
                 return new Ingredient("id2", "description2", "best before2", "location2", 2.0F, "unit2", "category2");
             case 3:
@@ -71,7 +69,7 @@ class IngredientStorageTest {
     }
 
     @Test
-    void getRecipeByPosition() {
+    void getIngredientByPosition() {
         IngredientStorage ingredientStorage = mockIngredientStorage(1);
         assert ingredientStorage != null;
         assertEquals("id1", ingredientStorage.getIngredientByPosition(0).getId());
@@ -89,8 +87,8 @@ class IngredientStorageTest {
     @Test
     void getDescriptions() {
         List<String> names = Objects.requireNonNull(mockIngredientStorage(1)).getDescriptions();
-        assertTrue(names.contains("title1"));
-        assertTrue(names.contains("title2"));
+        assertTrue(names.contains("description1"));
+        assertTrue(names.contains("description2"));
     }
 
     @Test
