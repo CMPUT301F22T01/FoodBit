@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
-class RecipeBookTest {
+class RecipeControllerTest {
     private Recipe mockRecipe(int choice) {
         switch (choice) {
             case 1:
@@ -26,61 +26,61 @@ class RecipeBookTest {
         return null;
     }
 
-    private RecipeBook mockRecipeBook(int choice) {
+    private RecipeController mockRecipeBook(int choice) {
         ArrayList<Recipe> recipes = new ArrayList<>();
         switch (choice) {
             case 1:
                 recipes.add(mockRecipe(1));
                 recipes.add(mockRecipe(2));
-                return new RecipeBook(recipes);
+                return new RecipeController(recipes);
             case 2:
                 recipes.add(mockRecipe(3));
                 recipes.add(mockRecipe(4));
-                return new RecipeBook(recipes);
+                return new RecipeController(recipes);
         }
         return null;
     }
 
     @Test
     void getRecipes() {
-        RecipeBook recipeBook1 = mockRecipeBook(1);
-        assert recipeBook1 != null;
-        ArrayList<Recipe> recipes1 = recipeBook1.getRecipes();
+        RecipeController recipeController1 = mockRecipeBook(1);
+        assert recipeController1 != null;
+        ArrayList<Recipe> recipes1 = recipeController1.getRecipes();
         assertEquals("id1", recipes1.get(0).getId());
         assertEquals("id2", recipes1.get(1).getId());
-        RecipeBook recipeBook2 = mockRecipeBook(2);
-        assert recipeBook2 != null;
-        ArrayList<Recipe> recipes2 = recipeBook2.getRecipes();
+        RecipeController recipeController2 = mockRecipeBook(2);
+        assert recipeController2 != null;
+        ArrayList<Recipe> recipes2 = recipeController2.getRecipes();
         assertEquals("id3", recipes2.get(0).getId());
         assertEquals("id4", recipes2.get(1).getId());
     }
 
     @Test
     public void setRecipes() {
-        RecipeBook recipeBook = mockRecipeBook(1);
+        RecipeController recipeController = mockRecipeBook(1);
         Recipe newRecipe1 = mockRecipe(3);
         Recipe newRecipe2 = mockRecipe(4);
         ArrayList<Recipe> newRecipes = new ArrayList<>(Arrays.asList(newRecipe1, newRecipe2));
-        assert recipeBook != null;
-        recipeBook.setRecipes(newRecipes);
-        assertTrue(recipeBook.contains(newRecipe1));
-        assertTrue(recipeBook.contains(newRecipe2));
+        assert recipeController != null;
+        recipeController.setRecipes(newRecipes);
+        assertTrue(recipeController.contains(newRecipe1));
+        assertTrue(recipeController.contains(newRecipe2));
     }
 
     @Test
     void getRecipeByPosition() {
-        RecipeBook recipeBook = mockRecipeBook(1);
-        assert recipeBook != null;
-        assertEquals("id1", recipeBook.getRecipeByPosition(0).getId());
-        assertEquals("id2", recipeBook.getRecipeByPosition(1).getId());
+        RecipeController recipeController = mockRecipeBook(1);
+        assert recipeController != null;
+        assertEquals("id1", recipeController.getRecipeByPosition(0).getId());
+        assertEquals("id2", recipeController.getRecipeByPosition(1).getId());
     }
 
     @Test
     void getRecipeById() {
-        RecipeBook recipeBook = mockRecipeBook(2);
-        assert recipeBook != null;
-        assertEquals("id3", recipeBook.getRecipeById("id3").getId());
-        assertEquals("id4", recipeBook.getRecipeById("id4").getId());
+        RecipeController recipeController = mockRecipeBook(2);
+        assert recipeController != null;
+        assertEquals("id3", recipeController.getRecipeById("id3").getId());
+        assertEquals("id4", recipeController.getRecipeById("id4").getId());
     }
 
     @Test
@@ -94,9 +94,9 @@ class RecipeBookTest {
     void contains() {
         Recipe recipe1 = mockRecipe(1);
         Recipe recipe2 = mockRecipe(2);
-        RecipeBook recipeBook = new RecipeBook(new ArrayList<>(Arrays.asList(recipe1, recipe2)));
-        assertTrue(recipeBook.contains(recipe1));
-        assertTrue(recipeBook.contains(recipe2));
+        RecipeController recipeController = new RecipeController(new ArrayList<>(Arrays.asList(recipe1, recipe2)));
+        assertTrue(recipeController.contains(recipe1));
+        assertTrue(recipeController.contains(recipe2));
     }
 
     @Test
@@ -104,16 +104,16 @@ class RecipeBookTest {
         Recipe recipe = new Recipe("id", null, 0, 0, null, null, null, null);
         ArrayList<Recipe> recipes = new ArrayList<>();
         recipes.add(recipe);
-        RecipeBook recipeBook = new RecipeBook(recipes);
-        assertThrows(AssertionError.class, () -> recipeBook.add(recipe), "This recipe is already in the recipe book!");
+        RecipeController recipeController = new RecipeController(recipes);
+        assertThrows(AssertionError.class, () -> recipeController.add(recipe), "This recipe is already in the recipe book!");
     }
 
     @Test
     void removeException() {
-        RecipeBook recipeBook = mockRecipeBook(1);
+        RecipeController recipeController = mockRecipeBook(1);
         assertThrows(AssertionError.class, () -> {
-            assert recipeBook != null;
-            recipeBook.remove(mockRecipe(3));
+            assert recipeController != null;
+            recipeController.remove(mockRecipe(3));
         }, "this recipe is not found in the recipe book!");
     }
 }

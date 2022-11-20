@@ -9,7 +9,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,12 +21,11 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -73,11 +71,11 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
         {   //Adding a Meal Plan
             case R.id.meal_plan_add:
                 //launches newFragment if there are ingredients/recipes
-                RecipeBook recipeBook = MainActivity.recipeBook;
+                RecipeController recipeController = MainActivity.recipeController;
                 IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
                 ingredientStorage.loadAllFromDB();
 
-                if (ingredientStorage.getIngredients().size() + recipeBook.getRecipes().size() == 0 ) {
+                if (ingredientStorage.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
                     Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
                             "Add an ingredient or recipe first!", Snackbar.LENGTH_SHORT);
                     snackbar.setAnchorView(R.id.nav_bar).show();
@@ -132,7 +130,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
     @Override
     public void onResume() {
         super.onResume();
-        // real time updates of the recipeBook
+        // real time updates of the recipeController
         CollectionReference recipeBookRef = MainActivity.mealPlanRef;
         recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
