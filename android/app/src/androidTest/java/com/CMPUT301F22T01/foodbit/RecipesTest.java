@@ -559,7 +559,7 @@ public class RecipesTest {
 
         // check title
         ViewInteraction viewGroup = onView(
-                allOf(withId(R.id.recipe_detail_toolbar),
+                allOf(withId(R.id.recipe_detail_topbar),
                         withParent(allOf(withContentDescription("Sandwich"),
                                 withParent(withId(R.id.appbar)))),
                         isDisplayed()));
@@ -610,7 +610,7 @@ public class RecipesTest {
         // click back button
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
-                                allOf(withId(R.id.recipe_detail_toolbar),
+                                allOf(withId(R.id.recipe_detail_topbar),
                                         childAtPosition(
                                                 withContentDescription("Sandwich"),
                                                 1)),
