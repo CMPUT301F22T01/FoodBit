@@ -60,8 +60,8 @@
         android:label="RecipeDetailFragment"
         tools:layout="@layout/fragment_recipe_detail">
         <argument
-            android:name="recipeBook"
-            app:argType="com.CMPUT301F22T01.foodbit.controllers.RecipeBook" />
+            android:name="recipeController"
+            app:argType="com.CMPUT301F22T01.foodbit.controllers.RecipeController" />
     </fragment>
 
     <fragment

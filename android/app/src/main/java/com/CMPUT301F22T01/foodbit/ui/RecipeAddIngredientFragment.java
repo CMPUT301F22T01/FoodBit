@@ -167,7 +167,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
             }
             return new AlertDialog.Builder(getContext())
                     .setView(view)
-                    .setTitle("Add an ingredient")
+                    .setTitle("Edit an ingredient")
                     .setNegativeButton("Delete", null)
                     .setNeutralButton("Cancel", null)
                     .setPositiveButton("Update", null)
