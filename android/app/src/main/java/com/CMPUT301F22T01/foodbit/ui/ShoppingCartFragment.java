@@ -21,6 +21,9 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 
+/**
+ * provide a fragment show shopping cart ingredients
+ */
 public class ShoppingCartFragment extends Fragment {
 
     public String TAG = "shoppingCartFragment";

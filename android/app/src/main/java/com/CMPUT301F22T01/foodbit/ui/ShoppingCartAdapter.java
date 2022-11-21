@@ -19,6 +19,10 @@ import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
 
+/**
+ * provide a set of ingredients according to the
+ * ingredients storage and meal plan
+ */
 public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder> {
     private final static String TAG = "ShoppingCartAdapter";
     private final ArrayList<Ingredient> items;
@@ -27,9 +31,11 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         this.items = items;
     }
 
+    /**
+     * set a viewHolder to provide a view for recycler view
+     */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // define UI
-        private final ImageView cartPhoto;
         private final TextView cartDescription;
         private final TextView cartAmount;
         private final TextView cartUnit;
@@ -46,7 +52,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             });
 
             // init UI
-            cartPhoto = view.findViewById(R.id.image_shopping_item);
             cartDescription = view.findViewById(R.id.shopping_ingredient_description);
             cartAmount = view.findViewById(R.id.shopping_ingredient_amount);
             cartUnit = view.findViewById(R.id.shopping_ingredient_unit);
@@ -54,10 +59,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         }
 
         // view holder's get view methods
-        public ImageView getCartPhotoView() {
-            return cartPhoto;
-        }
-
         public TextView getCartDescriptionView() {
             return cartDescription;
         }
@@ -103,6 +104,10 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         categoryView.setText(category);
     }
 
+    /**
+     * provide an item count function
+     * @return the size of the items
+     */
     @Override
     public int getItemCount() {
         return items.size();
