@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
@@ -72,14 +73,14 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for the ViewHolder's
+
             // Define click listener for items
             view.setOnClickListener(v -> {
                 // put argument
                 Bundle bundle = new Bundle();
                 bundle.putInt("position",getAdapterPosition());
 
-//                Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
+                Navigation.findNavController(v).navigate(R.id.action_fragment_meal_plan_to_mealDetailFragment, bundle);
             });
             mealPlanTitle = view.findViewById(R.id.meal_plan_title);
             mealPlanDate = view.findViewById(R.id.meal_plan_date);

@@ -46,7 +46,11 @@
         android:id="@+id/fragment_meal_plan"
         android:name="com.CMPUT301F22T01.foodbit.ui.MealPlanFragment"
         android:label="MealPlanFragment"
-        tools:layout="@layout/fragment_meal_plan"/>
+        tools:layout="@layout/fragment_meal_plan">
+        <action
+            android:id="@+id/action_fragment_meal_plan_to_mealDetailFragment"
+            app:destination="@id/mealDetailFragment" />
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_shopping_cart"
@@ -74,5 +78,10 @@
             app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientStorage" />
 
     </fragment>
+    <fragment
+        android:id="@+id/mealDetailFragment"
+        android:name="com.CMPUT301F22T01.foodbit.ui.MealDetailFragment"
+        android:label="fragment_meal_detail"
+        tools:layout="@layout/fragment_meal_detail" />
 
 </navigation>
