@@ -36,7 +36,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
         // define UI
-        private final ImageView cartPhoto;
         private final TextView cartDescription;
         private final TextView cartAmount;
         private final TextView cartUnit;
@@ -53,7 +52,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
             });
 
             // init UI
-            cartPhoto = view.findViewById(R.id.image_shopping_item);
             cartDescription = view.findViewById(R.id.shopping_ingredient_description);
             cartAmount = view.findViewById(R.id.shopping_ingredient_amount);
             cartUnit = view.findViewById(R.id.shopping_ingredient_unit);
@@ -61,10 +59,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         }
 
         // view holder's get view methods
-        public ImageView getCartPhotoView() {
-            return cartPhoto;
-        }
-
         public TextView getCartDescriptionView() {
             return cartDescription;
         }
