@@ -30,9 +30,14 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -274,6 +279,11 @@ public class IngredientAddFragment extends DialogFragment {
                     // checking if inputs are valid, will display an error message if not
                     // required fields are ones that can be sorted by including description, best before, location, and category
                     // if amount is not entered it defaults to 0
+                    // if the date is before today's date, amount will default to 0
+                    Date todayDate = Calendar.getInstance().getTime();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    String todayString = formatter.format(todayDate);
+
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
                         descriptionLayout.setError("Required");
@@ -282,6 +292,9 @@ public class IngredientAddFragment extends DialogFragment {
                         descriptionLayout.setError("Maximum 150 characters");
                         requiredFieldEntered = false;
                     }
+                    if (amount.equals("")) {
+                        amount = String.valueOf(0);
+                    }
                     if (bestBefore.equals("")) {
                         bestBeforeLayout.setError("Required");
                         requiredFieldEntered = false;
@@ -289,8 +302,16 @@ public class IngredientAddFragment extends DialogFragment {
                         bestBeforeLayout.setError("Format for date is yyyy-mm-dd");
                         requiredFieldEntered = false;
                     }
-                    if (amount.equals("")) {
-                        amount = String.valueOf(0);
+                    // This portion checks to see if date is expired
+                    else {
+                        try {
+                            Date bestBeforeDate = formatter.parse(bestBefore);
+                            if (bestBeforeDate.before(todayDate)) {
+                                amount = String.valueOf(0);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                     }
                     if (location.equals("")) {
                         locationLayout.setError("Required");
