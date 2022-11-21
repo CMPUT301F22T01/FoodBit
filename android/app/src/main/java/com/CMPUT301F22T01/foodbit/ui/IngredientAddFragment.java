@@ -13,6 +13,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Spinner;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
@@ -22,6 +25,7 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.lang.reflect.Array;
 import java.util.Objects;
 
 /**
@@ -38,14 +42,11 @@ public class IngredientAddFragment extends DialogFragment {
     TextInputLayout descriptionLayout;
     TextInputEditText bestBeforeEditText;
     TextInputLayout bestBeforeLayout;
-    TextInputEditText locationEditText;
-    TextInputLayout locationLayout;
     TextInputEditText amountEditText;
     TextInputLayout amountLayout;
-    TextInputEditText unitEditText;
-    TextInputLayout unitLayout;
-    TextInputEditText categoryEditText;
+    TextInputLayout locationLayout;
     TextInputLayout categoryLayout;
+
 
     public IngredientAddFragment() {
         // Required empty public constructor
@@ -75,14 +76,29 @@ public class IngredientAddFragment extends DialogFragment {
         descriptionLayout = view.findViewById(R.id.ingredient_add_text_layout_description);
         bestBeforeEditText = view.findViewById(R.id.ingredient_add_edit_text_best_before);
         bestBeforeLayout = view.findViewById(R.id.ingredient_add_text_layout_best_before);
-        locationEditText = view.findViewById(R.id.ingredient_add_edit_text_location);
-        locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
         amountEditText = view.findViewById(R.id.ingredient_add_edit_text_amount);
         amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
-        unitEditText = view.findViewById(R.id.ingredient_add_edit_text_unit);
-        unitLayout = view.findViewById(R.id.ingredient_add_text_layout_unit);
-        categoryEditText = view.findViewById(R.id.ingredient_add_edit_text_category);
+        locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
         categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
+
+        //Dropdown box for categories
+        AutoCompleteTextView categoryTextView = view.findViewById(R.id.category_picker);
+        String[] categories = {"vegetables", "fruits", "grains", "snacks", "dairy"};
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, categories);
+        categoryTextView.setAdapter(categoryAdapter);
+
+        //Dropdown box for units
+        AutoCompleteTextView unitTextView = view.findViewById(R.id.unit_picker);
+        String[] units = {"kg", "lbs", "oz", "tbs", "tsp", "g"};
+        ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
+        unitTextView.setAdapter(unitAdapter);
+
+        //Dropdown box for units
+        AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
+        String[] locations = {"fridge", "pantry", "freezer"};
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, locations);
+        locationTextView.setAdapter(locationAdapter);
+
 
         // back button
         topBar.setNavigationOnClickListener(v -> {
@@ -98,15 +114,20 @@ public class IngredientAddFragment extends DialogFragment {
                 if (itemId == R.id.ingredient_add_done) {
                     String description = Objects.requireNonNull(descriptionEditText.getText()).toString();
                     String bestBefore = Objects.requireNonNull(bestBeforeEditText.getText()).toString();
-                    String location = Objects.requireNonNull(locationEditText.getText()).toString();
+                    String location = Objects.requireNonNull(locationTextView.getText()).toString();
                     String amount = Objects.requireNonNull(amountEditText.getText()).toString();
-                    String unit = Objects.requireNonNull(unitEditText.getText()).toString();
-                    String category = Objects.requireNonNull(categoryEditText.getText()).toString();
+                    String unit = Objects.requireNonNull(unitTextView.getText()).toString();
+                    String category = Objects.requireNonNull(categoryTextView.getText()).toString();
 
                     // checking if inputs are valid, will display an error message if not
+                    // required fields are ones that can be sorted by including description, best before, location, and category
+                    // if amount is not entered it defaults to 0
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
                         descriptionLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    } else if (description.length() > 150) {
+                        descriptionLayout.setError("Maximum 150 characters");
                         requiredFieldEntered = false;
                     }
                     if (bestBefore.equals("")) {
@@ -116,29 +137,15 @@ public class IngredientAddFragment extends DialogFragment {
                         bestBeforeLayout.setError("Format for date is yyyy-mm-dd");
                         requiredFieldEntered = false;
                     }
+                    if (amount.equals("")) {
+                        amount = String.valueOf(0);
+                    }
                     if (location.equals("")) {
                         locationLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    } else if (!location.equals("pantry") && !location.equals("freezer") && !location.equals("fridge")) {
-                        locationLayout.setError("Options are pantry, freezer, or fridge!");
-                        requiredFieldEntered = false;
-                    }
-                    if (amount.equals("")) {
-                        amountLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    }
-                    if (unit.equals("")) {
-                        unitLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    } else if (!unit.equals("lbs") && !unit.equals("kg") && !unit.equals("oz") && !unit.equals("g")) {
-                        unitLayout.setError("Options are lbs, kg, oz, or g!");
                         requiredFieldEntered = false;
                     }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
-                        requiredFieldEntered = false;
-                    } else if (!category.equals("vegetables") && !category.equals("fruits") && !category.equals("meat") && !category.equals("grains") && !category.equals("dairy") && !category.equals("snacks") && !category.equals("seasonings")) {
-                        categoryLayout.setError("Options are vegetables, fruits, meat, grains, dairy, snacks, or spices!");
                         requiredFieldEntered = false;
                     }
                     if (requiredFieldEntered) {
