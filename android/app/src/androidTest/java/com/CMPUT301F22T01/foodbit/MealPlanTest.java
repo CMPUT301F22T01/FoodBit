@@ -174,7 +174,7 @@ public class MealPlanTest {
         textInputEditText3.perform(replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
+                allOf(withId(R.id.recipe_detail_edit), withContentDescription("ADD"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.recipe_add_top_bar),

@@ -1,7 +1,5 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientStorage;
-
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,15 +15,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -47,7 +42,7 @@ public class MealAddFragment extends DialogFragment {
 
     private IngredientStorage ingredientStorage;
     private MealPlanController mealPlanController;
-    private RecipeBook recipeBook;
+    private RecipeController recipeController;
     private int positionSelected;
     private Boolean notRealItem = false;
     private MealPlan meal;
@@ -112,14 +107,14 @@ public class MealAddFragment extends DialogFragment {
         servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
 
         //Populate dropdown with ingredients and recipes
-        recipeBook = MainActivity.recipeBook;
+        recipeController = MainActivity.recipeController;
         ingredientStorage = MainActivity.ingredientStorage;
         mealPlanController = MainActivity.mealPlan;
         ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
-        ArrayList<Recipe> recipeList = recipeBook.getRecipes();
+        ArrayList<Recipe> recipeList = recipeController.getRecipes();
         String[] items;
         if (ingredientList.size() + recipeList.size() == 0 ) {
-            // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeBook
+            // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeController
             Log.e("MealAdd","Ingredient and recipe size is 0");
             items = new String [] {"test1", "test2", "test3", "test4", "test5"};
             notRealItem = true;

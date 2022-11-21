@@ -19,10 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -32,10 +31,10 @@ import java.util.ArrayList;
  */
 public class RecipeBookFragment extends Fragment {
 
-    public String TAG = "RecipeBook";
+    public String TAG = "RecipeController";
 
     // get recipe book from MainActivity
-    private RecipeBook recipeBook;
+    private final RecipeController recipeController = MainActivity.recipeController;
 
     RecipeAdapter adapter;
 
@@ -94,9 +93,8 @@ public class RecipeBookFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment and initialize recipeBook
+        // Inflate the layout for this fragment and initialize recipeController
         View view = inflater.inflate(R.layout.fragment_recipe_book, container, false);
-        recipeBook = MainActivity.recipeBook;
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
@@ -123,7 +121,7 @@ public class RecipeBookFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // real time updates of the recipeBook
+        // real time updates of the recipeController
         recipeBookUpdate();
     }
 
@@ -137,7 +135,7 @@ public class RecipeBookFragment extends Fragment {
 
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new RecipeAdapter(recipeBook.getRecipes());
+        adapter = new RecipeAdapter(recipeController.getRecipes());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -161,35 +159,10 @@ public class RecipeBookFragment extends Fragment {
                 Recipe newRecipe = doc.toObject(Recipe.class);
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
-//                Map<String, Object> data = doc.getData();
-//                String title = (String) data.get("title");
-//                int prepTime = (int) (long) data.get("prepTime");
-//                int numServings = (int) (long) data.get("numServings");
-//                String category = (String) data.get("category");
-//                String comments = (String) data.get("comments");
-//                Uri photo;
-//                if (data.get("photo") != null) {
-//                    photo = Uri.parse((String) data.get("photo"));
-//                } else {photo = null;}
-//                ArrayList<HashMap<String, Object>> ingredientsData = (ArrayList<HashMap<String, Object>>) data.get("ingredients");
-//                ArrayList<Ingredient> ingredients = new ArrayList<>();
-//                assert ingredientsData != null;
-//                for (HashMap<String, Object> ingredientData : ingredientsData) {
-//                    ingredients.add(new Ingredient(
-//                            (String) ingredientData.get("description"),
-//                            ((float) (double) ingredientData.get("amount")),
-//                            (String) ingredientData.get("unit"),
-//                            (String) ingredientData.get("category")
-//                    ));
-//                }
-//                Recipe newRecipe = new Recipe(
-//                        doc.getId(), title, prepTime, numServings, category, comments, photo, ingredients);
-//                newRecipes.add(newRecipe);
-//                Log.d(TAG, "recipe id: "+newRecipe.getId());
             }
-            recipeBook.setRecipes(newRecipes);
-            Log.d(TAG, "current recipe book: "+recipeBook);
-            Log.d(TAG, "Current recipes: " + recipeBook.getRecipes());
+            recipeController.setRecipes(newRecipes);
+            Log.d(TAG, "current recipe book: "+ recipeController);
+            Log.d(TAG, "Current recipes: " + recipeController.getRecipes());
             adapter.notifyDataSetChanged();
         });
     }

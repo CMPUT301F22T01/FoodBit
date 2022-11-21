@@ -1,16 +1,7 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
-import android.util.Log;
-
-import androidx.annotation.NonNull;
-
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -20,15 +11,15 @@ import java.util.Objects;
 /**
  * Provide controls to a list of <code>Recipe</code> class objects.
  */
-public class RecipeBook implements Serializable {
+public class RecipeController implements Serializable {
 //    private FirebaseFirestore db;
     private DatabaseController db = new DatabaseController("Recipe Book");
     private final ArrayList<Recipe> recipes;
 
     /**
-     * Constructs an empty <code>RecipeBook</code>.
+     * Constructs an empty <code>RecipeController</code>.
      */
-    public RecipeBook() {
+    public RecipeController() {
         recipes = new ArrayList<Recipe>();
     }
 
@@ -36,7 +27,7 @@ public class RecipeBook implements Serializable {
      * Constructs a recipe book with an initial list of recipes.
      * @param recipes the initial list of recipes
      */
-    public RecipeBook(List<Recipe> recipes) {
+    public RecipeController(List<Recipe> recipes) {
         this.recipes = (ArrayList<Recipe>) recipes;
     }
 
@@ -102,6 +93,10 @@ public class RecipeBook implements Serializable {
         String TAG = RecipeAddFragment.TAG;
         assert !contains(recipe) : "This recipe is already in the recipe book!";
         db.addItem(recipe);
+    }
+
+    public void edit(Recipe recipe) {
+        db.editItem(recipe);
     }
 
     /**
