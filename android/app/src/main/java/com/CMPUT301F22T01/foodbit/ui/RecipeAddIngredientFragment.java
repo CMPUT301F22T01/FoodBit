@@ -4,15 +4,16 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
-
-import android.util.Log;
-import android.view.View;
-import android.widget.Button;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -30,6 +31,10 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     public static final int MODE_ADD = 0;
     public static final int MODE_EDIT = 1;
     private int mode;
+
+    AutoCompleteTextView autoCompleteIngredients;
+    String[] items = {"apple","Tomato","Bell Peppers","chicken"};
+    ArrayAdapter<String> adapterList;
 
     // listeners
     public interface OnIngredientAddListener {
@@ -144,10 +149,15 @@ public class RecipeAddIngredientFragment extends DialogFragment {
         amountLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_amount);
         unitLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_unit);
         categoryLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_category);
-        descriptionEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_description);
+//        descriptionEditText = view.findViewById(R.id.recipe_add_ingredient_add_auto_complete_ingredients);
         amountEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_amount);
         unitEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_unit);
         categoryEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_category);
+
+        autoCompleteIngredients = view.findViewById(R.id.recipe_add_ingredient_add_auto_complete_ingredients);
+        String[] ingredientList = {"vegetables", "fruits", "grains", "snacks", "dairy"};
+        adapterList = new ArrayAdapter<>(getActivity(),R.layout.ingredient_dropdown_layout,ingredientList);
+        autoCompleteIngredients.setAdapter(adapterList);
 
         // build the dialog based on the mode
         if (mode == MODE_ADD) {
