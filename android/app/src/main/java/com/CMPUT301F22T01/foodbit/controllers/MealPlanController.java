@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +35,16 @@ public class MealPlanController {
     }
 
     /**
+     * Deletes a meal from the meal plan
+     * @param meal the meal to be deleted
+     */
+    public void deleteMeal(MealPlan meal) {
+        assert contains(meal) : "this meal is not found in the meal plan!";
+        db.deleteItem(meal);
+        mealPlan.remove(meal);
+    }
+
+    /**
      * Loads the local cache of the meal plan from the database into the local array
      */
     public void loadAllMeals() {
@@ -51,6 +62,15 @@ public class MealPlanController {
             }
         });
         return mealPlan;
+    }
+
+    /**
+     * Returns true if the meal plan contains the meal.
+     * @param meal meal whose presence in this meal plan is to be tested
+     * @return whether if the meal plan contains the recipe
+     */
+    public boolean contains(MealPlan meal) {
+        return mealPlan.contains(meal);
     }
 
     /**
@@ -72,5 +92,14 @@ public class MealPlanController {
             t = t + mealPlan.get(i).getId();
         }
         return t;
+    }
+
+    /**
+     * Get a meal by its index in the list.
+     * @param position the index of the meal
+     * @return the meal at the position
+     */
+    public MealPlan getMealByPosition(int position) {
+        return mealPlan.get(position);
     }
 }
