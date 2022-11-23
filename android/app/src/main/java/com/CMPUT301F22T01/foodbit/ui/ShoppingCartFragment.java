@@ -1,13 +1,16 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +32,8 @@ public class ShoppingCartFragment extends Fragment {
     public String TAG = "shoppingCartFragment";
 
     private Context context;
+
+    public CheckBox shoppingCheckBox;
 
     // get ingredient storage from MainActivity
     private IngredientStorage ingredientStorage;
@@ -53,6 +58,18 @@ public class ShoppingCartFragment extends Fragment {
         // This fragment has options menu for the action bar
         setHasOptionsMenu(true);
     }
+
+    public void onCheckboxClicked(View view) {
+        boolean checked = ((CheckBox) view).isChecked();
+
+        switch (view.getId()){
+            case R.id.shopping_checkBox:
+                PreferenceManager.getDefaultSharedPreferences(context).edit()
+                        .putBoolean("shopping_checkBox", checked).commit();
+                break;
+        }
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
@@ -97,6 +114,10 @@ public class ShoppingCartFragment extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
+
+        //set checkBox
+
+
         //update bottom cart info
         if (adapter.getItemCount() > 0) {
             bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
