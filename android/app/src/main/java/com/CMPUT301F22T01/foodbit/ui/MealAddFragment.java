@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.Spinner;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
@@ -30,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -151,6 +153,11 @@ public class MealAddFragment extends DialogFragment {
             }
         });
 
+        //Date picker
+        EditText mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
+        EditDatePicker mealDatePicker = new EditDatePicker(context,mealDateEditText);
+
+
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
         });
@@ -159,9 +166,11 @@ public class MealAddFragment extends DialogFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) { //Check button is clicked!
                 String servings = Objects.requireNonNull(servingsEditText.getText().toString());
+                Date mealDate = mealDatePicker.getDate();
                 if (servings.equals("")) {
                     servingsLayout.setError("Required");
                 } else {
+                    meal.setDate(mealDate);
                     meal.setServings(Integer.valueOf(servings));
                     int ingredientSize = ingredientList.size();
                     if (!notRealItem) { // Is a real item. Fixed DB Issues basically
