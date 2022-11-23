@@ -28,7 +28,6 @@ public class ShoppingCartDetailFragment extends Fragment {
     TextView amountView;
     TextView unitView;
     TextView categoryView;
-    Button deleteButton;
     Button editButton;
 
     public ShoppingCartDetailFragment() {
@@ -45,15 +44,15 @@ public class ShoppingCartDetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         // inflating the layout
-        View view = inflater.inflate(R.layout.fragment_ingredient_detail, container, false);
+        View view = inflater.inflate(R.layout.fragment_shopping_cart_edit, container, false);
 
-        toolbar = view.findViewById(R.id.ingredient_detail_toolbar);
-        descriptionView = view.findViewById(R.id.ingredient_detail_description);
-        bestBeforeView = view.findViewById(R.id.ingredient_detail_best_before);
-        locationView = view.findViewById(R.id.ingredient_detail_location);
-        amountView = view.findViewById(R.id.ingredient_detail_amount);
-        unitView = view.findViewById(R.id.ingredient_detail_unit);
-        categoryView = view.findViewById(R.id.ingredient_detail_category);
+        toolbar = view.findViewById(R.id.shopping_detail_toolbar);
+        descriptionView = view.findViewById(R.id.shopping_detail_description);
+        bestBeforeView = view.findViewById(R.id.shopping_detail_best_before);
+        locationView = view.findViewById(R.id.shopping_detail_location);
+        amountView = view.findViewById(R.id.shopping_detail_amount);
+        unitView = view.findViewById(R.id.shopping_detail_unit);
+        categoryView = view.findViewById(R.id.shopping_detail_category);
 
         toolbar.setTitle(ingredient.getDescription());
 
@@ -73,17 +72,7 @@ public class ShoppingCartDetailFragment extends Fragment {
         unitView.setText(ingredient.getUnit());
         categoryView.setText(ingredient.getCategory());
 
-        // allows for deleting of ingredient being viewed when delete button is clicked
-        deleteButton = view.findViewById(R.id.button_ingredient_detail_delete);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.ingredientStorage.delete(ingredient);
-                Navigation.findNavController(v).popBackStack();
-            }
-        });
-
-        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
+        editButton = view.findViewById(R.id.button_shopping_detail_edit);
 
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
