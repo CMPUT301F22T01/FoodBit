@@ -56,7 +56,21 @@
         android:id="@+id/fragment_shopping_cart"
         android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment"
         android:label="ShoppingCartFragment"
-        tools:layout="@layout/fragment_shopping_cart"/>
+        tools:layout="@layout/fragment_shopping_cart">
+    <action
+        android:id="@+id/action_fragment_shopping_cart_to_fragment_shopping_cart_edit"
+        app:destination="@id/fragment_shopping_cart_edit"
+        app:enterAnim="@anim/slide_left_enter"
+        app:popExitAnim="@anim/slide_right_exit" />
+    </fragment>
+    <fragment
+        android:id="@+id/fragment_shopping_cart_edit"
+        android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartDetailFragment"
+        android:label="ShoppingDetailFragment"
+        tools:layout="@layout/fragment_shopping_cart_edit">
+
+    </fragment>
+
 
     <fragment
         android:id="@+id/fragment_recipe_detail"
@@ -78,6 +92,7 @@
             app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientStorage" />
 
     </fragment>
+
     <fragment
         android:id="@+id/mealDetailFragment"
         android:name="com.CMPUT301F22T01.foodbit.ui.MealDetailFragment"
