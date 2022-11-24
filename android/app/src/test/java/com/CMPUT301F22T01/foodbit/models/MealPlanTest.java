@@ -132,20 +132,20 @@ public class MealPlanTest {
         assertEquals(mockDate(), mockMealPlanRecipe().getDate());
     }
 
-    @Test
-    void setDate() {
-        Date newDate = new Date();
+    //@Test
+    //void setDate() {
+    //    Date newDate = new Date();
 
-        MealPlan mealPlanIngredient = mockMealPlanIngredient();
-        assertEquals(mockDate(), mealPlanIngredient.getDate());
-        mealPlanIngredient.setDate(newDate);
-        assertEquals(newDate, mealPlanIngredient.getDate());
+    //    MealPlan mealPlanIngredient = mockMealPlanIngredient();
+    //    assertEquals(mockDate(), mealPlanIngredient.getDate());
+    //    mealPlanIngredient.setDate(newDate);
+    //    assertEquals(newDate, mealPlanIngredient.getDate());
 
-        MealPlan mealPlanRecipe = mockMealPlanRecipe();
-        assertEquals(mockDate(), mealPlanRecipe.getDate());
-        mealPlanRecipe.setDate(newDate);
-        assertEquals(newDate, mealPlanRecipe.getDate());
-    }
+    //    MealPlan mealPlanRecipe = mockMealPlanRecipe();
+    //    assertEquals(mockDate(), mealPlanRecipe.getDate());
+    //    mealPlanRecipe.setDate(newDate);
+    //    assertEquals(newDate, mealPlanRecipe.getDate());
+    //}
 
     @Test
     void getIngredientList() {

@@ -81,15 +81,15 @@ public class MealPlanTest {
                         isDisplayed()));
         textInputEditText5.perform(replaceText("2022-01-01"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText6 = onView(
-                allOf(withId(R.id.ingredient_add_edit_text_location),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_location),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText6.perform(replaceText("pantry"), closeSoftKeyboard());
+        //ViewInteraction textInputEditText6 = onView(
+        //        allOf(withId(R.id.ingredient_add_edit_text_location),
+        //                childAtPosition(
+        //                        childAtPosition(
+        //                                withId(R.id.ingredient_add_text_layout_location),
+        //                                0),
+        //                        0),
+        //                isDisplayed()));
+        //textInputEditText6.perform(replaceText("pantry"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText7 = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_amount),
@@ -101,25 +101,25 @@ public class MealPlanTest {
                         isDisplayed()));
         textInputEditText7.perform(replaceText("1"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText8 = onView(
-                allOf(withId(R.id.ingredient_add_edit_text_unit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_unit),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText8.perform(replaceText("kg"), closeSoftKeyboard());
+        //ViewInteraction textInputEditText8 = onView(
+        //        allOf(withId(R.id.ingredient_add_edit_text_unit),
+        //                childAtPosition(
+        //                        childAtPosition(
+        //                                withId(R.id.ingredient_add_text_layout_unit),
+        //                                0),
+        //                        0),
+        //                isDisplayed()));
+        //textInputEditText8.perform(replaceText("kg"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText9 = onView(
-                allOf(withId(R.id.ingredient_add_edit_text_category),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_category),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText9.perform(replaceText("grains"), closeSoftKeyboard());
+        //ViewInteraction textInputEditText9 = onView(
+        //        allOf(withId(R.id.ingredient_add_edit_text_category),
+        //                childAtPosition(
+        //                        childAtPosition(
+        //                                withId(R.id.ingredient_add_text_layout_category),
+        //                                0),
+        //                        0),
+        //                isDisplayed()));
+        //textInputEditText9.perform(replaceText("grains"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView4 = onView(
                 allOf(withId(R.id.ingredient_add_done), withContentDescription("ADD"),
