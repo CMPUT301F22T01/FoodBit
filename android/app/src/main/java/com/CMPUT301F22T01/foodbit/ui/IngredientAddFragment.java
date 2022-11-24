@@ -30,6 +30,10 @@ import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -84,6 +88,7 @@ public class IngredientAddFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         // set the style of the dialog fragment to be full screen
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
+
     }
 
     @Override
@@ -282,7 +287,7 @@ public class IngredientAddFragment extends DialogFragment {
                     // if the date is before today's date, amount will default to 0
                     Date todayDate = Calendar.getInstance().getTime();
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    String todayString = formatter.format(todayDate);
+                    //String todayString = formatter.format(todayDate);
 
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
