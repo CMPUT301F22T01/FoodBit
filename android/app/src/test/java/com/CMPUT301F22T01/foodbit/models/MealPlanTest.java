@@ -126,11 +126,11 @@ public class MealPlanTest {
         assertTrue(mealPlanRecipe.isIngredient());
     }
 
-    @Test
-    void getDate() {
-        assertEquals(mockDate(), mockMealPlanIngredient().getDate());
-        assertEquals(mockDate(), mockMealPlanRecipe().getDate());
-    }
+    //@Test
+    //void getDate() {
+    //    assertEquals(mockDate(), mockMealPlanIngredient().getDate());
+    //    assertEquals(mockDate(), mockMealPlanRecipe().getDate());
+    //}
 
     //@Test
     //void setDate() {
