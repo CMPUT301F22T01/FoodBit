@@ -1,7 +1,5 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientStorage;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -27,12 +25,12 @@ import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -49,6 +47,7 @@ public class IngredientStorageFragment extends Fragment {
 
     IngredientAdapter adapter;
 
+
     public IngredientStorageFragment() {
         // Required empty public constructor
     }
@@ -62,7 +61,7 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Ingredient Storage");
+        getActivity().setTitle("Ingredient List");
 
 
 
@@ -92,6 +91,7 @@ public class IngredientStorageFragment extends Fragment {
 
             // Sorting the Ingredients accordingly
             case R.id.filter1:
+                nameSort(getView());
                 Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
                 Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
@@ -104,6 +104,19 @@ public class IngredientStorageFragment extends Fragment {
         }
 
 
+    }
+
+    public void nameSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
+        Collections.sort(ingredientStorage.getIngredients(), Ingredient.nameAscending);
+
+        int mode = 0;
+        ingredientStorage = MainActivity.ingredientStorage;
+        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override
@@ -126,7 +139,9 @@ public class IngredientStorageFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        getActivity().setTitle("Ingredient Storage");
+
+
+        getActivity().setTitle("Ingredient List");
         return view;
     }
 
