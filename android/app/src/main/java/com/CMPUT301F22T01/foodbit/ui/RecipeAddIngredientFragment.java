@@ -7,7 +7,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -90,7 +89,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     private ExtendedFloatingActionButton newIngredient;
     private ExtendedFloatingActionButton newUnit;
 
-    LayoutInflater inflater;
+
     EditText newUnitEditText;
     Button completeNewUnit;
 
