@@ -1,9 +1,11 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -69,6 +71,34 @@ public class MealDetailFragment extends Fragment {
             }
         });
 
+        // edit button functionality
+        Button editButton = view.findViewById(R.id.button_meal_edit);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MealEditFragment newFragment = new MealEditFragment(mealPlan);
+                FragmentManager fm = getChildFragmentManager();
+
+                fm.executePendingTransactions();
+                newFragment.show(fm, "EditMeal");
+
+                //TODO: Not working, Attempting to update details page after editing
+//                newFragment.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                    @Override
+//                    public void onDismiss(DialogInterface dialog) {
+//                        // reset text
+//                        mealPlan = newFragment.getUpdatedMeal();
+//                        descriptionView.setText(mealPlan.getName());
+//                        SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
+//                        mealDateView.setText(sf.format(mealPlan.getDate()));
+//                        servingsView.setText(String.valueOf(mealPlan.getServings()));
+//                    }
+//                });
+            };
+
+//                return true;
+
+        });
 
 
         return view;
@@ -80,4 +110,6 @@ public class MealDetailFragment extends Fragment {
         mealPlan = MainActivity.mealPlan.getMealByPosition(position);
         Log.d(TAG, String.valueOf(mealPlan));
     }
+
+
 }
