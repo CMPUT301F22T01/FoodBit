@@ -35,7 +35,7 @@ import java.util.ArrayList;
 /**
  * The main Meal Plan page that displays the list of MealPlans
  */
-public class MealPlanFragment extends Fragment implements DatePickerFragment.NoticeDialogListener {
+public class MealPlanFragment extends Fragment {
 
     public String TAG = "MealPlan";
 
@@ -73,7 +73,7 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
                 //launches newFragment if there are ingredients/recipes
                 RecipeController recipeController = MainActivity.recipeController;
                 IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
-                ingredientStorage.loadAllFromDB();
+//                ingredientStorage.loadAllFromDB();
 
                 if (ingredientStorage.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
                     Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
@@ -81,10 +81,15 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
                     snackbar.setAnchorView(R.id.nav_bar).show();
 
                 } else {
-                    // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
-                    DatePickerFragment newFragment = new DatePickerFragment();
-                    newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
+                    //Go straight to meal edit page
+                    MealPlan newMeal = new MealPlan();
+                    MealAddFragment newFragment = new MealAddFragment(newMeal);
+                    newFragment.show(getChildFragmentManager(), "AddMeal");
                     return true;
+//                    // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
+//                    DatePickerFragment newFragment = new DatePickerFragment();
+//                    newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
+//                    return true;
                 }
 
             default:
@@ -118,14 +123,6 @@ public class MealPlanFragment extends Fragment implements DatePickerFragment.Not
         return view;
     }
 
-    // User has clicked the ok from the date picker
-    @Override
-    public void onDialogPositiveClick(DatePickerFragment dialog) {
-        MealPlan newMeal = new MealPlan();
-        newMeal.setDate(dialog.getDate());
-        MealAddFragment newFragment = new MealAddFragment(newMeal);
-        newFragment.show(getChildFragmentManager(), "AddMeal");
-    }
 
     @Override
     public void onResume() {

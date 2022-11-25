@@ -7,8 +7,8 @@
     <fragment
         android:id="@+id/fragment_ingredient_edit"
         android:name="com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment"
-        android:label="IngredientEditFragment"
-        tools:layout="@layout/fragment_ingredient_edit">
+        android:label="IngredientAddFragment"
+        tools:layout="@layout/fragment_ingredient_add">
         <action
             android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_storage"
             app:destination="@+id/fragment_ingredient_storage"
@@ -16,6 +16,17 @@
             app:popEnterAnim="@anim/slide_right_exit"/>
     </fragment>
 
+    <fragment
+        android:id="@+id/fragment_ingredient_add"
+        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment"
+        android:label="IngredientAddFragment"
+        tools:layout="@layout/fragment_ingredient_add">
+        <action
+            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_detail"
+            app:destination="@+id/fragment_ingredient_detail"
+            app:enterAnim="@anim/slide_left_enter"
+            app:popEnterAnim="@anim/slide_right_exit"/>
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_ingredient_storage"
