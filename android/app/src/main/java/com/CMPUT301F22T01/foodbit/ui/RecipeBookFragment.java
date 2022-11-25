@@ -25,6 +25,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The recipe book screen that displays a list of recipes in the recipe book.
@@ -74,13 +75,16 @@ public class RecipeBookFragment extends Fragment {
 
             // Sorting the Recipes accordingly
             case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+                titleSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Title", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+                prepTimeSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Preparation Time", Toast.LENGTH_SHORT).show();
             case R.id.filter3:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+                serveSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Number of Servings", Toast.LENGTH_SHORT).show();
             case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -123,6 +127,42 @@ public class RecipeBookFragment extends Fragment {
 
         // real time updates of the recipeController
         recipeBookUpdate();
+    }
+
+    public void titleSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+        Collections.sort(recipeController.getRecipes(), Recipe.titleAscending);
+        adapter = new RecipeAdapter(recipeController.getRecipes());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void prepTimeSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+        Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort);
+        adapter = new RecipeAdapter(recipeController.getRecipes());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(adapter);
+    }
+
+    public void serveSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+        Collections.sort(recipeController.getRecipes(), Recipe.servingSort);
+        adapter = new RecipeAdapter(recipeController.getRecipes());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(adapter);
     }
 
 

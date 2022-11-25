@@ -68,57 +68,6 @@ public class IngredientStorageFragment extends Fragment {
         // This fragment has options menu for the action bar
         setHasOptionsMenu(true);
     }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-
-        // Inflating the menu resource file for this fragment
-        inflater.inflate(R.menu.ingredient_storage_actionbar, menu);
-        super.onCreateOptionsMenu(menu, inflater);
-    }
-
-    //Actions performed by the Action Bar
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
-        switch(item.getItemId())
-        {   //Adding an Ingredient
-            case R.id.ingredient_add:
-                //launches IngredientAddFragment
-                // allows for addition of a new ingredient when the add option is clicked on the action bar
-                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
-                return true;
-
-            // Sorting the Ingredients accordingly
-            case R.id.filter1:
-                nameSort(getView());
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter3:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-
-
-    }
-
-    public void nameSort(View view)
-    {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
-        Collections.sort(ingredientStorage.getIngredients(), Ingredient.nameAscending);
-
-        int mode = 0;
-        ingredientStorage = MainActivity.ingredientStorage;
-        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflating the view
@@ -144,6 +93,70 @@ public class IngredientStorageFragment extends Fragment {
         getActivity().setTitle("Ingredient List");
         return view;
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
+        // Inflating the menu resource file for this fragment
+        inflater.inflate(R.menu.ingredient_storage_actionbar, menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    //Actions performed by the Action Bar
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item)
+    {
+        switch(item.getItemId())
+        {   //Adding an Ingredient
+            case R.id.ingredient_add:
+                //launches IngredientAddFragment
+                // allows for addition of a new ingredient when the add option is clicked on the action bar
+                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
+                return true;
+
+            // Sorting the Ingredients accordingly
+            case R.id.filter1:
+                //descriptionSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Description", Toast.LENGTH_SHORT).show();
+            case R.id.filter2:
+                //dateSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Best Before", Toast.LENGTH_SHORT).show();
+            case R.id.filter3:
+                Toast.makeText(getActivity(), "Sorting: Location", Toast.LENGTH_SHORT).show();
+            case R.id.filter4:
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+
+    }
+
+    public void descriptionSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
+        Collections.sort(ingredientStorage.getIngredients(), Ingredient.nameAscending);
+
+        int mode = 0;
+        ingredientStorage = MainActivity.ingredientStorage;
+        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+    public void dateSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
+        Collections.sort(ingredientStorage.getIngredients(), Ingredient.dateSort);
+
+        int mode = 0;
+        ingredientStorage = MainActivity.ingredientStorage;
+        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
+    }
+
 
     @Override
     public void onResume() {

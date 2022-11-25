@@ -20,6 +20,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
+
+import java.util.Collections;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -70,15 +73,28 @@ public class ShoppingCartFragment extends Fragment {
         {
             // Sorting the Shopping List accordingly
             case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+                descriptionSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Description", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
 
             default:
                 return super.onOptionsItemSelected(item);
         }
 
 
+    }
+
+    public void descriptionSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        Collections.sort(ingredientStorage.getIngredients(), Ingredient.nameAscending);
+
+        ingredientStorage = MainActivity.ingredientStorage;
+        adapter = new ShoppingCartAdapter(ingredientStorage.getIngredients());
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+        recyclerView.setAdapter(adapter);
     }
 
     @Override

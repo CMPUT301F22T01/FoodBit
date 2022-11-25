@@ -154,4 +154,12 @@ public class Ingredient implements Serializable, dbObject {
             return String.CASE_INSENSITIVE_ORDER.compare(desc1,desc2);
         }
     };
+
+    public static Comparator<Ingredient> dateSort = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient o1, Ingredient o2)
+        {
+            return o1.getBestBefore().compareTo(o2.bestBefore);
+        }
+    };
 }

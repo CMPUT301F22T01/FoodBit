@@ -1,11 +1,11 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 import android.net.Uri;
-import android.util.Pair;
 
 import com.CMPUT301F22T01.foodbit.IRecipe;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -149,4 +149,39 @@ public class Recipe implements IRecipe, dbObject {
         }
         return list;
     }
+
+
+    public static Comparator<Recipe> titleAscending = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe r1, Recipe r2)
+        {
+            String title1 = String.valueOf(r1.getTitle());
+            String title2 = String.valueOf(r2.getTitle());
+
+            return String.CASE_INSENSITIVE_ORDER.compare(title1,title2);
+        }
+    };
+
+    public static Comparator<Recipe> prepTimeSort = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe r1, Recipe r2)
+        {
+            Integer prepTime1 = Integer.valueOf(r1.getPrepTime());
+            Integer prepTime2 = Integer.valueOf(r2.getPrepTime());
+
+            return prepTime1 - prepTime2;
+        }
+    };
+
+    public static Comparator<Recipe> servingSort = new Comparator<Recipe>() {
+        @Override
+        public int compare(Recipe r1, Recipe r2)
+        {
+            Integer numServing1 = Integer.valueOf(r1.getNumServings());
+            Integer numServing2 = Integer.valueOf(r2.getNumServings());
+
+            return numServing1 - numServing2;
+        }
+    };
+
 }
