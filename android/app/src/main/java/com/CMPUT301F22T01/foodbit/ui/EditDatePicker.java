@@ -28,7 +28,9 @@ public class EditDatePicker implements View.OnClickListener, DatePickerDialog.On
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        updateDisplay();
+        editText.setHint(new StringBuilder()
+                .append(day).append("/").append(month + 1).append("/").append(year).append(" "));
+//        updateDisplay();
     }
 
     @Override
@@ -49,15 +51,22 @@ public class EditDatePicker implements View.OnClickListener, DatePickerDialog.On
         dialog.show();
 
     }
-    // updates the date in the birth date EditText
-    private void updateDisplay() {
 
+
+    private void updateDisplay() {
         editText.setText(new StringBuilder()
-                // Month is 0 based so add 1
                 .append(day).append("/").append(month + 1).append("/").append(year).append(" "));
     }
+
     public Date getDate() {
         return new Date(year,month,day);
+    }
+
+    public void setDate(Date date) {
+        day = date.getDate();
+        month = date.getMonth();
+        year = date.getYear();
+        updateDisplay();
     }
 
 

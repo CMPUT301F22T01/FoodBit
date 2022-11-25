@@ -1,7 +1,9 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,6 +34,11 @@ public class MealPlanController {
     public void addMeal(MealPlan meal){
         db.addItem(meal);
         mealPlan.add(meal);
+    }
+
+    public void edit(MealPlan meal) {
+        assert contains(meal) : "This meal is not found int the meal list";
+        db.editItem(meal);
     }
 
     /**

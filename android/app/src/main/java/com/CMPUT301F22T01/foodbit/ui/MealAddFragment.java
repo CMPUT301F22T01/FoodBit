@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -43,16 +44,19 @@ public class MealAddFragment extends DialogFragment {
     private Context context;
 
     private IngredientStorage ingredientStorage;
-    private MealPlanController mealPlanController;
+    protected MealPlanController mealPlanController;
     private RecipeController recipeController;
     private int positionSelected;
     private Boolean notRealItem = false;
-    private MealPlan meal;
+    protected MealPlan meal;
 
     MaterialToolbar topBar;
     Spinner ingredientRecipeSpinner;
     TextInputEditText servingsEditText;
     TextInputLayout servingsLayout;
+    ArrayAdapter<String> adapter;
+    EditText mealDateEditText;
+    EditDatePicker mealDatePicker;
 
     public MealAddFragment() {
         // Required empty public constructor
@@ -133,7 +137,7 @@ public class MealAddFragment extends DialogFragment {
             }
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(context,
+        adapter = new ArrayAdapter<String>(context,
                 android.R.layout.simple_spinner_dropdown_item, items);
 
         // Get spinner
@@ -142,7 +146,6 @@ public class MealAddFragment extends DialogFragment {
         ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                // TODO: Based on position we should know if this is an ingredient or recipe and how to handle
                 Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
                 meal.setName((String) parent.getItemAtPosition(position));
                 positionSelected = position;
@@ -154,8 +157,8 @@ public class MealAddFragment extends DialogFragment {
         });
 
         //Date picker
-        EditText mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
-        EditDatePicker mealDatePicker = new EditDatePicker(context,mealDateEditText);
+        mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
+        mealDatePicker = new EditDatePicker(context,mealDateEditText);
 
 
         topBar.setNavigationOnClickListener(v -> {
@@ -185,7 +188,7 @@ public class MealAddFragment extends DialogFragment {
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
                     }
-                    mealPlanController.addMeal(meal);
+                    mealEditOrAdd(meal);
                     dismiss();
                 }
                 return false;
@@ -208,5 +211,13 @@ public class MealAddFragment extends DialogFragment {
             dialog.getWindow().setLayout(width, height);
             dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
         }
+    }
+
+    public void mealEditOrAdd(MealPlan meal) {
+        mealPlanController.addMeal(meal);
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
     }
 }
