@@ -1,7 +1,9 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,6 +36,11 @@ public class MealPlanController {
         mealPlan.add(meal);
     }
 
+    public void edit(MealPlan meal) {
+        assert contains(meal) : "This meal is not found int the meal list";
+        db.editItem(meal);
+    }
+
     /**
      * Deletes a meal from the meal plan
      * @param meal the meal to be deleted
@@ -54,6 +61,7 @@ public class MealPlanController {
     /**
      * Sort and return a cache of the mealPlan by date
      * @return the sorted array of MealPlans
+     * TODO: fix this
      */
     public ArrayList<MealPlan> getArrayList() {
         Collections.sort(mealPlan, new Comparator<MealPlan>() {
