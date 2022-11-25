@@ -69,35 +69,22 @@ public class MealDetailFragment extends Fragment {
         mealDateView.setText(sf.format(mealPlan.getDate()));
         servingsView.setText(String.valueOf(mealPlan.getServings()));
 
-//        if (!mealPlan.getIngredients().isEmpty()) {
-//            Log.d(TAG, mealPlan.getIngredients().toString());
-//            setUpRecyclerView();
-//        }
-
-        if (!mealPlan.isIngredient()) {
-            setUpRecyclerView();
+        if (!mealPlan.isIngredient() && !mealPlan.getIngredients().isEmpty()) {
+                setUpRecyclerView();
         } else {
             // meal is an ingredient, so ingredient list is null
             ingredientsFieldView.setVisibility(View.INVISIBLE);
-            ingredientsRecyclerView.setVisibility(View.INVISIBLE);
         }
 
         // delete button functionality
         deleteButton = view.findViewById(R.id.button_meal_delete);
         deleteButton.setOnClickListener(deleteButtonClicked());
-//        deleteButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                MainActivity.mealPlan.deleteMeal(mealPlan);
-//                Navigation.findNavController(v).popBackStack();
-//            }
-//        });
 
         return view;
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients(), 2);
+        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients(), IngredientAdapter.MEAL_DETAIL);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
