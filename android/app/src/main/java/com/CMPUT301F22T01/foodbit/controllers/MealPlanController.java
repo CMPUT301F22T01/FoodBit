@@ -61,6 +61,7 @@ public class MealPlanController {
     /**
      * Sort and return a cache of the mealPlan by date
      * @return the sorted array of MealPlans
+     * TODO: fix this
      */
     public ArrayList<MealPlan> getArrayList() {
         Collections.sort(mealPlan, new Comparator<MealPlan>() {
