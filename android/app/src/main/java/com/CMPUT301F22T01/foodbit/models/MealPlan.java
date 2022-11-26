@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Map;
 
@@ -136,5 +137,12 @@ public class MealPlan implements dbObject {
         this.date = date;
         this.ingredients = ingredients;
     }
+
+    public static Comparator<MealPlan> sortByDate = new Comparator<MealPlan>() {
+        @Override
+        public int compare(MealPlan o1, MealPlan o2) {
+            return o1.getDate().compareTo(o2.getDate());
+        }
+    };
 
 }
