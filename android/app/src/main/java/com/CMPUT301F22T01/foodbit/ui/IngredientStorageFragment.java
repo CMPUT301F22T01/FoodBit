@@ -62,7 +62,7 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Ingredient Storage");
+        getActivity().setTitle("Ingredients");
 
 
 
@@ -126,7 +126,7 @@ public class IngredientStorageFragment extends Fragment {
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(), linearLayoutManager.getOrientation());
         recyclerView.addItemDecoration(dividerItemDecoration);
 
-        getActivity().setTitle("Ingredient Storage");
+        getActivity().setTitle("Ingredients");
         return view;
     }
 

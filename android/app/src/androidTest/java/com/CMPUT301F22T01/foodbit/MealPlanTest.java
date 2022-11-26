@@ -144,40 +144,40 @@ public class MealPlanTest {
         actionMenuItemView.perform(click());
 
         ViewInteraction textInputEditText = onView(
-                allOf(withId(R.id.recipe_add_edit_text_title),
+                allOf(withId(R.id.recipe_input_edit_text_title),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_title),
+                                        withId(R.id.recipe_input_text_layout_title),
                                         0),
                                 0),
                         isDisplayed()));
         textInputEditText.perform(replaceText("a"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText2 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_prep_time),
+                allOf(withId(R.id.recipe_input_edit_text_prep_time),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_prep_time),
+                                        withId(R.id.recipe_input_text_layout_prep_time),
                                         0),
                                 0),
                         isDisplayed()));
         textInputEditText2.perform(replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText3 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_num_servings),
+                allOf(withId(R.id.recipe_input_edit_text_num_servings),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_num_servings),
+                                        withId(R.id.recipe_input_text_layout_num_servings),
                                         0),
                                 0),
                         isDisplayed()));
         textInputEditText3.perform(replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.recipe_detail_edit), withContentDescription("ADD"),
+                allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_top_bar),
+                                        withId(R.id.recipe_input_top_bar),
                                         2),
                                 0),
                         isDisplayed()));

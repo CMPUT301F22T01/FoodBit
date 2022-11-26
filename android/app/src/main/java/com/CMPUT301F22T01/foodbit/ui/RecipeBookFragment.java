@@ -1,6 +1,8 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
+import android.net.wifi.WifiNetworkSpecifier;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,6 +22,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -65,25 +68,42 @@ public class RecipeBookFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch(item.getItemId())
-        {   //Adding a Recipe
-            case R.id.recipe_add:
-                //launches RecipeAddFragment
-                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-                return true;
+        int itemId = item.getItemId();//Adding a Recipe
+        if (itemId == R.id.recipe_add) {//launches RecipeAddFragment
+            new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+            return true;
 
             // Sorting the Recipes accordingly
-            case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter3:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter1) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter2) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter3) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter4) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
 
 
     }
@@ -99,17 +119,8 @@ public class RecipeBookFragment extends Fragment {
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
 
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        //Button addButton = view.findViewById(R.id.recipe_book_add_button);
-
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
-
-
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        // add button launches RecipeAddFragment
-        //addButton.setOnClickListener(addButtonClicked());
-
 
         getActivity().setTitle("Recipe Book");
         return view;
@@ -135,7 +146,8 @@ public class RecipeBookFragment extends Fragment {
 
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new RecipeAdapter(recipeController.getRecipes());
+//        adapter = new RecipeAdapter(recipeController.getRecipes());
+        adapter = new RecipeAdapter(MainActivity.recipeController.getRecipes());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -156,7 +168,17 @@ public class RecipeBookFragment extends Fragment {
             ArrayList<Recipe> newRecipes = new ArrayList<>();
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
-                Recipe newRecipe = doc.toObject(Recipe.class);
+//                Recipe newRecipe = doc.toObject(Recipe.class);
+//                Recipe newRecipe = new Recipe(
+//                        doc.getId(),
+//                        doc.get("title").toString(),
+//                        (int) (long) doc.get("prepTime"),
+//                        (int) (long) doc.get("numServings"),
+//                        (String) doc.get("category"),
+//                        (String) doc.get("comments"),
+//                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
+//                        (ArrayList<Ingredient>) doc.get("ingredients"));
+                Recipe newRecipe = new Recipe(doc);
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
             }

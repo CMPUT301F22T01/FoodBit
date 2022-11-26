@@ -1,18 +1,18 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class RecipeEditFragment extends RecipeAddEditFragment {
+public class RecipeEditFragment extends RecipeInputFragment {
     private int position;
     private Recipe recipe;
 
@@ -34,13 +34,38 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
     }
 
     @Override
-    protected void presetInfo() {
-        super.presetInfo();
+    public void onResume() {
+        super.onResume();
+        titleEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                topBar.setTitle("Editing "+s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void displayInfo() {
+        super.displayInfo();
         titleEditText.setText(recipe.getTitle());
         prepTimeEditText.setText(String.valueOf(recipe.getPrepTime()));
         numServingsEditText.setText(String.valueOf(recipe.getNumServings()));
         categoryEditText.setText(recipe.getCategory());
         commentsEditText.setText(recipe.getComments());
+        if (recipe.getPhoto() != null) {
+            imageView.setImageURI(recipe.getPhoto());
+            hasPhoto = true;
+        }
     }
 
 
@@ -51,7 +76,7 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
 
     @Override
     protected String getTitle() {
-        return "Edit a Recipe";
+        return "Editing "+recipe.getTitle();
     }
 
     @Override
@@ -67,6 +92,9 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
             titleLayout.setError("Required");
+            requiredFieldEntered = false;
+        } else if (recipeController.getTitles().contains(title) && !title.equals(recipe.getTitle())) {
+            titleLayout.setError("This title already exists");
             requiredFieldEntered = false;
         }
         if (prepTime.equals("")) {
@@ -87,7 +115,12 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
             recipe.setNumServings(Integer.parseInt(numServings));
             recipe.setCategory(category);
             recipe.setComments(comments);
-            recipe.setPhoto(null);
+            if (photoBitmap != null) {
+                recipe.setPhoto(saveImage());
+            }
+            if (!hasPhoto) {
+                recipe.setPhoto(null);
+            }
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
             recipeEditedListener.onEdited();

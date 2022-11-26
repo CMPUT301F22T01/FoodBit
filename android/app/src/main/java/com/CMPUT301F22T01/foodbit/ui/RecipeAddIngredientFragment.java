@@ -137,17 +137,17 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.fragment_recipe_add_ingredient_add, null);
+        View view = getLayoutInflater().inflate(R.layout.fragment_recipe_input_ingredient_add, null);
 
         // set up UI
-        descriptionLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_description);
-        amountLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_amount);
-        unitLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_unit);
-        categoryLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_category);
-        descriptionEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_description);
-        amountEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_amount);
-        unitEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_unit);
-        categoryEditText = view.findViewById(R.id.recipe_add_ingredient_add_edit_text_category);
+        descriptionLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_description);
+        amountLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_amount);
+        unitLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_unit);
+        categoryLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_category);
+        descriptionEditText = view.findViewById(R.id.recipe_input_ingredient_add_edit_text_description);
+        amountEditText = view.findViewById(R.id.recipe_input_ingredient_add_edit_text_amount);
+        unitEditText = view.findViewById(R.id.recipe_input_ingredient_add_edit_text_unit);
+        categoryEditText = view.findViewById(R.id.recipe_input_ingredient_add_edit_text_category);
 
         // build the dialog based on the mode
         if (mode == MODE_ADD) {
