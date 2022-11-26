@@ -84,6 +84,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/recipe_add_image_layout"
         app:layout_constraintTop_toBottomOf="@+id/recipe_add_top_bar"
+        app:startIconDrawable="@drawable/ic_title_24"
         tools:layout_conversion_absoluteHeight="82dp"
         tools:layout_conversion_absoluteWidth="178dp">
 
@@ -110,6 +111,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/recipe_add_text_layout_title"
         app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_title"
+        app:startIconDrawable="@drawable/ic_category_24"
         tools:layout_conversion_absoluteHeight="61dp"
         tools:layout_conversion_absoluteWidth="178dp">
 
@@ -203,6 +205,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/recipe_add_text_layout_num_servings"
+        app:startIconDrawable="@drawable/ic_comment_24"
         tools:layout_conversion_absoluteHeight="56dp"
         tools:layout_conversion_absoluteWidth="379dp">
 

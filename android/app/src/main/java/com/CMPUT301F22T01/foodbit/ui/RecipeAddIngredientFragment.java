@@ -137,7 +137,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        View view = getLayoutInflater().inflate(R.layout.fragment_recipe_add_ingredient_add, null);
+        View view = getLayoutInflater().inflate(R.layout.fragment_recipe_input_ingredient_add, null);
 
         // set up UI
         descriptionLayout = view.findViewById(R.id.recipe_add_ingredient_add_layout_description);

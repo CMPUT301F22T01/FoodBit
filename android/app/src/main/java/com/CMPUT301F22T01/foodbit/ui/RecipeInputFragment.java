@@ -39,12 +39,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.lang.ref.WeakReference;
 import java.util.ArrayList;
-import java.util.WeakHashMap;
 
 public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener {
     public static String TAG;
@@ -107,7 +104,7 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_input, container, false);
 
         // init views
         topBar = view.findViewById(R.id.recipe_add_top_bar);
