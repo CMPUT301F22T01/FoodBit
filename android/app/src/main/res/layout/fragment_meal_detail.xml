@@ -72,7 +72,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/meal_detail_ingredients_field" />
 
             <TextView
-                android:id="@+id/meal_detail_date"
+                android:id="@+id/meal_detail_name"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
@@ -105,7 +105,7 @@
                 app:drawableStartCompat="@drawable/ic_numbers_24"
                 app:drawableTint="@color/primaryColor"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/meal_detail_date"
+                app:layout_constraintTop_toBottomOf="@+id/meal_detail_name"
                 tools:ignore="HardcodedText" />
 
             <Button

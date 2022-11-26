@@ -33,10 +33,8 @@ public class MealDetailFragment extends Fragment {
 
     private MealPlan mealPlan;
 
-    // TODO: change id for mealDateView
-
     Toolbar topBar;
-    TextView mealDateView;
+    TextView mealNameView;
     TextView servingsView;
     TextView ingredientsFieldView;
     Button deleteButton;
@@ -62,7 +60,7 @@ public class MealDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_meal_detail, container, false);
 
         topBar = view.findViewById(R.id.meal_detail_toolbar);
-        mealDateView = view.findViewById(R.id.meal_detail_date);
+        mealNameView = view.findViewById(R.id.meal_detail_name);
         servingsView = view.findViewById(R.id.meal_detail_servings);
         ingredientsRecyclerView = view.findViewById(R.id.meal_detail_ingredient_list);
         ingredientsFieldView = view.findViewById(R.id.meal_detail_ingredients_field);
@@ -72,7 +70,7 @@ public class MealDetailFragment extends Fragment {
         collapsingToolbarLayout.setTitle(mealPlan.getName());
         SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
         collapsingToolbarLayout.setTitle(sf.format(mealPlan.getDate()));
-        mealDateView.setText(mealPlan.getName());
+        mealNameView.setText(mealPlan.getName());
         String servingsSuffix = " servings";
         if (mealPlan.getServings() == 1) {
             servingsSuffix = " serving";
