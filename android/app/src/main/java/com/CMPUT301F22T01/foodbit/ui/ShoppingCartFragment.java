@@ -88,6 +88,14 @@ public class ShoppingCartFragment extends Fragment {
 
     }
 
+    /**
+     * Compare the Ingredient of MealPlan with Ingredient Storage
+     * Store new amount into new Shopping Ingredient list for adapter use
+     * @param shoppingList
+     * @param mealIngredient
+     * @param storage
+     * @param descriptionList
+     */
     public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
                              ArrayList<Ingredient> storage, List descriptionList) {
         for (Ingredient ingredient: mealIngredient
