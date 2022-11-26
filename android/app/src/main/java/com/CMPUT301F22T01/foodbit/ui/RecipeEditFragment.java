@@ -6,13 +6,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class RecipeEditFragment extends RecipeAddEditFragment {
+public class RecipeEditFragment extends RecipeInputFragment {
     private int position;
     private Recipe recipe;
 
@@ -34,13 +32,17 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
     }
 
     @Override
-    protected void presetInfo() {
-        super.presetInfo();
+    protected void displayInfo() {
+        super.displayInfo();
         titleEditText.setText(recipe.getTitle());
         prepTimeEditText.setText(String.valueOf(recipe.getPrepTime()));
         numServingsEditText.setText(String.valueOf(recipe.getNumServings()));
         categoryEditText.setText(recipe.getCategory());
         commentsEditText.setText(recipe.getComments());
+        if (recipe.getPhoto() != null) {
+            imageView.setImageURI(recipe.getPhoto());
+            hasPhoto = true;
+        }
     }
 
 
@@ -68,6 +70,9 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
         if (title.equals("")) {
             titleLayout.setError("Required");
             requiredFieldEntered = false;
+        } else if (recipeController.getTitles().contains(title) && !title.equals(recipe.getTitle())) {
+            titleLayout.setError("This title already exists");
+            requiredFieldEntered = false;
         }
         if (prepTime.equals("")) {
             prepTimeLayout.setError("Required");
@@ -87,7 +92,12 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
             recipe.setNumServings(Integer.parseInt(numServings));
             recipe.setCategory(category);
             recipe.setComments(comments);
-            recipe.setPhoto(null);
+            if (photoBitmap != null) {
+                recipe.setPhoto(saveImage());
+            }
+            if (!hasPhoto) {
+                recipe.setPhoto(null);
+            }
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
             recipeEditedListener.onEdited();
