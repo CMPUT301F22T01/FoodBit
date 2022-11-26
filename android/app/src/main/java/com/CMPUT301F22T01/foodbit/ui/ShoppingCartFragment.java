@@ -26,6 +26,7 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -85,35 +86,27 @@ public class ShoppingCartFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
 
-
     }
 
     public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
-                             ArrayList<Ingredient> storage) {
+                             ArrayList<Ingredient> storage, List descriptionList) {
         for (Ingredient ingredient: mealIngredient
              ) {
             shoppingList.add(ingredient);
         }
-//        for (Ingredient ingredient: storage
-//        ) {
-//            shoppingList.add(ingredient);
-//        }
-    }
-
-    public void getMealIngredient(ArrayList<MealPlan> meals, ArrayList<Ingredient> mealIngredient,
-                                  IngredientStorage storage){
-        for (MealPlan meal : meals
-             ) {
-            if (meal.isIngredient()){
-                Log.d("meal ingredient", String.valueOf(meal.getIngredients()));
-                mealIngredient.add(meal.getIngredients().get(0));
+        for (Ingredient ingredient: shoppingList
+        ) {
+            int index = descriptionList.indexOf(ingredient.getDescription());
+            if (ingredient.getAmount() >= storage.get(index).getAmount()){
+                shoppingList.remove(ingredient);
             }
-//            for (Ingredient ingredient : meal.getIngredients()
-//                 ) {
-//                mealIngredient.add(ingredient);
-//            }
+            if (ingredient.getAmount() < storage.get(index).getAmount()){
+                float amountNeed = storage.get(index).getAmount() - ingredient.getAmount();
+                ingredient.setAmount(amountNeed);
+            }
         }
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -124,10 +117,10 @@ public class ShoppingCartFragment extends Fragment {
         ingredientStorage = MainActivity.ingredientStorage;
         mealPlan = MainActivity.mealPlan;
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
-        ArrayList<Ingredient> mealIngredient = new ArrayList<>();
-        getMealIngredient(mealPlan.getArrayList(), mealIngredient, ingredientStorage);
+        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientStorage.getIngredients();
-        shoppingCart(shoppingList, mealIngredient, storage);
+        List<String> descriptionList = ingredientStorage.getDescriptions();
+        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
 
         //get views
