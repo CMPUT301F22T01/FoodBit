@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,7 @@ import java.util.Objects;
  * Issues: users are not yet able to edit or remove ingredients that are added to the recipe in this screen.
  * There is a false error reported by the IDE which actually works fine.
  */
-public class RecipeAddFragment extends RecipeAddEditFragment {
+public class RecipeAddFragment extends RecipeInputFragment {
 
     public RecipeAddFragment() {
         // Required empty public constructor
@@ -37,6 +38,8 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         if (category.equals("")){category = null;}
         String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
         if (comments.equals("")){comments = null;}
+        Uri photoUri = hasPhoto ? saveImage() : null;
+
         // check empty fields
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
@@ -62,8 +65,8 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
             Recipe recipe = new Recipe(title,
                     Integer.parseInt(prepTime),
                     Integer.parseInt(numServings),
-                    category, comments, null, ingredients);
-            super.recipeController.add(recipe);
+                    category, comments, photoUri, ingredients);
+            recipeController.add(recipe);
             dismiss();
         } else {
             Toast.makeText(super.context, "Invalid input value(s) - check all fields", Toast.LENGTH_SHORT).show();
