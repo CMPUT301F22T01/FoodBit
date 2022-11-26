@@ -17,7 +17,7 @@ public class MealPlanController {
 
     private ArrayList<MealPlan> mealPlan;
     private DatabaseController db;
-    private ArrayList<Ingredient> mealIngredient;
+//    private ArrayList<Ingredient> allIngredients;
 
     /**
      * Creates a new list of MealPlans
@@ -25,7 +25,7 @@ public class MealPlanController {
     public MealPlanController(){
         mealPlan = new ArrayList<MealPlan>();
         db = new DatabaseController("Meals");
-        this.loadAllMeals();
+//        this.loadAllMeals();
     }
 
     /**
@@ -52,24 +52,12 @@ public class MealPlanController {
         mealPlan.remove(meal);
     }
 
-    /**
-     * Loads the local cache of the meal plan from the database into the local array
-     */
-    public void loadAllMeals() {
-        db.getAllItems(mealPlan);
-    }
 
     /**
      * Sort and return a cache of the mealPlan by date
      * @return the sorted array of MealPlans
-     * TODO: fix this
      */
     public ArrayList<MealPlan> getArrayList() {
-        Collections.sort(mealPlan, new Comparator<MealPlan>() {
-            public int compare(MealPlan o1, MealPlan o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
         return mealPlan;
     }
 
@@ -112,6 +100,40 @@ public class MealPlanController {
         return mealPlan.get(position);
     }
 
+    /**
+     *
+     * @param ID
+     * @return -1 if ingredient ID doesnt exist within the ingredient list. Otherwise return index
+     */
+    public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (int i = 0; i< ingredList.size(); i++) {
+            if (ID.equals(ingredList.get(i).getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns all the ingredients required for this meal plan. Only ID and Amount are guaranteed
+     * to be accurate.
+     * @return the arraylist of ingredients
+     */
+    public ArrayList<Ingredient> getAllIngredients() {
+        ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
+        for (int i =0; i < mealPlan.size(); i++) { //iterate through all meals
+            MealPlan meal = mealPlan.get(i);
+            for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
+                Ingredient currentIngred = meal.getIngredients().get(j);
+                int index = lookUpIngredientID(currentIngred.getId(),allIngredients);
+                if(index != -1) {
+                    allIngredients.get(index).setAmount(currentIngred.getAmount() +
+                            allIngredients.get(index).getAmount());
+                } else {
+                    allIngredients.add(currentIngred);
+                }
+            }
+        }
+        return allIngredients;
+    }
 }
-
-
