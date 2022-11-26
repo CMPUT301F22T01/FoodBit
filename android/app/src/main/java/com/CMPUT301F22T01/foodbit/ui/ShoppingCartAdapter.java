@@ -96,7 +96,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         String unit = items.get(position).getUnit();
         String category = items.get(position).getCategory();
 
-
         // get UI
         TextView descriptionView = holder.getCartDescriptionView();
         TextView amountView = holder.getCartAmountView();
