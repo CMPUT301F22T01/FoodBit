@@ -92,7 +92,7 @@ public class RecipesTest {
         // click on close button on recipe add screen
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
-                                allOf(withId(R.id.recipe_add_top_bar),
+                                allOf(withId(R.id.recipe_input_top_bar),
                                         childAtPosition(
                                                 withId(R.id.constraintLayout),
                                                 0)),
@@ -123,7 +123,7 @@ public class RecipesTest {
                 allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_top_bar),
+                                        withId(R.id.recipe_input_top_bar),
                                         2),
                                 0),
                         isDisplayed()));
@@ -132,26 +132,26 @@ public class RecipesTest {
         // check if the correct error messages are displayed
         ViewInteraction textView2 = onView(
                 allOf(withId(com.google.android.material.R.id.textinput_error), withText("Required"),
-                        withParent(withParent(withParent(withId(R.id.recipe_add_text_layout_title)))),
+                        withParent(withParent(withParent(withId(R.id.recipe_input_text_layout_title)))),
                         isDisplayed()));
         textView2.check(matches(withText("Required")));
         ViewInteraction textView3 = onView(
                 allOf(withId(com.google.android.material.R.id.textinput_error), withText("Required"),
-                        withParent(withParent(withParent(withId(R.id.recipe_add_text_layout_prep_time)))),
+                        withParent(withParent(withParent(withId(R.id.recipe_input_text_layout_prep_time)))),
                         isDisplayed()));
         textView3.check(matches(withText("Required")));
         ViewInteraction textView4 = onView(
                 allOf(withId(com.google.android.material.R.id.textinput_error), withText("Required"),
-                        withParent(withParent(withParent(withId(R.id.recipe_add_text_layout_num_servings)))),
+                        withParent(withParent(withParent(withId(R.id.recipe_input_text_layout_num_servings)))),
                         isDisplayed()));
         textView4.check(matches(withText("Required")));
 
         // enter a title
         ViewInteraction textInputEditText12 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_title),
+                allOf(withId(R.id.recipe_input_edit_text_title),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_title),
+                                        withId(R.id.recipe_input_text_layout_title),
                                         0),
                                 0),
                         isDisplayed()));
@@ -159,10 +159,10 @@ public class RecipesTest {
 
         // enter zeros in the preparation time text field
         ViewInteraction textInputEditText13 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_prep_time),
+                allOf(withId(R.id.recipe_input_edit_text_prep_time),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_prep_time),
+                                        withId(R.id.recipe_input_text_layout_prep_time),
                                         0),
                                 0),
                         isDisplayed()));
@@ -170,17 +170,17 @@ public class RecipesTest {
 
         // check if zeros is not entered (check function of removing starting zeros)
         ViewInteraction editText = onView(
-                allOf(withId(R.id.recipe_add_edit_text_prep_time),
-                        withParent(withParent(withId(R.id.recipe_add_text_layout_prep_time))),
+                allOf(withId(R.id.recipe_input_edit_text_prep_time),
+                        withParent(withParent(withId(R.id.recipe_input_text_layout_prep_time))),
                         isDisplayed()));
         editText.check(matches(withText("")));
 
         // enter a oversize preparation time
         ViewInteraction textInputEditText15 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_prep_time),
+                allOf(withId(R.id.recipe_input_edit_text_prep_time),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_prep_time),
+                                        withId(R.id.recipe_input_text_layout_prep_time),
                                         0),
                                 0),
                         isDisplayed()));
@@ -195,10 +195,10 @@ public class RecipesTest {
 
         // enter a category
         ViewInteraction textInputEditText16 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_category),
+                allOf(withId(R.id.recipe_input_edit_text_category),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_category),
+                                        withId(R.id.recipe_input_text_layout_category),
                                         0),
                                 0),
                         isDisplayed()));
@@ -206,10 +206,10 @@ public class RecipesTest {
 
         // enter a preparation time
         ViewInteraction textInputEditText17 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_prep_time), withText("481"),
+                allOf(withId(R.id.recipe_input_edit_text_prep_time), withText("481"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_prep_time),
+                                        withId(R.id.recipe_input_text_layout_prep_time),
                                         0),
                                 0),
                         isDisplayed()));
@@ -217,10 +217,10 @@ public class RecipesTest {
 
         // enter zeros in the preparation time text field
         ViewInteraction textInputEditText19 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_num_servings),
+                allOf(withId(R.id.recipe_input_edit_text_num_servings),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_num_servings),
+                                        withId(R.id.recipe_input_text_layout_num_servings),
                                         0),
                                 0),
                         isDisplayed()));
@@ -228,17 +228,17 @@ public class RecipesTest {
 
         // check if zeros is not entered (check function of removing starting zeros)
         ViewInteraction editText2 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_num_servings),
-                        withParent(withParent(withId(R.id.recipe_add_text_layout_num_servings))),
+                allOf(withId(R.id.recipe_input_edit_text_num_servings),
+                        withParent(withParent(withId(R.id.recipe_input_text_layout_num_servings))),
                         isDisplayed()));
         editText2.check(matches(withText("")));
 
         // enter a number of servings
         ViewInteraction textInputEditText21 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_num_servings),
+                allOf(withId(R.id.recipe_input_edit_text_num_servings),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_num_servings),
+                                        withId(R.id.recipe_input_text_layout_num_servings),
                                         0),
                                 0),
                         isDisplayed()));
@@ -246,10 +246,10 @@ public class RecipesTest {
 
         // enter comments
         ViewInteraction textInputEditText22 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_comments),
+                allOf(withId(R.id.recipe_input_edit_text_comments),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_comments),
+                                        withId(R.id.recipe_input_text_layout_comments),
                                         0),
                                 0),
                         isDisplayed()));
@@ -260,7 +260,7 @@ public class RecipesTest {
                 allOf(withId(R.id.recipe_add_ingredient_add), withContentDescription("Add an ingredient"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredients_bar),
+                                        withId(R.id.recipe_input_ingredients_bar),
                                         1),
                                 0),
                         isDisplayed()));
@@ -279,7 +279,7 @@ public class RecipesTest {
         // check if addition is aborted
         ViewInteraction textView25 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Bread"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView25.check(doesNotExist());
 
@@ -288,17 +288,17 @@ public class RecipesTest {
                 allOf(withId(R.id.recipe_add_ingredient_add), withContentDescription("Add an ingredient"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredients_bar),
+                                        withId(R.id.recipe_input_ingredients_bar),
                                         1),
                                 0),
                         isDisplayed()));
         actionMenuItemView6.perform(click());
 
         ViewInteraction textInputEditText24 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_description),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
+                                        withId(R.id.recipe_input_ingredient_add_layout_description),
                                         0),
                                 0),
                         isDisplayed()));
@@ -306,10 +306,10 @@ public class RecipesTest {
 
         // enter a description
         ViewInteraction textInputEditText25 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_description),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
+                                        withId(R.id.recipe_input_ingredient_add_layout_description),
                                         0),
                                 0),
                         isDisplayed()));
@@ -317,10 +317,10 @@ public class RecipesTest {
 
         // enter an amount
         ViewInteraction textInputEditText26 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_amount),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_amount),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_amount),
+                                        withId(R.id.recipe_input_ingredient_add_layout_amount),
                                         0),
                                 0),
                         isDisplayed()));
@@ -328,10 +328,10 @@ public class RecipesTest {
 
         // enter a unit
         ViewInteraction textInputEditText27 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_unit),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_unit),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_unit),
+                                        withId(R.id.recipe_input_ingredient_add_layout_unit),
                                         0),
                                 0),
                         isDisplayed()));
@@ -350,17 +350,17 @@ public class RecipesTest {
         // check if ingredient is displayed
         ViewInteraction textView10 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Bread"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView10.check(matches(withText("Bread")));
         ViewInteraction textView11 = onView(
                 allOf(withId(R.id.item_ingredient_amount), withText("2.0"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView11.check(matches(withText("2.0")));
         ViewInteraction textView12 = onView(
                 allOf(withId(R.id.item_ingredient_unit), withText("slice"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView12.check(matches(withText("slice")));
 
@@ -369,7 +369,7 @@ public class RecipesTest {
                 allOf(withId(R.id.recipe_add_ingredient_add), withContentDescription("Add an ingredient"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredients_bar),
+                                        withId(R.id.recipe_input_ingredients_bar),
                                         1),
                                 0),
                         isDisplayed()));
@@ -377,10 +377,10 @@ public class RecipesTest {
 
         // enter a description
         ViewInteraction textInputEditText28 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_description),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_description),
+                                        withId(R.id.recipe_input_ingredient_add_layout_description),
                                         0),
                                 0),
                         isDisplayed()));
@@ -388,10 +388,10 @@ public class RecipesTest {
 
         // enter an amount
         ViewInteraction textInputEditText29 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_amount),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_amount),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_amount),
+                                        withId(R.id.recipe_input_ingredient_add_layout_amount),
                                         0),
                                 0),
                         isDisplayed()));
@@ -399,10 +399,10 @@ public class RecipesTest {
 
         // enter a unit
         ViewInteraction textInputEditText30 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_unit),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_unit),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_unit),
+                                        withId(R.id.recipe_input_ingredient_add_layout_unit),
                                         0),
                                 0),
                         isDisplayed()));
@@ -410,10 +410,10 @@ public class RecipesTest {
 
         // enter a category
         ViewInteraction textInputEditText31 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_category),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_category),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_ingredient_add_layout_category),
+                                        withId(R.id.recipe_input_ingredient_add_layout_category),
                                         0),
                                 0),
                         isDisplayed()));
@@ -432,47 +432,47 @@ public class RecipesTest {
         // check if ingredient is displayed
         ViewInteraction textView14 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("egg"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView14.check(matches(withText("egg")));
         ViewInteraction textView15 = onView(
                 allOf(withId(R.id.item_ingredient_amount), withText("1.0"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView15.check(matches(withText("1.0")));
         ViewInteraction textView16 = onView(
                 allOf(withId(R.id.item_ingredient_unit), withText("item"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView16.check(matches(withText("item")));
 
         // click on ingredient egg
         ViewInteraction recyclerView4 = onView(
-                allOf(withId(R.id.recipe_add_ingredients_list),
+                allOf(withId(R.id.recipe_input_ingredients_list),
                         childAtPosition(
-                                withId(R.id.recipe_add_ingredients_layout),
+                                withId(R.id.recipe_input_ingredients_layout),
                                 1)));
         recyclerView4.perform(actionOnItemAtPosition(1, click()));
 
         // check if the correct information is in the text fields
         ViewInteraction editText3 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_description), withText("egg"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredient_add_layout_description))),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_description), withText("egg"),
+                        withParent(withParent(withId(R.id.recipe_input_ingredient_add_layout_description))),
                         isDisplayed()));
         editText3.check(matches(withText("egg")));
         ViewInteraction editText4 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_amount), withText("1.0"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredient_add_layout_amount))),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_amount), withText("1.0"),
+                        withParent(withParent(withId(R.id.recipe_input_ingredient_add_layout_amount))),
                         isDisplayed()));
         editText4.check(matches(withText("1.0")));
         ViewInteraction editText5 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_unit), withText("item"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredient_add_layout_unit))),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_unit), withText("item"),
+                        withParent(withParent(withId(R.id.recipe_input_ingredient_add_layout_unit))),
                         isDisplayed()));
         editText5.check(matches(withText("item")));
         ViewInteraction editText6 = onView(
-                allOf(withId(R.id.recipe_add_ingredient_add_edit_text_category), withText("fridge"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredient_add_layout_category))),
+                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_category), withText("fridge"),
+                        withParent(withParent(withId(R.id.recipe_input_ingredient_add_layout_category))),
                         isDisplayed()));
         editText6.check(matches(withText("fridge")));
 
@@ -506,7 +506,7 @@ public class RecipesTest {
         // check if ingredient is deleted
         ViewInteraction textView18 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("egg"),
-                        withParent(withParent(withId(R.id.recipe_add_ingredients_list))),
+                        withParent(withParent(withId(R.id.recipe_input_ingredients_list))),
                         isDisplayed()));
         textView18.check(doesNotExist());
 
@@ -515,7 +515,7 @@ public class RecipesTest {
                 allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_top_bar),
+                                        withId(R.id.recipe_input_top_bar),
                                         2),
                                 0),
                         isDisplayed()));

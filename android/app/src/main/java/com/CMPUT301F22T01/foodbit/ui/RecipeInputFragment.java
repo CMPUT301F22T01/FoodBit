@@ -107,24 +107,24 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         View view = inflater.inflate(R.layout.fragment_recipe_input, container, false);
 
         // init views
-        topBar = view.findViewById(R.id.recipe_add_top_bar);
+        topBar = view.findViewById(R.id.recipe_input_top_bar);
         topBarSetText();
-        titleEditText = view.findViewById(R.id.recipe_add_edit_text_title);
-        titleLayout = view.findViewById(R.id.recipe_add_text_layout_title);
-        prepTimeEditText = view.findViewById(R.id.recipe_add_edit_text_prep_time);
-        prepTimeLayout = view.findViewById(R.id.recipe_add_text_layout_prep_time);
+        titleEditText = view.findViewById(R.id.recipe_input_edit_text_title);
+        titleLayout = view.findViewById(R.id.recipe_input_text_layout_title);
+        prepTimeEditText = view.findViewById(R.id.recipe_input_edit_text_prep_time);
+        prepTimeLayout = view.findViewById(R.id.recipe_input_text_layout_prep_time);
         prepTimeEditText.addTextChangedListener(prepTimeTextWatcher());
-        numServingsEditText = view.findViewById(R.id.recipe_add_edit_text_num_servings);
-        numServingsLayout = view.findViewById(R.id.recipe_add_text_layout_num_servings);
+        numServingsEditText = view.findViewById(R.id.recipe_input_edit_text_num_servings);
+        numServingsLayout = view.findViewById(R.id.recipe_input_text_layout_num_servings);
         numServingsEditText.addTextChangedListener(numServingsTextWatcher());
-        categoryEditText = view.findViewById(R.id.recipe_add_edit_text_category);
-        categoryLayout = view.findViewById(R.id.recipe_add_text_layout_category);
-        commentsEditText = view.findViewById(R.id.recipe_add_edit_text_comments);
-        commentsLayout = view.findViewById(R.id.recipe_add_text_layout_comments);
-        imageLayout = view.findViewById(R.id.recipe_add_image_layout);
-        imageView = view.findViewById(R.id.recipe_add_image);
-        ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
-        ingredientsRecyclerView = view.findViewById(R.id.recipe_add_ingredients_list);
+        categoryEditText = view.findViewById(R.id.recipe_input_edit_text_category);
+        categoryLayout = view.findViewById(R.id.recipe_input_text_layout_category);
+        commentsEditText = view.findViewById(R.id.recipe_input_edit_text_comments);
+        commentsLayout = view.findViewById(R.id.recipe_input_text_layout_comments);
+        imageLayout = view.findViewById(R.id.recipe_input_image_layout);
+        imageView = view.findViewById(R.id.recipe_input_image);
+        ingredientsBar = view.findViewById(R.id.recipe_input_ingredients_bar);
+        ingredientsRecyclerView = view.findViewById(R.id.recipe_input_ingredients_list);
         
         // display recipe info if in recipe edit screen
         displayInfo();
