@@ -17,6 +17,7 @@ public class MealPlanController {
 
     private ArrayList<MealPlan> mealPlan;
     private DatabaseController db;
+//    private ArrayList<Ingredient> allIngredients;
 
     /**
      * Creates a new list of MealPlans
@@ -24,7 +25,7 @@ public class MealPlanController {
     public MealPlanController(){
         mealPlan = new ArrayList<MealPlan>();
         db = new DatabaseController("Meals");
-        this.loadAllMeals();
+//        this.loadAllMeals();
     }
 
     /**
@@ -51,12 +52,6 @@ public class MealPlanController {
         mealPlan.remove(meal);
     }
 
-    /**
-     * Loads the local cache of the meal plan from the database into the local array
-     */
-    public void loadAllMeals() {
-        db.getAllItems(mealPlan);
-    }
 
     /**
      * Sort and return a cache of the mealPlan by date
@@ -103,5 +98,36 @@ public class MealPlanController {
      */
     public MealPlan getMealByPosition(int position) {
         return mealPlan.get(position);
+    }
+
+    /**
+     *
+     * @param ID
+     * @return -1 if ingredient does not occur within mealplan. Otherwise return index of
+     */
+    public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (int i = 0; i< ingredList.size(); i++) {
+            if (ID.equals(ingredList.get(i).getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    /**
+     * Returns all the ingredients required for this meal plan. Only ID and Amount are guaranteed.
+     * @return the arraylist of ingredients
+     */
+    public ArrayList<Ingredient> getAllIngredients() {
+        ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
+        for (int i =0; i < mealPlan.size(); i++) {
+
+            int index = lookUpIngredientID(mealPlan.get(i).getRecipeID(),allIngredients);
+            if(index != -1) {
+//
+            }
+            allIngredients.addAll(mealPlan.get(i).getIngredients());
+        }
+        return allIngredients;
     }
 }
