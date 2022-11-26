@@ -104,12 +104,12 @@ public class ShoppingCartFragment extends Fragment {
         for (MealPlan meal : meals
              ) {
             if (meal.isIngredient()){
-                mealIngredient.add(storage.getIngredientById(meal.getId()));
+                mealIngredient.add(meal.getIngredients().get(0));
             }
-            for (Ingredient ingredient : meal.getIngredients()
-                 ) {
-                mealIngredient.add(ingredient);
-            }
+//            for (Ingredient ingredient : meal.getIngredients()
+//                 ) {
+//                mealIngredient.add(ingredient);
+//            }
         }
     }
 
