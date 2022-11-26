@@ -17,6 +17,7 @@ public class MealPlanController {
 
     private ArrayList<MealPlan> mealPlan;
     private DatabaseController db;
+    private ArrayList<Ingredient> mealIngredient;
 
     /**
      * Creates a new list of MealPlans
@@ -110,4 +111,7 @@ public class MealPlanController {
     public MealPlan getMealByPosition(int position) {
         return mealPlan.get(position);
     }
+
 }
+
+
