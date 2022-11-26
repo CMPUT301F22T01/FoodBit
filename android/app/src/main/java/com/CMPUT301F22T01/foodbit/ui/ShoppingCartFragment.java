@@ -20,6 +20,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
+
+import java.util.ArrayList;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -30,8 +35,9 @@ public class ShoppingCartFragment extends Fragment {
 
     private Context context;
 
-    // get ingredient storage from MainActivity
+    // get ingredient storage and meal plan controller from MainActivity
     private IngredientStorage ingredientStorage;
+    private MealPlanController mealPlan;
 
     ShoppingCartAdapter adapter;
 
@@ -81,12 +87,42 @@ public class ShoppingCartFragment extends Fragment {
 
     }
 
+    public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
+                             ArrayList<Ingredient> storage) {
+        for (Ingredient ingredient: mealIngredient
+             ) {
+            shoppingList.add(ingredient);
+        }
+//        for (Ingredient ingredient: storage
+//        ) {
+//            shoppingList.add(ingredient);
+//        }
+    }
+
+    public void getMealIngredient(ArrayList<MealPlan> meals, ArrayList<Ingredient> mealIngredient,
+                                  IngredientStorage storage){
+        for (MealPlan meal : meals
+             ) {
+            if (meal.isIngredient()){
+                mealIngredient.add(storage.getIngredientById(meal.getId()));
+            }
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
+        // Get shoppingCart after calculating between meal plan and storage
         ingredientStorage = MainActivity.ingredientStorage;
+        mealPlan = MainActivity.mealPlan;
+        ArrayList<Ingredient> shoppingList = new ArrayList<>();
+        ArrayList<Ingredient> mealIngredient = new ArrayList<>();
+        getMealIngredient(mealPlan.getArrayList(), mealIngredient, ingredientStorage);
+        ArrayList<Ingredient> storage = ingredientStorage.getIngredients();
+        shoppingCart(shoppingList, mealIngredient, storage);
+
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
@@ -94,7 +130,7 @@ public class ShoppingCartFragment extends Fragment {
 
         //set recyclerView
         int mode = 0;
-        adapter = new ShoppingCartAdapter(ingredientStorage.getIngredients(), mode);
+        adapter = new ShoppingCartAdapter(shoppingList, mode);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
