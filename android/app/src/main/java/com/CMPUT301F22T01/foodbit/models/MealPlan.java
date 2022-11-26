@@ -1,8 +1,15 @@
 package com.CMPUT301F22T01.foodbit.models;
 
+import android.net.Uri;
+
+import com.google.firebase.Timestamp;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 // TODO: delete ingredientList later
@@ -91,12 +98,35 @@ public class MealPlan implements dbObject {
 //        this.ingredientList = ingredientList;
 //    }
 
+    /***
+     * Return ingredient list required for this meal.
+     * @return Ingredients required for this mealplan. Only ID and amount fields are guaranteed.
+     */
+
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
-        this.ingredients = ingredients;
+    public void setIngredientsFromRecipe(ArrayList<Ingredient> ingredients, int recipeServings) {
+        ArrayList<Ingredient> t = new ArrayList<Ingredient>();
+        float scalingFactor = (float)this.servings/recipeServings;
+        for (int i = 0; i<ingredients.size(); i++) {
+            Ingredient copy = new Ingredient();
+            copy.setId(ingredients.get(i).getId());
+            copy.setAmount(ingredients.get(i).getAmount() * scalingFactor);
+            t.add(copy);
+        }
+        this.ingredients = t;
+    }
+
+    public void setIngredients(Ingredient ingredient) {
+        ArrayList<Ingredient> t = new ArrayList<Ingredient>();
+        Ingredient copy = new Ingredient();
+        copy.setId(ingredient.getId());
+        copy.setAmount((float)this.getServings());
+        copy.setUnit(ingredient.getUnit());
+        t.add(copy);
+        ingredients = t;
     }
 
     public String getRecipeID() {
@@ -108,6 +138,25 @@ public class MealPlan implements dbObject {
     }
 
     public MealPlan(){};
+
+    public MealPlan(QueryDocumentSnapshot doc) {
+        this((String) doc.get("name"),
+                (int) (long) doc.get("servings"),
+                doc.getId(),
+                (boolean) doc.get("ingredient"),
+                (Date) ((Timestamp) doc.get("date")).toDate());
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for (HashMap map :
+                (ArrayList<HashMap>) doc.get("ingredients")) {
+            ingredients.add(new Ingredient(
+                    (String) map.get("description"),
+                    (float) (double) map.get("amount"),
+                    (String) map.get("unit"),
+                    (String) map.get("category")));
+        }
+        this.ingredients = ingredients;
+        this.recipeID = doc.get("recipeID").toString();
+    }
 
     // TODO: delete this later
 //    /**
@@ -128,6 +177,14 @@ public class MealPlan implements dbObject {
 //        this.date = date;
 //        this.ingredientList = ingredientList;
 //    }
+
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date) {
+        this.name = name;
+        this.servings = servings;
+        this.id = id;
+        this.isIngredient = isIngredient;
+        this.date = date;
+    }
 
     public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, ArrayList<Ingredient> ingredients) {
         this.name = name;
