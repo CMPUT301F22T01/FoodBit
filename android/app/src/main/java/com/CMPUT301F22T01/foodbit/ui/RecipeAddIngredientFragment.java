@@ -6,15 +6,10 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,7 +20,6 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
@@ -86,12 +80,13 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     private Ingredient ingredient;
     private int position;
 
-    private ExtendedFloatingActionButton newIngredient;
-    private ExtendedFloatingActionButton newUnit;
+    List<String> virtual_ingredients = new ArrayList<>();
 
 
-    EditText newUnitEditText;
-    Button completeNewUnit;
+
+
+   // EditText newUnitEditText;
+   // Button completeNewUnit;
 
 
 
@@ -206,19 +201,6 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 //        });
 
 
-        newIngredient = (ExtendedFloatingActionButton) view.findViewById(R.id.recipe_add_ingredient_new_ingredient);
-
-        newIngredient.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)
-            {
-                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
-                adapterList.notifyDataSetChanged();
-                adapter.notifyDataSetChanged();
-            }
-
-
-        });
 
 
         unitTextView = view.findViewById(R.id.recipe_add_ingredient_add_auto_complete_units);
@@ -226,51 +208,51 @@ public class RecipeAddIngredientFragment extends DialogFragment {
         unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.recipe_add_dropdown_layout, units);
         unitTextView.setAdapter(unitAdapter);
 
-        newUnit = (ExtendedFloatingActionButton) view.findViewById(R.id.recipe_add_ingredient_new_unit);
-        //Popup window for when user wants to add a new unit
-        newUnit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // inflate the layout of the popup window
-                View popupView = getLayoutInflater().inflate(R.layout.ingredient_add_dropdown_popup, null);
-
-                newUnitEditText = popupView.findViewById(R.id.add_dropdown_edit_text);
-                completeNewUnit = popupView.findViewById(R.id.add_complete);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                // show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                //add button pressed in popup window
-                completeNewUnit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //getting information user typed and adding it to the unit options
-                        String newUnit = newUnitEditText.getText().toString();
-                        if (!units.contains(newUnit)){
-                            unitAdapter.add(newUnit);
-                            unitAdapter.notifyDataSetChanged();
-                            popupWindow.dismiss();
-                        }
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
+//        newUnit = (ExtendedFloatingActionButton) view.findViewById(R.id.recipe_add_ingredient_new_unit);
+//        //Popup window for when user wants to add a new unit
+//        newUnit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                // inflate the layout of the popup window
+//                View popupView = getLayoutInflater().inflate(R.layout.ingredient_add_dropdown_popup, null);
+//
+//                newUnitEditText = popupView.findViewById(R.id.add_dropdown_edit_text);
+//                completeNewUnit = popupView.findViewById(R.id.add_complete);
+//
+//                // create the popup window
+//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+//                boolean focusable = true; // lets taps outside the popup also dismiss it
+//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//
+//                // show the popup window
+//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+//
+//                //add button pressed in popup window
+//                completeNewUnit.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        //getting information user typed and adding it to the unit options
+//                        String newUnit = newUnitEditText.getText().toString();
+//                        if (!units.contains(newUnit)){
+//                            unitAdapter.add(newUnit);
+//                            unitAdapter.notifyDataSetChanged();
+//                            popupWindow.dismiss();
+//                        }
+//                        popupWindow.dismiss();
+//                    }
+//                });
+//
+//                // dismiss the popup window when touched
+//                popupView.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        popupWindow.dismiss();
+//                        return true;
+//                    }
+//                });
+//            }
+//        });
 
         //int mode = 0;
         ingredientStorage = MainActivity.ingredientStorage;
@@ -315,6 +297,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     public void onResume() {
         super.onResume();
         setDialogButtons();
+        adapter.notifyDataSetChanged();
         adapterList.notifyDataSetChanged();
         CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
         ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -346,7 +329,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                 adapterList.notifyDataSetChanged();
 
             }
-        });
+    });
 
 
     }
@@ -372,12 +355,6 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                         descriptionLayout.setError("Required");
                     }
 
-
-
-                    else if (!ingredientList.contains(description)) {
-                        canAddIngredient = false;
-                        descriptionLayout.setError("Select Existing Ingredient or Add new Ingredient");
-                    }
 
                     else if (titleList.contains(description)) {
                         canAddIngredient = false;
@@ -415,17 +392,16 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                     boolean canUpdateIngredient = true;
                     // input check
                     String description = String.valueOf(descriptionEditText.getText());
+
                     ingredientStorage = MainActivity.ingredientStorage;
+
                     List ingredientList = ingredientStorage.getDescriptions();
                     if (description.equals("")) {
                         canUpdateIngredient = false;
                         descriptionLayout.setError("Required");
                     }
 
-                    else if (!ingredientList.contains(description)) {
-                        canUpdateIngredient = false;
-                        descriptionLayout.setError("Select Existing Ingredient or Add new Ingredient");
-                    }
+
                     String amountStr = String.valueOf(amountEditText.getText());
                     if (amountStr.equals("")) {
                         canUpdateIngredient = false;

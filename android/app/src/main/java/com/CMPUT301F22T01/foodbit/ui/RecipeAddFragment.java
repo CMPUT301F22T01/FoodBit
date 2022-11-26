@@ -1,13 +1,21 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.MainActivity;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -18,8 +26,14 @@ import java.util.Objects;
  */
 public class RecipeAddFragment extends RecipeAddEditFragment {
 
+    private IngredientStorage ingredientStorage;
     public RecipeAddFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -58,6 +72,21 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
             requiredFieldEntered = false;
         }
+
+        ingredientStorage = MainActivity.ingredientStorage;
+        List ingredientList = ingredientStorage.getDescriptions();
+
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredientList.contains(ingredient.getDescription()))
+            {
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
+                MainActivity.ingredientStorage.add(newIngredient);
+                ingredientAdapter.notifyDataSetChanged();
+            }
+
+        }
+
+
         if (requiredFieldEntered) {
             Recipe recipe = new Recipe(title,
                     Integer.parseInt(prepTime),

@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -26,8 +27,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class RecipeAddEditFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener {
+public abstract class RecipeAddEditFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
     public static String TAG;
     // an ingredient list to obtain from the RecipeAddIngredientFragment
     public ArrayList<Ingredient> ingredients;
@@ -46,6 +48,10 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
     TextInputLayout commentsLayout;
     MaterialToolbar ingredientsBar;
     RecyclerView ingredientsRecyclerView;
+    IngredientStorage ingredientStorage;
+
+
+
     protected Context context;
     // get recipe book from MainActivity
     protected RecipeController recipeController = MainActivity.recipeController;
@@ -77,6 +83,7 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
 
         setHasOptionsMenu(false);
+
     }
 
     @Override
@@ -101,7 +108,8 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
         commentsLayout = view.findViewById(R.id.recipe_add_text_layout_comments);
         ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_add_ingredients_list);
-        
+
+
         // preset recipe info in recipe edit screen
         presetInfo();
 
@@ -140,6 +148,7 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
                 ArrayList<String> titleList = new ArrayList<>();
                 for (Ingredient ingredient : ingredients) {
                     titleList.add(ingredient.getDescription());
+
                 }
                 RecipeAddIngredientFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
             }
@@ -247,6 +256,16 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
     @Override
     public void onIngredientAdd(Ingredient newIngredient) {
         ingredients.add(newIngredient);
+
+        ingredientStorage = MainActivity.ingredientStorage;
+        List ingredientList = ingredientStorage.getDescriptions();
+
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredientList.contains(ingredient.getDescription())) {
+                Ingredient addIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
+                MainActivity.ingredientStorage.add(addIngredient);
+            }
+        }
         ingredientAdapter.notifyDataSetChanged();
     }
 
