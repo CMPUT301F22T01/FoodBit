@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -104,6 +105,7 @@ public class ShoppingCartFragment extends Fragment {
         for (MealPlan meal : meals
              ) {
             if (meal.isIngredient()){
+                Log.d("meal ingredient", String.valueOf(meal.getIngredients()));
                 mealIngredient.add(meal.getIngredients().get(0));
             }
 //            for (Ingredient ingredient : meal.getIngredients()
