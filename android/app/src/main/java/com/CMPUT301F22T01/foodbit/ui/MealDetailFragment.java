@@ -1,9 +1,9 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
@@ -22,8 +22,7 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
-
-import org.w3c.dom.Text;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 import java.text.SimpleDateFormat;
 
@@ -34,13 +33,16 @@ public class MealDetailFragment extends Fragment {
 
     private MealPlan mealPlan;
 
-    TextView descriptionView;
+    // TODO: change id for mealDateView
+
+    Toolbar topBar;
     TextView mealDateView;
     TextView servingsView;
     TextView ingredientsFieldView;
     Button deleteButton;
     RecyclerView ingredientsRecyclerView;
     IngredientAdapter ingredientAdapter;
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     public MealDetailFragment() {
         // Required empty public constructor
@@ -59,17 +61,24 @@ public class MealDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_meal_detail, container, false);
 
-        descriptionView = view.findViewById(R.id.meal_detail_description);
+        topBar = view.findViewById(R.id.meal_detail_toolbar);
         mealDateView = view.findViewById(R.id.meal_detail_date);
         servingsView = view.findViewById(R.id.meal_detail_servings);
         ingredientsRecyclerView = view.findViewById(R.id.meal_detail_ingredient_list);
         ingredientsFieldView = view.findViewById(R.id.meal_detail_ingredients_field);
+        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
 
         // set text
-        descriptionView.setText(mealPlan.getName());
+        collapsingToolbarLayout.setTitle(mealPlan.getName());
         SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
-        mealDateView.setText(sf.format(mealPlan.getDate()));
-        servingsView.setText(String.valueOf(mealPlan.getServings()));
+        collapsingToolbarLayout.setTitle(sf.format(mealPlan.getDate()));
+        mealDateView.setText(mealPlan.getName());
+        String servingsSuffix = " servings";
+        if (mealPlan.getServings() == 1) {
+            servingsSuffix = " serving";
+        }
+        String servingsText = mealPlan.getServings() + servingsSuffix;
+        servingsView.setText(servingsText);
 
         if (!mealPlan.isIngredient() && !mealPlan.getIngredients().isEmpty()) {
                 setUpRecyclerView();
@@ -77,6 +86,9 @@ public class MealDetailFragment extends Fragment {
             // meal is an ingredient, so ingredient list is null
             ingredientsFieldView.setVisibility(View.INVISIBLE);
         }
+
+        // back button functionality
+        topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
         // delete button functionality
         deleteButton = view.findViewById(R.id.button_meal_delete);
