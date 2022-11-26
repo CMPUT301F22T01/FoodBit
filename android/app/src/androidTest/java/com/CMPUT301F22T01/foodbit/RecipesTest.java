@@ -612,9 +612,11 @@ public class RecipesTest {
                 allOf(childAtPosition(
                                 allOf(withId(R.id.recipe_detail_topbar),
                                         childAtPosition(
-                                                withContentDescription("Sandwich"),
+                                                allOf(
+                                                        withId(R.id.collapsingToolbarLayout),
+                                                        withContentDescription("Sandwich")),
                                                 1)),
-                                0),
+                                1),
                         isDisplayed()));
         appCompatImageButton.perform(click());
 

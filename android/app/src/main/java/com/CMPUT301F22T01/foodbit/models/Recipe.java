@@ -140,6 +140,7 @@ public class Recipe implements IRecipe, dbObject {
      * @return map of ingredient names and the number of ingredients you need to make this recipe
      */
     @Override
+    // todo: return the array list
     public Map<String, Float> doGetIngredientList() {
         Map<String, Float> list = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
