@@ -103,7 +103,7 @@ public class MealPlanController {
     /**
      *
      * @param ID
-     * @return -1 if ingredient does not occur within mealplan. Otherwise return index of
+     * @return -1 if ingredient ID doesnt exist within the ingredient list. Otherwise return index
      */
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
         for (int i = 0; i< ingredList.size(); i++) {
@@ -115,18 +115,24 @@ public class MealPlanController {
     }
 
     /**
-     * Returns all the ingredients required for this meal plan. Only ID and Amount are guaranteed.
+     * Returns all the ingredients required for this meal plan. Only ID and Amount are guaranteed
+     * to be accurate.
      * @return the arraylist of ingredients
      */
     public ArrayList<Ingredient> getAllIngredients() {
         ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
-        for (int i =0; i < mealPlan.size(); i++) {
-
-            int index = lookUpIngredientID(mealPlan.get(i).getRecipeID(),allIngredients);
-            if(index != -1) {
-//
+        for (int i =0; i < mealPlan.size(); i++) { //iterate through all meals
+            MealPlan meal = mealPlan.get(i);
+            for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
+                Ingredient currentIngred = meal.getIngredients().get(j);
+                int index = lookUpIngredientID(currentIngred.getId(),allIngredients);
+                if(index != -1) {
+                    allIngredients.get(index).setAmount(currentIngred.getAmount() +
+                            allIngredients.get(index).getAmount());
+                } else {
+                    allIngredients.add(currentIngred);
+                }
             }
-            allIngredients.addAll(mealPlan.get(i).getIngredients());
         }
         return allIngredients;
     }

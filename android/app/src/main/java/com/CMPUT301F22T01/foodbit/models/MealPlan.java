@@ -102,7 +102,6 @@ public class MealPlan implements dbObject {
      * Return ingredient list required for this meal.
      * @return Ingredients required for this mealplan. Only ID and amount fields are guaranteed.
      */
-
     public ArrayList<Ingredient> getIngredients() {
         return ingredients;
     }
