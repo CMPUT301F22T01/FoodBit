@@ -15,6 +15,7 @@
         android:text="Ingredient"
         android:textAllCaps="false"
         android:textColor="@color/primaryTextColor"
+        android:textSize="20dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,12 +26,12 @@
         android:id="@+id/item_ingredient_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="4dp"
+        android:layout_marginEnd="120dp"
         android:text="10"
         android:textColor="@color/primaryTextColor"
-        app:layout_constraintBottom_toBottomOf="@+id/item_ingredient_description"
-        app:layout_constraintEnd_toStartOf="@+id/item_ingredient_unit"
-        app:layout_constraintTop_toTopOf="@+id/item_ingredient_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -39,8 +40,8 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="kg"
-        app:layout_constraintBottom_toBottomOf="@+id/item_ingredient_amount"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/item_ingredient_amount"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

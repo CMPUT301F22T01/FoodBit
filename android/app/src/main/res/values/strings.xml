@@ -4,7 +4,6 @@
     <string name="title_recipe_book">Recipes</string>
     <string name="title_meal_plan">Meal Plan</string>
     <string name="title_shopping_cart">Shopping Cart</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment" tools:ignore="UnusedResources">Hello blank fragment</string>
     <string name="ingredient">INGREDIENT</string>
     <string name="amount">AMOUNT</string>

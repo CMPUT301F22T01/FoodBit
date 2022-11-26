@@ -9,8 +9,9 @@
 
     <TextView
         android:id="@+id/ingredient_description"
-        android:layout_width="175dp"
-        android:layout_height="0dp"
+        android:layout_width="211dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:text="Description"
         android:textSize="20sp"
@@ -23,11 +24,12 @@
 
     <TextView
         android:id="@+id/ingredient_best_before"
-        android:layout_width="132dp"
-        android:layout_height="0dp"
+        android:layout_width="107dp"
+        android:layout_height="38dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Best Before"
+        android:layout_marginBottom="8dp"
+        android:text="Amount"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
         app:layout_constraintStart_toEndOf="@+id/ingredient_description"
@@ -38,11 +40,12 @@
 
     <TextView
         android:id="@+id/ingredient_amount"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="44dp"
+        android:layout_height="39dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:text="Amount"
+        android:layout_marginBottom="8dp"
+        android:text="Unit"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
         app:layout_constraintEnd_toEndOf="parent"
@@ -55,20 +58,13 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_ingredient_storage"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/ingredient_storage_add_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ingredient_description" />
-
-    <Button
-        android:id="@+id/ingredient_storage_add_button"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:text="add"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="HardcodedText" />
+        android:scrollbars="vertical"
+        app:layout_constraintTop_toBottomOf="@+id/ingredient_description" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

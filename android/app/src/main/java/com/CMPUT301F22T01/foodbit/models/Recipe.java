@@ -1,17 +1,5 @@
 package com.CMPUT301F22T01.foodbit.models;
 
-//Original user story:
-//        As a meal planner, I want to add a recipe, with title, preparation time, number of servings, recipe category, comments, photograph, and list of ingredients.
-//        Expected Behaviour:
-//
-//        When the add button is clicked, the add new recipe screen should appear and prompt the user to enter the following information:
-//        Mandatory: title;
-//        Optional: preparation time, number of servings, recipe category, comments, photograph, and list of ingredients.
-//        When the user clicks done button, the recipe will be added to the database and shown on the recipe book screen.
-//        When the user clicks back button, the addition is aborted.
-//        Edge Case Behaviour:
-//        Mandatory field not entered -> display an error message and highlight the corresponding field prompting the user to enter
-
 import android.net.Uri;
 import android.util.Pair;
 
@@ -25,7 +13,7 @@ import java.util.Map;
  * Represents a recipe with an id, a title, preparation time, number of servings,
  * a category, comments, a photo, and a list of ingredients.
  */
-public class Recipe implements IRecipe {
+public class Recipe implements IRecipe, dbObject {
     private String id;
     private String title;
     private int prepTime;
@@ -152,6 +140,7 @@ public class Recipe implements IRecipe {
      * @return map of ingredient names and the number of ingredients you need to make this recipe
      */
     @Override
+    // todo: return the array list
     public Map<String, Float> doGetIngredientList() {
         Map<String, Float> list = new HashMap<>();
         for (Ingredient ingredient : ingredients) {

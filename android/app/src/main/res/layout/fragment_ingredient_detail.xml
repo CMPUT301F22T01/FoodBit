@@ -38,7 +38,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             tools:context=".ui.IngredientDetailFragment">
 
             <TextView
@@ -50,14 +50,13 @@
                 android:layout_marginEnd="16dp"
                 android:drawablePadding="6sp"
                 android:gravity="center_vertical"
-                android:text="480 minutes"
+                android:text="Description"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:drawableStartCompat="@drawable/ic_twotone_timer_24"
                 app:drawableTint="@color/primaryColor"
                 tools:ignore="HardcodedText" />
 
@@ -70,7 +69,7 @@
                 android:layout_marginEnd="16dp"
                 android:drawablePadding="6sp"
                 android:gravity="center_vertical"
-                android:text="100 servings"
+                android:text="Best Before"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -78,7 +77,6 @@
                 app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_description"
-                app:drawableStartCompat="@drawable/ic_numbers_24"
                 app:drawableTint="@color/primaryColor"
                 tools:ignore="HardcodedText" />
 
@@ -89,7 +87,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Category: "
+                android:text="Location"
                 android:textColor="@color/primaryTextColor"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -104,7 +102,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Comments"
+                android:text="Amount"
                 android:textColor="@color/primaryTextColor"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -119,7 +117,7 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="No comments."
+                android:text="Unit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_amount"
@@ -132,12 +130,37 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:text="Lunch"
+                android:text="Category"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_unit"
                 tools:ignore="HardcodedText" />
+
+            <Button
+                android:id="@+id/button_ingredient_detail_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="16dp"
+                android:text="Delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_category"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/button_ingredient_detail_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_ingredient_detail_delete"
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_category" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

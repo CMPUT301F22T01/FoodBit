@@ -110,18 +110,23 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         // set up UI
         titleView.setText(title);
-        String min = " minutes"; if (prepTime <= 1) {min = " minute";}
+        String min = " minutes";
+        if (prepTime <= 1) {
+            min = " minute";
+        }
         prepTimeView.setText(prepTime + min);
         numServingsView.setText("×" + numServings);
         commentsView.setText(Objects.requireNonNullElse(comments, "No comments."));
-        // todo: enable photo feature before release
-        if (photo != null) {
-            ImageView photoView = (ImageView) photoLayout.getViewById(R.id.item_recipe_photo_image);
-            photoView.setImageURI(photo);
-        } else {
-            TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
-            capLetter.setText(Character.toString(title.charAt(0)));
-        }
+        TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
+        capLetter.setText(Character.toString(title.charAt(0)));
+
+        // Define click listener for items
+        holder.itemView.setOnClickListener(v -> {
+            // put argument
+            Bundle bundle = new Bundle();
+            bundle.putInt("position", holder.getAdapterPosition());
+            Navigation.findNavController(v).navigate(R.id.action_fragment_recipe_book_to_fragment_recipe_detail, bundle);
+        });
     }
 
     @Override
