@@ -23,6 +23,7 @@ import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
+import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -130,9 +131,9 @@ public class MealPlanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // real time updates of the recipeController
-        CollectionReference recipeBookRef = MainActivity.mealPlanRef;
-        recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        // real time updates of the mealPlanController
+        CollectionReference mealPlanRef = MainActivity.mealPlanRef;
+        mealPlanRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -143,7 +144,9 @@ public class MealPlanFragment extends Fragment {
                 ArrayList<MealPlan> newMealPlans = new ArrayList<MealPlan>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    newMealPlans.add(doc.toObject(MealPlan.class));
+                    MealPlan newMeal = new MealPlan(doc);
+                    newMeal.setId(doc.getId());
+                    newMealPlans.add(newMeal);
                 }
                 mealPlan.update(newMealPlans);
                 Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());

@@ -178,14 +178,16 @@ public class MealAddFragment extends DialogFragment {
                     int ingredientSize = ingredientList.size();
                     if (!notRealItem) { // Is a real item. Fixed DB Issues basically
                         if (positionSelected < ingredientSize) {
-                            meal.setRecipeID(ingredientList.get(positionSelected).getId());
+                            Ingredient ingredient = ingredientList.get(positionSelected);
+                            meal.setRecipeID(ingredient.getId());
                             meal.setIngredient(true);
+                            meal.setIngredients(ingredient);
                             Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
                         } else {
                             meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
                             meal.setIngredient(false);
-//                            meal.setIngredientList(recipeList.get(positionSelected-ingredientSize).doGetIngredientList());
-                            meal.setIngredients(recipeList.get(positionSelected-ingredientSize).getIngredients());
+                            meal.setIngredientsFromRecipe(recipeList.get(positionSelected-ingredientSize).getIngredients(),
+                                    recipeList.get(positionSelected-ingredientSize).getNumServings());
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
                     }
