@@ -137,13 +137,13 @@ public class MealPlanFragment extends Fragment {
                     Log.e(TAG, "Listen failed.", error);
                     return;
                 }
-                ArrayList<MealPlan> newRecipes = new ArrayList<MealPlan>();
+                ArrayList<MealPlan> newMealPlans = new ArrayList<MealPlan>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    newRecipes.add(doc.toObject(MealPlan.class));
+                    newMealPlans.add(doc.toObject(MealPlan.class));
                 }
-                mealPlan.update(newRecipes);
-                Log.e(TAG, "Current recipes: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
+                mealPlan.update(newMealPlans);
+                Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
                 adapter.notifyDataSetChanged();
             }
         });

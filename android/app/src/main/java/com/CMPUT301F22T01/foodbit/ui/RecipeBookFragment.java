@@ -169,15 +169,16 @@ public class RecipeBookFragment extends Fragment {
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
 //                Recipe newRecipe = doc.toObject(Recipe.class);
-                Recipe newRecipe = new Recipe(
-                        doc.getId(),
-                        doc.get("title").toString(),
-                        (int) (long) doc.get("prepTime"),
-                        (int) (long) doc.get("numServings"),
-                        (String) doc.get("category"),
-                        (String) doc.get("comments"),
-                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
-                        (ArrayList<Ingredient>) doc.get("ingredients"));
+//                Recipe newRecipe = new Recipe(
+//                        doc.getId(),
+//                        doc.get("title").toString(),
+//                        (int) (long) doc.get("prepTime"),
+//                        (int) (long) doc.get("numServings"),
+//                        (String) doc.get("category"),
+//                        (String) doc.get("comments"),
+//                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
+//                        (ArrayList<Ingredient>) doc.get("ingredients"));
+                Recipe newRecipe = new Recipe(doc);
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
             }
