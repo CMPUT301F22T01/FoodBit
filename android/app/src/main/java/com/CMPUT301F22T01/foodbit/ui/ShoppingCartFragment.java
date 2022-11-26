@@ -115,6 +115,14 @@ public class ShoppingCartFragment extends Fragment {
         }
     }
 
+//    public void getAllIngredients(ArrayList<Ingredient> mealIngredient, ArrayList<MealPlan> meals){
+//        for (:
+//             ) {
+//
+//        }
+//
+//    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -125,7 +133,11 @@ public class ShoppingCartFragment extends Fragment {
         ingredientStorage = MainActivity.ingredientStorage;
         mealPlan = MainActivity.mealPlan;
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
+
+//        ArrayList<Ingredient> mealIngredient = new ArrayList<>();
+//        getAllIngredients(mealIngredient, mealPlan.getArrayList());
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+
         ArrayList<Ingredient> storage = ingredientStorage.getIngredients();
         List<String> descriptionList = ingredientStorage.getDescriptions();
         shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
