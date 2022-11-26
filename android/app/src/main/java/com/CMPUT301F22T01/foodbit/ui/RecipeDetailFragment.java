@@ -160,7 +160,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         numServingsView.setText(numServingsText);
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
-
+        appBarImageView.setImageURI(recipe.getPhoto());
         setUpRecyclerView();
     }
 }

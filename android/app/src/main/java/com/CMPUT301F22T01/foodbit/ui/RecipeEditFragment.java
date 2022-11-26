@@ -39,7 +39,10 @@ public class RecipeEditFragment extends RecipeInputFragment {
         numServingsEditText.setText(String.valueOf(recipe.getNumServings()));
         categoryEditText.setText(recipe.getCategory());
         commentsEditText.setText(recipe.getComments());
-        imageView.setImageURI(recipe.getPhoto());
+        if (recipe.getPhoto() != null) {
+            imageView.setImageURI(recipe.getPhoto());
+            hasPhoto = true;
+        }
     }
 
 
@@ -89,7 +92,12 @@ public class RecipeEditFragment extends RecipeInputFragment {
             recipe.setNumServings(Integer.parseInt(numServings));
             recipe.setCategory(category);
             recipe.setComments(comments);
-            recipe.setPhoto(null);
+            if (photoBitmap != null) {
+                recipe.setPhoto(saveImage());
+            }
+            if (!hasPhoto) {
+                recipe.setPhoto(null);
+            }
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
             recipeEditedListener.onEdited();

@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.net.Uri;
+import android.net.wifi.WifiNetworkSpecifier;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -175,7 +176,7 @@ public class RecipeBookFragment extends Fragment {
                         (int) (long) doc.get("numServings"),
                         (String) doc.get("category"),
                         (String) doc.get("comments"),
-                        Uri.parse((String) doc.get("photo")),
+                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
                         (ArrayList<Ingredient>) doc.get("ingredients"));
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
