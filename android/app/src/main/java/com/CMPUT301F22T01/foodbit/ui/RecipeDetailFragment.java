@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -93,7 +94,6 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
 
         });
 
-//        topBar.setTitle(recipe.getTitle());
         collapsingToolbarLayout.setTitle(recipe.getTitle());
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
         String prepTimeText = recipe.getPrepTime() + prepTimeSuffix;
@@ -104,7 +104,12 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
 
-        appBarImageView.setImageResource(android.R.color.transparent);
+        Uri photo = recipe.getPhoto();
+        if (photo == null) {
+            appBarImageView.setImageResource(android.R.color.transparent);
+        } else {
+            appBarImageView.setImageURI(photo);
+        }
 
         setUpRecyclerView();
 
