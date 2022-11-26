@@ -106,6 +106,10 @@ public class ShoppingCartFragment extends Fragment {
             if (meal.isIngredient()){
                 mealIngredient.add(storage.getIngredientById(meal.getId()));
             }
+            for (Ingredient ingredient : meal.getIngredients()
+                 ) {
+                mealIngredient.add(ingredient);
+            }
         }
     }
 
