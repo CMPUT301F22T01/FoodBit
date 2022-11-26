@@ -164,10 +164,10 @@ public class Recipe implements IRecipe, dbObject {
      */
     @Override
     // todo: return the array list
-    public Map<String, Float> doGetIngredientList() {
+    public Map<String, Float> getIngredientList() {
         Map<String, Float> list = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
-            String key = ingredient.getDescription();
+            String key = ingredient.getId();
             float value = ingredient.getAmount();
             list.put(key, value);
         }
