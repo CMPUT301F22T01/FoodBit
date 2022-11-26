@@ -18,13 +18,14 @@ import java.util.ArrayList;
 
 /**
  * Provides a binding from a set of ingredients to views that are displayed with in the
- * <code>RecyclerView</code> in either the ingredient storage page, add recipe page or
- * recipe detail page.
+ * <code>RecyclerView</code> in either the ingredient storage page, add recipe page,
+ * recipe detail page, or meal detail page.
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
     public final static int INGREDIENT_STORAGE = 0;
     public final static int RECIPE_ADD = 1;
     public final static int RECIPE_DETAIL = 2;
+    public final static int MEAL_DETAIL = 3;
     private final ArrayList<Ingredient> items;
     private final int mode;
 
@@ -61,6 +62,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         private final static int INGREDIENT_STORAGE = 0;
         private final static int RECIPE_ADD = 1;
         private final static int RECIPE_DETAIL = 2;
+        public final static int MEAL_DETAIL = 3;
         // define UI
         private final TextView ingredientDescription;
         private final TextView ingredientAmount;
@@ -126,7 +128,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
         // set up UI
         descriptionView.setText(description);
-        if (mode == RECIPE_ADD || mode == RECIPE_DETAIL) {
+        if (mode == RECIPE_ADD || mode == RECIPE_DETAIL || mode == MEAL_DETAIL) {
             descriptionView.setTextSize(14);
         }
         amountView.setText(String.valueOf(amount));

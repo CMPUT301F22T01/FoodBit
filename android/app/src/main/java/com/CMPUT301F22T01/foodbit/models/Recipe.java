@@ -1,12 +1,13 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 import android.net.Uri;
-import android.util.Pair;
 
 import com.CMPUT301F22T01.foodbit.IRecipe;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -67,6 +68,28 @@ public class Recipe implements IRecipe, dbObject {
         this.category = category;
         this.comments = comments;
         this.photo = photo;
+        this.ingredients = ingredients;
+    }
+
+    public Recipe(QueryDocumentSnapshot doc) {
+        this(doc.getId(),
+                doc.get("title").toString(),
+                (int) (long) doc.get("prepTime"),
+                (int) (long) doc.get("numServings"),
+                (String) doc.get("category"),
+                (String) doc.get("comments"),
+                doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
+                null);
+
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for (HashMap map :
+                (ArrayList<HashMap>) doc.get("ingredients")) {
+            ingredients.add(new Ingredient(
+                    (String) map.get("description"),
+                    (float) (double) map.get("amount"),
+                    (String) map.get("unit"),
+                    (String) map.get("category")));
+        }
         this.ingredients = ingredients;
     }
 
@@ -140,10 +163,11 @@ public class Recipe implements IRecipe, dbObject {
      * @return map of ingredient names and the number of ingredients you need to make this recipe
      */
     @Override
-    public Map<String, Float> doGetIngredientList() {
+    // todo: return the array list
+    public Map<String, Float> getIngredientList() {
         Map<String, Float> list = new HashMap<>();
         for (Ingredient ingredient : ingredients) {
-            String key = ingredient.getDescription();
+            String key = ingredient.getId();
             float value = ingredient.getAmount();
             list.put(key, value);
         }

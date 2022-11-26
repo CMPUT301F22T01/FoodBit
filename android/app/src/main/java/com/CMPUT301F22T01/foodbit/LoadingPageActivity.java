@@ -38,6 +38,8 @@ public class LoadingPageActivity extends AppCompatActivity {
 
                 MainActivity.recipeBookRef = db.collection(FID).document(FID).collection("Recipe Book");
                 MainActivity.recipeController = new RecipeController();
+                // todo: test
+//                MainActivity.recipeController.load();
 
                 MainActivity.ingredientStorageRef = db.collection(FID).document(FID).collection("ingredient list");
                 MainActivity.ingredientStorage = new IngredientStorage();

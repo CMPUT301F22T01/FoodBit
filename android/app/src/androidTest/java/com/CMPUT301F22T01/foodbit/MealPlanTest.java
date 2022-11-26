@@ -81,15 +81,15 @@ public class MealPlanTest {
                         isDisplayed()));
         textInputEditText5.perform(replaceText("2022-01-01"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText6 = onView(
-                allOf(withId(R.id.ingredient_add_edit_text_location),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_location),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText6.perform(replaceText("pantry"), closeSoftKeyboard());
+        //ViewInteraction textInputEditText6 = onView(
+        //        allOf(withId(R.id.ingredient_add_edit_text_location),
+        //                childAtPosition(
+        //                        childAtPosition(
+        //                                withId(R.id.ingredient_add_text_layout_location),
+        //                                0),
+        //                        0),
+        //                isDisplayed()));
+        //textInputEditText6.perform(replaceText("pantry"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText7 = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_amount),
@@ -101,25 +101,25 @@ public class MealPlanTest {
                         isDisplayed()));
         textInputEditText7.perform(replaceText("1"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText8 = onView(
-                allOf(withId(R.id.ingredient_add_edit_text_unit),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_unit),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText8.perform(replaceText("kg"), closeSoftKeyboard());
+        //ViewInteraction textInputEditText8 = onView(
+        //        allOf(withId(R.id.ingredient_add_edit_text_unit),
+        //                childAtPosition(
+        //                        childAtPosition(
+        //                                withId(R.id.ingredient_add_text_layout_unit),
+        //                                0),
+        //                        0),
+        //                isDisplayed()));
+        //textInputEditText8.perform(replaceText("kg"), closeSoftKeyboard());
 
-        ViewInteraction textInputEditText9 = onView(
-                allOf(withId(R.id.ingredient_add_edit_text_category),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_category),
-                                        0),
-                                0),
-                        isDisplayed()));
-        textInputEditText9.perform(replaceText("grains"), closeSoftKeyboard());
+        //ViewInteraction textInputEditText9 = onView(
+        //        allOf(withId(R.id.ingredient_add_edit_text_category),
+        //                childAtPosition(
+        //                        childAtPosition(
+        //                                withId(R.id.ingredient_add_text_layout_category),
+        //                                0),
+        //                        0),
+        //                isDisplayed()));
+        //textInputEditText9.perform(replaceText("grains"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView4 = onView(
                 allOf(withId(R.id.ingredient_add_done), withContentDescription("ADD"),
@@ -144,40 +144,40 @@ public class MealPlanTest {
         actionMenuItemView.perform(click());
 
         ViewInteraction textInputEditText = onView(
-                allOf(withId(R.id.recipe_add_edit_text_title),
+                allOf(withId(R.id.recipe_input_edit_text_title),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_title),
+                                        withId(R.id.recipe_input_text_layout_title),
                                         0),
                                 0),
                         isDisplayed()));
         textInputEditText.perform(replaceText("a"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText2 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_prep_time),
+                allOf(withId(R.id.recipe_input_edit_text_prep_time),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_prep_time),
+                                        withId(R.id.recipe_input_text_layout_prep_time),
                                         0),
                                 0),
                         isDisplayed()));
         textInputEditText2.perform(replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction textInputEditText3 = onView(
-                allOf(withId(R.id.recipe_add_edit_text_num_servings),
+                allOf(withId(R.id.recipe_input_edit_text_num_servings),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_text_layout_num_servings),
+                                        withId(R.id.recipe_input_text_layout_num_servings),
                                         0),
                                 0),
                         isDisplayed()));
         textInputEditText3.perform(replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.recipe_detail_edit), withContentDescription("ADD"),
+                allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.recipe_add_top_bar),
+                                        withId(R.id.recipe_input_top_bar),
                                         2),
                                 0),
                         isDisplayed()));

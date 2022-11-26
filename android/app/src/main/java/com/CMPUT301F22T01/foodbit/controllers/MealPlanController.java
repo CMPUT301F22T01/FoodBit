@@ -63,11 +63,6 @@ public class MealPlanController {
      * @return the sorted array of MealPlans
      */
     public ArrayList<MealPlan> getArrayList() {
-        Collections.sort(mealPlan, new Comparator<MealPlan>() {
-            public int compare(MealPlan o1, MealPlan o2) {
-                return o1.getDate().compareTo(o2.getDate());
-            }
-        });
         return mealPlan;
     }
 
