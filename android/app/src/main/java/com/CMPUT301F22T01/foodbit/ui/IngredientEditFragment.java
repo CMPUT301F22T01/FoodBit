@@ -357,6 +357,9 @@ public class IngredientEditFragment extends DialogFragment {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
                     }
+                    if (unit.equals("")) {
+                        unit = null;
+                    }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
                         requiredFieldEntered = false;

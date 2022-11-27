@@ -50,7 +50,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                 MainActivity.mealPlan = new MealPlanController();
                 MainActivity.mealPlan.load();
 
-                MainActivity.recipeBookRef = db.collection(FID).document(FID).collection("Recipe Book");
+                MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
                 MainActivity.recipeController = new RecipeController();
                 // todo: test
 //                MainActivity.recipeController.load();

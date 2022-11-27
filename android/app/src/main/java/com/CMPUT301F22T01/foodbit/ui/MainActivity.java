@@ -1,11 +1,6 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +21,6 @@ import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 //import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 //import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 //import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
-import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 
@@ -34,13 +28,12 @@ import com.google.firebase.firestore.CollectionReference;
  * The main activity of the app.
  */
 public class MainActivity extends AppCompatActivity {
-
-
+    static ActionBar actionBar;
     public final static String TAG = "MainActivity";
     static String FID = LoadingPageActivity.FID;
 
     // access a Cloud Firestore instance and retrieve data
-    public static CollectionReference recipeBookRef;
+    public static CollectionReference recipeControllerRef;
     public static RecipeController recipeController;
     public static CollectionReference ingredientListRef;
     public static IngredientController ingredientController;
@@ -62,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         //declaring and initializing the action bar
-        ActionBar actionBar;
+//        ActionBar actionBar;
         setSupportActionBar(findViewById(R.id.action_bar));
         actionBar = getSupportActionBar();
         assert actionBar != null;
