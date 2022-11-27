@@ -104,15 +104,25 @@ public class ShoppingCartFragment extends Fragment {
         }
         for (Ingredient ingredient: shoppingList
         ) {
-            int index = descriptionList.indexOf(ingredient.getDescription());
-            if (ingredient.getAmount() >= storage.get(index).getAmount()){
-                shoppingList.remove(ingredient);
-            }
-            if (ingredient.getAmount() < storage.get(index).getAmount()){
-                float amountNeed = storage.get(index).getAmount() - ingredient.getAmount();
+            int index = lookUpIngredientID(ingredient.getId(), storage);
+            if (ingredient.getAmount() > storage.get(index).getAmount()){
+                float amountNeed = ingredient.getAmount() - storage.get(index).getAmount();
+                ingredient.update(storage.get(index));
                 ingredient.setAmount(amountNeed);
             }
+            else{
+                shoppingList.remove(ingredient);
+            }
         }
+    }
+
+    public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (int i = 0; i< ingredList.size(); i++) {
+            if (ID.equals(ingredList.get(i).getId())) {
+                return i;
+            }
+        }
+        return -1;
     }
 
 
