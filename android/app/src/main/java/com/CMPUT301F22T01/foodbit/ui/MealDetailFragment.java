@@ -41,6 +41,7 @@ public class MealDetailFragment extends Fragment {
     TextView ingredientsFieldView;
     Button deleteButton;
     RecyclerView ingredientsRecyclerView;
+    TextView ingredientEmptyView;
     IngredientAdapter ingredientAdapter;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -66,6 +67,7 @@ public class MealDetailFragment extends Fragment {
         servingsView = view.findViewById(R.id.meal_detail_servings);
         ingredientsRecyclerView = view.findViewById(R.id.meal_detail_ingredient_list);
         ingredientsFieldView = view.findViewById(R.id.meal_detail_ingredients_field);
+        ingredientEmptyView = view.findViewById(R.id.meal_detail_ingredients_empty);
         collapsingToolbarLayout = view.findViewById(R.id.meal_detail_top_bar);
 
         // set text
@@ -110,7 +112,6 @@ public class MealDetailFragment extends Fragment {
                             "Not enough ingredients within storage!", Snackbar.LENGTH_SHORT);
                     snackbar.setAnchorView(R.id.nav_bar).show();
                 }
-
             }
         });
 
@@ -197,11 +198,11 @@ public class MealDetailFragment extends Fragment {
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.isIngredient() && !mealPlan.getIngredients().isEmpty()) {
+        if (!mealPlan.getIngredients().isEmpty()) {
             setUpRecyclerView();
         } else {
-            // meal is an ingredient, so ingredient list is null
-            ingredientsFieldView.setVisibility(View.INVISIBLE);
+            // no ingredients
+            ingredientEmptyView.setVisibility(View.VISIBLE);
         }
     }
 
