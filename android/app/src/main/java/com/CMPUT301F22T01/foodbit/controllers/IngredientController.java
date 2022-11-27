@@ -141,6 +141,7 @@ public class IngredientController implements Serializable {
 
     /**
      * Loads ingredients from the database
+     * Checks if the expiry date has passed
      */
     public void loadAllFromDB() {
         ingredients.clear();
