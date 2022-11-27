@@ -152,6 +152,7 @@ public class ShoppingCartFragment extends Fragment {
             bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
         }
 
+
         // add borderlines between items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
                 linearLayoutManager.getOrientation());

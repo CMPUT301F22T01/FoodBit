@@ -6,219 +6,166 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ScrollView
-        android:id="@+id/scrollView2"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="250dp">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ingredient_detail_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:contentScrim="@color/white"
+            app:expandedTitleTextAppearance="@style/Theme.FoodBit.ExpandedTitleTextAppearance"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
+            app:toolbarId="@+id/ingredient_detail_toolbar">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/ingredient_detail_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_arrow_back_24" />
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="0dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+        tools:ignore="SpeakableTextPresentCheck">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="?android:windowBackground"
-            tools:context=".ui.IngredientAddFragment">
+            tools:context=".ui.ShoppingCartPickedItemFragment">
 
-            <com.google.android.material.appbar.MaterialToolbar
-                android:id="@+id/ingredient_add_top_bar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:layout_marginTop="10dp"
-                android:minHeight="?attr/actionBarSize"
-                android:paddingEnd="6dp"
-                android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
+            <TextView
+                android:id="@+id/ingredient_detail_description"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:drawablePadding="6sp"
+                android:gravity="center_vertical"
+                android:text="Description"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/ingredient_lsit_top_app_bar"
-                app:navigationIcon="@drawable/ic_close_24"
-                app:title="Add an ingredient"
-                tools:ignore="RtlSymmetry" />
+                app:drawableTint="@color/primaryColor"
+                tools:ignore="HardcodedText" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredient_add_text_layout_description"
-                style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+            <TextView
+                android:id="@+id/ingredient_detail_best_before"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:errorEnabled="true"
+                android:drawablePadding="6sp"
+                android:gravity="center_vertical"
+                android:text="Best Before"
+                android:textColor="@color/primaryTextColor"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintHorizontal_bias="0.06"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_top_bar"
-                app:startIconDrawable="@drawable/ic_description_24">
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_description"
+                app:drawableTint="@color/primaryColor"
+                tools:ignore="HardcodedText" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ingredient_add_edit_text_description"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Description"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    tools:ignore="HardcodedText" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredient_add_text_layout_best_before"
-                style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+            <TextView
+                android:id="@+id/ingredient_detail_location"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:errorEnabled="true"
+                android:text="Location"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_description"
-                app:startIconDrawable="@drawable/ic_schedule_24">
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_best_before"
+                tools:ignore="HardcodedText" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ingredient_add_edit_text_best_before"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Best Before Date"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    tools:ignore="HardcodedText" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredient_add_text_layout_location"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <TextView
+                android:id="@+id/ingredient_detail_amount"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:orientation="horizontal"
-                app:errorEnabled="true"
+                android:text="Amount"
+                android:textColor="@color/primaryTextColor"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_best_before"
-                app:startIconDrawable="@drawable/ic_location_on_24"
-                app:startIconTint="@color/primaryColor">
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_location"
+                tools:ignore="HardcodedText" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/location_picker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_toStartOf="@+id/add_location_button"
-                    android:hint="Location"
-                    android:imeOptions="actionDone"
-                    android:inputType="textAutoComplete"
-                    android:maxLines="1"
-                    app:layout_constraintEnd_toStartOf="@id/add_location_button"
-                    app:layout_constraintStart_toStartOf="parent"
-                    tools:ignore="HardcodedText" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredient_add_text_layout_amount"
-                style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
+            <TextView
+                android:id="@+id/ingredient_detail_unit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:errorEnabled="true"
+                android:text="Unit"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_location"
-                app:startIconDrawable="@drawable/ic_numbers_24">
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_amount"
+                tools:ignore="HardcodedText" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/ingredient_add_edit_text_amount"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Amount"
-                    android:inputType="numberDecimal"
-                    android:maxLines="1"
-                    tools:ignore="HardcodedText" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredient_add_text_layout_unit"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="16dp"
-                app:errorEnabled="true"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_amount"
-                app:startIconDrawable="@drawable/ic_straighten_24"
-                app:startIconTint="@color/primaryColor">
-
-                <AutoCompleteTextView
-                    android:id="@+id/unit_picker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="0dp"
-                    android:hint="Unit"
-                    android:imeOptions="actionDone"
-                    android:inputType="textAutoComplete"
-                    android:maxLines="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_amount"
-                    tools:ignore="HardcodedText" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/ingredient_add_text_layout_category"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            <TextView
+                android:id="@+id/ingredient_detail_category"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                app:errorEnabled="true"
+                android:text="Category"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_unit"
-                app:startIconDrawable="@drawable/ic_category_24"
-                app:startIconTint="@color/primaryColor">
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_unit"
+                tools:ignore="HardcodedText" />
 
-                <AutoCompleteTextView
-                    android:id="@+id/category_picker"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginEnd="0dp"
-                    android:hint="Category"
-                    android:imeOptions="actionDone"
-                    android:inputType="textAutoComplete"
-                    android:maxLines="1"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_unit"
-                    tools:ignore="HardcodedText" />
+            <Button
+                android:id="@+id/button_ingredient_detail_delete"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="28dp"
+                android:layout_marginBottom="16dp"
+                android:text="Delete"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_category"
+                app:layout_constraintVertical_bias="0.0" />
 
-            </com.google.android.material.textfield.TextInputLayout>
+            <Button
+                android:id="@+id/button_ingredient_detail_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Edit"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/button_ingredient_detail_delete"
+                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_category" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
