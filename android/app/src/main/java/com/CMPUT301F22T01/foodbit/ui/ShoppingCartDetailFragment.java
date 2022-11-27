@@ -46,7 +46,7 @@ import java.util.Objects;
  * drop down boxes added in pt 4
  */
 public class ShoppingCartDetailFragment extends DialogFragment {
-    public final static String TAG = "EditIngredient";
+    public final static String TAG = "PickedIngredient";
     private Ingredient ingredient;
     private int position;
     private Context context;

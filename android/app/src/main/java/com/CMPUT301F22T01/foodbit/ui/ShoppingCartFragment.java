@@ -143,8 +143,7 @@ public class ShoppingCartFragment extends Fragment {
         TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        int mode = 0;
-        adapter = new ShoppingCartAdapter(shoppingList, mode);
+        adapter = new ShoppingCartAdapter(shoppingList);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
