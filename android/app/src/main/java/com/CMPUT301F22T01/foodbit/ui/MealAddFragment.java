@@ -14,10 +14,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ListAdapter;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
@@ -50,12 +50,13 @@ public class MealAddFragment extends DialogFragment {
     protected MealPlan meal;
 
     MaterialToolbar topBar;
-    Spinner ingredientRecipeSpinner;
     TextInputEditText servingsEditText;
     TextInputLayout servingsLayout;
     ArrayAdapter<String> adapter;
     EditText mealDateEditText;
     EditDatePicker mealDatePicker;
+    TextInputLayout mealAddLayout;
+    AutoCompleteTextView mealAddTextView;
 
     public MealAddFragment() {
         // Required empty public constructor
@@ -110,6 +111,7 @@ public class MealAddFragment extends DialogFragment {
         topBar = view.findViewById(R.id.meal_add_top_bar);
         servingsEditText = view.findViewById(R.id.meal_add_serving_size);
         servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
+        mealAddLayout = view.findViewById(R.id.meal_add_layout_meal);
 
         //Populate dropdown with ingredients and recipes
         recipeController = MainActivity.recipeController;
@@ -135,22 +137,27 @@ public class MealAddFragment extends DialogFragment {
             }
         }
 
-        adapter = new ArrayAdapter<String>(context,
-                android.R.layout.simple_spinner_dropdown_item, items);
+        // get autocomplete text view
+        mealAddTextView = view.findViewById(R.id.meal_picker);
+        adapter = new ArrayAdapter<String>(context, R.layout.ingredient_dropdown_layout, items);
+        mealAddTextView.setAdapter(adapter);
 
-        // Get spinner
-        ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
-        ingredientRecipeSpinner.setAdapter(adapter);
-        ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+        mealAddTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
-                meal.setName((String) parent.getItemAtPosition(position));
-                positionSelected = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String str = mealAddTextView.getText().toString();
+                    ListAdapter listAdapter = mealAddTextView.getAdapter();
+                    for(int i = 0; i < listAdapter.getCount(); i++) {
+                        String temp = listAdapter.getItem(i).toString();
+                        if(str.compareTo(temp) == 0) {
+                            return;
+                        } else {
+                            positionSelected = i+1;
+                        }
+                    }
+                    mealAddTextView.setText("");
+                }
             }
         });
 
@@ -167,10 +174,17 @@ public class MealAddFragment extends DialogFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) { //Check button is clicked!
                 String servings = Objects.requireNonNull(servingsEditText.getText().toString());
+                String mealName = Objects.requireNonNull(mealAddTextView.getText()).toString();
                 Date mealDate = mealDatePicker.getDate();
+                boolean requiredFieldEntered = true;
                 if (servings.equals("")) {
                     servingsLayout.setError("Required");
-                } else {
+                    requiredFieldEntered = false;
+                } if (mealName.equals("")) {
+                    mealAddLayout.setError("Required");
+                    requiredFieldEntered = false;
+                } if (requiredFieldEntered) {
+                    meal.setName(mealName);
                     meal.setDate(mealDate);
                     meal.setServings(Integer.valueOf(servings));
                     int ingredientSize = ingredientList.size();
