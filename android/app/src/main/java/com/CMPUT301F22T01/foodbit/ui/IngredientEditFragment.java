@@ -1,6 +1,5 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
@@ -8,12 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.navigation.Navigation;
 
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -28,10 +22,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
 import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
@@ -88,7 +80,7 @@ public class IngredientEditFragment extends DialogFragment {
      */
     public IngredientEditFragment(int position) {
         this.position = position;
-        this.ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+        this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
     }
 
     @Override
@@ -222,6 +214,9 @@ public class IngredientEditFragment extends DialogFragment {
                         MainActivity.unit.add(newUnit);
                         MainActivity.unit.loadAllFromDB();
                     }
+                    if (unit.equals("")) {
+                        unit = null;
+                    }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
                         requiredFieldEntered = false;
@@ -239,7 +234,7 @@ public class IngredientEditFragment extends DialogFragment {
                         ingredient.setAmount(Float.parseFloat(amount));
                         ingredient.setUnit(unit);
                         ingredient.setCategory(category);
-                        MainActivity.ingredientStorage.edit(ingredient);
+                        MainActivity.ingredientController.edit(ingredient);
                         ingredientEditedListener.onEdited();
                         dismiss();
                     }

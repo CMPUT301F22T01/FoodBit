@@ -54,6 +54,17 @@ public class Ingredient implements Serializable, dbObject {
     }
 
     /**
+     * Creates a new Ingredient type with only a id and amount
+     * @param id id of the ingredient
+     * @param amount how many of the ingredient
+     */
+    public Ingredient(String id, float amount) {
+        this.id = id;
+        this.amount = amount;
+
+    }
+
+    /**
      * Creates a new Ingredient type with an id, description, bestBefore date, location, amount, unit, category
      * @param id number to identity the ingredient
      * @param description the description/title of the ingredient
@@ -141,5 +152,13 @@ public class Ingredient implements Serializable, dbObject {
         amount = newIngredient.getAmount();
         unit = newIngredient.getUnit();
         category = newIngredient.getCategory();
+    }
+
+    /**
+     * Check if the ingredient is missing details.
+     * @return whether the ingredient is missing details
+     */
+    public boolean isMissingDetails() {
+        return (description == null) || (bestBefore == null) || (location == null) || (unit == null);
     }
 }

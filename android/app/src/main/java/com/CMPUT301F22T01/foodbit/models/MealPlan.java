@@ -1,3 +1,5 @@
+
+
 package com.CMPUT301F22T01.foodbit.models;
 
 import android.net.Uri;
@@ -18,7 +20,7 @@ import java.util.Map;
  * A class to represent a MealPlan with a name, number of servings, id,
  * a boolean indicating whether it is an ingredient, a date, an a list of ingredients.
  */
-public class MealPlan implements dbObject {
+public class MealPlan implements dbObject, dbObjectDeep {
     /**
      * Looking to model MealPlans as Collections
      * MealPlan (Collection)
@@ -148,13 +150,29 @@ public class MealPlan implements dbObject {
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {
             ingredients.add(new Ingredient(
-                    (String) map.get("description"),
-                    (float) (double) map.get("amount"),
-                    (String) map.get("unit"),
-                    (String) map.get("category")));
+                    (String) map.get("id"),
+                    (float) (double) map.get("amount")));
         }
         this.ingredients = ingredients;
         this.recipeID = doc.get("recipeID").toString();
+    }
+
+    public MealPlan createFromDoc(QueryDocumentSnapshot doc) {
+        name = (String) doc.get("name");
+        servings = (int) (long) doc.get("servings");
+        id = doc.getId();
+        isIngredient =  (boolean) doc.get("ingredient");
+        date = (Date) ((Timestamp) doc.get("date")).toDate();
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for (HashMap map :
+                (ArrayList<HashMap>) doc.get("ingredients")) {
+            ingredients.add(new Ingredient(
+                    (String) map.get("id"),
+                    (float) (double) map.get("amount")));
+        }
+        this.ingredients = ingredients;
+        this.recipeID = doc.get("recipeID").toString();
+        return this;
     }
 
     // TODO: delete this later
@@ -202,3 +220,5 @@ public class MealPlan implements dbObject {
     };
 
 }
+
+
