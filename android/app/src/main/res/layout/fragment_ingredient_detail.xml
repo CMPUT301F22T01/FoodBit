@@ -12,6 +12,7 @@
         android:layout_height="250dp">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/ingredient_detail_tool_bar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:contentScrim="@color/white"

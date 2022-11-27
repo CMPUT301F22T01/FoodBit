@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
@@ -14,19 +13,20 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 /**
  * Class representing the details for ingredients that can be viewed
  * Description, bestBefore, location, amount, unit, and category can ve viewed on the app screen
  */
-public class IngredientDetailFragment extends Fragment {
+public class IngredientDetailFragment extends Fragment implements IngredientEditFragment.OnIngredientEditedListener {
 
     private static final String TAG = "Ingredient Detail Fragment";
 
     Ingredient ingredient;
+    int position;
 
     Toolbar toolbar;
     TextView descriptionView;
@@ -37,6 +37,7 @@ public class IngredientDetailFragment extends Fragment {
     TextView categoryView;
     Button deleteButton;
     Button editButton;
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     public IngredientDetailFragment() {
         // Required empty constructor
@@ -61,6 +62,7 @@ public class IngredientDetailFragment extends Fragment {
         amountView = view.findViewById(R.id.ingredient_detail_amount);
         unitView = view.findViewById(R.id.ingredient_detail_unit);
         categoryView = view.findViewById(R.id.ingredient_detail_category);
+        collapsingToolbarLayout = view.findViewById(R.id.ingredient_detail_tool_bar);
 
         toolbar.setTitle(ingredient.getDescription());
 
@@ -85,7 +87,7 @@ public class IngredientDetailFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.ingredientStorage.delete(ingredient);
+                MainActivity.ingredientController.delete(ingredient);
                 Navigation.findNavController(v).popBackStack();
             }
         });
@@ -95,7 +97,7 @@ public class IngredientDetailFragment extends Fragment {
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new IngredientEditFragment(ingredient).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+                new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
         });
         return view;
@@ -107,8 +109,20 @@ public class IngredientDetailFragment extends Fragment {
      */
     private void getIngredient() {
         assert getArguments() != null;
-        int position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+        position = getArguments().getInt("position");
+        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
+    }
+
+    @Override
+    public void onEdited() {
+        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        collapsingToolbarLayout.setTitle(ingredient.getDescription());
+        descriptionView.setText(ingredient.getDescription());
+        bestBeforeView.setText(ingredient.getBestBefore());
+        locationView.setText(ingredient.getLocation());
+        amountView.setText(String.valueOf(ingredient.getAmount()));
+        unitView.setText(ingredient.getUnit());
+        categoryView.setText(ingredient.getCategory());
     }
 }

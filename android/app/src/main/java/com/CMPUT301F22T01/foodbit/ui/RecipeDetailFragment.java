@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -68,7 +67,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // set UI
-        topBar = view.findViewById(R.id.recipe_detail_topbar);
+        topBar = view.findViewById(R.id.recipe_detail_toolbar);
         prepTimeView = view.findViewById(R.id.recipe_detail_prep_time);
         numServingsView = view.findViewById(R.id.recipe_detail_num_servings);
         categoryView = view.findViewById(R.id.recipe_detail_category_content);
@@ -78,7 +77,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         ingredientEmptyView = view.findViewById(R.id.recipe_detail_ingredients_empty);
         tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
         tempDeleteButton.setOnClickListener(deleteButtonClicked());
-        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
+        collapsingToolbarLayout = view.findViewById(R.id.recipe_detail_top_bar);
 
         // back button behaviour
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -119,12 +118,11 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     }
 
     private void editButtonClicked() {
-//        new RecipeEditFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
         RecipeEditFragment.newInstance(position).show(getChildFragmentManager(), RecipeEditFragment.TAG);
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        ingredientAdapter = new IngredientAdapter(recipe.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

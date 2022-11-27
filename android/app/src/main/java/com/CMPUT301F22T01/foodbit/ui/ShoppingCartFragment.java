@@ -17,9 +17,13 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -30,8 +34,9 @@ public class ShoppingCartFragment extends Fragment {
 
     private Context context;
 
-    // get ingredient storage from MainActivity
-    private IngredientStorage ingredientStorage;
+    // get ingredient storage and meal plan controller from MainActivity
+    private IngredientController ingredientController;
+    private MealPlanController mealPlan;
 
     ShoppingCartAdapter adapter;
 
@@ -78,22 +83,68 @@ public class ShoppingCartFragment extends Fragment {
                 return super.onOptionsItemSelected(item);
         }
 
-
     }
+
+    /**
+     * Compare the Ingredient of MealPlan with Ingredient Storage
+     * Store new amount into new Shopping Ingredient list for adapter use
+     * @param shoppingList
+     * @param mealIngredient
+     * @param storage
+     * @param descriptionList
+     */
+    public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
+                             ArrayList<Ingredient> storage, List descriptionList) {
+        for (Ingredient ingredient: mealIngredient
+             ) {
+            shoppingList.add(ingredient);
+        }
+        for (Ingredient ingredient: shoppingList
+        ) {
+            int index = lookUpIngredientID(ingredient.getId(), storage);
+            if (ingredient.getAmount() > storage.get(index).getAmount()){
+                float amountNeed = ingredient.getAmount() - storage.get(index).getAmount();
+                ingredient.update(storage.get(index));
+                ingredient.setAmount(amountNeed);
+            }
+            else{
+                shoppingList.remove(ingredient);
+            }
+        }
+    }
+
+    public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (int i = 0; i< ingredList.size(); i++) {
+            if (ID.equals(ingredList.get(i).getId())) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
-        ingredientStorage = MainActivity.ingredientStorage;
+        // Get shoppingCart after calculating between meal plan and storage
+        ingredientController = MainActivity.ingredientController;
+        mealPlan = MainActivity.mealPlan;
+        ArrayList<Ingredient> shoppingList = new ArrayList<>();
+        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+        ArrayList<Ingredient> storage = ingredientController.getIngredients();
+        List<String> descriptionList = ingredientController.getDescriptions();
+        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        adapter = new ShoppingCartAdapter(ingredientStorage.getIngredients());
+        int mode = 0;
+        adapter = new ShoppingCartAdapter(shoppingList, mode);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);

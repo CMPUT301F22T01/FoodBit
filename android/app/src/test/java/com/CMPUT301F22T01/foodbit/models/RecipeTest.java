@@ -12,13 +12,22 @@ import java.util.List;
 import java.util.Map;
 
 class RecipeTest {
-    private Ingredient mockIngredient() {
-        return new Ingredient("bread", 2F, "slice", "pantry");
+    private Ingredient mockIngredient1() {
+        Ingredient ingredient = new Ingredient("bread", 2f, "slice", "pantry");
+        ingredient.setId("id1");
+        return ingredient;
+    }
+
+    private Ingredient mockIngredient2() {
+        Ingredient ingredient = new Ingredient("apple", 3f, "item", "pantry");
+        ingredient.setId("id2");
+        return ingredient;
     }
 
     private ArrayList<Ingredient> mockIngredientList() {
         ArrayList<Ingredient> mockIngredientList = new ArrayList<>();
-        mockIngredientList.add(mockIngredient());
+        mockIngredientList.add(mockIngredient1());
+        mockIngredientList.add(mockIngredient2());
         return mockIngredientList;
     }
 
@@ -136,6 +145,8 @@ class RecipeTest {
         Recipe recipe = mockRecipe();
         Map<String, Float> list = recipe.doGetIngredientList();
         Float value = list.get("bread");
-        Assertions.assertEquals(2f, (float) value);
+        Assertions.assertEquals(2f, (float) list.get("id1"));
+        Assertions.assertEquals(3f, (float) list.get("id2"));
+
     }
 }

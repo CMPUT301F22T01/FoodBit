@@ -21,12 +21,17 @@ public class MealEditFragment extends MealAddFragment {
         servingsEditText.setText(String.valueOf(meal.getServings()));
         mealAddTextView.setText(meal.getName());
         mealDatePicker.setDate(meal.getDate());
+
+
         return view;
     }
 
     @Override
     public void mealEditOrAdd(MealPlan meal) {
         mealPlanController.edit(meal);
+        // Reload detail fragment
+        MealDetailFragment fragment = (MealDetailFragment) this.getParentFragment();
+        fragment.populateData();
     }
 
     public MealPlan getUpdatedMeal() {

@@ -19,9 +19,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListAdapter;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -43,7 +42,7 @@ public class MealAddFragment extends DialogFragment {
     public final static String TAG = "AddMeal";
     private Context context;
 
-    private IngredientStorage ingredientStorage;
+    private IngredientController ingredientController;
     protected MealPlanController mealPlanController;
     private RecipeController recipeController;
     private int positionSelected;
@@ -116,9 +115,9 @@ public class MealAddFragment extends DialogFragment {
 
         //Populate dropdown with ingredients and recipes
         recipeController = MainActivity.recipeController;
-        ingredientStorage = MainActivity.ingredientStorage;
+        ingredientController = MainActivity.ingredientController;
         mealPlanController = MainActivity.mealPlan;
-        ArrayList<Ingredient> ingredientList =  ingredientStorage.getIngredients();
+        ArrayList<Ingredient> ingredientList =  ingredientController.getIngredients();
         ArrayList<Recipe> recipeList = recipeController.getRecipes();
         String[] items;
         if (ingredientList.size() + recipeList.size() == 0 ) {
@@ -191,13 +190,16 @@ public class MealAddFragment extends DialogFragment {
                     int ingredientSize = ingredientList.size();
                     if (!notRealItem) { // Is a real item. Fixed DB Issues basically
                         if (positionSelected < ingredientSize) {
-                            meal.setRecipeID(ingredientList.get(positionSelected).getId());
+                            Ingredient ingredient = ingredientList.get(positionSelected);
+                            meal.setRecipeID(ingredient.getId());
                             meal.setIngredient(true);
+                            meal.setIngredients(ingredient);
                             Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
                         } else {
                             meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
                             meal.setIngredient(false);
-                            meal.setIngredients(recipeList.get(positionSelected-ingredientSize).getIngredients());
+                            meal.setIngredientsFromRecipe(recipeList.get(positionSelected-ingredientSize).getIngredients(),
+                                    recipeList.get(positionSelected-ingredientSize).getNumServings());
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
                     }

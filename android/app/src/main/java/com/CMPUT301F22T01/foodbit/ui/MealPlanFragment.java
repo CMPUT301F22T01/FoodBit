@@ -17,9 +17,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
@@ -73,10 +72,10 @@ public class MealPlanFragment extends Fragment {
             case R.id.meal_plan_add:
                 //launches newFragment if there are ingredients/recipes
                 RecipeController recipeController = MainActivity.recipeController;
-                IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
-//                ingredientStorage.loadAllFromDB();
+                IngredientController ingredientController = MainActivity.ingredientController;
+//                ingredientController.loadAllFromDB();
 
-                if (ingredientStorage.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
+                if (ingredientController.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
                     Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
                             "Add an ingredient or recipe first!", Snackbar.LENGTH_SHORT);
                     snackbar.setAnchorView(R.id.nav_bar).show();
@@ -126,9 +125,9 @@ public class MealPlanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // real time updates of the recipeController
-        CollectionReference recipeBookRef = MainActivity.mealPlanRef;
-        recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        // real time updates of the mealPlanController
+        CollectionReference mealPlanRef = MainActivity.mealPlanRef;
+        mealPlanRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -139,7 +138,9 @@ public class MealPlanFragment extends Fragment {
                 ArrayList<MealPlan> newMealPlans = new ArrayList<MealPlan>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    newMealPlans.add(doc.toObject(MealPlan.class));
+                    MealPlan newMeal = new MealPlan(doc);
+                    newMeal.setId(doc.getId());
+                    newMealPlans.add(newMeal);
                 }
                 mealPlan.update(newMealPlans);
                 Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());

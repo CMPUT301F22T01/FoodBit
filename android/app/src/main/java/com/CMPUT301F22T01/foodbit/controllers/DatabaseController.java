@@ -1,23 +1,32 @@
-package com.CMPUT301F22T01.foodbit.controllers;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
+
+
+
+
+
+package com.CMPUT301F22T01.foodbit.controllers;
 
 import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
+import com.CMPUT301F22T01.foodbit.ui.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
+import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
+import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.dbObject;
+import com.CMPUT301F22T01.foodbit.models.dbObjectDeep;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.installations.FirebaseInstallations;
 
@@ -35,6 +44,15 @@ public class DatabaseController {
     public DatabaseController(String mode){
         this.mode = mode;
         switch(mode) {
+            case "Units":
+                this.model = new IngredientUnit();
+                break;
+            case "Locations":
+                this.model = new IngredientLocation();
+                break;
+            case "Categories":
+                this.model = new IngredientCategory();
+                break;
             case "Meals":
                 this.model = new MealPlan();
                 break;
@@ -55,10 +73,16 @@ public class DatabaseController {
     private CollectionReference getCollectionReference() {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
+            case "Units":
+                return MainActivity.unitListRef;
+            case "Locations":
+                return MainActivity.locationListRef;
+            case "Categories":
+                return MainActivity.categoryListRef;
             case "Meals":
                 return MainActivity.mealPlanRef;
             case "Ingredients":
-                return MainActivity.ingredientStorageRef;
+                return MainActivity.ingredientListRef;
             case "Recipe Book":
                 return MainActivity.recipeBookRef;
             default:
@@ -99,6 +123,33 @@ public class DatabaseController {
                     for (int i =0; i< task.getResult().size(); i++) {
                         model = task.getResult().getDocuments().get(i).toObject(model.getClass());
                         items.add((T)model);
+                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
+                    }
+                }
+            }
+        });
+    }
+
+    /**
+     * Pass in an arrayList<T> to be updated with information from the database.
+     * <T> should implement the dbObject interface
+     * @param items, item of type dbObjectDeep allowing you to
+     * @param <T>
+     */
+    public <T extends dbObjectDeep> void getAllItemsDeep(ArrayList<T> items, T item) {
+        CollectionReference collectionReference = getCollectionReference();
+        Log.e("LOAD MODE: ", getCollectionReference().getPath());
+        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if (!task.isSuccessful()) {
+                    Log.e("firebase", "Error getting data", task.getException());
+                }
+                else {
+                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
+                    for (int i =0; i< task.getResult().size(); i++) {
+                        T s = (T) item.createFromDoc((QueryDocumentSnapshot) task.getResult().getDocuments().get(i));
+                        items.add(s);
                         Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
                     }
                 }
@@ -169,3 +220,4 @@ public class DatabaseController {
     }
 
 }
+
