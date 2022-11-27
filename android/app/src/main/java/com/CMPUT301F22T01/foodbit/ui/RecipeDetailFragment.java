@@ -20,7 +20,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -119,12 +118,11 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     }
 
     private void editButtonClicked() {
-//        new RecipeEditFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
         RecipeEditFragment.newInstance(position).show(getChildFragmentManager(), RecipeEditFragment.TAG);
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        ingredientAdapter = new IngredientAdapter(recipe.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

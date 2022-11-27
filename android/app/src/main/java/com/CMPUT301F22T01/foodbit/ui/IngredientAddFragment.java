@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
@@ -341,7 +340,7 @@ public class IngredientAddFragment extends DialogFragment {
                     }
                     if (requiredFieldEntered) {
                         Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
-                        MainActivity.ingredientStorage.add(ingredient);
+                        MainActivity.ingredientController.add(ingredient);
                         dismiss();
                     }
                 }

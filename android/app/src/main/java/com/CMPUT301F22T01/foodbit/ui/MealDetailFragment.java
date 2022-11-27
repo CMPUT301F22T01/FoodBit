@@ -18,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -127,7 +126,7 @@ public class MealDetailFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients(), IngredientAdapter.MEAL_DETAIL);
+        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
@@ -148,7 +147,7 @@ public class MealDetailFragment extends Fragment {
     public boolean checkIngredients(MealPlan meal) {
         ArrayList<Ingredient> mealIngredients = meal.getIngredients();
         for (int i = 0; i <mealIngredients.size(); i++) {//check all ingredients in this meal
-            Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
+            Ingredient temp = MainActivity.ingredientController.getIngredientById(mealIngredients.get(i).getId());
             if (temp!=null) {//Ingredient exists
                 if (temp.getAmount() < mealIngredients.get(i).getAmount()) {//Not enough.
                     return false;
@@ -168,9 +167,9 @@ public class MealDetailFragment extends Fragment {
         if(checkIngredients(meal)){ //we have enough so consume the ingredients!
             ArrayList<Ingredient> mealIngredients = meal.getIngredients();
             for (int i = 0; i <mealIngredients.size(); i++) { //reduce the amount within each ingredient
-                Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
+                Ingredient temp = MainActivity.ingredientController.getIngredientById(mealIngredients.get(i).getId());
                 temp.setAmount(temp.getAmount() - mealIngredients.get(i).getAmount());
-                MainActivity.ingredientStorage.edit(temp);
+                MainActivity.ingredientController.edit(temp);
             }
             return true;
         }

@@ -1,8 +1,11 @@
-package com.CMPUT301F22T01.foodbit;
+package com.CMPUT301F22T01.foodbit.ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,19 +15,20 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
-//import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
+//import com.CMPUT301F22T01.foodbit.ui.IngredientListFragment;
 //import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 //import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 //import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * The main activity of the app.
@@ -33,21 +37,20 @@ public class MainActivity extends AppCompatActivity {
 
 
     public final static String TAG = "MainActivity";
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
     static String FID = LoadingPageActivity.FID;
 
     // access a Cloud Firestore instance and retrieve data
     public static CollectionReference recipeBookRef;
     public static RecipeController recipeController;
-    public static CollectionReference ingredientStorageRef;
-    public static IngredientStorage ingredientStorage;
+    public static CollectionReference ingredientListRef;
+    public static IngredientController ingredientController;
     public static CollectionReference mealPlanRef;
     public static MealPlanController mealPlan;
-    public static CollectionReference categoryStorageRef;
+    public static CollectionReference categoryListRef;
     public static IngredientCategoryController category;
-    public static CollectionReference locationStorageRef;
+    public static CollectionReference locationListRef;
     public static IngredientLocationController location;
-    public static CollectionReference unitStorageRef;
+    public static CollectionReference unitListRef;
     public static IngredientUnitController unit;
 
     public static MutableLiveData<String> listen = new MutableLiveData<>(); //Listener for FID from firebase
@@ -60,15 +63,18 @@ public class MainActivity extends AppCompatActivity {
 
         //declaring and initializing the action bar
         ActionBar actionBar;
+        setSupportActionBar(findViewById(R.id.action_bar));
         actionBar = getSupportActionBar();
-
+        assert actionBar != null;
+        actionBar.setElevation(10);
         //changing the color to match
-        ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#ff9d3f"));
-        actionBar.setBackgroundDrawable(colorDrawable);
-
-
-
+//        ColorDrawable colorDrawable
+//                = new ColorDrawable(Color.parseColor("#ffffff"));
+//        assert actionBar != null;
+//        actionBar.setBackgroundDrawable(colorDrawable);
+//        Spannable text = new SpannableString(actionBar.getTitle());
+//        text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//        actionBar.setTitle(text);
         setUpNavBar();
     }
 

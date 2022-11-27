@@ -22,7 +22,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
@@ -87,7 +86,7 @@ public class IngredientEditFragment extends DialogFragment {
      */
     public IngredientEditFragment(int position) {
         this.position = position;
-        this.ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+        this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
     }
 
     @Override
@@ -369,7 +368,7 @@ public class IngredientEditFragment extends DialogFragment {
                         ingredient.setAmount(Float.parseFloat(amount));
                         ingredient.setUnit(unit);
                         ingredient.setCategory(category);
-                        MainActivity.ingredientStorage.edit(ingredient);
+                        MainActivity.ingredientController.edit(ingredient);
                         ingredientEditedListener.onEdited();
                         dismiss();
                     }
