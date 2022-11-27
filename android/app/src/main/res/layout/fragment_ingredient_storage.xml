@@ -9,9 +9,9 @@
 
     <TextView
         android:id="@+id/ingredient_description"
-        android:layout_width="211dp"
-        android:layout_height="36dp"
-        android:layout_marginStart="16dp"
+        android:layout_width="146dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="Description"
         android:textSize="20sp"
@@ -23,10 +23,10 @@
     </TextView>
 
     <TextView
-        android:id="@+id/ingredient_best_before"
-        android:layout_width="107dp"
-        android:layout_height="38dp"
-        android:layout_marginStart="16dp"
+        android:id="@+id/ingredient_amount"
+        android:layout_width="80dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:text="Amount"
@@ -39,18 +39,38 @@
     </TextView>
 
     <TextView
-        android:id="@+id/ingredient_amount"
-        android:layout_width="44dp"
+        android:id="@+id/ingredient_unit"
+        android:layout_width="58dp"
         android:layout_height="39dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="Unit"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/ingredient_best_before"
+        app:layout_constraintEnd_toStartOf="@+id/missing_details"
+        app:layout_constraintStart_toEndOf="@+id/ingredient_amount"
         app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="HardcodedText">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/missing_details"
+        android:layout_width="79dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Missing Details"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerView_ingredient_storage"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ingredient_unit"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
         tools:ignore="HardcodedText">
 
     </TextView>
