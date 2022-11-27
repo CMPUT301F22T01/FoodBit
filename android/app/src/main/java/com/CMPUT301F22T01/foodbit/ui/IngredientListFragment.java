@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -41,9 +42,11 @@ public class IngredientListFragment extends Fragment {
     private Context context;
 
     // getting ingredientController from main activity
-    private IngredientController ingredientController;
+    private IngredientController ingredientController = MainActivity.ingredientController;
 
     IngredientAdapter adapter;
+
+    TextView missingDetailWarning;
 
     public IngredientListFragment() {
         // Required empty public constructor
@@ -110,11 +113,12 @@ public class IngredientListFragment extends Fragment {
 
         // displays the ingredient list items and the add button for adding new ingredients
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        missingDetailWarning = view.findViewById(R.id.ingredient_list_missing_details_warning);
+        setMissingDetailWarningVisibility();
 
         // Changed from addButton to adding by clicking the add icon on the Top Action Bar
         //Button addButton = view.findViewById(R.id.ingredient_list_add_button);
 
-        ingredientController = MainActivity.ingredientController;
 //        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_LIST);
         adapter = new IngredientListIngredientAdapter(ingredientController.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -125,6 +129,21 @@ public class IngredientListFragment extends Fragment {
 
         getActivity().setTitle("Ingredients");
         return view;
+    }
+
+    private void setMissingDetailWarningVisibility() {
+        boolean hasIngredientMissingDetail = false;
+        for (Ingredient ingredient :
+                ingredientController.getIngredients()) {
+            if (ingredient.isMissingDetails()) {
+                hasIngredientMissingDetail = true;
+            }
+        }
+        if (hasIngredientMissingDetail) {
+            missingDetailWarning.setVisibility(View.VISIBLE);
+        } else {
+            missingDetailWarning.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -159,6 +178,7 @@ public class IngredientListFragment extends Fragment {
                 ingredientController.setIngredients(newIngredients);
                 Log.d(TAG, "current ingredient list:" + ingredientController);
                 Log.d(TAG, "Current ingredients" + ingredientController.getIngredients());
+                setMissingDetailWarningVisibility();
                 adapter.notifyDataSetChanged();
             }
         });

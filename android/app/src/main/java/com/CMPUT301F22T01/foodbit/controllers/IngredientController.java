@@ -23,7 +23,7 @@ import java.util.Objects;
  */
 public class IngredientController implements Serializable {
     //private FirebaseFirestore db;
-    private DatabaseController db = new DatabaseController("Ingredients");
+    private final DatabaseController db = new DatabaseController("Ingredients");
     private final ArrayList<Ingredient> ingredients;
 
     /**

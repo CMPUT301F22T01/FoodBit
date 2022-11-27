@@ -27,13 +27,14 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="3dp"
         android:drawablePadding="3dp"
+        android:gravity="center"
         android:text="Prep Time"
         android:textSize="12sp"
         android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_twotone_timer_12"
+        app:drawableTint="@android:color/secondary_text_light"
         app:layout_constraintStart_toEndOf="@+id/item_recipe_image"
         app:layout_constraintTop_toBottomOf="@+id/item_recipe_title"
-        app:drawableTint="@android:color/secondary_text_light"
-        app:drawableStartCompat="@drawable/ic_twotone_timer_12"
         tools:ignore="HardcodedText" />
 
     <TextView
@@ -43,13 +44,14 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:drawablePadding="3dp"
+        android:gravity="center"
         android:text="× Servings"
         android:textSize="12sp"
         android:textStyle="bold"
+        app:drawableStartCompat="@drawable/ic_numbers_12"
+        app:drawableTint="@android:color/secondary_text_light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:drawableTint="@android:color/secondary_text_light"
-        app:drawableStartCompat="@drawable/ic_numbers_12"
         tools:ignore="HardcodedText" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

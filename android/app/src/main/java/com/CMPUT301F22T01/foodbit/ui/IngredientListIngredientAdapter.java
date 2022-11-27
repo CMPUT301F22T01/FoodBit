@@ -38,7 +38,7 @@ public class IngredientListIngredientAdapter extends IngredientAdapter{
         descriptionView.setTextSize(20);
         amountView.setTextSize(18);
         unitView.setTextSize(18);
-        if (((description == null) || (bestBefore == null) || (location == null) || (unit == null))) {
+        if (items.get(position).isMissingDetails()) {
             missingDetailsView.setVisibility(View.VISIBLE);
         }
         holder.itemView.setOnClickListener(onItemClick(holder));
