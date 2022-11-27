@@ -137,9 +137,8 @@ public class IngredientStorageFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
         Collections.sort(ingredientStorage.getIngredients(), Ingredient.nameAscending);
 
-        int mode = 0;
         ingredientStorage = MainActivity.ingredientStorage;
-        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
+        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), IngredientAdapter.INGREDIENT_STORAGE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);

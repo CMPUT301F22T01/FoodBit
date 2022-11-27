@@ -67,7 +67,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // set UI
-        topBar = view.findViewById(R.id.recipe_detail_topbar);
+        topBar = view.findViewById(R.id.recipe_detail_toolbar);
         prepTimeView = view.findViewById(R.id.recipe_detail_prep_time);
         numServingsView = view.findViewById(R.id.recipe_detail_num_servings);
         categoryView = view.findViewById(R.id.recipe_detail_category_content);
@@ -77,7 +77,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         ingredientEmptyView = view.findViewById(R.id.recipe_detail_ingredients_empty);
         tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
         tempDeleteButton.setOnClickListener(deleteButtonClicked());
-        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
+        collapsingToolbarLayout = view.findViewById(R.id.recipe_detail_top_bar);
 
         // back button behaviour
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());

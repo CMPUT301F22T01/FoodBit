@@ -22,6 +22,7 @@ import java.util.ArrayList;
  * recipe detail page, or meal detail page.
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
+    final String TAG = "IngredientAdapter";
     public final static int INGREDIENT_STORAGE = 0;
     public final static int RECIPE_ADD = 1;
     public final static int RECIPE_DETAIL = 2;
@@ -66,6 +67,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         private final TextView ingredientDescription;
         private final TextView ingredientAmount;
         private final TextView ingredientUnit;
+        private final TextView missingDetails;
 
         /**
          * Choosing which view to use
@@ -89,6 +91,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             ingredientDescription = view.findViewById(R.id.item_ingredient_description);
             ingredientAmount = view.findViewById(R.id.item_ingredient_amount);
             ingredientUnit = view.findViewById(R.id.item_ingredient_unit);
+            missingDetails = view.findViewById(R.id.item_ingredient_missing_details);
         }
 
         // view holder's get view methods
@@ -101,6 +104,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public TextView getIngredientUnitView() {
             return ingredientUnit;
         }
+        public TextView getMissingDetailsView() {return missingDetails;}
     }
 
     @NonNull
@@ -114,16 +118,25 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
         // get value of each fields
-        Log.d("IngredientAdapter", String.valueOf(items));
-        Log.d("IngredientAdapter", items.getClass().getName());
+        Log.d(TAG, String.valueOf(items));
+        Log.d(TAG, items.getClass().getName());
         String description = items.get(position).getDescription();
+        String bestBefore = items.get(position).getBestBefore();
+        String location = items.get(position).getLocation();
         float amount = items.get(position).getAmount();
         String unit = items.get(position).getUnit();
+        String category = items.get(position).getUnit();
 
         // get UI
         TextView descriptionView = holder.getIngredientDescriptionView();
         TextView amountView = holder.getIngredientAmountView();
         TextView unitView = holder.getIngredientUnitView();
+        TextView missingDetailsView = holder.getMissingDetailsView();
+
+        if (((description == null) || (bestBefore == null) || (location == null) || (unit == null))
+        && mode == INGREDIENT_STORAGE) {
+            missingDetailsView.setVisibility(View.VISIBLE);
+        }
 
         // set up UI
         descriptionView.setText(description);
