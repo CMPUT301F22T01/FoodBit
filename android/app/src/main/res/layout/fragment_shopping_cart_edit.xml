@@ -12,7 +12,7 @@
         tools:context=".ui.MealAddFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/meal_add_top_bar"
+            android:id="@+id/shopping_pick_top_bar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:minHeight="?attr/actionBarSize"
@@ -22,41 +22,76 @@
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:menu="@menu/mealplan_top_app_bar"
+            app:menu="@menu/shopping_edit_top_bar"
             app:navigationIcon="@drawable/ic_close_24"
             app:title="Picked an Ingredient"
             tools:ignore="RtlSymmetry"
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
-        <Spinner
-            android:id="@+id/meal_spinner"
+        <TextView
+            android:id="@+id/shopping_picked_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:contentDescription="meal spinner"
-            android:minHeight="48dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_select_textview" />
-
-        <TextView
-            android:id="@+id/meal_select_textview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="76dp"
-            android:text="Select a Meal:"
-            android:textSize="18sp"
+            android:text="Description"
+            android:textSize="18dp"
             android:textStyle="bold"
             android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/shopping_pick_top_bar" />
+
+        <TextView
+            android:id="@+id/shopping_picked_need_amount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Amount Needed"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_description" />
+
+        <TextView
+            android:id="@+id/shopping_picked_unit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Unit"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_need_amount" />
+
+        <TextView
+            android:id="@+id/shopping_picked_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Category"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_unit" />
+
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/meal_add_layout_serving_size"
+            android:id="@+id/shopping_picked_amount_layout"
             style="@style/Theme.FoodBit.TextInputLayout.OutlinedBox"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
@@ -66,16 +101,16 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_spinner"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_category"
             app:startIconDrawable="@drawable/ic_numbers_24"
             tools:layout_conversion_absoluteHeight="90dp"
             tools:layout_conversion_absoluteWidth="379dp">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/meal_add_serving_size"
+                android:id="@+id/shopping_picked_amount"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Picked Amount"
+                android:hint="Input Picked Amount"
                 android:inputType="number"
                 android:maxLines="1"
                 tools:ignore="HardcodedText"
@@ -86,28 +121,6 @@
 
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <EditText
-            android:id="@+id/meal_add_date"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_add_layout_serving_size"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="24dp"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:maxLines="1"
-            tools:layout_conversion_absoluteHeight="48dp"
-            tools:layout_conversion_absoluteWidth="379dp"
-            tools:layout_editor_absoluteX="16dp"
-            tools:layout_editor_absoluteY="412dp">
-
-        </EditText>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

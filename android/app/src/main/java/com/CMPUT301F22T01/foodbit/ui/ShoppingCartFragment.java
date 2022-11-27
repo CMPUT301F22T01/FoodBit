@@ -92,10 +92,9 @@ public class ShoppingCartFragment extends Fragment {
      * @param shoppingList
      * @param mealIngredient
      * @param storage
-     * @param descriptionList
      */
     public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
-                             ArrayList<Ingredient> storage, List descriptionList) {
+                             ArrayList<Ingredient> storage) {
         for (Ingredient ingredient: mealIngredient
              ) {
             shoppingList.add(ingredient);
@@ -135,8 +134,7 @@ public class ShoppingCartFragment extends Fragment {
         mealPlan = MainActivity.mealPlan;
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        List<String> descriptionList = ingredientController.getDescriptions();
-        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+        shoppingCart(shoppingList, mealIngredient, storage);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
