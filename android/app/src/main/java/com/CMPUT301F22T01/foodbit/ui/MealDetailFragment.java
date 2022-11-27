@@ -148,7 +148,7 @@ public class MealDetailFragment extends Fragment {
     public boolean checkIngredients(MealPlan meal) {
         ArrayList<Ingredient> mealIngredients = meal.getIngredients();
         for (int i = 0; i <mealIngredients.size(); i++) {//check all ingredients in this meal
-            Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
+            Ingredient temp = MainActivity.ingredientController.getIngredientById(mealIngredients.get(i).getId());
             if (temp!=null) {//Ingredient exists
                 if (temp.getAmount() < mealIngredients.get(i).getAmount()) {//Not enough.
                     return false;
@@ -168,9 +168,9 @@ public class MealDetailFragment extends Fragment {
         if(checkIngredients(meal)){ //we have enough so consume the ingredients!
             ArrayList<Ingredient> mealIngredients = meal.getIngredients();
             for (int i = 0; i <mealIngredients.size(); i++) { //reduce the amount within each ingredient
-                Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
+                Ingredient temp = MainActivity.ingredientController.getIngredientById(mealIngredients.get(i).getId());
                 temp.setAmount(temp.getAmount() - mealIngredients.get(i).getAmount());
-                MainActivity.ingredientStorage.edit(temp);
+                MainActivity.ingredientController.edit(temp);
             }
             return true;
         }

@@ -21,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -37,12 +37,12 @@ import java.util.Map;
  */
 public class IngredientStorageFragment extends Fragment {
 
-    public String TAG = "IngredientStorage";
+    public String TAG = "IngredientController";
 
     private Context context;
 
-    // getting ingredientStorage from main activity
-    private  IngredientStorage ingredientStorage;
+    // getting ingredientController from main activity
+    private IngredientController ingredientController;
 
     IngredientAdapter adapter;
 
@@ -114,8 +114,8 @@ public class IngredientStorageFragment extends Fragment {
         // Changed from addButton to adding by clicking the add icon on the Top Action Bar
         //Button addButton = view.findViewById(R.id.ingredient_storage_add_button);
 
-        ingredientStorage = MainActivity.ingredientStorage;
-        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), IngredientAdapter.INGREDIENT_STORAGE);
+        ingredientController = MainActivity.ingredientController;
+        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_STORAGE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -155,9 +155,9 @@ public class IngredientStorageFragment extends Fragment {
                     newIngredients.add(newIngredient);
                     Log.d(TAG, "ingredient id: " + newIngredient.getId());
                 }
-                ingredientStorage.setIngredients(newIngredients);
-                Log.d(TAG, "current ingredient storage:" + ingredientStorage);
-                Log.d(TAG, "Current ingredients" + ingredientStorage.getIngredients());
+                ingredientController.setIngredients(newIngredients);
+                Log.d(TAG, "current ingredient storage:" + ingredientController);
+                Log.d(TAG, "Current ingredients" + ingredientController.getIngredients());
                 adapter.notifyDataSetChanged();
             }
         });

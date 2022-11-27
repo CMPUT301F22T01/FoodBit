@@ -2,7 +2,6 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -20,10 +19,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +36,7 @@ public class ShoppingCartFragment extends Fragment {
     private Context context;
 
     // get ingredient storage and meal plan controller from MainActivity
-    private IngredientStorage ingredientStorage;
+    private IngredientController ingredientController;
     private MealPlanController mealPlan;
 
     ShoppingCartAdapter adapter;
@@ -132,12 +130,12 @@ public class ShoppingCartFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         // Get shoppingCart after calculating between meal plan and storage
-        ingredientStorage = MainActivity.ingredientStorage;
+        ingredientController = MainActivity.ingredientController;
         mealPlan = MainActivity.mealPlan;
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
-        ArrayList<Ingredient> storage = ingredientStorage.getIngredients();
-        List<String> descriptionList = ingredientStorage.getDescriptions();
+        ArrayList<Ingredient> storage = ingredientController.getIngredients();
+        List<String> descriptionList = ingredientController.getDescriptions();
         shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
 

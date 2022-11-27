@@ -14,7 +14,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
     public static CollectionReference recipeBookRef;
     public static RecipeController recipeController;
     public static CollectionReference ingredientStorageRef;
-    public static IngredientStorage ingredientStorage;
+    public static IngredientController ingredientController;
     public static CollectionReference mealPlanRef;
     public static MealPlanController mealPlan;
     public static CollectionReference categoryStorageRef;

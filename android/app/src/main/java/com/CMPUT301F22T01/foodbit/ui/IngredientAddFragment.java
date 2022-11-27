@@ -341,7 +341,7 @@ public class IngredientAddFragment extends DialogFragment {
                     }
                     if (requiredFieldEntered) {
                         Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
-                        MainActivity.ingredientStorage.add(ingredient);
+                        MainActivity.ingredientController.add(ingredient);
                         dismiss();
                     }
                 }

@@ -19,11 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
-import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -74,10 +73,10 @@ public class MealPlanFragment extends Fragment {
             case R.id.meal_plan_add:
                 //launches newFragment if there are ingredients/recipes
                 RecipeController recipeController = MainActivity.recipeController;
-                IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
-//                ingredientStorage.loadAllFromDB();
+                IngredientController ingredientController = MainActivity.ingredientController;
+//                ingredientController.loadAllFromDB();
 
-                if (ingredientStorage.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
+                if (ingredientController.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
                     Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
                             "Add an ingredient or recipe first!", Snackbar.LENGTH_SHORT);
                     snackbar.setAnchorView(R.id.nav_bar).show();

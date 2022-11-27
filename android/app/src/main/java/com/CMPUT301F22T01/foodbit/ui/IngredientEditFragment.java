@@ -87,7 +87,7 @@ public class IngredientEditFragment extends DialogFragment {
      */
     public IngredientEditFragment(int position) {
         this.position = position;
-        this.ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+        this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
     }
 
     @Override
@@ -369,7 +369,7 @@ public class IngredientEditFragment extends DialogFragment {
                         ingredient.setAmount(Float.parseFloat(amount));
                         ingredient.setUnit(unit);
                         ingredient.setCategory(category);
-                        MainActivity.ingredientStorage.edit(ingredient);
+                        MainActivity.ingredientController.edit(ingredient);
                         ingredientEditedListener.onEdited();
                         dismiss();
                     }

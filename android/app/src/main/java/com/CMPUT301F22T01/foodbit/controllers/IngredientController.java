@@ -21,7 +21,7 @@ import java.util.Objects;
 /**
  * Stores each ingredient created
  */
-public class IngredientStorage implements Serializable {
+public class IngredientController implements Serializable {
     //private FirebaseFirestore db;
     private DatabaseController db = new DatabaseController("Ingredients");
     private final ArrayList<Ingredient> ingredients;
@@ -29,7 +29,7 @@ public class IngredientStorage implements Serializable {
     /**
      * Creates a new list for ingredients
      */
-    public IngredientStorage() {
+    public IngredientController() {
         ingredients = new ArrayList<Ingredient>();
     }
 
@@ -37,7 +37,7 @@ public class IngredientStorage implements Serializable {
      * Creates new array list of ingredients
      * @param ingredients an array list of ingredients
      */
-    public IngredientStorage(List<Ingredient> ingredients) {
+    public IngredientController(List<Ingredient> ingredients) {
         this.ingredients = (ArrayList<Ingredient>) ingredients;
     }
 

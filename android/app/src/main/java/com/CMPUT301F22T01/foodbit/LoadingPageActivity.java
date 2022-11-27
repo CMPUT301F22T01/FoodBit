@@ -6,7 +6,7 @@ package com.CMPUT301F22T01.foodbit;
 
 import static com.CMPUT301F22T01.foodbit.MainActivity.category;
 import static com.CMPUT301F22T01.foodbit.MainActivity.db;
-import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientStorage;
+import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientController;
 import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
 import static com.CMPUT301F22T01.foodbit.MainActivity.location;
 import static com.CMPUT301F22T01.foodbit.MainActivity.unit;
@@ -19,8 +19,8 @@ import android.os.Bundle;
 
 import com.CMPUT301F22T01.foodbit.controllers.DatabaseController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
@@ -54,8 +54,8 @@ public class LoadingPageActivity extends AppCompatActivity {
 //                MainActivity.recipeController.load();
 
                 MainActivity.ingredientStorageRef = db.collection(FID).document(FID).collection("ingredient list");
-                MainActivity.ingredientStorage = new IngredientStorage();
-                ingredientStorage.loadAllFromDB();
+                MainActivity.ingredientController = new IngredientController();
+                ingredientController.loadAllFromDB();
 
                 MainActivity.categoryStorageRef = db.collection(FID).document(FID).collection("Category List");
                 MainActivity.category = new IngredientCategoryController();

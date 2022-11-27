@@ -90,7 +90,7 @@
 //    private void getIngredient() {
 //        assert getArguments() != null;
 //        int position = getArguments().getInt("position");
-//        ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+//        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
 //        Log.d(TAG, String.valueOf(ingredient));
 //    }
 //}
