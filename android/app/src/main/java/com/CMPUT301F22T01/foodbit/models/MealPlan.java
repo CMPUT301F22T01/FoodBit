@@ -111,6 +111,7 @@ public class MealPlan implements dbObject, dbObjectDeep {
         ArrayList<Ingredient> t = new ArrayList<Ingredient>();
         Ingredient copy = new Ingredient();
         copy.setId(ingredient.getId());
+        copy.setDescription(ingredient.getDescription());
         copy.setAmount((float)this.getServings());
         copy.setUnit(ingredient.getUnit());
         t.add(copy);
