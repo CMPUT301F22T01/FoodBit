@@ -5,10 +5,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
-import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
-import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;

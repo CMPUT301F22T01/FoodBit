@@ -14,8 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 /**
