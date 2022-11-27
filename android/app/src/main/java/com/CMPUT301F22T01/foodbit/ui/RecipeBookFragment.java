@@ -71,7 +71,7 @@ public class RecipeBookFragment extends Fragment {
         {   //Adding a Recipe
             case R.id.recipe_add:
 
-                Toast.makeText(getActivity(), "Adding a Recipe", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getActivity(), "Adding a Recipe", Toast.LENGTH_SHORT).show();
                 //launches RecipeAddFragment
                 new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
                 return true;
