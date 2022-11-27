@@ -6,10 +6,16 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +26,7 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
@@ -84,9 +91,9 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
 
 
-
-   // EditText newUnitEditText;
-   // Button completeNewUnit;
+    ExtendedFloatingActionButton newUnit;
+    EditText newUnitEditText;
+    Button completeNewUnit;
 
 
 
@@ -189,16 +196,23 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
 
 
-//        autoCompleteIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String item = parent.getItemAtPosition(position).toString();
-//
-//                categoryEditText.setText(ingredient.getCategory());
-//
-//
-//            }
-//        });
+        autoCompleteIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                ingredientStorage = MainActivity.ingredientStorage;
+                ArrayList<Ingredient> ingredientList = ingredientStorage.getIngredients();
+
+
+                for (Ingredient findIngredient: ingredientList) {
+
+                    if (findIngredient.getDescription().equals(item)){
+                    categoryEditText.setText(findIngredient.getCategory());
+
+                }}
+            }
+        });
 
 
 
@@ -208,51 +222,51 @@ public class RecipeAddIngredientFragment extends DialogFragment {
         unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.recipe_add_dropdown_layout, units);
         unitTextView.setAdapter(unitAdapter);
 
-//        newUnit = (ExtendedFloatingActionButton) view.findViewById(R.id.recipe_add_ingredient_new_unit);
-//        //Popup window for when user wants to add a new unit
-//        newUnit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                // inflate the layout of the popup window
-//                View popupView = getLayoutInflater().inflate(R.layout.ingredient_add_dropdown_popup, null);
-//
-//                newUnitEditText = popupView.findViewById(R.id.add_dropdown_edit_text);
-//                completeNewUnit = popupView.findViewById(R.id.add_complete);
-//
-//                // create the popup window
-//                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-//                boolean focusable = true; // lets taps outside the popup also dismiss it
-//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-//
-//                // show the popup window
-//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-//
-//                //add button pressed in popup window
-//                completeNewUnit.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        //getting information user typed and adding it to the unit options
-//                        String newUnit = newUnitEditText.getText().toString();
-//                        if (!units.contains(newUnit)){
-//                            unitAdapter.add(newUnit);
-//                            unitAdapter.notifyDataSetChanged();
-//                            popupWindow.dismiss();
-//                        }
-//                        popupWindow.dismiss();
-//                    }
-//                });
-//
-//                // dismiss the popup window when touched
-//                popupView.setOnTouchListener(new View.OnTouchListener() {
-//                    @Override
-//                    public boolean onTouch(View v, MotionEvent event) {
-//                        popupWindow.dismiss();
-//                        return true;
-//                    }
-//                });
-//            }
-//        });
+        newUnit = (ExtendedFloatingActionButton) view.findViewById(R.id.recipe_add_ingredient_new_unit);
+        //Popup window for when user wants to add a new unit
+        newUnit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // inflate the layout of the popup window
+                View popupView = getLayoutInflater().inflate(R.layout.ingredient_add_dropdown_popup, null);
+
+                newUnitEditText = popupView.findViewById(R.id.add_dropdown_edit_text);
+                completeNewUnit = popupView.findViewById(R.id.add_complete);
+
+                // create the popup window
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+
+                // show the popup window
+                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+
+                //add button pressed in popup window
+                completeNewUnit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        //getting information user typed and adding it to the unit options
+                        String newUnit = newUnitEditText.getText().toString();
+                        if (!units.contains(newUnit)){
+                            unitAdapter.add(newUnit);
+                            unitAdapter.notifyDataSetChanged();
+                            popupWindow.dismiss();
+                        }
+                        popupWindow.dismiss();
+                    }
+                });
+
+                // dismiss the popup window when touched
+                popupView.setOnTouchListener(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        popupWindow.dismiss();
+                        return true;
+                    }
+                });
+            }
+        });
 
         //int mode = 0;
         ingredientStorage = MainActivity.ingredientStorage;
