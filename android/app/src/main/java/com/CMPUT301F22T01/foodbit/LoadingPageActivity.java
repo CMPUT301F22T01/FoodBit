@@ -5,6 +5,7 @@ import static com.CMPUT301F22T01.foodbit.MainActivity.db;
 import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientStorage;
 import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
 import static com.CMPUT301F22T01.foodbit.MainActivity.location;
+import static com.CMPUT301F22T01.foodbit.MainActivity.unit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -16,6 +17,7 @@ import com.CMPUT301F22T01.foodbit.controllers.DatabaseController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 
@@ -57,6 +59,10 @@ public class LoadingPageActivity extends AppCompatActivity {
                 MainActivity.locationStorageRef = db.collection(FID).document(FID).collection("Location List");
                 MainActivity.location = new IngredientLocationController();
                 location.loadAllFromDB();
+
+                MainActivity.unitStorageRef = db.collection(FID).document(FID).collection("Unit List");
+                MainActivity.unit = new IngredientUnitController();
+                unit.loadAllFromDB();
 
                 Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
                 LoadingPageActivity.this.startActivity(myIntent);

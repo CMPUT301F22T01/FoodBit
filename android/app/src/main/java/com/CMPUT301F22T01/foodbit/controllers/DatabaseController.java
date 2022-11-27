@@ -9,6 +9,7 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
+import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.dbObject;
@@ -35,6 +36,9 @@ public class DatabaseController {
     public DatabaseController(String mode){
         this.mode = mode;
         switch(mode) {
+            case "Units":
+                this.model = new IngredientUnit();
+                break;
             case "Locations":
                 this.model = new IngredientLocation();
                 break;
@@ -61,6 +65,8 @@ public class DatabaseController {
     private CollectionReference getCollectionReference() {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
+            case "Units":
+                return MainActivity.unitStorageRef;
             case "Locations":
                 return MainActivity.locationStorageRef;
             case "Categories":
