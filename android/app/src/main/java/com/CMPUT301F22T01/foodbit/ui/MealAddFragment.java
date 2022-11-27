@@ -3,6 +3,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -16,7 +17,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.Spinner;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
@@ -51,12 +54,13 @@ public class MealAddFragment extends DialogFragment {
     protected MealPlan meal;
 
     MaterialToolbar topBar;
-    Spinner ingredientRecipeSpinner;
+//    Spinner ingredientRecipeSpinner;
     TextInputEditText servingsEditText;
     TextInputLayout servingsLayout;
     ArrayAdapter<String> adapter;
     EditText mealDateEditText;
     EditDatePicker mealDatePicker;
+    TextInputLayout mealAddLayout;
 
     public MealAddFragment() {
         // Required empty public constructor
@@ -111,6 +115,7 @@ public class MealAddFragment extends DialogFragment {
         topBar = view.findViewById(R.id.meal_add_top_bar);
         servingsEditText = view.findViewById(R.id.meal_add_serving_size);
         servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
+        mealAddLayout = view.findViewById(R.id.meal_add_layout_meal);
 
         //Populate dropdown with ingredients and recipes
         recipeController = MainActivity.recipeController;
@@ -137,24 +142,48 @@ public class MealAddFragment extends DialogFragment {
             }
         }
 
-        adapter = new ArrayAdapter<String>(context,
-                android.R.layout.simple_spinner_dropdown_item, items);
+        // get autocomplete text view
+        AutoCompleteTextView mealAddTextView = view.findViewById(R.id.meal_picker);
+        adapter = new ArrayAdapter<String>(context, R.layout.ingredient_dropdown_layout, items);
+        mealAddTextView.setAdapter(adapter);
 
-        // Get spinner
-        ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
-        ingredientRecipeSpinner.setAdapter(adapter);
-        ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
-                meal.setName((String) parent.getItemAtPosition(position));
-                positionSelected = position;
-            }
+//        adapter = new ArrayAdapter<String>(context,
+//                android.R.layout.simple_spinner_dropdown_item, items);
 
+        mealAddTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    String str = mealAddTextView.getText().toString();
+                    ListAdapter listAdapter = mealAddTextView.getAdapter();
+                    for(int i = 0; i < listAdapter.getCount(); i++) {
+                        String temp = listAdapter.getItem(i).toString();
+                        if(str.compareTo(temp) == 0) {
+                            return;
+                        } else {
+                            positionSelected = i+1;
+                        }
+                    }
+                    mealAddTextView.setText("");
+                }
             }
         });
+
+//        // Get spinner
+//        ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
+//        ingredientRecipeSpinner.setAdapter(adapter);
+//        ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
+//                meal.setName((String) parent.getItemAtPosition(position));
+//                positionSelected = position;
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
 
         //Date picker
         mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
@@ -169,10 +198,14 @@ public class MealAddFragment extends DialogFragment {
             @Override
             public boolean onMenuItemClick(MenuItem item) { //Check button is clicked!
                 String servings = Objects.requireNonNull(servingsEditText.getText().toString());
+                String mealName = Objects.requireNonNull(mealAddTextView.getText()).toString();
                 Date mealDate = mealDatePicker.getDate();
                 if (servings.equals("")) {
                     servingsLayout.setError("Required");
+                } if (mealName.equals("")) {
+                    mealAddLayout.setError("Required");
                 } else {
+                    meal.setName(mealName);
                     meal.setDate(mealDate);
                     meal.setServings(Integer.valueOf(servings));
                     int ingredientSize = ingredientList.size();
@@ -184,7 +217,6 @@ public class MealAddFragment extends DialogFragment {
                         } else {
                             meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
                             meal.setIngredient(false);
-//                            meal.setIngredientList(recipeList.get(positionSelected-ingredientSize).doGetIngredientList());
                             meal.setIngredients(recipeList.get(positionSelected-ingredientSize).getIngredients());
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }

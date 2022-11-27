@@ -22,7 +22,7 @@ public class MealEditFragment extends MealAddFragment {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         servingsEditText.setText(String.valueOf(meal.getServings()));
         int selectionPosition = adapter.getPosition(meal.getName());
-        ingredientRecipeSpinner.setSelection(selectionPosition);
+//        ingredientRecipeSpinner.setSelection(selectionPosition);
         mealDatePicker.setDate(meal.getDate());
         return view;
     }
