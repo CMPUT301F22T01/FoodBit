@@ -6,12 +6,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_anchorGravity="center"
         tools:context=".ui.MealAddFragment">
 
         <com.google.android.material.appbar.MaterialToolbar
@@ -32,72 +29,31 @@
             tools:layout_conversion_absoluteHeight="56dp"
             tools:layout_conversion_absoluteWidth="411dp" />
 
-        <!--            <com.google.android.material.textfield.TextInputEditText-->
-        <!--                android:id="@+id/meal_add_serving_size"-->
-        <!--                android:layout_width="match_parent"-->
-        <!--                android:layout_height="wrap_content"-->
-        <!--                android:layout_marginStart="24dp"-->
-        <!--                android:layout_marginTop="32dp"-->
-        <!--                android:layout_marginEnd="24dp"-->
-        <!--                android:hint="Serving Size"-->
-        <!--                android:inputType="number"-->
-        <!--                android:maxLines="1"-->
-        <!--                app:layout_constraintEnd_toEndOf="parent"-->
-        <!--                app:layout_constraintStart_toStartOf="parent"-->
-        <!--                app:layout_constraintTop_toBottomOf="@+id/meal_spinner"-->
-        <!--                tools:ignore="HardcodedText" />-->
-        <!--        </com.google.android.material.textfield.TextInputEditText>-->
-
-        <!--        <Spinner-->
-        <!--            android:id="@+id/meal_spinner"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginStart="24dp"-->
-        <!--            android:layout_marginTop="32dp"-->
-        <!--            android:layout_marginEnd="24dp"-->
-        <!--            android:contentDescription="meal spinner"-->
-        <!--            android:minHeight="48dp"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintHorizontal_bias="0.0"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toBottomOf="@+id/meal_add_layout_meal" />-->
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/meal_add_layout_meal"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
+        <Spinner
+            android:id="@+id/meal_spinner"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="24dp"
             android:layout_marginEnd="24dp"
-            android:orientation="horizontal"
-            app:errorEnabled="true"
+            android:contentDescription="meal spinner"
+            android:minHeight="48dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_add_top_bar"
-            app:startIconDrawable="@drawable/ic_description_24"
-            app:startIconTint="@color/primaryColor"
-            tools:layout_conversion_absoluteHeight="90dp"
-            tools:layout_conversion_absoluteWidth="379dp">
+            app:layout_constraintTop_toBottomOf="@+id/meal_select_textview" />
 
-            <AutoCompleteTextView
-                android:id="@+id/meal_picker"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginTop="16dp"
-                android:hint="Meal"
-                android:imeOptions="actionDone"
-                android:inputType="textAutoComplete"
-                android:maxLines="1"
-                app:layout_constraintStart_toStartOf="parent"
-                tools:ignore="HardcodedText"
-                tools:layout_conversion_absoluteHeight="48dp"
-                tools:layout_conversion_absoluteWidth="379dp"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="412dp" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/meal_select_textview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="76dp"
+            android:text="Select a Meal:"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/meal_add_layout_serving_size"
@@ -109,9 +65,8 @@
             android:layout_marginEnd="24dp"
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_add_layout_meal"
+            app:layout_constraintTop_toBottomOf="@+id/meal_spinner"
             app:startIconDrawable="@drawable/ic_numbers_24"
             tools:layout_conversion_absoluteHeight="90dp"
             tools:layout_conversion_absoluteWidth="379dp">
@@ -134,8 +89,9 @@
 
         <EditText
             android:id="@+id/meal_add_date"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/meal_add_layout_serving_size"
             android:layout_marginStart="24dp"
             android:layout_marginTop="32dp"
             android:layout_marginEnd="24dp"
@@ -143,17 +99,15 @@
             android:cursorVisible="false"
             android:focusable="false"
             android:focusableInTouchMode="false"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:maxLines="1"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/meal_add_layout_serving_size"
             tools:layout_conversion_absoluteHeight="48dp"
             tools:layout_conversion_absoluteWidth="379dp"
             tools:layout_editor_absoluteX="16dp"
             tools:layout_editor_absoluteY="412dp">
 
         </EditText>
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
