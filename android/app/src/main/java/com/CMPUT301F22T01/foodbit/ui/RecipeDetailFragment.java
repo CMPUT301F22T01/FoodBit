@@ -123,7 +123,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        ingredientAdapter = new IngredientAdapter(recipe.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

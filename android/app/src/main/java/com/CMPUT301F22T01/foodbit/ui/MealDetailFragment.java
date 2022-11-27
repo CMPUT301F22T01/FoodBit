@@ -126,7 +126,7 @@ public class MealDetailFragment extends Fragment {
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients(), IngredientAdapter.MEAL_DETAIL);
+        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

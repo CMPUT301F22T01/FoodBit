@@ -233,7 +233,8 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(ingredients, IngredientAdapter.RECIPE_ADD);
+//        ingredientAdapter = new IngredientAdapter(ingredients, IngredientAdapter.RECIPE_INPUT);
+        ingredientAdapter = new RecipeInputIngredientAdapter(ingredients);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

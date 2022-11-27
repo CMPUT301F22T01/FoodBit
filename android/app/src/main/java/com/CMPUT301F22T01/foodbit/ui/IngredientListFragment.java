@@ -114,7 +114,8 @@ public class IngredientListFragment extends Fragment {
         //Button addButton = view.findViewById(R.id.ingredient_list_add_button);
 
         ingredientController = MainActivity.ingredientController;
-        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_LIST);
+//        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_LIST);
+        adapter = new IngredientListIngredientAdapter(ingredientController.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
