@@ -6,14 +6,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 public class MealEditFragment extends MealAddFragment {
 
     public MealEditFragment(MealPlan meal) {
         super(meal);
-
     }
 
     @Override
@@ -21,8 +19,7 @@ public class MealEditFragment extends MealAddFragment {
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         servingsEditText.setText(String.valueOf(meal.getServings()));
-        int selectionPosition = adapter.getPosition(meal.getName());
-//        ingredientRecipeSpinner.setSelection(selectionPosition);
+        mealAddTextView.setText(meal.getName());
         mealDatePicker.setDate(meal.getDate());
         return view;
     }

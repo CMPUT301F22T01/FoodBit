@@ -3,7 +3,6 @@ package com.CMPUT301F22T01.foodbit.ui;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.os.Build;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,12 +14,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
 import android.widget.ListAdapter;
-import android.widget.Spinner;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
@@ -54,13 +51,13 @@ public class MealAddFragment extends DialogFragment {
     protected MealPlan meal;
 
     MaterialToolbar topBar;
-//    Spinner ingredientRecipeSpinner;
     TextInputEditText servingsEditText;
     TextInputLayout servingsLayout;
     ArrayAdapter<String> adapter;
     EditText mealDateEditText;
     EditDatePicker mealDatePicker;
     TextInputLayout mealAddLayout;
+    AutoCompleteTextView mealAddTextView;
 
     public MealAddFragment() {
         // Required empty public constructor
@@ -125,7 +122,6 @@ public class MealAddFragment extends DialogFragment {
         ArrayList<Recipe> recipeList = recipeController.getRecipes();
         String[] items;
         if (ingredientList.size() + recipeList.size() == 0 ) {
-            // TODO: Ingredient and recipes arent being loaded from DB. Fix constructor for IngredientStorage and recipeController
             Log.e("MealAdd","Ingredient and recipe size is 0");
             items = new String [] {"test1", "test2", "test3", "test4", "test5"};
             notRealItem = true;
@@ -143,12 +139,9 @@ public class MealAddFragment extends DialogFragment {
         }
 
         // get autocomplete text view
-        AutoCompleteTextView mealAddTextView = view.findViewById(R.id.meal_picker);
+        mealAddTextView = view.findViewById(R.id.meal_picker);
         adapter = new ArrayAdapter<String>(context, R.layout.ingredient_dropdown_layout, items);
         mealAddTextView.setAdapter(adapter);
-
-//        adapter = new ArrayAdapter<String>(context,
-//                android.R.layout.simple_spinner_dropdown_item, items);
 
         mealAddTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
@@ -169,22 +162,6 @@ public class MealAddFragment extends DialogFragment {
             }
         });
 
-//        // Get spinner
-//        ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
-//        ingredientRecipeSpinner.setAdapter(adapter);
-//        ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
-//                meal.setName((String) parent.getItemAtPosition(position));
-//                positionSelected = position;
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
-
         //Date picker
         mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
         mealDatePicker = new EditDatePicker(context,mealDateEditText);
@@ -200,11 +177,14 @@ public class MealAddFragment extends DialogFragment {
                 String servings = Objects.requireNonNull(servingsEditText.getText().toString());
                 String mealName = Objects.requireNonNull(mealAddTextView.getText()).toString();
                 Date mealDate = mealDatePicker.getDate();
+                boolean requiredFieldEntered = true;
                 if (servings.equals("")) {
                     servingsLayout.setError("Required");
+                    requiredFieldEntered = false;
                 } if (mealName.equals("")) {
                     mealAddLayout.setError("Required");
-                } else {
+                    requiredFieldEntered = false;
+                } if (requiredFieldEntered) {
                     meal.setName(mealName);
                     meal.setDate(mealDate);
                     meal.setServings(Integer.valueOf(servings));
