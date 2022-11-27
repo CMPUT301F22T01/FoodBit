@@ -91,8 +91,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ingredient_add_text_layout_location"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="248dp"
-                android:layout_height="75dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -107,12 +107,12 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/location_picker"
-                    android:layout_width="235dp"
-                    android:layout_height="55dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="16dp"
-                    android:layout_marginEnd="26dp"
+                    android:layout_marginEnd="0dp"
                     android:layout_toStartOf="@+id/add_location_button"
                     android:hint="Location"
                     android:imeOptions="actionDone"
@@ -152,8 +152,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ingredient_add_text_layout_unit"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="248dp"
-                android:layout_height="75dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
@@ -167,8 +167,8 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/unit_picker"
-                    android:layout_width="235dp"
-                    android:layout_height="55dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="0dp"
@@ -186,8 +186,8 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/ingredient_add_text_layout_category"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-                android:layout_width="248dp"
-                android:layout_height="75dp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
@@ -201,8 +201,8 @@
 
                 <AutoCompleteTextView
                     android:id="@+id/category_picker"
-                    android:layout_width="235dp"
-                    android:layout_height="55dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="0dp"
@@ -216,45 +216,6 @@
                     tools:ignore="HardcodedText" />
 
             </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/add_location_button"
-                android:layout_width="112dp"
-                android:layout_height="68dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="@color/primaryColor"
-                android:text="Add as a New Location"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.304"
-                app:layout_constraintStart_toEndOf="@+id/ingredient_add_text_layout_location"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_best_before" />
-
-            <Button
-                android:id="@+id/add_unit_button"
-                android:layout_width="112dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="12dp"
-                android:backgroundTint="@color/primaryColor"
-                android:text="Add as a New Unit"
-                android:textSize="11sp"
-                app:layout_constraintStart_toEndOf="@+id/ingredient_add_text_layout_unit"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_amount" />
-
-            <Button
-                android:id="@+id/add_category_button"
-                android:layout_width="112dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="22dp"
-                android:backgroundTint="@color/primaryColor"
-                android:textSize="11sp"
-                android:text="Add as a New Category"
-                app:layout_constraintStart_toEndOf="@+id/ingredient_add_text_layout_category"
-                app:layout_constraintTop_toBottomOf="@+id/add_unit_button" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
