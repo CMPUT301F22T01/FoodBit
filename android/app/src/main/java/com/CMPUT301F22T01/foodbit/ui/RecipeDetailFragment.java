@@ -118,7 +118,6 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     }
 
     private void editButtonClicked() {
-//        new RecipeEditFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
         RecipeEditFragment.newInstance(position).show(getChildFragmentManager(), RecipeEditFragment.TAG);
     }
 

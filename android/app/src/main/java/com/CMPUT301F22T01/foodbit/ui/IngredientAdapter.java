@@ -1,9 +1,11 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -55,7 +57,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         private final TextView ingredientDescription;
         private final TextView ingredientAmount;
         private final TextView ingredientUnit;
-        private final TextView missingDetails;
+        private final ImageView missingDetails;
 
         /**
          * Choosing which view to use
@@ -80,7 +82,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public TextView getIngredientUnitView() {
             return ingredientUnit;
         }
-        public TextView getMissingDetailsView() {return missingDetails;}
+        public ImageView getMissingDetailsView() {return missingDetails;}
     }
 
     @NonNull
@@ -107,7 +109,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         TextView descriptionView = holder.getIngredientDescriptionView();
         TextView amountView = holder.getIngredientAmountView();
         TextView unitView = holder.getIngredientUnitView();
-        TextView missingDetailsView = holder.getMissingDetailsView();
 
         // set up UI
         descriptionView.setText(description);

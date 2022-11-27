@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,8 +32,12 @@ public class IngredientListIngredientAdapter extends IngredientAdapter{
         String unit = items.get(position).getUnit();
 
         TextView descriptionView = holder.getIngredientDescriptionView();
-        TextView missingDetailsView = holder.getMissingDetailsView();
+        TextView amountView = holder.getIngredientAmountView();
+        TextView unitView = holder.getIngredientUnitView();
+        ImageView missingDetailsView = holder.getMissingDetailsView();
         descriptionView.setTextSize(20);
+        amountView.setTextSize(18);
+        unitView.setTextSize(18);
         if (((description == null) || (bestBefore == null) || (location == null) || (unit == null))) {
             missingDetailsView.setVisibility(View.VISIBLE);
         }
