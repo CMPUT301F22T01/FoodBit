@@ -1,4 +1,4 @@
-package com.CMPUT301F22T01.foodbit;
+package com.CMPUT301F22T01.foodbit.ui;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -12,13 +12,14 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
-//import com.CMPUT301F22T01.foodbit.ui.IngredientStorageFragment;
+//import com.CMPUT301F22T01.foodbit.ui.IngredientListFragment;
 //import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 //import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 //import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
@@ -37,15 +38,15 @@ public class MainActivity extends AppCompatActivity {
     // access a Cloud Firestore instance and retrieve data
     public static CollectionReference recipeBookRef;
     public static RecipeController recipeController;
-    public static CollectionReference ingredientStorageRef;
+    public static CollectionReference ingredientListRef;
     public static IngredientController ingredientController;
     public static CollectionReference mealPlanRef;
     public static MealPlanController mealPlan;
-    public static CollectionReference categoryStorageRef;
+    public static CollectionReference categoryListRef;
     public static IngredientCategoryController category;
-    public static CollectionReference locationStorageRef;
+    public static CollectionReference locationListRef;
     public static IngredientLocationController location;
-    public static CollectionReference unitStorageRef;
+    public static CollectionReference unitListRef;
     public static IngredientUnitController unit;
 
     public static MutableLiveData<String> listen = new MutableLiveData<>(); //Listener for FID from firebase

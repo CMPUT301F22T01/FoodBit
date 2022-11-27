@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -33,9 +32,9 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * The ingredient storage that displays the list of ingredients in the ingredient storage
+ * The ingredient list fragment that displays the list of ingredients in the ingredient list
  */
-public class IngredientStorageFragment extends Fragment {
+public class IngredientListFragment extends Fragment {
 
     public String TAG = "IngredientController";
 
@@ -46,7 +45,7 @@ public class IngredientStorageFragment extends Fragment {
 
     IngredientAdapter adapter;
 
-    public IngredientStorageFragment() {
+    public IngredientListFragment() {
         // Required empty public constructor
     }
 
@@ -71,7 +70,7 @@ public class IngredientStorageFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         // Inflating the menu resource file for this fragment
-        inflater.inflate(R.menu.ingredient_storage_actionbar, menu);
+        inflater.inflate(R.menu.ingredient_list_actionbar, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -106,16 +105,16 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflating the view
-        View view = inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
-        // displays the ingredient storage items and the add button for adding new ingredients
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
+        // displays the ingredient list items and the add button for adding new ingredients
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
 
         // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        //Button addButton = view.findViewById(R.id.ingredient_storage_add_button);
+        //Button addButton = view.findViewById(R.id.ingredient_list_add_button);
 
         ingredientController = MainActivity.ingredientController;
-        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_STORAGE);
+        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_LIST);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -130,8 +129,8 @@ public class IngredientStorageFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
-        ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        CollectionReference ingredientListRef = MainActivity.ingredientListRef;
+        ingredientListRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -156,7 +155,7 @@ public class IngredientStorageFragment extends Fragment {
                     Log.d(TAG, "ingredient id: " + newIngredient.getId());
                 }
                 ingredientController.setIngredients(newIngredients);
-                Log.d(TAG, "current ingredient storage:" + ingredientController);
+                Log.d(TAG, "current ingredient list:" + ingredientController);
                 Log.d(TAG, "Current ingredients" + ingredientController.getIngredients());
                 adapter.notifyDataSetChanged();
             }

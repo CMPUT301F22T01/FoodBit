@@ -2,13 +2,12 @@ package com.CMPUT301F22T01.foodbit.models;
 
 import android.net.Uri;
 
-import com.CMPUT301F22T01.foodbit.IRecipe;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Represents a recipe with an id, a title, preparation time, number of servings,
@@ -73,7 +72,7 @@ public class Recipe implements IRecipe, dbObject {
 
     public Recipe(QueryDocumentSnapshot doc) {
         this(doc.getId(),
-                doc.get("title").toString(),
+                Objects.requireNonNull(doc.get("title")).toString(),
                 (int) (long) doc.get("prepTime"),
                 (int) (long) doc.get("numServings"),
                 (String) doc.get("category"),
@@ -83,7 +82,7 @@ public class Recipe implements IRecipe, dbObject {
 
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (HashMap map :
-                (ArrayList<HashMap>) doc.get("ingredients")) {
+                (ArrayList<HashMap>) Objects.requireNonNull(doc.get("ingredients"))) {
             ingredients.add(new Ingredient(
                     (String) map.get("description"),
                     (float) (double) map.get("amount"),

@@ -27,7 +27,7 @@ class IngredientControllerTest {
         return null;
     }
 
-    private IngredientController mockIngredientStorage(int choice) {
+    private IngredientController mockIngredientList(int choice) {
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         switch (choice) {
             case 1:
@@ -44,12 +44,12 @@ class IngredientControllerTest {
 
     @Test
     void getIngredients() {
-        IngredientController ingredientController1 = mockIngredientStorage(1);
+        IngredientController ingredientController1 = mockIngredientList(1);
         assert ingredientController1 != null;
         ArrayList<Ingredient> ingredients1 = ingredientController1.getIngredients();
         assertEquals("id1", ingredients1.get(0).getId());
         assertEquals("id2", ingredients1.get(1).getId());
-        IngredientController ingredientController2 = mockIngredientStorage(2);
+        IngredientController ingredientController2 = mockIngredientList(2);
         assert ingredientController2 != null;
         ArrayList<Ingredient> ingredients2 = ingredientController2.getIngredients();
         assertEquals("id3", ingredients2.get(0).getId());
@@ -58,7 +58,7 @@ class IngredientControllerTest {
 
     @Test
     public void setIngredients() {
-        IngredientController ingredientController = mockIngredientStorage(1);
+        IngredientController ingredientController = mockIngredientList(1);
         Ingredient newIngredient1 = mockIngredient(3);
         Ingredient newIngredient2 = mockIngredient(4);
         ArrayList<Ingredient> newIngredients = new ArrayList<>(Arrays.asList(newIngredient1, newIngredient2));
@@ -70,7 +70,7 @@ class IngredientControllerTest {
 
     @Test
     void getIngredientByPosition() {
-        IngredientController ingredientController = mockIngredientStorage(1);
+        IngredientController ingredientController = mockIngredientList(1);
         assert ingredientController != null;
         assertEquals("id1", ingredientController.getIngredientByPosition(0).getId());
         assertEquals("id2", ingredientController.getIngredientByPosition(1).getId());
@@ -78,7 +78,7 @@ class IngredientControllerTest {
 
     @Test
     void getIngredientById() {
-        IngredientController ingredientController = mockIngredientStorage(2);
+        IngredientController ingredientController = mockIngredientList(2);
         assert ingredientController != null;
         assertEquals("id3", ingredientController.getIngredientById("id3").getId());
         assertEquals("id4", ingredientController.getIngredientById("id4").getId());
@@ -86,7 +86,7 @@ class IngredientControllerTest {
 
     @Test
     void getDescriptions() {
-        List<String> names = Objects.requireNonNull(mockIngredientStorage(1)).getDescriptions();
+        List<String> names = Objects.requireNonNull(mockIngredientList(1)).getDescriptions();
         assertTrue(names.contains("description1"));
         assertTrue(names.contains("description2"));
     }

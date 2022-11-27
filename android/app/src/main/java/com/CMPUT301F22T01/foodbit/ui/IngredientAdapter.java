@@ -18,12 +18,12 @@ import java.util.ArrayList;
 
 /**
  * Provides a binding from a set of ingredients to views that are displayed with in the
- * <code>RecyclerView</code> in either the ingredient storage page, add recipe page,
+ * <code>RecyclerView</code> in either the ingredient list page, add recipe page,
  * recipe detail page, or meal detail page.
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
     final String TAG = "IngredientAdapter";
-    public final static int INGREDIENT_STORAGE = 0;
+    public final static int INGREDIENT_LIST = 0;
     public final static int RECIPE_ADD = 1;
     public final static int RECIPE_DETAIL = 2;
     public final static int MEAL_DETAIL = 3;
@@ -60,7 +60,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
      * Provide a reference to the type of views that are used.
      */
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        private final static int INGREDIENT_STORAGE = 0;
+        private final static int INGREDIENT_LIST = 0;
         private final static int RECIPE_ADD = 1;
         private final static int RECIPE_DETAIL = 2;
         public final static int MEAL_DETAIL = 3;
@@ -79,12 +79,12 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             super(view);
             // todo: Define click listener for the ViewHolder's View
             //view.setOnClickListener();
-            // used to view ingredient details when an item in ingredient storage is clicked on
-            if (mode == INGREDIENT_STORAGE) {
+            // used to view ingredient details when an item in ingredient list is clicked on
+            if (mode == INGREDIENT_LIST) {
                 view.setOnClickListener(v -> {
                     Bundle bundle = new Bundle();
                     bundle.putInt("position", getAdapterPosition());
-                    Navigation.findNavController(v).navigate(R.id.action_fragment_ingredient_storage_to_fragment_ingredient_detail, bundle);
+                    Navigation.findNavController(v).navigate(R.id.action_fragment_ingredient_list_to_fragment_ingredient_detail, bundle);
                 });
             }
 
@@ -135,7 +135,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         TextView missingDetailsView = holder.getMissingDetailsView();
 
         if (((description == null) || (bestBefore == null) || (location == null) || (unit == null))
-        && mode == INGREDIENT_STORAGE) {
+        && mode == INGREDIENT_LIST) {
             missingDetailsView.setVisibility(View.VISIBLE);
         }
 

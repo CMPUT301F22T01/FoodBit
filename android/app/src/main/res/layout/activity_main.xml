@@ -32,6 +32,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph"
-        tools:layout="@layout/fragment_ingredient_storage" />
+        tools:layout="@layout/fragment_ingredient_list" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

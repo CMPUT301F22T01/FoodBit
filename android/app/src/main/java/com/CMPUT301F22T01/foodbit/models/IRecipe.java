@@ -1,4 +1,4 @@
-package com.CMPUT301F22T01.foodbit;
+package com.CMPUT301F22T01.foodbit.models;
 
 import java.util.Map;
 
