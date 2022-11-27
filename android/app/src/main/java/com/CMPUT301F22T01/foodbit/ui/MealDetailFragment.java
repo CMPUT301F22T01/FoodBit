@@ -174,6 +174,7 @@ public class MealDetailFragment extends Fragment {
             for (int i = 0; i <mealIngredients.size(); i++) { //reduce the amount within each ingredient
                 Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
                 temp.setAmount(temp.getAmount() - mealIngredients.get(i).getAmount());
+                MainActivity.ingredientStorage.edit(temp);
             }
             return true;
         }

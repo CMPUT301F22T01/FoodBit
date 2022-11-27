@@ -148,10 +148,8 @@ public class MealPlan implements dbObject {
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {
             ingredients.add(new Ingredient(
-                    (String) map.get("description"),
-                    (float) (double) map.get("amount"),
-                    (String) map.get("unit"),
-                    (String) map.get("category")));
+                    (String) map.get("id"),
+                    (float) (double) map.get("amount")));
         }
         this.ingredients = ingredients;
         this.recipeID = doc.get("recipeID").toString();
