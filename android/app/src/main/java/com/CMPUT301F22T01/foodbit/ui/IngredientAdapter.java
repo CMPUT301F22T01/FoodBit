@@ -119,8 +119,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
     @Override
     public void onBindViewHolder(@NonNull IngredientAdapter.ViewHolder holder, int position) {
         // get value of each fields
-        Log.d("IngredientAdapter", String.valueOf(items));
-        Log.d("IngredientAdapter", items.getClass().getName());
+        Log.d(TAG, String.valueOf(items));
+        Log.d(TAG, items.getClass().getName());
         String description = items.get(position).getDescription();
         String bestBefore = items.get(position).getBestBefore();
         String location = items.get(position).getLocation();
