@@ -2,19 +2,18 @@ package com.CMPUT301F22T01.foodbit.models;
 
 import android.net.Uri;
 
-import com.CMPUT301F22T01.foodbit.IRecipe;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * Represents a recipe with an id, a title, preparation time, number of servings,
  * a category, comments, a photo, and a list of ingredients.
  */
-public class Recipe implements IRecipe, dbObject {
+public class Recipe implements dbObject {
     private String id;
     private String title;
     private int prepTime;
@@ -73,7 +72,7 @@ public class Recipe implements IRecipe, dbObject {
 
     public Recipe(QueryDocumentSnapshot doc) {
         this(doc.getId(),
-                doc.get("title").toString(),
+                Objects.requireNonNull(doc.get("title")).toString(),
                 (int) (long) doc.get("prepTime"),
                 (int) (long) doc.get("numServings"),
                 (String) doc.get("category"),
@@ -83,7 +82,7 @@ public class Recipe implements IRecipe, dbObject {
 
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (HashMap map :
-                (ArrayList<HashMap>) doc.get("ingredients")) {
+                (ArrayList<HashMap>) Objects.requireNonNull(doc.get("ingredients"))) {
             ingredients.add(new Ingredient(
                     (String) map.get("description"),
                     (float) (double) map.get("amount"),
@@ -162,7 +161,6 @@ public class Recipe implements IRecipe, dbObject {
      *
      * @return map of ingredient names and the number of ingredients you need to make this recipe
      */
-    @Override
     // todo: return the array list
     public Map<String, Float> doGetIngredientList() {
         Map<String, Float> list = new HashMap<>();

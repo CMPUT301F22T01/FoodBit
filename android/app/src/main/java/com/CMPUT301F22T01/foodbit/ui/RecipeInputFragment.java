@@ -30,7 +30,6 @@ import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -234,7 +233,8 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(ingredients, IngredientAdapter.RECIPE_ADD);
+//        ingredientAdapter = new IngredientAdapter(ingredients, IngredientAdapter.RECIPE_INPUT);
+        ingredientAdapter = new RecipeInputIngredientAdapter(ingredients);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

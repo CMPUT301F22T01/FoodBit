@@ -1,15 +1,11 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -22,7 +18,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -46,6 +41,7 @@ public class MealDetailFragment extends Fragment {
     TextView ingredientsFieldView;
     Button deleteButton;
     RecyclerView ingredientsRecyclerView;
+    TextView ingredientEmptyView;
     IngredientAdapter ingredientAdapter;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
@@ -71,10 +67,10 @@ public class MealDetailFragment extends Fragment {
         servingsView = view.findViewById(R.id.meal_detail_servings);
         ingredientsRecyclerView = view.findViewById(R.id.meal_detail_ingredient_list);
         ingredientsFieldView = view.findViewById(R.id.meal_detail_ingredients_field);
-        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
+        ingredientEmptyView = view.findViewById(R.id.meal_detail_ingredients_empty);
+        collapsingToolbarLayout = view.findViewById(R.id.meal_detail_top_bar);
 
-        // set text
-        populateData();
+
 
         // back button functionality
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -90,23 +86,15 @@ public class MealDetailFragment extends Fragment {
         });
 
         // edit button functionality
-        Button editButton = view.findViewById(R.id.button_meal_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MealEditFragment newFragment = new MealEditFragment(mealPlan);
-                FragmentManager fm = getChildFragmentManager();
-
-                fm.executePendingTransactions();
-                newFragment.show(fm, "EditMeal");
-
-            };
-
-//                return true;
-
+        topBar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.meal_detail_edit) {
+                editButtonClicked();
+            }
+            return false;
         });
 
-        //ate button
+        // ate button
         Button ateButton = view.findViewById(R.id.button_meal_ate);
         ateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,15 +111,17 @@ public class MealDetailFragment extends Fragment {
                             "Not enough ingredients within storage!", Snackbar.LENGTH_SHORT);
                     snackbar.setAnchorView(R.id.nav_bar).show();
                 }
-
             }
         });
+
+        // set text
+        populateData();
 
         return view;
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients(), IngredientAdapter.MEAL_DETAIL);
+        ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
@@ -152,7 +142,7 @@ public class MealDetailFragment extends Fragment {
     public boolean checkIngredients(MealPlan meal) {
         ArrayList<Ingredient> mealIngredients = meal.getIngredients();
         for (int i = 0; i <mealIngredients.size(); i++) {//check all ingredients in this meal
-            Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
+            Ingredient temp = MainActivity.ingredientController.getIngredientById(mealIngredients.get(i).getId());
             if (temp!=null) {//Ingredient exists
                 if (temp.getAmount() < mealIngredients.get(i).getAmount()) {//Not enough.
                     return false;
@@ -172,9 +162,9 @@ public class MealDetailFragment extends Fragment {
         if(checkIngredients(meal)){ //we have enough so consume the ingredients!
             ArrayList<Ingredient> mealIngredients = meal.getIngredients();
             for (int i = 0; i <mealIngredients.size(); i++) { //reduce the amount within each ingredient
-                Ingredient temp = MainActivity.ingredientStorage.getIngredientById(mealIngredients.get(i).getId());
+                Ingredient temp = MainActivity.ingredientController.getIngredientById(mealIngredients.get(i).getId());
                 temp.setAmount(temp.getAmount() - mealIngredients.get(i).getAmount());
-                MainActivity.ingredientStorage.edit(temp);
+                MainActivity.ingredientController.edit(temp);
             }
             return true;
         }
@@ -187,6 +177,14 @@ public class MealDetailFragment extends Fragment {
             mealPlanController.deleteMeal(mealPlan);
             Navigation.findNavController(v).popBackStack();
         };
+    }
+
+    private void editButtonClicked() {
+        MealEditFragment newFragment = new MealEditFragment(mealPlan);
+        FragmentManager fm = getChildFragmentManager();
+
+        fm.executePendingTransactions();
+        newFragment.show(fm, "EditMeal");
     }
 
 
@@ -202,11 +200,11 @@ public class MealDetailFragment extends Fragment {
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.isIngredient() && !mealPlan.getIngredients().isEmpty()) {
+        if (!mealPlan.getIngredients().isEmpty() && !mealPlan.isIngredient()) {
             setUpRecyclerView();
         } else {
-            // meal is an ingredient, so ingredient list is null
-            ingredientsFieldView.setVisibility(View.INVISIBLE);
+            // no ingredients
+            ingredientEmptyView.setVisibility(View.VISIBLE);
         }
     }
 

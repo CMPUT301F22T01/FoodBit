@@ -1,3 +1,5 @@
+
+
 package com.CMPUT301F22T01.foodbit.controllers;
 
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -141,4 +143,10 @@ public class MealPlanController {
         }
         return allIngredients;
     }
+
+    public void load() {
+        mealPlan.clear();
+        db.getAllItemsCustom(mealPlan, new MealPlan());
+    }
 }
+
