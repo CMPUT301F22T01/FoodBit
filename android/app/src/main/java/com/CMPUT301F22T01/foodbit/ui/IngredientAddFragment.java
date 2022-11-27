@@ -26,6 +26,7 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
+import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -106,6 +107,7 @@ public class IngredientAddFragment extends DialogFragment {
         //Dropdown box for location
         AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
         List<String> locations = new ArrayList<>(Arrays.asList("fridge", "pantry", "freezer"));
+        locations.addAll(MainActivity.location.getLocationDescription());
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, locations);
         locationTextView.setAdapter(locationAdapter);
 
@@ -152,6 +154,10 @@ public class IngredientAddFragment extends DialogFragment {
                         if (!locations.contains(newLocation)) {
                             locationAdapter.add(newLocation);
                             locationAdapter.notifyDataSetChanged();
+                            IngredientLocation location = new IngredientLocation(newLocation);
+                            MainActivity.location.add(location);
+                            MainActivity.location.loadAllFromDB();
+
                             popupWindow.dismiss();
                         }
                         popupWindow.dismiss();
