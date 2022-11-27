@@ -39,6 +39,9 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
     Button editButton;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
+    /**
+     * Required empty constructor
+     */
     public IngredientDetailFragment() {
         // Required empty constructor
     }
@@ -87,13 +90,14 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Removing from the database
                 MainActivity.ingredientController.delete(ingredient);
                 Navigation.findNavController(v).popBackStack();
             }
         });
 
+        // allows for editing of ingredient being viewed when edit button is clicked
         editButton = view.findViewById(R.id.button_ingredient_detail_edit);
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
