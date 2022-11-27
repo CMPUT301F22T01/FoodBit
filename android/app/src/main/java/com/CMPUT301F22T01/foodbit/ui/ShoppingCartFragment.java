@@ -21,6 +21,7 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,7 +122,6 @@ public class ShoppingCartFragment extends Fragment {
         }
         return -1;
     }
-
 
 
     public ArrayList<Ingredient> shoppingList = new ArrayList<>();

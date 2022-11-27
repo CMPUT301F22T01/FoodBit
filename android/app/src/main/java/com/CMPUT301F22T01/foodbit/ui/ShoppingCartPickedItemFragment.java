@@ -1,128 +1,221 @@
-package com.CMPUT301F22T01.foodbit.ui;
-
-import android.os.Bundle;
-
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.Fragment;
-import androidx.navigation.Navigation;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
-
-import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.google.android.material.appbar.CollapsingToolbarLayout;
-
-/**
- * Class representing the details for ingredients that can be viewed
- * Description, bestBefore, location, amount, unit, and category can ve viewed on the app screen
- */
-public class ShoppingCartPickedItemFragment extends Fragment implements IngredientEditFragment.OnIngredientEditedListener {
-
-    private static final String TAG = "Ingredient Detail Fragment";
-
-    Ingredient ingredient;
-    int position;
-
-    Toolbar toolbar;
-    TextView descriptionView;
-    TextView bestBeforeView;
-    TextView locationView;
-    TextView amountView;
-    TextView unitView;
-    TextView categoryView;
-    Button deleteButton;
-    Button editButton;
-    CollapsingToolbarLayout collapsingToolbarLayout;
-
-    public ShoppingCartPickedItemFragment() {
-        // Required empty constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        getIngredient();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        // inflating the layout
-        View view = inflater.inflate(R.layout.fragment_shopping_cart_edit, container, false);
-
-        toolbar = view.findViewById(R.id.ingredient_detail_toolbar);
-        descriptionView = view.findViewById(R.id.ingredient_detail_description);
-        bestBeforeView = view.findViewById(R.id.ingredient_detail_best_before);
-        locationView = view.findViewById(R.id.ingredient_detail_location);
-        amountView = view.findViewById(R.id.ingredient_detail_amount);
-        unitView = view.findViewById(R.id.ingredient_detail_unit);
-        categoryView = view.findViewById(R.id.ingredient_detail_category);
-        collapsingToolbarLayout = view.findViewById(R.id.ingredient_detail_tool_bar);
-
-        toolbar.setTitle(ingredient.getDescription());
-
-        // back button
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Navigation.findNavController(v).popBackStack();
-            }
-        });
-
-        // setting to current ingredient details
-        descriptionView.setText(ingredient.getDescription());
-        bestBeforeView.setText(ingredient.getBestBefore());
-        locationView.setText(ingredient.getLocation());
-        amountView.setText(String.valueOf(ingredient.getAmount()));
-        unitView.setText(ingredient.getUnit());
-        categoryView.setText(ingredient.getCategory());
-
-        // allows for deleting of ingredient being viewed when delete button is clicked
-        deleteButton = view.findViewById(R.id.button_ingredient_detail_delete);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.ingredientController.delete(ingredient);
-                Navigation.findNavController(v).popBackStack();
-            }
-        });
-
-        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
-
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
-            }
-        });
-        return view;
-    }
-
-    /**
-     * Retrieving the ingredient as a certain position
-     * Position of the ingredient being viewed
-     */
-    private void getIngredient() {
-        assert getArguments() != null;
-        position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
-        Log.d(TAG, String.valueOf(ingredient));
-    }
-
-    @Override
-    public void onEdited() {
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
-        collapsingToolbarLayout.setTitle(ingredient.getDescription());
-        descriptionView.setText(ingredient.getDescription());
-        bestBeforeView.setText(ingredient.getBestBefore());
-        locationView.setText(ingredient.getLocation());
-        amountView.setText(String.valueOf(ingredient.getAmount()));
-        unitView.setText(ingredient.getUnit());
-        categoryView.setText(ingredient.getCategory());
-    }
-}
+//package com.CMPUT301F22T01.foodbit.ui;
+//
+//import android.app.Dialog;
+//import android.content.Context;
+//import android.content.DialogInterface;
+//import android.os.Bundle;
+//
+//import androidx.annotation.NonNull;
+//import androidx.appcompat.widget.Toolbar;
+//import androidx.fragment.app.DialogFragment;
+//
+//import android.util.Log;
+//import android.view.LayoutInflater;
+//import android.view.MenuItem;
+//import android.view.View;
+//import android.view.ViewGroup;
+//import android.widget.AdapterView;
+//import android.widget.ArrayAdapter;
+//import android.widget.EditText;
+//import android.widget.Spinner;
+//
+//import com.CMPUT301F22T01.foodbit.R;
+//import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+//import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+//import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
+//import com.CMPUT301F22T01.foodbit.models.Ingredient;
+//import com.CMPUT301F22T01.foodbit.models.MealPlan;
+//import com.CMPUT301F22T01.foodbit.models.Recipe;
+//import com.google.android.material.appbar.MaterialToolbar;
+//import com.google.android.material.textfield.TextInputEditText;
+//import com.google.android.material.textfield.TextInputLayout;
+//
+//import java.util.ArrayList;
+//import java.util.Date;
+//import java.util.Objects;
+//
+///**
+// * Fragment for adding new MealPlan items
+// */
+//public class ShoppingCartPickedItemFragment extends DialogFragment {
+//
+//    public final static String TAG = "PickedIngredient";
+//    private Context context;
+//
+//    private IngredientController ingredientController;
+//    private int positionSelected;
+//
+//    MaterialToolbar topBar;
+//    Spinner ingredientRecipeSpinner;
+//    TextInputEditText amountEditText;
+//    TextInputLayout amountLayout;
+//    ArrayAdapter<String> adapter;
+//    EditText IngredientDateEditText;
+//    EditDatePicker IngredientDatePicker;
+//    protected Ingredient ingredient;
+//
+//    public ShoppingCartPickedItemFragment() {
+//        // Required empty public constructor
+//    }
+//
+//    /**
+//     * Constructor with the meal as a parameter
+//     * @param ingredient
+//     */
+//    public ShoppingCartPickedItemFragment(Ingredient ingredient) {
+//        this.ingredient = ingredient;
+//    }
+//
+//    @Override
+//    public void onAttach(@NonNull Context context) {
+//        super.onAttach(context);
+//        this.context = context;
+//        Log.d(TAG, "context: " + context);
+//    }
+//
+//    /**
+//     * Use this factory method to create a new instance of this fragment.
+//     * @return A new instance of fragment MealAddFragment.
+//     */
+//    public static MealAddFragment newInstance() {
+//        MealAddFragment fragment = new MealAddFragment();
+//        Bundle args = new Bundle();
+//        fragment.setArguments(args);
+//        return fragment;
+//    }
+//
+//    @Override
+//    public void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        // set the style of the dialog fragment to be full screen
+//        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
+//    }
+//
+//    /**
+//     * Inflates the view and allows for user input for meal details to be added
+//     * @param inflater
+//     * @param container
+//     * @param savedInstanceState
+//     * @return
+//     */
+//    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        // Inflate the layout for this fragment
+//        View view = inflater.inflate(R.layout.fragment_meal_add, container, false);
+//
+//        topBar = view.findViewById(R.id.meal_add_top_bar);
+//        servingsEditText = view.findViewById(R.id.meal_add_serving_size);
+//        servingsLayout = view.findViewById(R.id.meal_add_layout_serving_size);
+//
+//        //Populate dropdown with ingredients and recipes
+//        recipeController = MainActivity.recipeController;
+//        ingredientController = MainActivity.ingredientController;
+//        mealPlanController = MainActivity.mealPlan;
+//        ArrayList<Ingredient> ingredientList =  ingredientController.getIngredients();
+//        ArrayList<Recipe> recipeList = recipeController.getRecipes();
+//        String[] items;
+//        if (ingredientList.size() + recipeList.size() == 0 ) {
+//            Log.e("MealAdd","Ingredient and recipe size is 0");
+//            items = new String [] {"test1", "test2", "test3", "test4", "test5"};
+//            notRealItem = true;
+//        } else {
+//            items = new String[ingredientList.size() + recipeList.size()];
+//            int ingredientSize = ingredientList.size();
+//            int j = ingredientSize;
+//            for (int i = 0; i<j; i++) {
+//                items[i] = ingredientList.get(i).getDescription();
+//            }
+//            for (int i =0; i<recipeList.size(); i++ ) {
+//                items[j] = recipeList.get(i).getTitle();
+//                j+=1;
+//            }
+//        }
+//
+//        adapter = new ArrayAdapter<String>(context,
+//                android.R.layout.simple_spinner_dropdown_item, items);
+//
+//        // Get spinner
+//        ingredientRecipeSpinner = (Spinner) view.findViewById(R.id.meal_spinner);
+//        ingredientRecipeSpinner.setAdapter(adapter);
+//        ingredientRecipeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                Log.e("meal selected: ", (String) parent.getItemAtPosition(position) );
+//                meal.setName((String) parent.getItemAtPosition(position));
+//                positionSelected = position;
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//            }
+//        });
+//
+//        //Date picker
+//        mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
+//        mealDatePicker = new EditDatePicker(context,mealDateEditText);
+//
+//
+//        topBar.setNavigationOnClickListener(v -> {
+//            dismiss();
+//        });
+//
+//        topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+//            @Override
+//            public boolean onMenuItemClick(MenuItem item) { //Check button is clicked!
+//                String servings = Objects.requireNonNull(servingsEditText.getText().toString());
+//                Date mealDate = mealDatePicker.getDate();
+//                if (servings.equals("")) {
+//                    servingsLayout.setError("Required");
+//                } else {
+//                    meal.setDate(mealDate);
+//                    meal.setServings(Integer.valueOf(servings));
+//                    int ingredientSize = ingredientList.size();
+//                    if (!notRealItem) { // Is a real item. Fixed DB Issues basically
+//                        if (positionSelected < ingredientSize) {
+//                            Ingredient ingredient = ingredientList.get(positionSelected);
+//                            meal.setRecipeID(ingredient.getId());
+//                            meal.setIngredient(true);
+//                            meal.setIngredients(ingredient);
+//                            Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
+//                        } else {
+//                            meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
+//                            meal.setIngredient(false);
+//                            meal.setIngredientsFromRecipe(recipeList.get(positionSelected-ingredientSize).getIngredients(),
+//                                    recipeList.get(positionSelected-ingredientSize).getNumServings());
+//                            Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
+//                        }
+//                    }
+//                    mealEditOrAdd(meal);
+//                    dismiss();
+//                }
+//                return false;
+//            }
+//        });
+//
+//        return view;
+//    }
+//
+//    /**
+//     * Sets the layout
+//     */
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        Dialog dialog = getDialog();
+//        if (dialog != null) {
+//            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+//            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+//            dialog.getWindow().setLayout(width, height);
+//            dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
+//        }
+//    }
+//
+//    public void mealEditOrAdd(MealPlan meal) {
+//        mealPlanController.addMeal(meal);
+//    }
+//
+//    @Override
+//    public void onDismiss(DialogInterface dialog) {
+//    }
+//}
