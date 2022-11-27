@@ -82,10 +82,11 @@
                     android:id="@+id/ingredient_add_edit_text_best_before"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Best Before Date"
-                    android:inputType="text"
                     android:maxLines="1"
-                    tools:ignore="HardcodedText" />
+                    android:clickable="false"
+                    android:cursorVisible="false"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

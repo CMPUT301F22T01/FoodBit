@@ -6,6 +6,11 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import com.google.type.DateTime;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -17,6 +22,8 @@ public class EditDatePicker implements View.OnClickListener, DatePickerDialog.On
     private int year;
     private Context _context;
     private Calendar calendar;
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+
 
     public EditDatePicker(Context context, EditText editText)
     {
@@ -24,13 +31,11 @@ public class EditDatePicker implements View.OnClickListener, DatePickerDialog.On
         this.editText.setOnClickListener(this);
         this._context = context;
 
-        calendar = Calendar.getInstance(TimeZone.getDefault());
+        calendar = Calendar.getInstance();
         day = calendar.get(Calendar.DAY_OF_MONTH);
         month = calendar.get(Calendar.MONTH);
         year = calendar.get(Calendar.YEAR);
-        editText.setHint(new StringBuilder()
-                .append(day).append("/").append(month + 1).append("/").append(year).append(" "));
-//        updateDisplay();
+        editText.setHint(toString());
     }
 
     @Override
@@ -38,6 +43,7 @@ public class EditDatePicker implements View.OnClickListener, DatePickerDialog.On
         this.year = year;
         month = monthOfYear;
         day = dayOfMonth;
+        calendar.set(year,month,day);
         updateDisplay();
 
     }
@@ -54,14 +60,17 @@ public class EditDatePicker implements View.OnClickListener, DatePickerDialog.On
 
 
     private void updateDisplay() {
-        editText.setText(new StringBuilder()
-                .append(day).append("/").append(month + 1).append("/").append(year).append(" "));
+        editText.setText(toString());
     }
 
     public Date getDate() {
         return new Date(year,month,day);
     }
 
+    public String toString() {
+        formatter.setTimeZone(calendar.getTimeZone());
+        return formatter.format(calendar.getTime());
+    }
     public void setDate(Date date) {
         day = date.getDate();
         month = date.getMonth();

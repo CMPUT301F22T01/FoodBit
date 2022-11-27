@@ -53,6 +53,7 @@ public class IngredientAddFragment extends DialogFragment {
     TextInputEditText descriptionEditText;
     TextInputLayout descriptionLayout;
     TextInputEditText bestBeforeEditText;
+    EditDatePicker bestBeforePicker;
     TextInputLayout bestBeforeLayout;
     TextInputEditText amountEditText;
     TextInputLayout amountLayout;
@@ -96,6 +97,7 @@ public class IngredientAddFragment extends DialogFragment {
         descriptionEditText = view.findViewById(R.id.ingredient_add_edit_text_description);
         descriptionLayout = view.findViewById(R.id.ingredient_add_text_layout_description);
         bestBeforeEditText = view.findViewById(R.id.ingredient_add_edit_text_best_before);
+        bestBeforePicker = new EditDatePicker(context,bestBeforeEditText);
         bestBeforeLayout = view.findViewById(R.id.ingredient_add_text_layout_best_before);
         amountEditText = view.findViewById(R.id.ingredient_add_edit_text_amount);
         amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
