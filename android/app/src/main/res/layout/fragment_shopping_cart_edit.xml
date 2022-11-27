@@ -33,7 +33,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/ingredient_storage_top_app_bar"
+                app:menu="@menu/ingredient_lsit_top_app_bar"
                 app:navigationIcon="@drawable/ic_close_24"
                 app:title="Add an ingredient"
                 tools:ignore="RtlSymmetry" />
@@ -55,7 +55,6 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingredient_add_edit_text_description"
-                    android:enabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Description"

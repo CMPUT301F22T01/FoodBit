@@ -7,7 +7,6 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentResultListener;
 
 import android.util.Log;
 import android.view.Gravity;
@@ -23,7 +22,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
@@ -48,7 +46,7 @@ import java.util.Objects;
  * drop down boxes added in pt 4
  */
 public class ShoppingCartDetailFragment extends DialogFragment {
-    public final static String TAG = "PickedIngredient";
+    public final static String TAG = "EditIngredient";
     private Ingredient ingredient;
     private int position;
     private Context context;
@@ -88,7 +86,7 @@ public class ShoppingCartDetailFragment extends DialogFragment {
      */
     public ShoppingCartDetailFragment(int position) {
         this.position = position;
-        this.ingredient = ingredient;
+        this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
     }
 
     @Override
@@ -96,18 +94,12 @@ public class ShoppingCartDetailFragment extends DialogFragment {
         super.onAttach(context);
         this.context = context;
         Log.d(TAG, "context: " + context);
+        ingredientEditedListener = (OnIngredientEditedListener) getParentFragment();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getParentFragmentManager().setFragmentResultListener("requestShoppingIngredient",
-                this, new FragmentResultListener() {
-            @Override
-            public void onFragmentResult(@NonNull String requestKey, @NonNull Bundle result) {
-                ingredient = (Ingredient) result.get("BundleIngredient");
-            }
-        });
         // set the style of the dialog fragment to be full screen
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
     }
@@ -153,8 +145,8 @@ public class ShoppingCartDetailFragment extends DialogFragment {
         categoryTextView.setAdapter(categoryAdapter);
 
         descriptionEditText.setText(ingredient.getDescription());
-//        bestBeforeEditText.setText(ingredient.getBestBefore());
-//        locationTextView.setText(ingredient.getLocation());
+        bestBeforeEditText.setText(ingredient.getBestBefore());
+        locationTextView.setText(ingredient.getLocation());
         amountEditText.setText(String.valueOf(ingredient.getAmount()));
         unitTextView.setText(ingredient.getUnit());
         categoryTextView.setText(ingredient.getCategory());
@@ -365,6 +357,9 @@ public class ShoppingCartDetailFragment extends DialogFragment {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
                     }
+                    if (unit.equals("")) {
+                        unit = null;
+                    }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
                         requiredFieldEntered = false;
@@ -376,7 +371,7 @@ public class ShoppingCartDetailFragment extends DialogFragment {
                         ingredient.setAmount(Float.parseFloat(amount));
                         ingredient.setUnit(unit);
                         ingredient.setCategory(category);
-                        MainActivity.ingredientStorage.edit(ingredient);
+                        MainActivity.ingredientController.edit(ingredient);
                         ingredientEditedListener.onEdited();
                         dismiss();
                     }
