@@ -3,7 +3,6 @@ package com.CMPUT301F22T01.foodbit.models;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 /**
  * Class to represent ingredients
@@ -155,22 +154,11 @@ public class Ingredient implements Serializable, dbObject {
         category = newIngredient.getCategory();
     }
 
-    public static Comparator<Ingredient> nameAscending = new Comparator<Ingredient>() {
-        @Override
-        public int compare(Ingredient o1, Ingredient o2)
-        {
-            String desc1 = String.valueOf(o1.getDescription());
-            String desc2 = String.valueOf(o2.getDescription());
-
-            return String.CASE_INSENSITIVE_ORDER.compare(desc1,desc2);
-        }
-    };
-
-    public static Comparator<Ingredient> dateSort = new Comparator<Ingredient>() {
-        @Override
-        public int compare(Ingredient o1, Ingredient o2)
-        {
-            return o1.getBestBefore().compareTo(o2.bestBefore);
-        }
-    };
+    /**
+     * Check if the ingredient is missing details.
+     * @return whether the ingredient is missing details
+     */
+    public boolean isMissingDetails() {
+        return (description == null) || (bestBefore == null) || (location == null) || (unit == null);
+    }
 }

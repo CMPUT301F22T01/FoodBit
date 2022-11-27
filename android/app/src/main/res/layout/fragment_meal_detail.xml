@@ -20,7 +20,7 @@
             app:expandedTitleTextAppearance="@style/Theme.FoodBit.ExpandedTitleTextAppearance"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
             app:layout_scrollInterpolator="@android:anim/decelerate_interpolator"
-            app:title="Name"
+            app:title="Date"
             app:toolbarId="@+id/meal_detail_toolbar">
 
             <androidx.appcompat.widget.Toolbar
@@ -80,7 +80,7 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:gravity="center_vertical"
-                android:text="Date"
+                android:text="Name"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="32sp"
                 android:textStyle="bold"
@@ -123,18 +123,6 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <Button
-                android:id="@+id/button_meal_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_meal_delete"
-                app:layout_constraintTop_toBottomOf="@id/meal_detail_ingredient_list" />
-
-            <Button
                 android:id="@+id/button_meal_ate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -143,9 +131,19 @@
                 android:layout_marginBottom="16dp"
                 android:text="Ate"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_meal_edit"
+                app:layout_constraintEnd_toStartOf="@+id/button_meal_delete"
                 app:layout_constraintTop_toBottomOf="@id/meal_detail_ingredient_list" />
 
+            <TextView
+                android:id="@+id/meal_detail_ingredients_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="This meal contains no ingredients."
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/meal_detail_ingredients_field"
+                app:layout_constraintStart_toEndOf="@+id/meal_detail_ingredients_field"
+                app:layout_constraintTop_toTopOf="@+id/meal_detail_ingredients_field" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

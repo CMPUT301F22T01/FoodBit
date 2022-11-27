@@ -17,9 +17,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
@@ -72,10 +71,10 @@ public class MealPlanFragment extends Fragment {
             case R.id.meal_plan_add:
                 //launches newFragment if there are ingredients/recipes
                 RecipeController recipeController = MainActivity.recipeController;
-                IngredientStorage ingredientStorage = MainActivity.ingredientStorage;
-//                ingredientStorage.loadAllFromDB();
+                IngredientController ingredientController = MainActivity.ingredientController;
+//                ingredientController.loadAllFromDB();
 
-                if (ingredientStorage.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
+                if (ingredientController.getIngredients().size() + recipeController.getRecipes().size() == 0 ) {
                     Snackbar snackbar = Snackbar.make(this.getActivity().findViewById(R.id.nav_container),
                             "Add an ingredient or recipe first!", Snackbar.LENGTH_SHORT);
                     snackbar.setAnchorView(R.id.nav_bar).show();
@@ -86,10 +85,6 @@ public class MealPlanFragment extends Fragment {
                     MealAddFragment newFragment = new MealAddFragment(newMeal);
                     newFragment.show(getChildFragmentManager(), "AddMeal");
                     return true;
-//                    // Create a DatePicker. When User clicks OK we move to onDialogPositiveClick
-//                    DatePickerFragment newFragment = new DatePickerFragment();
-//                    newFragment.show(getChildFragmentManager(), "datePicker"); //Goes to onDialogPositiveClick when done
-//                    return true;
                 }
 
             default:

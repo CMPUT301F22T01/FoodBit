@@ -17,7 +17,6 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -25,7 +24,6 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * The recipe book screen that displays a list of recipes in the recipe book.
@@ -66,28 +64,22 @@ public class RecipeBookFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch(item.getItemId())
-        {   //Adding a Recipe
-            case R.id.recipe_add:
-                //launches RecipeAddFragment
-                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-                return true;
+        int itemId = item.getItemId();//Adding a Recipe
+        if (itemId == R.id.recipe_add) {//launches RecipeAddFragment
+            new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+            return true;
 
             // Sorting the Recipes accordingly
-            case R.id.filter1:
-                titleSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Title", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                prepTimeSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Preparation Time", Toast.LENGTH_SHORT).show();
-            case R.id.filter3:
-                serveSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Number of Servings", Toast.LENGTH_SHORT).show();
-            case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter1) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.filter2) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.filter3) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.filter4) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
         }
+        return super.onOptionsItemSelected(item);
 
 
     }
@@ -103,17 +95,8 @@ public class RecipeBookFragment extends Fragment {
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
 
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        //Button addButton = view.findViewById(R.id.recipe_book_add_button);
-
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
-
-
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        // add button launches RecipeAddFragment
-        //addButton.setOnClickListener(addButtonClicked());
-
 
         getActivity().setTitle("Recipe Book");
         return view;
@@ -129,42 +112,6 @@ public class RecipeBookFragment extends Fragment {
         recipeBookUpdate();
     }
 
-    public void titleSort(View view)
-    {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
-        Collections.sort(recipeController.getRecipes(), Recipe.titleAscending);
-        adapter = new RecipeAdapter(recipeController.getRecipes());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
-    }
-
-    public void prepTimeSort(View view)
-    {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
-        Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort);
-        adapter = new RecipeAdapter(recipeController.getRecipes());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
-    }
-
-    public void serveSort(View view)
-    {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
-        Collections.sort(recipeController.getRecipes(), Recipe.servingSort);
-        adapter = new RecipeAdapter(recipeController.getRecipes());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
-    }
-
 
 // Changed from addButton to adding by clicking the add icon on the Top Action Bar
 //    @NonNull
@@ -175,7 +122,8 @@ public class RecipeBookFragment extends Fragment {
 
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new RecipeAdapter(recipeController.getRecipes());
+//        adapter = new RecipeAdapter(recipeController.getRecipes());
+        adapter = new RecipeAdapter(MainActivity.recipeController.getRecipes());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -187,7 +135,7 @@ public class RecipeBookFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void recipeBookUpdate() {
-        CollectionReference recipeBookRef = MainActivity.recipeBookRef;
+        CollectionReference recipeBookRef = MainActivity.recipeControllerRef;
         recipeBookRef.addSnapshotListener((value, error) -> {
             if (error != null) {
                 Log.w(TAG, "Listen failed.", error);
@@ -196,7 +144,17 @@ public class RecipeBookFragment extends Fragment {
             ArrayList<Recipe> newRecipes = new ArrayList<>();
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
-                Recipe newRecipe = doc.toObject(Recipe.class);
+//                Recipe newRecipe = doc.toObject(Recipe.class);
+//                Recipe newRecipe = new Recipe(
+//                        doc.getId(),
+//                        doc.get("title").toString(),
+//                        (int) (long) doc.get("prepTime"),
+//                        (int) (long) doc.get("numServings"),
+//                        (String) doc.get("category"),
+//                        (String) doc.get("comments"),
+//                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
+//                        (ArrayList<Ingredient>) doc.get("ingredients"));
+                Recipe newRecipe = new Recipe(doc);
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
             }

@@ -4,7 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
+import com.CMPUT301F22T01.foodbit.ui.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment;
 import com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment;
@@ -14,22 +14,26 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
 /**
  * Stores each ingredient created
  */
-public class IngredientStorage implements Serializable {
+public class IngredientController implements Serializable {
     //private FirebaseFirestore db;
-    private DatabaseController db = new DatabaseController("Ingredients");
+    private final DatabaseController db = new DatabaseController("Ingredients");
     private final ArrayList<Ingredient> ingredients;
 
     /**
      * Creates a new list for ingredients
      */
-    public IngredientStorage() {
+    public IngredientController() {
         ingredients = new ArrayList<Ingredient>();
     }
 
@@ -37,7 +41,7 @@ public class IngredientStorage implements Serializable {
      * Creates new array list of ingredients
      * @param ingredients an array list of ingredients
      */
-    public IngredientStorage(List<Ingredient> ingredients) {
+    public IngredientController(List<Ingredient> ingredients) {
         this.ingredients = (ArrayList<Ingredient>) ingredients;
     }
 
@@ -103,7 +107,7 @@ public class IngredientStorage implements Serializable {
     }
 
     /**
-     * Adds an ingredient to the ingredient storage
+     * Adds an ingredient to the ingredient list
      * Makes sure there are no duplicates
      * @param ingredient the ingredient to be added
      */
@@ -114,19 +118,19 @@ public class IngredientStorage implements Serializable {
     }
 
     /**
-     * Deletes an ingredient from ingredient storage
-     * Makes sure the ingredient is in the ingredient storage first
+     * Deletes an ingredient from ingredient list
+     * Makes sure the ingredient is in the ingredient list first
      * @param ingredient the ingredient to be deleted
      */
     public void delete(Ingredient ingredient) {
-        String TAG = "IngredientStorageDeleteIngredient";
+        String TAG = "IngredientListDeleteIngredient";
         assert contains(ingredient) : "this ingredient is not found in the ingredient list!";
         db.deleteItem(ingredient);
     }
 
     /**
-     * Edits an ingredient in ingredient storage
-     * Makes sure the ingredient is in the ingredient storage first
+     * Edits an ingredient in ingredient list
+     * Makes sure the ingredient is in the ingredient list first
      * @param ingredient the ingredient to be edited
      */
     public void edit(Ingredient ingredient) {
@@ -137,10 +141,13 @@ public class IngredientStorage implements Serializable {
 
     /**
      * Loads ingredients from the database
+     * Checks if the expiry date has passed
      */
     public void loadAllFromDB() {
         ingredients.clear();
-        CollectionReference collectionReference = MainActivity.ingredientStorageRef;
+        CollectionReference collectionReference = MainActivity.ingredientListRef;
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -151,6 +158,16 @@ public class IngredientStorage implements Serializable {
                     Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
                     for (int i =0; i< task.getResult().size(); i++) {
                         Ingredient model = task.getResult().getDocuments().get(i).toObject(Ingredient.class);
+                        try {
+                            assert model != null;
+                            Date bestBeforeDate = formatter.parse(model.getBestBefore());
+                            assert bestBeforeDate != null;
+                            if (bestBeforeDate.before(todayDate)) {
+                                model.setAmount(0F);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         ingredients.add(model);
                     }
                 }
