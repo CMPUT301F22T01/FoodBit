@@ -69,12 +69,6 @@ public class ShoppingCartDetailFragment extends DialogFragment {
     Button addLocation;
     Button addUnit;
     Button addCategory;
-    EditText editTextLocation;
-    EditText editTextUnit;
-    EditText editTextCategory;
-    Button completeNewLocation;
-    Button completeNewUnit;
-    Button completeNewCategory;
 
     public ShoppingCartDetailFragment() {
         // Required empty public constructor
@@ -106,9 +100,9 @@ public class ShoppingCartDetailFragment extends DialogFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shopping_cart_edit, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_add, container, false);
         topBar = view.findViewById(R.id.ingredient_add_top_bar);
-        topBar.setTitle("Picked an Ingredient");
+        topBar.setTitle("Edit an Ingredient");
         descriptionEditText = view.findViewById(R.id.ingredient_add_edit_text_description);
         descriptionLayout = view.findViewById(R.id.ingredient_add_text_layout_description);
         bestBeforeEditText = view.findViewById(R.id.ingredient_add_edit_text_best_before);
@@ -117,9 +111,6 @@ public class ShoppingCartDetailFragment extends DialogFragment {
         amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
         locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
         categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
-        addCategory = view.findViewById(R.id.add_category_button);
-        addLocation = view.findViewById(R.id.add_location_button);
-        addUnit = view.findViewById(R.id.add_unit_button);
 
         //Dropdown box for location
         AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
@@ -150,153 +141,6 @@ public class ShoppingCartDetailFragment extends DialogFragment {
         amountEditText.setText(String.valueOf(ingredient.getAmount()));
         unitTextView.setText(ingredient.getUnit());
         categoryTextView.setText(ingredient.getCategory());
-
-        //Popup window for when user wants to add a new location
-        addLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // inflate the layout of the popup window
-                View popupView = inflater.inflate(R.layout.ingredient_add_dropdown_popup, null);
-
-                editTextLocation = popupView.findViewById(R.id.add_dropdown_edit_text);
-                completeNewLocation = popupView.findViewById(R.id.add_complete);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                // show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                //add button pressed in popup window
-                completeNewLocation.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //getting information user typed and adding it to the location options
-                        String newLocation = editTextLocation.getText().toString();
-                        if (!locations.contains(newLocation)) {
-                            locationAdapter.add(newLocation);
-                            locationAdapter.notifyDataSetChanged();
-                            IngredientLocation location = new IngredientLocation(newLocation);
-                            MainActivity.location.add(location);
-                            MainActivity.location.loadAllFromDB();
-
-                            popupWindow.dismiss();
-                        }
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
-
-        //Popup window for when user wants to add a new unit
-        addUnit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // inflate the layout of the popup window
-                View popupView = inflater.inflate(R.layout.ingredient_add_dropdown_popup, null);
-
-                editTextUnit = popupView.findViewById(R.id.add_dropdown_edit_text);
-                completeNewUnit = popupView.findViewById(R.id.add_complete);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                // show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                //add button pressed in popup window
-                completeNewUnit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //getting information user typed and adding it to the unit options
-                        String newUnit = editTextUnit.getText().toString();
-                        if (!units.contains(newUnit)) {
-                            unitAdapter.add(newUnit);
-                            unitAdapter.notifyDataSetChanged();
-                            IngredientUnit unit = new IngredientUnit(newUnit);
-                            MainActivity.unit.add(unit);
-                            MainActivity.unit.loadAllFromDB();
-
-                            popupWindow.dismiss();
-                        }
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
-
-        //Popup window for when user wants to add a new category
-        addCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // inflate the layout of the popup window
-                View popupView = inflater.inflate(R.layout.ingredient_add_dropdown_popup, null);
-
-                editTextCategory = popupView.findViewById(R.id.add_dropdown_edit_text);
-                completeNewCategory = popupView.findViewById(R.id.add_complete);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                // show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                //add button pressed in popup window
-                completeNewCategory.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //getting information user typed and adding it to the category options
-                        String newCategory = editTextCategory.getText().toString();
-                        if (!categories.contains(newCategory)) {
-                            categoryAdapter.add(newCategory);
-                            categoryAdapter.notifyDataSetChanged();
-                            IngredientCategory category = new IngredientCategory(newCategory);
-                            MainActivity.category.add(category);
-                            MainActivity.category.loadAllFromDB();
-
-                            popupWindow.dismiss();
-                        }
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
 
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
@@ -356,6 +200,19 @@ public class ShoppingCartDetailFragment extends DialogFragment {
                     if (location.equals("")) {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
+                    } else if (!locations.contains(location)) {
+                        locationAdapter.add(location);
+                        locationAdapter.notifyDataSetChanged();
+                        IngredientLocation newLocation = new IngredientLocation(location);
+                        MainActivity.location.add(newLocation);
+                        MainActivity.location.loadAllFromDB();
+                    }
+                    if (!units.contains(unit)) {
+                        unitAdapter.add(unit);
+                        unitAdapter.notifyDataSetChanged();
+                        IngredientUnit newUnit = new IngredientUnit(unit);
+                        MainActivity.unit.add(newUnit);
+                        MainActivity.unit.loadAllFromDB();
                     }
                     if (unit.equals("")) {
                         unit = null;
@@ -363,6 +220,12 @@ public class ShoppingCartDetailFragment extends DialogFragment {
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
                         requiredFieldEntered = false;
+                    } else if (!categories.contains(category)) {
+                        categoryAdapter.add(category);
+                        categoryAdapter.notifyDataSetChanged();
+                        IngredientCategory newCategory = new IngredientCategory(category);
+                        MainActivity.category.add(newCategory);
+                        MainActivity.category.loadAllFromDB();
                     }
                     if (requiredFieldEntered) {
                         ingredient.setDescription(description);
