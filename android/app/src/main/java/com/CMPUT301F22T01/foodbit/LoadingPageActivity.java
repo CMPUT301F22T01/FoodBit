@@ -1,3 +1,7 @@
+
+
+
+
 package com.CMPUT301F22T01.foodbit;
 
 import static com.CMPUT301F22T01.foodbit.MainActivity.category;
@@ -42,6 +46,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                 FID = listen.getValue();
                 MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
                 MainActivity.mealPlan = new MealPlanController();
+                MainActivity.mealPlan.load();
 
                 MainActivity.recipeBookRef = db.collection(FID).document(FID).collection("Recipe Book");
                 MainActivity.recipeController = new RecipeController();
