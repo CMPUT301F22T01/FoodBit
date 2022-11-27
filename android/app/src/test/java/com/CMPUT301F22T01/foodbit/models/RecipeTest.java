@@ -143,7 +143,7 @@ class RecipeTest {
     @Test
     void getIngredientList() {
         Recipe recipe = mockRecipe();
-        Map<String, Float> list = recipe.getIngredientList();
+        Map<String, Float> list = recipe.doGetIngredientList();
         Float value = list.get("bread");
         Assertions.assertEquals(2f, (float) list.get("id1"));
         Assertions.assertEquals(3f, (float) list.get("id2"));
