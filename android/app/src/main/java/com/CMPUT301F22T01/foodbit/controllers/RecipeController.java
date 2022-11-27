@@ -1,5 +1,7 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import android.util.Log;
+
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
 
@@ -92,6 +94,7 @@ public class RecipeController implements Serializable {
     public void add(Recipe recipe) {
         String TAG = RecipeAddFragment.TAG;
         assert !contains(recipe) : "This recipe is already in the recipe book!";
+        Log.d("UITest", "add: "+recipe.getIngredients().get(0).toString());
         db.addItem(recipe);
     }
 
