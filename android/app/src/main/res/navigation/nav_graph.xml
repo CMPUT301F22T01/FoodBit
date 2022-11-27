@@ -100,7 +100,7 @@
         tools:layout="@layout/fragment_ingredient_detail">
         <argument
             android:name="ingredientController"
-            app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientStorage" />
+            app:argType="com.CMPUT301F22T01.foodbit.controllers.IngredientController" />
 
     </fragment>
 

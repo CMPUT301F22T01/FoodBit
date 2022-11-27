@@ -24,7 +24,6 @@ import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 //import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 /**
  * The main activity of the app.
@@ -33,7 +32,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     public final static String TAG = "MainActivity";
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
     static String FID = LoadingPageActivity.FID;
 
     // access a Cloud Firestore instance and retrieve data

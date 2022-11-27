@@ -5,7 +5,6 @@
 package com.CMPUT301F22T01.foodbit;
 
 import static com.CMPUT301F22T01.foodbit.MainActivity.category;
-import static com.CMPUT301F22T01.foodbit.MainActivity.db;
 import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientController;
 import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
 import static com.CMPUT301F22T01.foodbit.MainActivity.location;
@@ -24,9 +23,11 @@ import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class LoadingPageActivity extends AppCompatActivity {
+    public static FirebaseFirestore db = FirebaseFirestore.getInstance();
     static String FID = "empty";
     @Override
     protected void onCreate(Bundle savedInstanceState) {

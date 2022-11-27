@@ -1,22 +1,22 @@
-//package com.CMPUT301F22T01.foodbit.ui;
-//
-//import android.os.Bundle;
-//import android.util.Log;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.ViewGroup;
-//import android.widget.Button;
-//import android.widget.TextView;
-//
-//import androidx.appcompat.widget.Toolbar;
-//import androidx.fragment.app.Fragment;
-//import androidx.navigation.Navigation;
-//
-//import com.CMPUT301F22T01.foodbit.MainActivity;
-//import com.CMPUT301F22T01.foodbit.R;
-//import com.CMPUT301F22T01.foodbit.models.Ingredient;
-//
-//public class ShoppingCartDetailFragment extends Fragment {
+package com.CMPUT301F22T01.foodbit.ui;
+
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
+
+import com.CMPUT301F22T01.foodbit.MainActivity;
+import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
+
+public class ShoppingCartDetailFragment extends Fragment {
 //    private static final String TAG = "Shopping Detail Fragment";
 //
 //    Ingredient ingredient;
@@ -93,5 +93,5 @@
 //        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
 //        Log.d(TAG, String.valueOf(ingredient));
 //    }
-//}
+}
 //
