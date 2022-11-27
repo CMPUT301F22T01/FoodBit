@@ -131,6 +131,9 @@ public class IngredientListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Will give an indicator if an ingredient has any missing details
+     */
     private void setMissingDetailWarningVisibility() {
         boolean hasIngredientMissingDetail = false;
         for (Ingredient ingredient :
