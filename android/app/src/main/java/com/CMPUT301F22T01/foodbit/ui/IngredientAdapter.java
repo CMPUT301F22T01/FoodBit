@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 /**
@@ -67,6 +69,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         private final TextView ingredientDescription;
         private final TextView ingredientAmount;
         private final TextView ingredientUnit;
+        private final TextView missingDetails;
 
         /**
          * Choosing which view to use
@@ -90,6 +93,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
             ingredientDescription = view.findViewById(R.id.item_ingredient_description);
             ingredientAmount = view.findViewById(R.id.item_ingredient_amount);
             ingredientUnit = view.findViewById(R.id.item_ingredient_unit);
+            missingDetails = view.findViewById(R.id.item_ingredient_missing_details);
         }
 
         // view holder's get view methods
@@ -102,6 +106,7 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         public TextView getIngredientUnitView() {
             return ingredientUnit;
         }
+        public TextView getMissingDetailsView() {return missingDetails;}
     }
 
     @NonNull
@@ -118,13 +123,21 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         Log.d("IngredientAdapter", String.valueOf(items));
         Log.d("IngredientAdapter", items.getClass().getName());
         String description = items.get(position).getDescription();
+        String bestBefore = items.get(position).getBestBefore();
+        String location = items.get(position).getLocation();
         float amount = items.get(position).getAmount();
         String unit = items.get(position).getUnit();
+        String category = items.get(position).getUnit();
 
         // get UI
         TextView descriptionView = holder.getIngredientDescriptionView();
         TextView amountView = holder.getIngredientAmountView();
         TextView unitView = holder.getIngredientUnitView();
+        TextView missingDetailsView = holder.getMissingDetailsView();
+
+        if (description.equals("") || bestBefore.equals("") || location.equals("") ||  unit.equals("") || category.equals("")) {
+            missingDetailsView.setVisibility(View.VISIBLE);
+        }
 
         // set up UI
         descriptionView.setText(description);
