@@ -56,8 +56,14 @@ import java.util.Objects;
 public class IngredientEditFragment extends DialogFragment {
     public final static String TAG = "EditIngredient";
     private Ingredient ingredient;
+    private int position;
     private Context context;
 
+    // interface
+    public interface OnIngredientEditedListener {
+        void onEdited();
+    }
+    private OnIngredientEditedListener ingredientEditedListener;
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;
@@ -84,10 +90,11 @@ public class IngredientEditFragment extends DialogFragment {
 
     /**
      * sets ingredient to be edited
-     * @param ingredient ingredient to be editied
+     * @param position position of the ingredient to be edited in the controller
      */
-    public IngredientEditFragment(Ingredient ingredient) {
-        this.ingredient = ingredient;
+    public IngredientEditFragment(int position) {
+        this.position = position;
+        this.ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
     }
 
     @Override
@@ -95,6 +102,7 @@ public class IngredientEditFragment extends DialogFragment {
         super.onAttach(context);
         this.context = context;
         Log.d(TAG, "context: " + context);
+        ingredientEditedListener = (OnIngredientEditedListener) getParentFragment();
     }
 
     @Override
@@ -369,6 +377,7 @@ public class IngredientEditFragment extends DialogFragment {
                         ingredient.setUnit(unit);
                         ingredient.setCategory(category);
                         MainActivity.ingredientStorage.edit(ingredient);
+                        ingredientEditedListener.onEdited();
                         dismiss();
                     }
                 }
