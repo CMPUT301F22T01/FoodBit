@@ -94,7 +94,6 @@ public class RecipeController implements Serializable {
     public void add(Recipe recipe) {
         String TAG = RecipeAddFragment.TAG;
         assert !contains(recipe) : "This recipe is already in the recipe book!";
-        Log.d("UITest", "add: "+recipe.getIngredients().get(0).toString());
         db.addItem(recipe);
     }
 
