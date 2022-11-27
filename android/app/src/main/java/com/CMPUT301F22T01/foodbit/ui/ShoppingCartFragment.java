@@ -126,6 +126,8 @@ public class ShoppingCartFragment extends Fragment {
     }
 
 
+
+    public ArrayList<Ingredient> shoppingList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -134,12 +136,10 @@ public class ShoppingCartFragment extends Fragment {
         // Get shoppingCart after calculating between meal plan and storage
         ingredientStorage = MainActivity.ingredientStorage;
         mealPlan = MainActivity.mealPlan;
-        ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientStorage.getIngredients();
         List<String> descriptionList = ingredientStorage.getDescriptions();
         shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
-
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
