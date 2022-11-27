@@ -1,5 +1,7 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
+import android.util.Log;
+
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
 
