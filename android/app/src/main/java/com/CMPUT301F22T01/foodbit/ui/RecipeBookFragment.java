@@ -97,48 +97,34 @@ public class RecipeBookFragment extends Fragment {
         {
             RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.titleAscending);
-            adapter = new RecipeAdapter(recipeController.getRecipes());
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(linearLayoutManager);
-
-            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+//            adapter = new RecipeAdapter(recipeController.getRecipes());
+//
+//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//            recyclerView.setLayoutManager(linearLayoutManager);
+//
+//            recyclerView.setAdapter(adapter);
         }
 
         public void prepTimeSort(View view)
         {
             RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort);
-            adapter = new RecipeAdapter(recipeController.getRecipes());
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(linearLayoutManager);
-
-            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
 
         public void serveSort(View view)
         {
             RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.servingSort);
-            adapter = new RecipeAdapter(recipeController.getRecipes());
-
-            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-            recyclerView.setLayoutManager(linearLayoutManager);
-
-            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
         }
 
     public void categorySort(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
         Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending);
-        adapter = new RecipeAdapter(recipeController.getRecipes());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 

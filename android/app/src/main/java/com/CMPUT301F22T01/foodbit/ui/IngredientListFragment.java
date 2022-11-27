@@ -116,46 +116,32 @@ public class IngredientListFragment extends Fragment {
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
         Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
-        adapter = new IngredientAdapter(ingredientController.getIngredients());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
+//        adapter = new IngredientAdapter(ingredientController.getIngredients());
+        adapter.notifyDataSetChanged();
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//
+//        recyclerView.setAdapter(adapter);
 
     }
     public void dateSort(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
         Collections.sort(ingredientController.getIngredients(), Ingredient.dateSort);
-        adapter = new IngredientAdapter(ingredientController.getIngredients());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     public void locationSort(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
         Collections.sort(ingredientController.getIngredients(), Ingredient.locationAscending);
-        adapter = new IngredientAdapter(ingredientController.getIngredients());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
     public void categorySort(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
         Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
-        adapter = new IngredientAdapter(ingredientController.getIngredients());
-
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-
-        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
     @Override

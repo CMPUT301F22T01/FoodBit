@@ -108,10 +108,11 @@ public class ShoppingCartFragment extends Fragment {
 
         //set recyclerView
         int mode = 0;
-        adapter = new ShoppingCartAdapter(shoppingList, mode);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
+//        adapter = new ShoppingCartAdapter(shoppingList, mode);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
 
     }
     public void categorySort(View view)
@@ -131,11 +132,11 @@ public class ShoppingCartFragment extends Fragment {
 
         //set recyclerView
         int mode = 0;
-        adapter = new ShoppingCartAdapter(shoppingList, mode);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(linearLayoutManager);
-        recyclerView.setAdapter(adapter);
-
+//        adapter = new ShoppingCartAdapter(shoppingList, mode);
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//        recyclerView.setAdapter(adapter);
+        adapter.notifyDataSetChanged();
     }
 
 
