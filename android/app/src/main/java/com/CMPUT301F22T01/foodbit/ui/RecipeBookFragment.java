@@ -135,7 +135,7 @@ public class RecipeBookFragment extends Fragment {
 
     @SuppressLint("NotifyDataSetChanged")
     private void recipeBookUpdate() {
-        CollectionReference recipeBookRef = MainActivity.recipeBookRef;
+        CollectionReference recipeBookRef = MainActivity.recipeControllerRef;
         recipeBookRef.addSnapshotListener((value, error) -> {
             if (error != null) {
                 Log.w(TAG, "Listen failed.", error);

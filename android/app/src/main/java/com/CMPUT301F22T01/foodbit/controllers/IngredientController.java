@@ -14,7 +14,11 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
@@ -141,6 +145,8 @@ public class IngredientController implements Serializable {
     public void loadAllFromDB() {
         ingredients.clear();
         CollectionReference collectionReference = MainActivity.ingredientListRef;
+        Date todayDate = Calendar.getInstance().getTime();
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -151,6 +157,16 @@ public class IngredientController implements Serializable {
                     Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
                     for (int i =0; i< task.getResult().size(); i++) {
                         Ingredient model = task.getResult().getDocuments().get(i).toObject(Ingredient.class);
+                        try {
+                            assert model != null;
+                            Date bestBeforeDate = formatter.parse(model.getBestBefore());
+                            assert bestBeforeDate != null;
+                            if (bestBeforeDate.before(todayDate)) {
+                                model.setAmount(0F);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
                         ingredients.add(model);
                     }
                 }

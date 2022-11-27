@@ -84,7 +84,7 @@ public class DatabaseController {
             case "Ingredients":
                 return MainActivity.ingredientListRef;
             case "Recipe Book":
-                return MainActivity.recipeBookRef;
+                return MainActivity.recipeControllerRef;
             default:
                 return null;
         }
