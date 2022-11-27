@@ -31,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
@@ -48,6 +49,9 @@ public class MealAddFragment extends DialogFragment {
     private int positionSelected;
     private Boolean notRealItem = false;
     protected MealPlan meal;
+    ArrayList<String> itemsDropdown = new ArrayList<String>();
+    private String mealSelected = "";
+
 
     MaterialToolbar topBar;
     TextInputEditText servingsEditText;
@@ -119,19 +123,20 @@ public class MealAddFragment extends DialogFragment {
         mealPlanController = MainActivity.mealPlan;
         ArrayList<Ingredient> ingredientList =  ingredientController.getIngredients();
         ArrayList<Recipe> recipeList = recipeController.getRecipes();
-        String[] items;
+        String[] items = new String[ingredientList.size() + recipeList.size()];
+        ;
         if (ingredientList.size() + recipeList.size() == 0 ) {
-            Log.e("MealAdd","Ingredient and recipe size is 0");
-            items = new String [] {"test1", "test2", "test3", "test4", "test5"};
-            notRealItem = true;
+            Log.e("MealAdd","Ingredient and recipe size is 0. Should be impossible since " +
+                    "we check for this before launching this fragment.");
         } else {
-            items = new String[ingredientList.size() + recipeList.size()];
             int ingredientSize = ingredientList.size();
             int j = ingredientSize;
             for (int i = 0; i<j; i++) {
+                itemsDropdown.add( ingredientList.get(i).getDescription());
                 items[i] = ingredientList.get(i).getDescription();
             }
             for (int i =0; i<recipeList.size(); i++ ) {
+                itemsDropdown.add( recipeList.get(i).getTitle());
                 items[j] = recipeList.get(i).getTitle();
                 j+=1;
             }
@@ -141,7 +146,6 @@ public class MealAddFragment extends DialogFragment {
         mealAddTextView = view.findViewById(R.id.meal_picker);
         adapter = new ArrayAdapter<String>(context, R.layout.ingredient_dropdown_layout, items);
         mealAddTextView.setAdapter(adapter);
-
         mealAddTextView.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -151,6 +155,8 @@ public class MealAddFragment extends DialogFragment {
                     for(int i = 0; i < listAdapter.getCount(); i++) {
                         String temp = listAdapter.getItem(i).toString();
                         if(str.compareTo(temp) == 0) {
+                            mealSelected = temp;
+                            positionSelected = itemsDropdown.indexOf(mealSelected);
                             return;
                         } else {
                             positionSelected = i+1;
