@@ -94,7 +94,7 @@ public class RecipeAddFragment extends DialogFragment
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_input, container, false);
 
         // init views
         topBar = view.findViewById(R.id.recipe_add_top_bar);
