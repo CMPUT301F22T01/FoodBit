@@ -1,15 +1,10 @@
 
-
 package com.CMPUT301F22T01.foodbit.controllers;
 
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
-import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Receive requests from UI and other Controllers to update the meal plan and pass along
@@ -149,4 +144,3 @@ public class MealPlanController {
         db.getAllItemsCustom(mealPlan, new MealPlan());
     }
 }
-

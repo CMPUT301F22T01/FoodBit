@@ -4,11 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,6 +13,10 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
@@ -176,14 +175,16 @@ public class MealAddFragment extends DialogFragment {
                     int ingredientSize = ingredientList.size();
                     if (!notRealItem) { // Is a real item. Fixed DB Issues basically
                         if (positionSelected < ingredientSize) {
-                            meal.setRecipeID(ingredientList.get(positionSelected).getId());
+                            Ingredient ingredient = ingredientList.get(positionSelected);
+                            meal.setRecipeID(ingredient.getId());
                             meal.setIngredient(true);
+                            meal.setIngredients(ingredient);
                             Log.e("mealAdd Ingredient:", ingredientList.get(positionSelected).getDescription());
                         } else {
                             meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
                             meal.setIngredient(false);
-//                            meal.setIngredientList(recipeList.get(positionSelected-ingredientSize).doGetIngredientList());
-                            meal.setIngredients(recipeList.get(positionSelected-ingredientSize).getIngredients());
+                            meal.setIngredientsFromRecipe(recipeList.get(positionSelected-ingredientSize).getIngredients(),
+                                    recipeList.get(positionSelected-ingredientSize).getNumServings());
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
                     }

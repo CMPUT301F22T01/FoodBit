@@ -1,6 +1,12 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
@@ -10,13 +16,6 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
@@ -70,8 +69,7 @@ public class MealDetailFragment extends Fragment {
         ingredientEmptyView = view.findViewById(R.id.meal_detail_ingredients_empty);
         collapsingToolbarLayout = view.findViewById(R.id.meal_detail_top_bar);
 
-        // set text
-        populateData();
+
 
         // back button functionality
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -114,6 +112,9 @@ public class MealDetailFragment extends Fragment {
                 }
             }
         });
+
+        // set text
+        populateData();
 
         return view;
     }
@@ -198,7 +199,7 @@ public class MealDetailFragment extends Fragment {
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.getIngredients().isEmpty()) {
+        if (!mealPlan.getIngredients().isEmpty() && !mealPlan.isIngredient()) {
             setUpRecyclerView();
         } else {
             // no ingredients

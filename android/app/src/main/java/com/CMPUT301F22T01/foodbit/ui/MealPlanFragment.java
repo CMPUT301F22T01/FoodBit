@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The main Meal Plan page that displays the list of MealPlans
@@ -38,8 +39,8 @@ public class MealPlanFragment extends Fragment {
 
     public String TAG = "MealPlan";
 
-    // get recipe book from MainActivity
-    private MealPlanController mealPlan;
+    // get meal plan from MainActivity
+    private final MealPlanController mealPlan = MainActivity.mealPlan;
 
     MealPlanAdapter adapter;
 
@@ -101,8 +102,10 @@ public class MealPlanFragment extends Fragment {
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
 
+        // sort
+        Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
+
         // set RecyclerView
-        this.mealPlan = MainActivity.mealPlan;
         adapter = new MealPlanAdapter(mealPlan.getArrayList());
         Log.e(TAG,"init = " + mealPlan.getArrayList());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
@@ -122,9 +125,9 @@ public class MealPlanFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        // real time updates of the recipeController
-        CollectionReference recipeBookRef = MainActivity.mealPlanRef;
-        recipeBookRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        // real time updates of the mealPlanController
+        CollectionReference mealPlanRef = MainActivity.mealPlanRef;
+        mealPlanRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
             @SuppressLint("NotifyDataSetChanged")
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -132,13 +135,15 @@ public class MealPlanFragment extends Fragment {
                     Log.e(TAG, "Listen failed.", error);
                     return;
                 }
-                ArrayList<MealPlan> newRecipes = new ArrayList<MealPlan>();
+                ArrayList<MealPlan> newMealPlans = new ArrayList<MealPlan>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    newRecipes.add(doc.toObject(MealPlan.class));
+                    MealPlan newMeal = new MealPlan(doc);
+                    newMeal.setId(doc.getId());
+                    newMealPlans.add(newMeal);
                 }
-                mealPlan.update(newRecipes);
-                Log.e(TAG, "Current recipes: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
+                mealPlan.update(newMealPlans);
+                Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
                 adapter.notifyDataSetChanged();
             }
         });
