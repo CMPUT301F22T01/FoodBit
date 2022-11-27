@@ -22,6 +22,7 @@ import java.util.ArrayList;
  * recipe detail page, or meal detail page.
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
+    final String TAG = "IngredientAdapter";
     public final static int INGREDIENT_STORAGE = 0;
     public final static int RECIPE_ADD = 1;
     public final static int RECIPE_DETAIL = 2;
@@ -133,7 +134,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         TextView unitView = holder.getIngredientUnitView();
         TextView missingDetailsView = holder.getMissingDetailsView();
 
-        if (description.equals("") || bestBefore.equals("") || location.equals("") ||  unit.equals("") || category.equals("")) {
+        if (((description == null) || (bestBefore == null) || (location == null) || (unit == null))
+        && mode == INGREDIENT_STORAGE) {
             missingDetailsView.setVisibility(View.VISIBLE);
         }
 

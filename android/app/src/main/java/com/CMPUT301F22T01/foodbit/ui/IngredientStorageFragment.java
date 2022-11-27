@@ -114,9 +114,8 @@ public class IngredientStorageFragment extends Fragment {
         // Changed from addButton to adding by clicking the add icon on the Top Action Bar
         //Button addButton = view.findViewById(R.id.ingredient_storage_add_button);
 
-        int mode = 0;
         ingredientStorage = MainActivity.ingredientStorage;
-        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), mode);
+        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), IngredientAdapter.INGREDIENT_STORAGE);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
