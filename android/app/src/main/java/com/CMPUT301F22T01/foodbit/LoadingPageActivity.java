@@ -15,7 +15,8 @@ import com.CMPUT301F22T01.foodbit.controllers.DatabaseController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
+
 
 public class LoadingPageActivity extends AppCompatActivity {
     static String FID = "empty";
@@ -39,7 +40,9 @@ public class LoadingPageActivity extends AppCompatActivity {
                 MainActivity.mealPlan = new MealPlanController();
 
                 MainActivity.recipeBookRef = db.collection(FID).document(FID).collection("Recipe Book");
-                MainActivity.recipeBook = new RecipeBook();
+                MainActivity.recipeController = new RecipeController();
+                // todo: test
+//                MainActivity.recipeController.load();
 
                 MainActivity.ingredientStorageRef = db.collection(FID).document(FID).collection("ingredient list");
                 MainActivity.ingredientStorage = new IngredientStorage();

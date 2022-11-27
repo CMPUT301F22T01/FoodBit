@@ -1,6 +1,8 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
+import android.net.wifi.WifiNetworkSpecifier;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,10 +21,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
@@ -32,10 +34,10 @@ import java.util.ArrayList;
  */
 public class RecipeBookFragment extends Fragment {
 
-    public String TAG = "RecipeBook";
+    public String TAG = "RecipeController";
 
     // get recipe book from MainActivity
-    private RecipeBook recipeBook;
+    private final RecipeController recipeController = MainActivity.recipeController;
 
     RecipeAdapter adapter;
 
@@ -66,25 +68,42 @@ public class RecipeBookFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch(item.getItemId())
-        {   //Adding a Recipe
-            case R.id.recipe_add:
-                //launches RecipeAddFragment
-                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-                return true;
+        int itemId = item.getItemId();//Adding a Recipe
+        if (itemId == R.id.recipe_add) {//launches RecipeAddFragment
+            new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+            return true;
 
             // Sorting the Recipes accordingly
-            case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter3:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter1) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter2) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter3) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter4) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+
+            return super.onOptionsItemSelected(item);
         }
+        return super.onOptionsItemSelected(item);
 
 
     }
@@ -94,24 +113,14 @@ public class RecipeBookFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment and initialize recipeBook
+        // Inflate the layout for this fragment and initialize recipeController
         View view = inflater.inflate(R.layout.fragment_recipe_book, container, false);
-        recipeBook = MainActivity.recipeBook;
 
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
 
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        //Button addButton = view.findViewById(R.id.recipe_book_add_button);
-
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
-
-
-        // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        // add button launches RecipeAddFragment
-        //addButton.setOnClickListener(addButtonClicked());
-
 
         getActivity().setTitle("Recipe Book");
         return view;
@@ -123,7 +132,7 @@ public class RecipeBookFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        // real time updates of the recipeBook
+        // real time updates of the recipeController
         recipeBookUpdate();
     }
 
@@ -137,7 +146,8 @@ public class RecipeBookFragment extends Fragment {
 
 
     private void setUpRecyclerView(@NonNull RecyclerView recyclerView) {
-        adapter = new RecipeAdapter(recipeBook.getRecipes());
+//        adapter = new RecipeAdapter(recipeController.getRecipes());
+        adapter = new RecipeAdapter(MainActivity.recipeController.getRecipes());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -158,38 +168,23 @@ public class RecipeBookFragment extends Fragment {
             ArrayList<Recipe> newRecipes = new ArrayList<>();
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
-                Recipe newRecipe = doc.toObject(Recipe.class);
+//                Recipe newRecipe = doc.toObject(Recipe.class);
+//                Recipe newRecipe = new Recipe(
+//                        doc.getId(),
+//                        doc.get("title").toString(),
+//                        (int) (long) doc.get("prepTime"),
+//                        (int) (long) doc.get("numServings"),
+//                        (String) doc.get("category"),
+//                        (String) doc.get("comments"),
+//                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
+//                        (ArrayList<Ingredient>) doc.get("ingredients"));
+                Recipe newRecipe = new Recipe(doc);
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);
-//                Map<String, Object> data = doc.getData();
-//                String title = (String) data.get("title");
-//                int prepTime = (int) (long) data.get("prepTime");
-//                int numServings = (int) (long) data.get("numServings");
-//                String category = (String) data.get("category");
-//                String comments = (String) data.get("comments");
-//                Uri photo;
-//                if (data.get("photo") != null) {
-//                    photo = Uri.parse((String) data.get("photo"));
-//                } else {photo = null;}
-//                ArrayList<HashMap<String, Object>> ingredientsData = (ArrayList<HashMap<String, Object>>) data.get("ingredients");
-//                ArrayList<Ingredient> ingredients = new ArrayList<>();
-//                assert ingredientsData != null;
-//                for (HashMap<String, Object> ingredientData : ingredientsData) {
-//                    ingredients.add(new Ingredient(
-//                            (String) ingredientData.get("description"),
-//                            ((float) (double) ingredientData.get("amount")),
-//                            (String) ingredientData.get("unit"),
-//                            (String) ingredientData.get("category")
-//                    ));
-//                }
-//                Recipe newRecipe = new Recipe(
-//                        doc.getId(), title, prepTime, numServings, category, comments, photo, ingredients);
-//                newRecipes.add(newRecipe);
-//                Log.d(TAG, "recipe id: "+newRecipe.getId());
             }
-            recipeBook.setRecipes(newRecipes);
-            Log.d(TAG, "current recipe book: "+recipeBook);
-            Log.d(TAG, "Current recipes: " + recipeBook.getRecipes());
+            recipeController.setRecipes(newRecipes);
+            Log.d(TAG, "current recipe book: "+ recipeController);
+            Log.d(TAG, "Current recipes: " + recipeController.getRecipes());
             adapter.notifyDataSetChanged();
         });
     }

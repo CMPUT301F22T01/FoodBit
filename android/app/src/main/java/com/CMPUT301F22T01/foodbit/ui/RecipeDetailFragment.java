@@ -22,19 +22,22 @@ import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
 
 /**
  * A <code>recipe detail screen</code> that displays the details of a recipe.
  */
-public class RecipeDetailFragment extends Fragment {
+public class RecipeDetailFragment extends Fragment implements RecipeEditFragment.OnRecipeEditedListener{
 
-    private static final String TAG = "Recipe Detail Fragment";
-
-    Recipe recipe;
+    public static final String TAG = "Recipe Detail Fragment";
+    private static final RecipeController recipeController = MainActivity.recipeController;
+    private Recipe recipe;
+    private int position;
 
     // UI
-    Toolbar toolbar;
+    Toolbar topBar;
     TextView prepTimeView;
     TextView numServingsView;
     TextView categoryView;
@@ -43,6 +46,8 @@ public class RecipeDetailFragment extends Fragment {
     RecyclerView ingredientsRecyclerView;
     TextView ingredientEmptyView;
     Button tempDeleteButton;
+    IngredientAdapter ingredientAdapter;
+    CollapsingToolbarLayout collapsingToolbarLayout;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
@@ -63,7 +68,7 @@ public class RecipeDetailFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // set UI
-        toolbar = view.findViewById(R.id.recipe_detail_toolbar);
+        topBar = view.findViewById(R.id.recipe_detail_topbar);
         prepTimeView = view.findViewById(R.id.recipe_detail_prep_time);
         numServingsView = view.findViewById(R.id.recipe_detail_num_servings);
         categoryView = view.findViewById(R.id.recipe_detail_category_content);
@@ -73,11 +78,23 @@ public class RecipeDetailFragment extends Fragment {
         ingredientEmptyView = view.findViewById(R.id.recipe_detail_ingredients_empty);
         tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
         tempDeleteButton.setOnClickListener(deleteButtonClicked());
+        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
 
-        toolbar.setTitle(recipe.getTitle());
         // back button behaviour
-        toolbar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+        topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
 
+        // edit button behaviour
+        topBar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            // done button behaviour
+            if (itemId == R.id.recipe_detail_edit) {
+                editButtonClicked();
+            }
+            return false;
+
+        });
+
+        collapsingToolbarLayout.setTitle(recipe.getTitle());
         String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
         String prepTimeText = recipe.getPrepTime() + prepTimeSuffix;
         prepTimeView.setText(prepTimeText);
@@ -87,7 +104,12 @@ public class RecipeDetailFragment extends Fragment {
         if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
         if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
 
-        appBarImageView.setImageResource(android.R.color.transparent);
+        Uri photo = recipe.getPhoto();
+        if (photo == null) {
+            appBarImageView.setImageResource(android.R.color.transparent);
+        } else {
+            appBarImageView.setImageURI(photo);
+        }
 
         setUpRecyclerView();
 
@@ -96,8 +118,13 @@ public class RecipeDetailFragment extends Fragment {
         return view;
     }
 
+    private void editButtonClicked() {
+//        new RecipeEditFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+        RecipeEditFragment.newInstance(position).show(getChildFragmentManager(), RecipeEditFragment.TAG);
+    }
+
     private void setUpRecyclerView() {
-        IngredientAdapter ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);
@@ -108,7 +135,7 @@ public class RecipeDetailFragment extends Fragment {
     @NonNull
     private View.OnClickListener deleteButtonClicked() {
         return v -> {
-            MainActivity.recipeBook.remove(recipe);
+            recipeController.remove(recipe);
             Navigation.findNavController(v).popBackStack();
         };
     }
@@ -116,8 +143,24 @@ public class RecipeDetailFragment extends Fragment {
     // get recipe from recipe book obtained from MainActivity and position given by the adapter
     private void getRecipe() {
         assert getArguments() != null;
-        int position = getArguments().getInt("position");
-        recipe = MainActivity.recipeBook.getRecipeByPosition(position);
+        position = getArguments().getInt("position");
+        recipe = recipeController.getRecipeByPosition(position);
         Log.d(TAG, String.valueOf(recipe));
+    }
+
+    @Override
+    public void onEdited() {
+        recipe = recipeController.getRecipeByPosition(position);
+        collapsingToolbarLayout.setTitle(recipe.getTitle());
+        String prepTimeSuffix = " minutes"; if (recipe.getPrepTime() == 1) {prepTimeSuffix = " minute";}
+        String prepTimeText = recipe.getPrepTime() + prepTimeSuffix;
+        prepTimeView.setText(prepTimeText);
+        String numServingsSuffix = " servings"; if (recipe.getNumServings() == 1) {numServingsSuffix = " serving";}
+        String numServingsText = recipe.getNumServings() + numServingsSuffix;
+        numServingsView.setText(numServingsText);
+        if (recipe.getCategory() != null) {categoryView.setText(recipe.getCategory());} else {categoryView.setText("Unknown");}
+        if (recipe.getComments() != null) {commentsView.setText(recipe.getComments());} else {commentsView.setText("No comments.");}
+        appBarImageView.setImageURI(recipe.getPhoto());
+        setUpRecyclerView();
     }
 }

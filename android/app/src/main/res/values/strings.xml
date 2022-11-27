@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">FoodBit</string>
     <string name="title_ingredient_storage">Ingredients</string>
-    <string name="title_recipe_book">Recipes</string>
+    <string name="title_recipe_book">Recipe Book</string>
     <string name="title_meal_plan">Meal Plan</string>
     <string name="title_shopping_cart">Shopping Cart</string>
     <string name="hello_blank_fragment" tools:ignore="UnusedResources">Hello blank fragment</string>
