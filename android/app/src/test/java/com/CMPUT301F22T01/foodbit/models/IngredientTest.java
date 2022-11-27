@@ -95,13 +95,13 @@ class IngredientTest {
 
     @Test
     void getId() {
-        assertEquals("id", mockIngredient1().getId());
+        assertEquals("id1", mockIngredient1().getId());
     }
 
     @Test
     void setId() {
         Ingredient ingredient = mockIngredient1();
-        assertEquals("id", ingredient.getId());
+        assertEquals("id1", ingredient.getId());
         ingredient.setId("new id");
         assertEquals("new id", ingredient.getId());
     }
