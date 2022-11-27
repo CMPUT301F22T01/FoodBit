@@ -12,6 +12,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.NavigationUI;
 
+import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
@@ -19,7 +20,6 @@ import com.CMPUT301F22T01.foodbit.controllers.RecipeBook;
 //import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 //import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 //import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
-import com.CMPUT301F22T01.foodbit.ui.MealPlanAdapter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -38,9 +38,11 @@ public class MainActivity extends AppCompatActivity {
     public static CollectionReference recipeBookRef;
     public static RecipeBook recipeBook;
     public static CollectionReference ingredientStorageRef;
+    public static CollectionReference categoryStorageRef;
     public static IngredientStorage ingredientStorage;
     public static CollectionReference mealPlanRef;
     public static MealPlanController mealPlan;
+    public static IngredientCategoryController category;
 
     public static MutableLiveData<String> listen = new MutableLiveData<>(); //Listener for FID from firebase
 
