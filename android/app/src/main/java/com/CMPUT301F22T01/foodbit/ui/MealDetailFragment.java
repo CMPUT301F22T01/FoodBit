@@ -1,15 +1,11 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -71,7 +67,7 @@ public class MealDetailFragment extends Fragment {
         servingsView = view.findViewById(R.id.meal_detail_servings);
         ingredientsRecyclerView = view.findViewById(R.id.meal_detail_ingredient_list);
         ingredientsFieldView = view.findViewById(R.id.meal_detail_ingredients_field);
-        collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
+        collapsingToolbarLayout = view.findViewById(R.id.meal_detail_top_bar);
 
         // set text
         populateData();

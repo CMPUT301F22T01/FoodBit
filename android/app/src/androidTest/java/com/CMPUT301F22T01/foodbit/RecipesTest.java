@@ -4,8 +4,6 @@ package com.CMPUT301F22T01.foodbit;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
-import static androidx.test.espresso.action.ViewActions.doubleClick;
-import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -561,7 +559,7 @@ public class RecipesTest {
 
         // check title
         ViewInteraction viewGroup = onView(
-                allOf(withId(R.id.recipe_detail_topbar),
+                allOf(withId(R.id.recipe_detail_toolbar),
                         withParent(allOf(withContentDescription("Sandwich"),
                                 withParent(withId(R.id.appbar)))),
                         isDisplayed()));
@@ -612,10 +610,10 @@ public class RecipesTest {
         // click back button
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
-                                allOf(withId(R.id.recipe_detail_topbar),
+                                allOf(withId(R.id.recipe_detail_toolbar),
                                         childAtPosition(
                                                 allOf(
-                                                        withId(R.id.collapsingToolbarLayout),
+                                                        withId(R.id.recipe_detail_top_bar),
                                                         withContentDescription("Sandwich")),
                                                 1)),
                                 1),
