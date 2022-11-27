@@ -85,23 +85,15 @@ public class MealDetailFragment extends Fragment {
         });
 
         // edit button functionality
-        Button editButton = view.findViewById(R.id.button_meal_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MealEditFragment newFragment = new MealEditFragment(mealPlan);
-                FragmentManager fm = getChildFragmentManager();
-
-                fm.executePendingTransactions();
-                newFragment.show(fm, "EditMeal");
-
-            };
-
-//                return true;
-
+        topBar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.meal_detail_edit) {
+                editButtonClicked();
+            }
+            return false;
         });
 
-        //ate button
+        // ate button
         Button ateButton = view.findViewById(R.id.button_meal_ate);
         ateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +174,14 @@ public class MealDetailFragment extends Fragment {
             mealPlanController.deleteMeal(mealPlan);
             Navigation.findNavController(v).popBackStack();
         };
+    }
+
+    private void editButtonClicked() {
+        MealEditFragment newFragment = new MealEditFragment(mealPlan);
+        FragmentManager fm = getChildFragmentManager();
+
+        fm.executePendingTransactions();
+        newFragment.show(fm, "EditMeal");
     }
 
 
