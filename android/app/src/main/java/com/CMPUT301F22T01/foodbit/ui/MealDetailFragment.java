@@ -200,7 +200,7 @@ public class MealDetailFragment extends Fragment {
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.getIngredients().isEmpty()) {
+        if (!mealPlan.getIngredients().isEmpty() && !mealPlan.isIngredient()) {
             setUpRecyclerView();
         } else {
             // no ingredients
