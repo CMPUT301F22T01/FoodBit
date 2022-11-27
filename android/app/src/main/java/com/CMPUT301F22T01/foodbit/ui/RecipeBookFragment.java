@@ -72,32 +72,12 @@ public class RecipeBookFragment extends Fragment {
             // Sorting the Recipes accordingly
         } else if (itemId == R.id.filter1) {
             Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.filter2) {
             Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.filter3) {
             Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            return super.onOptionsItemSelected(item);
         } else if (itemId == R.id.filter4) {
             Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
-            return super.onOptionsItemSelected(item);
         }
         return super.onOptionsItemSelected(item);
 

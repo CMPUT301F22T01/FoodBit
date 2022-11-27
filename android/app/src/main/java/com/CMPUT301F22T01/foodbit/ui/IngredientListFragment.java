@@ -78,26 +78,27 @@ public class IngredientListFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch(item.getItemId())
-        {   //Adding an Ingredient
-            case R.id.ingredient_add:
-                //launches IngredientAddFragment
-                // allows for addition of a new ingredient when the add option is clicked on the action bar
-                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
-                return true;
+        int itemId = item.getItemId();//Adding an Ingredient
+        if (itemId == R.id.ingredient_add) {//launches IngredientAddFragment
+            // allows for addition of a new ingredient when the add option is clicked on the action bar
+            new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
+            return true;
 
             // Sorting the Ingredients accordingly
-            case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter3:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter1) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.filter2) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.filter3) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.filter4) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
 
     }
