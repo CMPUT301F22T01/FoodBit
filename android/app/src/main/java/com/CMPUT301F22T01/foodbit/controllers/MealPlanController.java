@@ -146,7 +146,7 @@ public class MealPlanController {
 
     public void load() {
         mealPlan.clear();
-        db.getAllItemsDeep(mealPlan, new MealPlan());
+        db.getAllItemsCustom(mealPlan, new MealPlan());
     }
 }
 

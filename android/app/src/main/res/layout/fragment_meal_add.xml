@@ -1,7 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<!-- TODO: this is ugly -->
-
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -43,22 +41,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/meal_select_textview" />
-
-<!--            <com.google.android.material.textfield.TextInputEditText-->
-<!--                android:id="@+id/meal_add_serving_size"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginStart="24dp"-->
-<!--                android:layout_marginTop="32dp"-->
-<!--                android:layout_marginEnd="24dp"-->
-<!--                android:hint="Serving Size"-->
-<!--                android:inputType="number"-->
-<!--                android:maxLines="1"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/meal_spinner"-->
-<!--                tools:ignore="HardcodedText" />-->
-<!--        </com.google.android.material.textfield.TextInputEditText>-->
 
         <TextView
             android:id="@+id/meal_select_textview"
@@ -127,10 +109,6 @@
 
         </EditText>
 
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
 

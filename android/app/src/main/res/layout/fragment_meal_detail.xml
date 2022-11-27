@@ -134,6 +134,16 @@
                 app:layout_constraintEnd_toStartOf="@+id/button_meal_delete"
                 app:layout_constraintTop_toBottomOf="@id/meal_detail_ingredient_list" />
 
+            <TextView
+                android:id="@+id/meal_detail_ingredients_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="This meal contains no ingredients."
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="@+id/meal_detail_ingredients_field"
+                app:layout_constraintStart_toEndOf="@+id/meal_detail_ingredients_field"
+                app:layout_constraintTop_toTopOf="@+id/meal_detail_ingredients_field" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

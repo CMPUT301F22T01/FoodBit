@@ -9,18 +9,13 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -57,10 +52,10 @@ public class IngredientAddFragment extends DialogFragment {
     TextInputLayout amountLayout;
     TextInputLayout locationLayout;
     TextInputLayout categoryLayout;
-    Button addLocation;
-    Button addUnit;
-    Button addCategory;
 
+    /**
+     * Required empty constructor
+     */
     public IngredientAddFragment() {
         // Required empty public constructor
     }
@@ -97,14 +92,18 @@ public class IngredientAddFragment extends DialogFragment {
 
         //Dropdown box for location
         AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
+        //Default list - these are not in the database
         List<String> locations = new ArrayList<>(Arrays.asList("fridge", "pantry", "freezer"));
+        //Getting any units from the database
         locations.addAll(MainActivity.location.getLocationDescription());
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, locations);
         locationTextView.setAdapter(locationAdapter);
 
         //Dropdown box for units
         AutoCompleteTextView unitTextView = view.findViewById(R.id.unit_picker);
+        //Default list - these are not in the database
         List<String> units = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
+        //Getting any units from the database
         units.addAll(MainActivity.unit.getUnitDescription());
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
         unitTextView.setAdapter(unitAdapter);
@@ -143,7 +142,6 @@ public class IngredientAddFragment extends DialogFragment {
                     // if the date is before today's date, amount will default to 0
                     Date todayDate = Calendar.getInstance().getTime();
                     SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-                    //String todayString = formatter.format(todayDate);
 
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
@@ -178,6 +176,7 @@ public class IngredientAddFragment extends DialogFragment {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
                     } else if (!locations.contains(location)) {
+                        //Adds new unit to the adapter and the database if it is not already in it
                         locationAdapter.add(location);
                         locationAdapter.notifyDataSetChanged();
                         IngredientLocation newLocation = new IngredientLocation(location);
@@ -185,6 +184,7 @@ public class IngredientAddFragment extends DialogFragment {
                         MainActivity.location.loadAllFromDB();
                     }
                     if (!units.contains(unit)) {
+                        //Adds new unit to the adapter and the database if it is not already in it
                         unitAdapter.add(unit);
                         unitAdapter.notifyDataSetChanged();
                         IngredientUnit newUnit = new IngredientUnit(unit);
@@ -198,6 +198,7 @@ public class IngredientAddFragment extends DialogFragment {
                         categoryLayout.setError("Required");
                         requiredFieldEntered = false;
                     } else if (!categories.contains(category)) {
+                        //Adds new category to the adapter and the database if it is not already in it
                         categoryAdapter.add(category);
                         categoryAdapter.notifyDataSetChanged();
                         IngredientCategory newCategory = new IngredientCategory(category);
@@ -205,6 +206,7 @@ public class IngredientAddFragment extends DialogFragment {
                         MainActivity.category.loadAllFromDB();
                     }
                     if (requiredFieldEntered) {
+                        //Creating the new ingredient and adding it to the database
                         Ingredient ingredient = new Ingredient(description, bestBefore, location, Float.parseFloat(amount), unit, category);
                         MainActivity.ingredientController.add(ingredient);
                         dismiss();

@@ -14,7 +14,7 @@ import java.util.HashMap;
  * A class to represent a MealPlan with a name, number of servings, id,
  * a boolean indicating whether it is an ingredient, a date, an a list of ingredients.
  */
-public class MealPlan implements dbObject, dbObjectDeep {
+public class MealPlan implements dbObject, dbObjectCustom {
     /**
      * Looking to model MealPlans as Collections
      * MealPlan (Collection)
@@ -111,6 +111,7 @@ public class MealPlan implements dbObject, dbObjectDeep {
         ArrayList<Ingredient> t = new ArrayList<Ingredient>();
         Ingredient copy = new Ingredient();
         copy.setId(ingredient.getId());
+        copy.setDescription(ingredient.getDescription());
         copy.setAmount((float)this.getServings());
         copy.setUnit(ingredient.getUnit());
         t.add(copy);
@@ -144,7 +145,7 @@ public class MealPlan implements dbObject, dbObjectDeep {
         this.recipeID = doc.get("recipeID").toString();
     }
 
-    public MealPlan createFromDoc(QueryDocumentSnapshot doc) {
+    public MealPlan createFromDocCustom(QueryDocumentSnapshot doc) {
         name = (String) doc.get("name");
         servings = (int) (long) doc.get("servings");
         id = doc.getId();
@@ -187,5 +188,4 @@ public class MealPlan implements dbObject, dbObjectDeep {
     };
 
 }
-
 
