@@ -32,6 +32,9 @@ import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
+import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
+import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -121,18 +124,23 @@ public class IngredientEditFragment extends DialogFragment {
         //Dropdown box for location
         AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
         List<String> locations = new ArrayList<>(Arrays.asList("fridge", "pantry", "freezer"));
+        locations.addAll(MainActivity.location.getLocationDescription());
         ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, locations);
         locationTextView.setAdapter(locationAdapter);
 
         //Dropdown box for units
         AutoCompleteTextView unitTextView = view.findViewById(R.id.unit_picker);
         List<String> units = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
+        units.addAll(MainActivity.unit.getUnitDescription());
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
         unitTextView.setAdapter(unitAdapter);
 
         //Dropdown box for categories
         AutoCompleteTextView categoryTextView = view.findViewById(R.id.category_picker);
+        //Defaults of categories - not in database
         List<String> categories = new ArrayList<>(Arrays.asList("vegetables", "fruits", "grains", "snacks", "dairy"));
+        //Getting any categories from the database
+        categories.addAll(MainActivity.category.getCategoryDescription());
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, categories);
         categoryTextView.setAdapter(categoryAdapter);
 
@@ -171,6 +179,10 @@ public class IngredientEditFragment extends DialogFragment {
                         if (!locations.contains(newLocation)) {
                             locationAdapter.add(newLocation);
                             locationAdapter.notifyDataSetChanged();
+                            IngredientLocation location = new IngredientLocation(newLocation);
+                            MainActivity.location.add(location);
+                            MainActivity.location.loadAllFromDB();
+
                             popupWindow.dismiss();
                         }
                         popupWindow.dismiss();
@@ -216,6 +228,10 @@ public class IngredientEditFragment extends DialogFragment {
                         if (!units.contains(newUnit)) {
                             unitAdapter.add(newUnit);
                             unitAdapter.notifyDataSetChanged();
+                            IngredientUnit unit = new IngredientUnit(newUnit);
+                            MainActivity.unit.add(unit);
+                            MainActivity.unit.loadAllFromDB();
+
                             popupWindow.dismiss();
                         }
                         popupWindow.dismiss();
@@ -261,6 +277,10 @@ public class IngredientEditFragment extends DialogFragment {
                         if (!categories.contains(newCategory)) {
                             categoryAdapter.add(newCategory);
                             categoryAdapter.notifyDataSetChanged();
+                            IngredientCategory category = new IngredientCategory(newCategory);
+                            MainActivity.category.add(category);
+                            MainActivity.category.loadAllFromDB();
+
                             popupWindow.dismiss();
                         }
                         popupWindow.dismiss();
