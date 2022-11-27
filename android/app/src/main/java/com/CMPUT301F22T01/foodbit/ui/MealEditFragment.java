@@ -12,6 +12,7 @@ public class MealEditFragment extends MealAddFragment {
 
     public MealEditFragment(MealPlan meal) {
         super(meal);
+
     }
 
     @Override
@@ -19,7 +20,8 @@ public class MealEditFragment extends MealAddFragment {
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
         servingsEditText.setText(String.valueOf(meal.getServings()));
-        mealAddTextView.setText(meal.getName());
+        int selectionPosition = adapter.getPosition(meal.getName());
+        ingredientRecipeSpinner.setSelection(selectionPosition);
         mealDatePicker.setDate(meal.getDate());
 
 
