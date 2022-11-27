@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -124,7 +125,7 @@ public class MealAddFragment extends DialogFragment {
         ArrayList<Ingredient> ingredientList =  ingredientController.getIngredients();
         ArrayList<Recipe> recipeList = recipeController.getRecipes();
         String[] items = new String[ingredientList.size() + recipeList.size()];
-        ;
+
         if (ingredientList.size() + recipeList.size() == 0 ) {
             Log.e("MealAdd","Ingredient and recipe size is 0. Should be impossible since " +
                     "we check for this before launching this fragment.");
@@ -167,6 +168,13 @@ public class MealAddFragment extends DialogFragment {
             }
         });
 
+//        mealAddTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//
+//            }
+//        });
+
         //Date picker
         mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
         mealDatePicker = new EditDatePicker(context,mealDateEditText);
@@ -190,6 +198,7 @@ public class MealAddFragment extends DialogFragment {
                     mealAddLayout.setError("Required");
                     requiredFieldEntered = false;
                 } if (requiredFieldEntered) {
+                    positionSelected = itemsDropdown.indexOf(mealName);
                     meal.setName(mealName);
                     meal.setDate(mealDate);
                     meal.setServings(Integer.valueOf(servings));
