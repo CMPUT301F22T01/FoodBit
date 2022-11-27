@@ -13,7 +13,7 @@ import java.util.Objects;
  * Represents a recipe with an id, a title, preparation time, number of servings,
  * a category, comments, a photo, and a list of ingredients.
  */
-public class Recipe implements IRecipe, dbObject {
+public class Recipe implements dbObject {
     private String id;
     private String title;
     private int prepTime;
@@ -161,7 +161,6 @@ public class Recipe implements IRecipe, dbObject {
      *
      * @return map of ingredient names and the number of ingredients you need to make this recipe
      */
-    @Override
     // todo: return the array list
     public Map<String, Float> doGetIngredientList() {
         Map<String, Float> list = new HashMap<>();
