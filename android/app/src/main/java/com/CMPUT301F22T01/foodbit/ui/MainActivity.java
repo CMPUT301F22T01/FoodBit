@@ -3,6 +3,9 @@ package com.CMPUT301F22T01.foodbit.ui;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +26,7 @@ import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 //import com.CMPUT301F22T01.foodbit.ui.MealPlanFragment;
 //import com.CMPUT301F22T01.foodbit.ui.RecipeBookFragment;
 //import com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment;
+import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.CollectionReference;
 
@@ -59,15 +63,18 @@ public class MainActivity extends AppCompatActivity {
 
         //declaring and initializing the action bar
         ActionBar actionBar;
+        setSupportActionBar(findViewById(R.id.action_bar));
         actionBar = getSupportActionBar();
-
+        assert actionBar != null;
+        actionBar.setElevation(10);
         //changing the color to match
-        ColorDrawable colorDrawable
-                = new ColorDrawable(Color.parseColor("#ff9d3f"));
-        actionBar.setBackgroundDrawable(colorDrawable);
-
-
-
+//        ColorDrawable colorDrawable
+//                = new ColorDrawable(Color.parseColor("#ffffff"));
+//        assert actionBar != null;
+//        actionBar.setBackgroundDrawable(colorDrawable);
+//        Spannable text = new SpannableString(actionBar.getTitle());
+//        text.setSpan(new ForegroundColorSpan(Color.BLACK), 0, text.length(), Spannable.SPAN_INCLUSIVE_INCLUSIVE);
+//        actionBar.setTitle(text);
         setUpNavBar();
     }
 
