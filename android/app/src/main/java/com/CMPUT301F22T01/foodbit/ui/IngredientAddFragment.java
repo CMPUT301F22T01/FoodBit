@@ -27,6 +27,7 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
+import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -114,6 +115,7 @@ public class IngredientAddFragment extends DialogFragment {
         //Dropdown box for units
         AutoCompleteTextView unitTextView = view.findViewById(R.id.unit_picker);
         List<String> units = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
+        units.addAll(MainActivity.unit.getUnitDescription());
         ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
         unitTextView.setAdapter(unitAdapter);
 
@@ -203,6 +205,10 @@ public class IngredientAddFragment extends DialogFragment {
                         if (!units.contains(newUnit)){
                             unitAdapter.add(newUnit);
                             unitAdapter.notifyDataSetChanged();
+                            IngredientUnit unit = new IngredientUnit(newUnit);
+                            MainActivity.unit.add(unit);
+                            MainActivity.unit.loadAllFromDB();
+
                             popupWindow.dismiss();
                         }
                         popupWindow.dismiss();
