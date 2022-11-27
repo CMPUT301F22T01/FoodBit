@@ -14,7 +14,6 @@ import java.util.Objects;
  * Provide controls to a list of <code>Recipe</code> class objects.
  */
 public class RecipeController implements Serializable {
-//    private FirebaseFirestore db;
     private DatabaseController db = new DatabaseController("Recipe Book");
     private final ArrayList<Recipe> recipes;
 

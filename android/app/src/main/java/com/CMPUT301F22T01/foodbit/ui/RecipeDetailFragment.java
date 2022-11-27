@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,11 +21,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import java.util.Objects;
 
 /**
  * A <code>recipe detail screen</code> that displays the details of a recipe.
@@ -57,7 +59,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getRecipe();
-
+//        getActivity().getActionBar().hide();
     }
 
     @SuppressLint("SetTextI18n")
@@ -68,6 +70,10 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         View view = inflater.inflate(R.layout.fragment_recipe_detail, container, false);
 
         // set UI
+//        ActionBar actionBar = requireActivity().getActionBar();
+//        actionBar.hide();
+        Log.d(TAG, "onCreateView: "+MainActivity.actionBar);
+
         topBar = view.findViewById(R.id.recipe_detail_toolbar);
         prepTimeView = view.findViewById(R.id.recipe_detail_prep_time);
         numServingsView = view.findViewById(R.id.recipe_detail_num_servings);
@@ -81,7 +87,9 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         collapsingToolbarLayout = view.findViewById(R.id.recipe_detail_top_bar);
 
         // back button behaviour
-        topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
+        topBar.setNavigationOnClickListener(v -> {
+            Navigation.findNavController(v).popBackStack();
+        });
 
         // edit button behaviour
         topBar.setOnMenuItemClickListener(item -> {
@@ -119,12 +127,11 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     }
 
     private void editButtonClicked() {
-//        new RecipeEditFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
         RecipeEditFragment.newInstance(position).show(getChildFragmentManager(), RecipeEditFragment.TAG);
     }
 
     private void setUpRecyclerView() {
-        ingredientAdapter = new IngredientAdapter(recipe.getIngredients(), IngredientAdapter.RECIPE_DETAIL);
+        ingredientAdapter = new IngredientAdapter(recipe.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
         ingredientsRecyclerView.setAdapter(ingredientAdapter);

@@ -13,7 +13,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -88,7 +87,7 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.ingredientStorage.delete(ingredient);
+                MainActivity.ingredientController.delete(ingredient);
                 Navigation.findNavController(v).popBackStack();
             }
         });
@@ -111,13 +110,13 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
     private void getIngredient() {
         assert getArguments() != null;
         position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
     }
 
     @Override
     public void onEdited() {
-        ingredient = MainActivity.ingredientStorage.getIngredientByPosition(position);
+        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
         collapsingToolbarLayout.setTitle(ingredient.getDescription());
         descriptionView.setText(ingredient.getDescription());
         bestBeforeView.setText(ingredient.getBestBefore());

@@ -11,7 +11,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
+import com.CMPUT301F22T01.foodbit.ui.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
@@ -74,17 +74,17 @@ public class DatabaseController {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
             case "Units":
-                return MainActivity.unitStorageRef;
+                return MainActivity.unitListRef;
             case "Locations":
-                return MainActivity.locationStorageRef;
+                return MainActivity.locationListRef;
             case "Categories":
-                return MainActivity.categoryStorageRef;
+                return MainActivity.categoryListRef;
             case "Meals":
                 return MainActivity.mealPlanRef;
             case "Ingredients":
-                return MainActivity.ingredientStorageRef;
+                return MainActivity.ingredientListRef;
             case "Recipe Book":
-                return MainActivity.recipeBookRef;
+                return MainActivity.recipeControllerRef;
             default:
                 return null;
         }

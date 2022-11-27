@@ -2,14 +2,13 @@
 
 
 
-package com.CMPUT301F22T01.foodbit;
+package com.CMPUT301F22T01.foodbit.ui;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.category;
-import static com.CMPUT301F22T01.foodbit.MainActivity.db;
-import static com.CMPUT301F22T01.foodbit.MainActivity.ingredientStorage;
-import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
-import static com.CMPUT301F22T01.foodbit.MainActivity.location;
-import static com.CMPUT301F22T01.foodbit.MainActivity.unit;
+import static com.CMPUT301F22T01.foodbit.ui.MainActivity.category;
+import static com.CMPUT301F22T01.foodbit.ui.MainActivity.ingredientController;
+import static com.CMPUT301F22T01.foodbit.ui.MainActivity.listen;
+import static com.CMPUT301F22T01.foodbit.ui.MainActivity.location;
+import static com.CMPUT301F22T01.foodbit.ui.MainActivity.unit;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -17,17 +16,20 @@ import androidx.lifecycle.Observer;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.DatabaseController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientCategoryController;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientLocationController;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientUnitController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class LoadingPageActivity extends AppCompatActivity {
-    static String FID = "empty";
+    private final FirebaseFirestore db = FirebaseFirestore.getInstance();
+    public static String FID = "empty";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,24 +50,24 @@ public class LoadingPageActivity extends AppCompatActivity {
                 MainActivity.mealPlan = new MealPlanController();
                 MainActivity.mealPlan.load();
 
-                MainActivity.recipeBookRef = db.collection(FID).document(FID).collection("Recipe Book");
+                MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
                 MainActivity.recipeController = new RecipeController();
                 // todo: test
 //                MainActivity.recipeController.load();
 
-                MainActivity.ingredientStorageRef = db.collection(FID).document(FID).collection("ingredient list");
-                MainActivity.ingredientStorage = new IngredientStorage();
-                ingredientStorage.loadAllFromDB();
+                MainActivity.ingredientListRef = db.collection(FID).document(FID).collection("ingredient list");
+                MainActivity.ingredientController = new IngredientController();
+                ingredientController.loadAllFromDB();
 
-                MainActivity.categoryStorageRef = db.collection(FID).document(FID).collection("Category List");
+                MainActivity.categoryListRef = db.collection(FID).document(FID).collection("Category List");
                 MainActivity.category = new IngredientCategoryController();
                 category.loadAllFromDB();
 
-                MainActivity.locationStorageRef = db.collection(FID).document(FID).collection("Location List");
+                MainActivity.locationListRef = db.collection(FID).document(FID).collection("Location List");
                 MainActivity.location = new IngredientLocationController();
                 location.loadAllFromDB();
 
-                MainActivity.unitStorageRef = db.collection(FID).document(FID).collection("Unit List");
+                MainActivity.unitListRef = db.collection(FID).document(FID).collection("Unit List");
                 MainActivity.unit = new IngredientUnitController();
                 unit.loadAllFromDB();
 

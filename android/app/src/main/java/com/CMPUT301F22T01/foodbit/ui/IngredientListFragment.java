@@ -10,6 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,9 +20,8 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.EventListener;
@@ -33,20 +33,22 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * The ingredient storage that displays the list of ingredients in the ingredient storage
+ * The ingredient list fragment that displays the list of ingredients in the ingredient list
  */
-public class IngredientStorageFragment extends Fragment {
+public class IngredientListFragment extends Fragment {
 
-    public String TAG = "IngredientStorage";
+    public String TAG = "IngredientController";
 
     private Context context;
 
-    // getting ingredientStorage from main activity
-    private  IngredientStorage ingredientStorage;
+    // getting ingredientController from main activity
+    private IngredientController ingredientController = MainActivity.ingredientController;
 
     IngredientAdapter adapter;
 
-    public IngredientStorageFragment() {
+    TextView missingDetailWarning;
+
+    public IngredientListFragment() {
         // Required empty public constructor
     }
 
@@ -71,7 +73,7 @@ public class IngredientStorageFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
         // Inflating the menu resource file for this fragment
-        inflater.inflate(R.menu.ingredient_storage_actionbar, menu);
+        inflater.inflate(R.menu.ingredient_list_actionbar, menu);
         super.onCreateOptionsMenu(menu, inflater);
     }
 
@@ -79,26 +81,27 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item)
     {
-        switch(item.getItemId())
-        {   //Adding an Ingredient
-            case R.id.ingredient_add:
-                //launches IngredientAddFragment
-                // allows for addition of a new ingredient when the add option is clicked on the action bar
-                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
-                return true;
+        int itemId = item.getItemId();//Adding an Ingredient
+        if (itemId == R.id.ingredient_add) {//launches IngredientAddFragment
+            // allows for addition of a new ingredient when the add option is clicked on the action bar
+            new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
+            return true;
 
             // Sorting the Ingredients accordingly
-            case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter3:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter4:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.filter1) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.filter2) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.filter3) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
+        } else if (itemId == R.id.filter4) {
+            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
 
     }
@@ -106,16 +109,18 @@ public class IngredientStorageFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // inflating the view
-        View view = inflater.inflate(R.layout.fragment_ingredient_storage, container, false);
+        View view = inflater.inflate(R.layout.fragment_ingredient_list, container, false);
 
-        // displays the ingredient storage items and the add button for adding new ingredients
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_storage);
+        // displays the ingredient list items and the add button for adding new ingredients
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        missingDetailWarning = view.findViewById(R.id.ingredient_list_missing_details_warning);
+        setMissingDetailWarningVisibility();
 
         // Changed from addButton to adding by clicking the add icon on the Top Action Bar
-        //Button addButton = view.findViewById(R.id.ingredient_storage_add_button);
+        //Button addButton = view.findViewById(R.id.ingredient_list_add_button);
 
-        ingredientStorage = MainActivity.ingredientStorage;
-        adapter = new IngredientAdapter(ingredientStorage.getIngredients(), IngredientAdapter.INGREDIENT_STORAGE);
+//        adapter = new IngredientAdapter(ingredientController.getIngredients(), IngredientAdapter.INGREDIENT_LIST);
+        adapter = new IngredientListIngredientAdapter(ingredientController.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -126,12 +131,27 @@ public class IngredientStorageFragment extends Fragment {
         return view;
     }
 
+    private void setMissingDetailWarningVisibility() {
+        boolean hasIngredientMissingDetail = false;
+        for (Ingredient ingredient :
+                ingredientController.getIngredients()) {
+            if (ingredient.isMissingDetails()) {
+                hasIngredientMissingDetail = true;
+            }
+        }
+        if (hasIngredientMissingDetail) {
+            missingDetailWarning.setVisibility(View.VISIBLE);
+        } else {
+            missingDetailWarning.setVisibility(View.GONE);
+        }
+    }
+
     @Override
     public void onResume() {
         super.onResume();
 
-        CollectionReference ingredientStorageRef = MainActivity.ingredientStorageRef;
-        ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
+        CollectionReference ingredientListRef = MainActivity.ingredientListRef;
+        ingredientListRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
 
             @SuppressLint("NotifyDataSetChanged")
             @Override
@@ -155,9 +175,10 @@ public class IngredientStorageFragment extends Fragment {
                     newIngredients.add(newIngredient);
                     Log.d(TAG, "ingredient id: " + newIngredient.getId());
                 }
-                ingredientStorage.setIngredients(newIngredients);
-                Log.d(TAG, "current ingredient storage:" + ingredientStorage);
-                Log.d(TAG, "Current ingredients" + ingredientStorage.getIngredients());
+                ingredientController.setIngredients(newIngredients);
+                Log.d(TAG, "current ingredient list:" + ingredientController);
+                Log.d(TAG, "Current ingredients" + ingredientController.getIngredients());
+                setMissingDetailWarningVisibility();
                 adapter.notifyDataSetChanged();
             }
         });
