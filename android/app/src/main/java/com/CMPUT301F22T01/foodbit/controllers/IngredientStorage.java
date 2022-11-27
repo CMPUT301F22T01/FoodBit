@@ -22,7 +22,6 @@ import java.util.Objects;
  * Stores each ingredient created
  */
 public class IngredientStorage implements Serializable {
-    //private FirebaseFirestore db;
     private DatabaseController db = new DatabaseController("Ingredients");
     private final ArrayList<Ingredient> ingredients;
 
@@ -137,6 +136,7 @@ public class IngredientStorage implements Serializable {
 
     /**
      * Loads ingredients from the database
+     * Ingredient expiry dates are checked to see if ingredient is expired or not
      */
     public void loadAllFromDB() {
         ingredients.clear();
