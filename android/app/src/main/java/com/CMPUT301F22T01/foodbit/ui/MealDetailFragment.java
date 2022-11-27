@@ -70,8 +70,7 @@ public class MealDetailFragment extends Fragment {
         ingredientEmptyView = view.findViewById(R.id.meal_detail_ingredients_empty);
         collapsingToolbarLayout = view.findViewById(R.id.meal_detail_top_bar);
 
-        // set text
-        populateData();
+
 
         // back button functionality
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -114,6 +113,9 @@ public class MealDetailFragment extends Fragment {
                 }
             }
         });
+
+        // set text
+        populateData();
 
         return view;
     }
@@ -198,7 +200,7 @@ public class MealDetailFragment extends Fragment {
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.getIngredients().isEmpty()) {
+        if (!mealPlan.getIngredients().isEmpty() && !mealPlan.isIngredient()) {
             setUpRecyclerView();
         } else {
             // no ingredients
