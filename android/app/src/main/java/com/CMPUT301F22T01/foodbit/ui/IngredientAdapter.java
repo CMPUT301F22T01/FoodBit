@@ -21,7 +21,7 @@ import java.util.ArrayList;
  */
 public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.ViewHolder>{
     final String TAG = "IngredientAdapter";
-    private final ArrayList<Ingredient> items;
+    protected final ArrayList<Ingredient> items;
 
     /**
      * Item click listener for ingredients
@@ -109,26 +109,13 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         TextView unitView = holder.getIngredientUnitView();
         TextView missingDetailsView = holder.getMissingDetailsView();
 
-        displayMissingDetailsIcon(description, bestBefore, location, unit, missingDetailsView);
-
         // set up UI
         descriptionView.setText(description);
-        setDescriptionTextSize(descriptionView);
+//        setDescriptionTextSize(descriptionView);
+        descriptionView.setTextSize(14);
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);
-
-        holder.itemView.setOnClickListener(onItemClick(holder));
     }
-
-    protected void setDescriptionTextSize(TextView descriptionView) {
-        descriptionView.setTextSize(14);
-    }
-
-    protected View.OnClickListener onItemClick(@NonNull ViewHolder holder) {
-        return null;
-    };
-
-    protected void displayMissingDetailsIcon(String description, String bestBefore, String location, String unit, TextView missingDetailsView) {}
 
     @Override
     public int getItemCount() {

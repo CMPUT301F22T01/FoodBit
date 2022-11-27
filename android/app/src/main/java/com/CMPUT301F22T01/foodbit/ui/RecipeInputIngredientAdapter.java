@@ -21,10 +21,10 @@ public class RecipeInputIngredientAdapter extends IngredientAdapter{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
+        holder.itemView.setOnClickListener(onItemClick(holder));
     }
 
-    @Override
-    protected View.OnClickListener onItemClick(@NonNull ViewHolder holder) {
+    private View.OnClickListener onItemClick(@NonNull ViewHolder holder) {
         return v -> itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
     }
 }
