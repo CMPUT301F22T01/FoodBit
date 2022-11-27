@@ -64,10 +64,15 @@ public class MealPlanController {
     /**
      * Returns true if the meal plan contains the meal.
      * @param meal meal whose presence in this meal plan is to be tested
-     * @return whether if the meal plan contains the recipe
+     * @return whether the meal plan contains the meal
      */
     public boolean contains(MealPlan meal) {
-        return mealPlan.contains(meal);
+        for (int i =0; i < mealPlan.size(); i++) {
+            if (mealPlan.get(i).getId().equals(meal.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
