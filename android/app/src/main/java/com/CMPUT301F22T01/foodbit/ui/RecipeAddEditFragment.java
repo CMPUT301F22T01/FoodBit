@@ -18,7 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -47,7 +47,7 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
     TextInputLayout commentsLayout;
     MaterialToolbar ingredientsBar;
     RecyclerView ingredientsRecyclerView;
-    IngredientStorage ingredientStorage;
+    IngredientController ingredientStorage;
 
 
 
@@ -88,25 +88,25 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recipe_add, container, false);
+        View view = inflater.inflate(R.layout.fragment_recipe_input, container, false);
 
         // init views
-        topBar = view.findViewById(R.id.recipe_add_top_bar);
+        topBar = view.findViewById(R.id.recipe_input_top_bar);
         topBarSetText();
-        titleEditText = view.findViewById(R.id.recipe_add_edit_text_title);
-        titleLayout = view.findViewById(R.id.recipe_add_text_layout_title);
-        prepTimeEditText = view.findViewById(R.id.recipe_add_edit_text_prep_time);
-        prepTimeLayout = view.findViewById(R.id.recipe_add_text_layout_prep_time);
+        titleEditText = view.findViewById(R.id.recipe_input_edit_text_title);
+        titleLayout = view.findViewById(R.id.recipe_input_text_layout_title);
+        prepTimeEditText = view.findViewById(R.id.recipe_input_edit_text_prep_time);
+        prepTimeLayout = view.findViewById(R.id.recipe_input_text_layout_prep_time);
         prepTimeEditText.addTextChangedListener(prepTimeTextWatcher());
-        numServingsEditText = view.findViewById(R.id.recipe_add_edit_text_num_servings);
-        numServingsLayout = view.findViewById(R.id.recipe_add_text_layout_num_servings);
+        numServingsEditText = view.findViewById(R.id.recipe_input_edit_text_num_servings);
+        numServingsLayout = view.findViewById(R.id.recipe_input_text_layout_num_servings);
         numServingsEditText.addTextChangedListener(numServingsTextWatcher());
-        categoryEditText = view.findViewById(R.id.recipe_add_edit_text_category);
-        categoryLayout = view.findViewById(R.id.recipe_add_text_layout_category);
-        commentsEditText = view.findViewById(R.id.recipe_add_edit_text_comments);
-        commentsLayout = view.findViewById(R.id.recipe_add_text_layout_comments);
-        ingredientsBar = view.findViewById(R.id.recipe_add_ingredients_bar);
-        ingredientsRecyclerView = view.findViewById(R.id.recipe_add_ingredients_list);
+        categoryEditText = view.findViewById(R.id.recipe_input_edit_text_category);
+        categoryLayout = view.findViewById(R.id.recipe_input_text_layout_category);
+        commentsEditText = view.findViewById(R.id.recipe_input_edit_text_comments);
+        commentsLayout = view.findViewById(R.id.recipe_input_text_layout_comments);
+        ingredientsBar = view.findViewById(R.id.recipe_input_ingredients_bar);
+        ingredientsRecyclerView = view.findViewById(R.id.recipe_input_ingredients_list);
 
 
         // preset recipe info in recipe edit screen
@@ -257,13 +257,13 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
     public void onIngredientAdd(Ingredient newIngredient) {
         ingredients.add(newIngredient);
 
-        ingredientStorage = MainActivity.ingredientStorage;
+        ingredientStorage = MainActivity.ingredientController;
         List ingredientList = ingredientStorage.getDescriptions();
 
         for (Ingredient ingredient : ingredients) {
             if (!ingredientList.contains(ingredient.getDescription())) {
                 Ingredient addIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
-                MainActivity.ingredientStorage.add(addIngredient);
+                MainActivity.ingredientController.add(addIngredient);
             }
         }
         ingredientAdapter.notifyDataSetChanged();

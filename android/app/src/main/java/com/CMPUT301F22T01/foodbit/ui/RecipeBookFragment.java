@@ -24,6 +24,7 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The recipe book screen that displays a list of recipes in the recipe book.
@@ -61,34 +62,89 @@ public class RecipeBookFragment extends Fragment {
     }
 
     //Actions performed by the Action Bar
+
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
-        int itemId = item.getItemId();//Adding a Recipe
-        if (itemId == R.id.recipe_add) {//launches RecipeAddFragment
-            new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-            return true;
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {   //Adding a Recipe
+            case R.id.recipe_add:
+                //launches RecipeAddFragment
+                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+                return true;
 
             // Sorting the Recipes accordingly
-        } else if (itemId == R.id.filter1) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.filter2) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.filter3) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-        } else if (itemId == R.id.filter4) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
+            case R.id.filter1:
+                titleSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Title", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter2:
+                prepTimeSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Preparation Time", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter3:
+                serveSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Number of Servings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter4:
+                categorySort(getView());
+                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+        public void titleSort(View view)
+        {
+            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+            Collections.sort(recipeController.getRecipes(), Recipe.titleAscending);
+            adapter = new RecipeAdapter(recipeController.getRecipes());
 
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(linearLayoutManager);
 
+            recyclerView.setAdapter(adapter);
+        }
+
+        public void prepTimeSort(View view)
+        {
+            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+            Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort);
+            adapter = new RecipeAdapter(recipeController.getRecipes());
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(linearLayoutManager);
+
+            recyclerView.setAdapter(adapter);
+        }
+
+        public void serveSort(View view)
+        {
+            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+            Collections.sort(recipeController.getRecipes(), Recipe.servingSort);
+            adapter = new RecipeAdapter(recipeController.getRecipes());
+
+            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+            recyclerView.setLayoutManager(linearLayoutManager);
+
+            recyclerView.setAdapter(adapter);
+        }
+
+    public void categorySort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+        Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending);
+        adapter = new RecipeAdapter(recipeController.getRecipes());
+
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(linearLayoutManager);
+
+        recyclerView.setAdapter(adapter);
     }
 
 
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
 
-                             Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment and initialize recipeController
         View view = inflater.inflate(R.layout.fragment_recipe_book, container, false);
 

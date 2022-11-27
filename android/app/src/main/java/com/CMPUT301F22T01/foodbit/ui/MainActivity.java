@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     public static RecipeController recipeController;
     public static CollectionReference ingredientListRef;
     public static IngredientController ingredientController;
+    public static IngredientListFragment ingredientListFragment;
     public static CollectionReference mealPlanRef;
     public static MealPlanController mealPlan;
     public static CollectionReference categoryListRef;

@@ -9,8 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
@@ -26,7 +25,7 @@ import java.util.Objects;
  */
 public class RecipeAddFragment extends RecipeAddEditFragment {
 
-    private IngredientStorage ingredientStorage;
+    private IngredientController ingredientStorage;
     public RecipeAddFragment() {
         // Required empty public constructor
     }
@@ -73,14 +72,14 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
             requiredFieldEntered = false;
         }
 
-        ingredientStorage = MainActivity.ingredientStorage;
+        ingredientStorage = MainActivity.ingredientController;
         List ingredientList = ingredientStorage.getDescriptions();
 
         for (Ingredient ingredient : ingredients) {
             if (!ingredientList.contains(ingredient.getDescription()))
             {
-                Ingredient newIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
-                MainActivity.ingredientStorage.add(newIngredient);
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "Not Assigned", ingredient.getCategory());
+                MainActivity.ingredientController.add(newIngredient);
                 ingredientAdapter.notifyDataSetChanged();
             }
 
