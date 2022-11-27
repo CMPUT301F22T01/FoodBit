@@ -1,7 +1,5 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
-import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
-
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.models.dbObject;
@@ -35,6 +34,9 @@ public class DatabaseController {
     public DatabaseController(String mode){
         this.mode = mode;
         switch(mode) {
+            case "Categories":
+                this.model = new IngredientCategory();
+                break;
             case "Meals":
                 this.model = new MealPlan();
                 break;
@@ -55,6 +57,8 @@ public class DatabaseController {
     private CollectionReference getCollectionReference() {
         db = FirebaseFirestore.getInstance();
         switch (mode) {
+            case "Categories":
+                return MainActivity.categoryStorageRef;
             case "Meals":
                 return MainActivity.mealPlanRef;
             case "Ingredients":

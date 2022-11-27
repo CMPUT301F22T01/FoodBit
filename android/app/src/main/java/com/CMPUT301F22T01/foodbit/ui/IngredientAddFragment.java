@@ -21,19 +21,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,7 +37,6 @@ import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 /**
@@ -51,7 +46,6 @@ import java.util.Objects;
 public class IngredientAddFragment extends DialogFragment {
     public final static String TAG = "AddIngredient";
     private Context context;
-
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;
@@ -123,7 +117,10 @@ public class IngredientAddFragment extends DialogFragment {
 
         //Dropdown box for categories
         AutoCompleteTextView categoryTextView = view.findViewById(R.id.category_picker);
+        //Defaults of categories - not in database
         List<String> categories = new ArrayList<>(Arrays.asList("vegetables", "fruits", "grains", "snacks", "dairy"));
+        //Getting any categories from the database
+        categories.addAll(MainActivity.category.getCategoryDescription());
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, categories);
         categoryTextView.setAdapter(categoryAdapter);
 
@@ -245,6 +242,10 @@ public class IngredientAddFragment extends DialogFragment {
                         if (!categories.contains(newCategory)) {
                             categoryAdapter.add(newCategory);
                             categoryAdapter.notifyDataSetChanged();
+                            IngredientCategory category = new IngredientCategory(newCategory);
+                            MainActivity.category.add(category);
+                            MainActivity.category.loadAllFromDB();
+
                             popupWindow.dismiss();
                         }
                         popupWindow.dismiss();
