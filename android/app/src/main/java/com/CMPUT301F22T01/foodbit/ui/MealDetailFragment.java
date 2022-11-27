@@ -1,11 +1,15 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import static com.CMPUT301F22T01.foodbit.MainActivity.listen;
+
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.Observer;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -67,23 +71,7 @@ public class MealDetailFragment extends Fragment {
         collapsingToolbarLayout = view.findViewById(R.id.collapsingToolbarLayout);
 
         // set text
-        collapsingToolbarLayout.setTitle(mealPlan.getName());
-        SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
-        collapsingToolbarLayout.setTitle(sf.format(mealPlan.getDate()));
-        mealNameView.setText(mealPlan.getName());
-        String servingsSuffix = " servings";
-        if (mealPlan.getServings() == 1) {
-            servingsSuffix = " serving";
-        }
-        String servingsText = mealPlan.getServings() + servingsSuffix;
-        servingsView.setText(servingsText);
-
-        if (!mealPlan.isIngredient() && !mealPlan.getIngredients().isEmpty()) {
-                setUpRecyclerView();
-        } else {
-            // meal is an ingredient, so ingredient list is null
-            ingredientsFieldView.setVisibility(View.INVISIBLE);
-        }
+        populateData();
 
         // back button functionality
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -110,17 +98,7 @@ public class MealDetailFragment extends Fragment {
                 newFragment.show(fm, "EditMeal");
 
                 //TODO: Not working, Attempting to update details page after editing
-//                newFragment.getDialog().setOnDismissListener(new DialogInterface.OnDismissListener() {
-//                    @Override
-//                    public void onDismiss(DialogInterface dialog) {
-//                        // reset text
-//                        mealPlan = newFragment.getUpdatedMeal();
-//                        descriptionView.setText(mealPlan.getName());
-//                        SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
-//                        mealDateView.setText(sf.format(mealPlan.getDate()));
-//                        servingsView.setText(String.valueOf(mealPlan.getServings()));
-//                    }
-//                });
+
             };
 
 //                return true;
@@ -153,4 +131,26 @@ public class MealDetailFragment extends Fragment {
             Navigation.findNavController(v).popBackStack();
         };
     }
+
+
+    public void populateData() {
+        collapsingToolbarLayout.setTitle(mealPlan.getName());
+        SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
+        collapsingToolbarLayout.setTitle(sf.format(mealPlan.getDate()));
+        mealNameView.setText(mealPlan.getName());
+        String servingsSuffix = " servings";
+        if (mealPlan.getServings() == 1) {
+            servingsSuffix = " serving";
+        }
+        String servingsText = mealPlan.getServings() + servingsSuffix;
+        servingsView.setText(servingsText);
+
+        if (!mealPlan.isIngredient() && !mealPlan.getIngredients().isEmpty()) {
+            setUpRecyclerView();
+        } else {
+            // meal is an ingredient, so ingredient list is null
+            ingredientsFieldView.setVisibility(View.INVISIBLE);
+        }
+    }
+
 }
