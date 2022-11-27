@@ -82,7 +82,7 @@ public class IngredientStorage implements Serializable {
     }
 
     /**
-     * Gets all the descriptions from the ingredients in teh list
+     * Gets all the descriptions from the ingredients in the list
      * @return list of the descriptions
      */
     public List<String> getDescriptions() {
