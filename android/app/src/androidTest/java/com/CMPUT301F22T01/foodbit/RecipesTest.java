@@ -4,6 +4,8 @@ package com.CMPUT301F22T01.foodbit;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
+import static androidx.test.espresso.action.ViewActions.doubleClick;
+import static androidx.test.espresso.action.ViewActions.longClick;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
@@ -59,7 +61,7 @@ public class RecipesTest {
     public void recipeAddTest() throws InterruptedException {
         // click on the recipes icon on the bottom navigation bar
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"),
+                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_bar),
@@ -72,9 +74,9 @@ public class RecipesTest {
 
         // check if navigated to the recipe book screen
         ViewInteraction textView = onView(
-                allOf(withId(com.google.android.material.R.id.navigation_bar_item_large_label_view), withText("Recipes"),
+                allOf(withId(com.google.android.material.R.id.navigation_bar_item_large_label_view), withText("Recipe Book"),
                         withParent(allOf(withId(com.google.android.material.R.id.navigation_bar_item_labels_group),
-                                withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"))))),
+                                withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"))))),
                         isDisplayed()));
         textView.check(matches(isDisplayed()));
 
