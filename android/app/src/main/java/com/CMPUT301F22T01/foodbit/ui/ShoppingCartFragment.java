@@ -111,6 +111,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
 
         adapter.notifyDataSetChanged();
     }
+
     public void categoryASort(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
@@ -183,7 +184,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     }
 
 
-    public ArrayList<Ingredient> shoppingList = new ArrayList<>();
+    public ArrayList<Ingredient> shoppingList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -194,7 +195,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         mealPlan = MainActivity.mealPlanController;
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
-//        shoppingCart(shoppingList, mealIngredient, storage);
+        shoppingList = getShoppingList(mealIngredient, storage);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
