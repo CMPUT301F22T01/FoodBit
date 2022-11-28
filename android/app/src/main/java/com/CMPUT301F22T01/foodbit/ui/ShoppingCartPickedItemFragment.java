@@ -174,4 +174,5 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
             dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
         }
     }
+
 }

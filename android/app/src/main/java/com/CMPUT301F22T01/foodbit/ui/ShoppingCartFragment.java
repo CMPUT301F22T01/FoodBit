@@ -132,32 +132,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         adapter.notifyDataSetChanged();
     }
 
-//    /**
-//     * Compare the Ingredient of MealPlan with Ingredient Storage
-//     * Store new amount into new Shopping Ingredient list for adapter use
-//     * @param shoppingList
-//     * @param mealIngredient
-//     * @param storage
-//     */
-//    public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
-//                             ArrayList<Ingredient> storage) {
-//        for (Ingredient ingredient: mealIngredient
-//             ) {
-//            shoppingList.add(ingredient);
-//        }
-//        for (Ingredient ingredient: shoppingList
-//        ) {
-//            int index = lookUpIngredientID(ingredient.getId(), storage);
-//            if (ingredient.getAmount() > storage.get(index).getAmount()){
-//                float amountNeed = ingredient.getAmount() - storage.get(index).getAmount();
-//                ingredient.update(storage.get(index));
-//                ingredient.setAmount(amountNeed);
-//            }
-//            else{
-//                shoppingList.remove(ingredient);
-//            }
-//        }
-//    }
+
     private ArrayList<Ingredient> getShoppingList(ArrayList<Ingredient> need, ArrayList<Ingredient> have) {
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         for (Ingredient ingredientNeeded :
@@ -233,20 +208,6 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onItemPickedUp(Ingredient newIngredient) {
-//        have = ingredientController.getIngredients();
-//        for (Ingredient item :
-//                have) {
-//            if (Objects.equals(item.getId(), newIngredient.getId())) {
-//                Log.d(TAG, "onItemPickedUp: newIngredient amount: "+newIngredient.getAmount());
-//                item.update(newIngredient);
-//                Log.d(TAG, "onItemPickedUp: "+item.getId()+" amount: "+item.getAmount());
-//            }
-//        }
-//        shoppingList = getShoppingList(need, have);
-//        for (Ingredient item :
-//                shoppingList) {
-//            Log.d(TAG, "onItemPickedUp: shopping List "+item.getAmount());
-//        }
         shoppingList.clear();
         shoppingList.addAll(getShoppingList(need, have));
         adapter.notifyDataSetChanged();
