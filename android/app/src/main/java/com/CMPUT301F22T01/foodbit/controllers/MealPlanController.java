@@ -160,7 +160,8 @@ public class MealPlanController {
         for (int i =0; i < mealPlan.size(); i++) { //iterate through all meals
             MealPlan meal = mealPlan.get(i);
             for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
-                Ingredient currentIngred = meal.getIngredients().get(j);
+                Ingredient currentIngred = new Ingredient();
+                currentIngred.update(meal.getIngredients().get(j));
                 int index = lookUpIngredientID(currentIngred.getId(),allIngredients);
                 if(index != -1) {
                     allIngredients.get(index).setAmount(currentIngred.getAmount() +
@@ -179,9 +180,10 @@ public class MealPlanController {
      */
     private void addToIngredientList(MealPlan meal) {
         for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
-            Ingredient currentIngred = meal.getIngredients().get(j);
+            Ingredient currentIngred = new Ingredient();
+            currentIngred.update(meal.getIngredients().get(j));
             int index = lookUpIngredientID(currentIngred.getId(),ingredList);
-            if(index != -1) {
+            if(index != -1) {//Found ingredient in our list already
                 ingredList.get(index).setAmount(currentIngred.getAmount() +
                         ingredList.get(index).getAmount());
             } else {
