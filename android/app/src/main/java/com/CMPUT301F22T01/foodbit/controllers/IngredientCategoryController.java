@@ -101,21 +101,6 @@ public class IngredientCategoryController implements Serializable {
      */
     public void loadAllFromDB() {
         categories.clear();
-        CollectionReference collectionReference = MainActivity.categoryListRef;
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
-                    for (int i =0; i< task.getResult().size(); i++) {
-                        IngredientCategory model = task.getResult().getDocuments().get(i).toObject(IngredientCategory.class);
-                        categories.add(model);
-                    }
-                }
-            }
-        });
+        db.getAllItems(categories);
     }
 }
