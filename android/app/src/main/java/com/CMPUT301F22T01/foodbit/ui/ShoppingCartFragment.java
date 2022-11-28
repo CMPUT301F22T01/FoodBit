@@ -116,7 +116,6 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
 
         adapter.notifyDataSetChanged();
     }
-
     public void categoryASort(View view)
     {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
