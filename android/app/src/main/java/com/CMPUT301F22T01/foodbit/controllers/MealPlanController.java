@@ -33,8 +33,8 @@ public class MealPlanController {
 //        this.loadAllMeals();
     }
 
-    public MealPlanController(List<MealPlan> meals) {
-        this.mealPlans = (ArrayList<MealPlan>) meals;
+    public MealPlanController(List<MealPlan> mealPlans) {
+        this.mealPlans = (ArrayList<MealPlan>) mealPlans;
     }
 
     /**
