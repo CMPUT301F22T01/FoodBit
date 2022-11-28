@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Input Picked Amount"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:maxLines="1"
                 tools:ignore="HardcodedText"
                 tools:layout_conversion_absoluteHeight="48dp"

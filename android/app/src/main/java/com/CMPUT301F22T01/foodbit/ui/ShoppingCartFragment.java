@@ -23,8 +23,6 @@ import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -76,59 +74,15 @@ public class ShoppingCartFragment extends Fragment {
         {
             // Sorting the Shopping List accordingly
             case R.id.filter1:
-                descriptionSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Description", Toast.LENGTH_SHORT).show();
-                break;
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
             case R.id.filter2:
-                categorySort(getView());
-                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
-                break;
+                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
 
             default:
                 return super.onOptionsItemSelected(item);
         }
-        return true;
 
     }
-    public void descriptionSort(View view)
-    {
-        ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlanController;
-        Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
-        ArrayList<Ingredient> shoppingList = new ArrayList<>();
-        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
-        ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        List<String> descriptionList = ingredientController.getDescriptions();
-        //shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
-
-        //get views
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
-
-        adapter.notifyDataSetChanged();
-
-    }
-    public void categorySort(View view)
-    {   ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlanController;
-        Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
-        ArrayList<Ingredient> shoppingList = new ArrayList<>();
-        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
-        ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        List<String> descriptionList = ingredientController.getDescriptions();
-        //shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
-
-
-        //get views
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
-
-        //set recyclerView
-        int mode = 0;
-
-        adapter.notifyDataSetChanged();
-    }
-
 
     /**
      * Compare the Ingredient of MealPlan with Ingredient Storage
@@ -175,10 +129,8 @@ public class ShoppingCartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
-
         mealPlan = MainActivity.mealPlanController;
-//        ArrayList<Ingredient> shoppingList = new ArrayList<>();
-//        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+//        ArrayList<Ingredient> mealIngredient = mealPlanController.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
 //        shoppingCart(shoppingList, mealIngredient, storage);
 

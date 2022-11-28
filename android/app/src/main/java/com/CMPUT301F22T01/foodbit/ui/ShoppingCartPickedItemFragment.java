@@ -1,15 +1,21 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import static java.lang.Float.parseFloat;
+
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -25,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.security.PrivateKey;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,7 +55,6 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     TextView category;
     TextInputEditText pickedAmountEditText;
     TextInputLayout pickedAmountLayout;
-    ArrayAdapter<String> adapter;
 
     public ShoppingCartPickedItemFragment() {
         // Required empty public constructor
@@ -93,6 +99,8 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         amountNeeded = view.findViewById(R.id.shopping_picked_need_amount);
         unit = view.findViewById(R.id.shopping_picked_unit);
         category = view.findViewById(R.id.shopping_picked_category);
+        pickedAmountEditText = view.findViewById(R.id.shopping_picked_amount);
+        pickedAmountLayout = view.findViewById(R.id.shopping_picked_amount_layout);
 
         topBar.setTitle("Picked Ingredient");
         // close button
@@ -103,13 +111,33 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
             }
         });
 
+        topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                String inputPickedAmount = Objects.requireNonNull(pickedAmountEditText.getText().toString());
+                boolean requiredFieldEntered = true;
+                if (inputPickedAmount.equals("")) {
+                    pickedAmountLayout.setError("Required");
+                    requiredFieldEntered = false;
+                }
+                if (requiredFieldEntered) {
+                    Log.d(TAG, "current ingredient: "+ ingredient.getDescription());
+                    Log.d(TAG, "current neededAmount: "+ inputPickedAmount);
+                    Log.d(TAG, "current originalAmount: "+ ingredient.getAmount());
+                    float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
+                    ingredient.setAmount(amount);
+                    MainActivity.ingredientController.edit(ingredient);
+                    dismiss();
+                }
+                return false;
+            }
+        });
+
         // setting to current ingredient details
         description.setText(ingredient.getDescription());
         amountNeeded.setText(String.valueOf(ingredient.getAmount()));
         unit.setText(ingredient.getUnit());
         category.setText(ingredient.getCategory());
-
-
 
         return view;
     }
@@ -119,5 +147,21 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         position = getArguments().getInt("position");
         ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Dialog dialog = getDialog();
+        if (dialog != null) {
+            int width = ViewGroup.LayoutParams.MATCH_PARENT;
+            int height = ViewGroup.LayoutParams.MATCH_PARENT;
+            dialog.getWindow().setLayout(width, height);
+            dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
+        }
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
     }
 }
