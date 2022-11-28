@@ -200,11 +200,14 @@ public class MealDetailFragment extends Fragment {
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.getIngredients().isEmpty() && !mealPlan.isIngredient()) {
+        if (!mealPlan.getIngredients().isEmpty()) {
+            ingredientEmptyView.setVisibility(View.INVISIBLE);
+            ingredientsRecyclerView.setVisibility(View.VISIBLE);
             setUpRecyclerView();
         } else {
             // no ingredients
             ingredientEmptyView.setVisibility(View.VISIBLE);
+            ingredientsRecyclerView.setVisibility(View.INVISIBLE);
         }
     }
 
