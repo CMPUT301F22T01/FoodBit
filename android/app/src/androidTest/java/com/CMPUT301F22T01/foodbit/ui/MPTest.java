@@ -245,21 +245,18 @@ public class MPTest {
         // check meal name displayed
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.meal_detail_name), withText("recipe"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView5.check(matches(withText("recipe")));
 
         // check meal servings is displayed
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.meal_detail_servings), withText("4 servings"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView6.check(matches(withText("4 servings")));
 
         // check for ingredients (none)
         ViewInteraction textView7 = onView(
                 allOf(withId(R.id.meal_detail_ingredients_field), withText("Ingredients"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
                         isDisplayed()));
         textView7.check(matches(withText("Ingredients")));
 
@@ -281,16 +278,16 @@ public class MPTest {
 //                        isDisplayed()));
 //        textView10.check(matches(withText("kg")));
 
-        // try to eat the meal
-        ViewInteraction materialButton5 = onView(
-                allOf(withId(R.id.button_meal_ate), withText("Ate"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("androidx.core.widget.NestedScrollView")),
-                                        0),
-                                5),
-                        isDisplayed()));
-        materialButton5.perform(click());
+//        // try to eat the meal
+//        ViewInteraction materialButton5 = onView(
+//                allOf(withId(R.id.button_meal_ate), withText("Ate"),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withClassName(is("androidx.core.widget.NestedScrollView")),
+//                                        0),
+//                                5),
+//                        isDisplayed()));
+//        materialButton5.perform(click());
 
         // edit the meal
         ViewInteraction actionMenuItemView6 = onView(
@@ -337,9 +334,7 @@ public class MPTest {
 
         // new servings displayed
         ViewInteraction textView11 = onView(
-                allOf(withId(R.id.meal_detail_servings), withText("8 servings"),
-                        withParent(withParent(IsInstanceOf.<View>instanceOf(android.widget.ScrollView.class))),
-                        isDisplayed()));
+                allOf(withId(R.id.meal_detail_servings), withText("8 servings"), isDisplayed()));
         textView11.check(matches(withText("8 servings")));
 
 //        ViewInteraction textView12 = onView(
