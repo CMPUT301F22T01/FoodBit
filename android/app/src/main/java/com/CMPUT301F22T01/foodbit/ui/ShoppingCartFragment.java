@@ -232,21 +232,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
-    public void onItemPickedUp(Ingredient newIngredient) {
-//        have = ingredientController.getIngredients();
-//        for (Ingredient item :
-//                have) {
-//            if (Objects.equals(item.getId(), newIngredient.getId())) {
-//                Log.d(TAG, "onItemPickedUp: newIngredient amount: "+newIngredient.getAmount());
-//                item.update(newIngredient);
-//                Log.d(TAG, "onItemPickedUp: "+item.getId()+" amount: "+item.getAmount());
-//            }
-//        }
-//        shoppingList = getShoppingList(need, have);
-//        for (Ingredient item :
-//                shoppingList) {
-//            Log.d(TAG, "onItemPickedUp: shopping List "+item.getAmount());
-//        }
+    public void onItemPickedUp() {
         shoppingList.clear();
         shoppingList.addAll(getShoppingList(need, have));
         adapter.notifyDataSetChanged();
