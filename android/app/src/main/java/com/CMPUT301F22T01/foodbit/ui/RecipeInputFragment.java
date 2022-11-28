@@ -10,9 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -45,10 +48,10 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     TextInputEditText commentsEditText;
     TextInputLayout commentsLayout;
     MaterialToolbar ingredientsBar;
+    TextView photoPrompt;
+    ImageView photoImage;
     RecyclerView ingredientsRecyclerView;
     IngredientController ingredientStorage;
-
-
 
     protected Context context;
     // get recipe book from MainActivity
