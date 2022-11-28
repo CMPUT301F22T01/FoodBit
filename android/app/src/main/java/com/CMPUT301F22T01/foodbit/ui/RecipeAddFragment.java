@@ -23,7 +23,7 @@ import java.util.Objects;
  * Issues: users are not yet able to edit or remove ingredients that are added to the recipe in this screen.
  * There is a false error reported by the IDE which actually works fine.
  */
-public class RecipeAddFragment extends RecipeAddEditFragment {
+public class RecipeAddFragment extends RecipeInputFragment {
 
     private IngredientController ingredientStorage;
     public RecipeAddFragment() {
@@ -77,18 +77,15 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         ArrayList<Ingredient> ingredientList = ingredientStorage.getIngredients();
 
         for (Ingredient ingredient : ingredients) {
-
-
             if (!ingredientDescriptionList.contains(ingredient.getDescription()))
             {
-                Ingredient newIngredient = new Ingredient(ingredient.getId(),ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
                 MainActivity.ingredientController.add(newIngredient);
                 ingredientAdapter.notifyDataSetChanged();
             }
 
             if (ingredientDescriptionList.contains(ingredient.getDescription()))
             {
-
                 for (Ingredient matchIngredient:ingredientList)
                 {
                     if (ingredient.getDescription().equals(matchIngredient.getDescription()))
@@ -97,7 +94,6 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
                     }
                 }
             }
-
         }
 
 

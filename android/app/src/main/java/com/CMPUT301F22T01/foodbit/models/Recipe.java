@@ -157,21 +157,20 @@ public class Recipe implements dbObject {
         this.ingredients = ingredients;
     }
 
-    /**
-     * Get ingredient list of a recipe.
-     *
-     * @return map of ingredient names and the number of ingredients you need to make this recipe
-     */
-    // todo: return the array list
-    public Map<String, Float> doGetIngredientList() {
-        Map<String, Float> list = new HashMap<>();
-        for (Ingredient ingredient : ingredients) {
-            String key = ingredient.getId();
-            float value = ingredient.getAmount();
-            list.put(key, value);
-        }
-        return list;
-    }
+//    /**
+//     * Get ingredient list of a recipe.
+//     *
+//     * @return map with ingredient id as its key and amount as its value
+//     */
+//    public Map<String, Float> doGetIngredientList() {
+//        Map<String, Float> list = new HashMap<>();
+//        for (Ingredient ingredient : ingredients) {
+//            String key = ingredient.getId();
+//            float value = ingredient.getAmount();
+//            list.put(key, value);
+//        }
+//        return list;
+//    }
     public static Comparator<Recipe> titleAscending = new Comparator<Recipe>() {
         @Override
         public int compare(Recipe r1, Recipe r2)

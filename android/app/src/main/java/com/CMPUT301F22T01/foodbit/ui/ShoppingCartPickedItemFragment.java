@@ -73,9 +73,10 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
      *
      * @return A new instance of fragment ShoppingCartPickedItemFragment.
      */
-    public static ShoppingCartPickedItemFragment newInstance() {
+    public static ShoppingCartPickedItemFragment newInstance(int position) {
         ShoppingCartPickedItemFragment fragment = new ShoppingCartPickedItemFragment();
         Bundle args = new Bundle();
+        args.putInt("position", position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -107,27 +108,31 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         topBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).popBackStack();
+//                Navigation.findNavController(v).popBackStack();
+                dismiss();
             }
         });
 
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                String inputPickedAmount = Objects.requireNonNull(pickedAmountEditText.getText().toString());
-                boolean requiredFieldEntered = true;
-                if (inputPickedAmount.equals("")) {
-                    pickedAmountLayout.setError("Required");
-                    requiredFieldEntered = false;
-                }
-                if (requiredFieldEntered) {
-                    Log.d(TAG, "current ingredient: "+ ingredient.getDescription());
-                    Log.d(TAG, "current neededAmount: "+ inputPickedAmount);
-                    Log.d(TAG, "current originalAmount: "+ ingredient.getAmount());
-                    float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
-                    ingredient.setAmount(amount);
-                    MainActivity.ingredientController.edit(ingredient);
-                    dismiss();
+                int itemId = item.getItemId();
+                if (itemId == R.id.shopping_edit_done) {
+                    String inputPickedAmount = Objects.requireNonNull(pickedAmountEditText.getText().toString());
+                    boolean requiredFieldEntered = true;
+                    if (inputPickedAmount.equals("")) {
+                        pickedAmountLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    }
+                    if (requiredFieldEntered) {
+                        Log.d(TAG, "current ingredient: " + ingredient.getDescription());
+                        Log.d(TAG, "current neededAmount: " + inputPickedAmount);
+                        Log.d(TAG, "current originalAmount: " + ingredient.getAmount());
+                        float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
+                        ingredient.setAmount(amount);
+                        MainActivity.ingredientController.edit(ingredient);
+                        dismiss();
+                    }
                 }
                 return false;
             }
@@ -145,7 +150,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     private void getIngredient() {
         assert getArguments() != null;
         position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        ingredient = ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
     }
 
@@ -159,9 +164,5 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
             dialog.getWindow().setLayout(width, height);
             dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
         }
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
     }
 }

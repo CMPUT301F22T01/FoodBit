@@ -27,7 +27,7 @@ import java.util.ArrayList;
 /**
  * provide a fragment show shopping cart ingredients
  */
-public class ShoppingCartFragment extends Fragment {
+public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapter.OnItemClickListener{
 
     public String TAG = "shoppingCartFragment";
 
@@ -130,16 +130,17 @@ public class ShoppingCartFragment extends Fragment {
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
         mealPlan = MainActivity.mealPlanController;
-        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+//        ArrayList<Ingredient> mealIngredient = mealPlanController.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        shoppingCart(shoppingList, mealIngredient, storage);
+//        shoppingCart(shoppingList, mealIngredient, storage);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        adapter = new ShoppingCartAdapter(shoppingList);
+        adapter = new ShoppingCartAdapter(storage);
+        adapter.setItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -158,4 +159,8 @@ public class ShoppingCartFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onIngredientItemClick(View v, int position) {
+        ShoppingCartPickedItemFragment.newInstance(position).show(getChildFragmentManager(), TAG);
+    }
 }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 class RecipeTest {
     private Ingredient mockIngredient() {
@@ -130,12 +131,11 @@ class RecipeTest {
         assertEquals("new ingredient", recipe.getIngredients().get(0).getDescription());
     }
 
-    //Failing Test:Needs to be fixed
 //    @Test
-//    void getIngredientList() {
+//    void doGetIngredientList() {
 //        Recipe recipe = mockRecipe();
 //        Map<String, Float> list = recipe.doGetIngredientList();
-//        Float value = list.get("bread");
-//        Assertions.assertEquals(2f, (float) value);
+//        Float value = list.get("id");
+//        assertEquals(2f, (float) value);
 //    }
 }
