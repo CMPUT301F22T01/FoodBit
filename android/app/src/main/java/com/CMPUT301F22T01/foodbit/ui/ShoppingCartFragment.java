@@ -28,6 +28,7 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -148,31 +149,23 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
             shoppingList.add(cartItem);
             Log.d("GetShoppingList", String.valueOf(cartItem.getDescription()));
         }
-        for (int i = 0; i < shoppingList.size(); i++){
-            int index = lookUpIngredientID(shoppingList.get(i).getId(), have);
-            String id = shoppingList.get(i).getId();
-            Log.d("GetShoppingList", String.valueOf(shoppingList.get(i).getAmount()));
-            Log.d("GetShoppingList", String.valueOf(ingredientController.getIngredientById(id).getDescription()));
-            Log.d("GetShoppingList", String.valueOf(ingredientController.getIngredientById(id).getAmount()));
-            if (shoppingList.get(i).getAmount() <= have.get(index).getAmount()) {
-                shoppingList.remove(shoppingList.get(i));
-//                Log.d("GetShoppingList", String.valueOf(shoppingList.size()));
+        ListIterator<Ingredient> iter = shoppingList.listIterator();
+        while (iter.hasNext()){
+            Ingredient currentIngredient = iter.next();
+
+            int index = lookUpIngredientID(currentIngredient.getId(), have);
+            String id = currentIngredient.getId();
+            if (currentIngredient.getAmount() <= have.get(index).getAmount()) {
+                iter.remove();
             } else {
-                float amountNeeded = shoppingList.get(i).getAmount() - have.get(index).getAmount();
-                shoppingList.get(i).setAmount(amountNeeded);
-//                shoppingList.get(i).setCategory(ingredientController.getIngredientById(shoppingList.get(i).getId()).getCategory());
-                shoppingList.get(i).setCategory(have.get(i).getCategory());
-                if(shoppingList.get(i).getCategory() == null) {
-                    shoppingList.get(i).setCategory("missing");
+                float amountNeeded = currentIngredient.getAmount() - have.get(index).getAmount();
+                currentIngredient.setAmount(amountNeeded);
+                currentIngredient.setCategory(ingredientController.getIngredientById(currentIngredient.getId()).getCategory());
+                if(currentIngredient.getCategory() == null) {
+                    currentIngredient.setCategory("missing");
                 }
             }
         }
-        for (int i = 1; i < shoppingList.size(); i++){
-            if (shoppingList.get(i).getAmount() <= 0) {
-                shoppingList.remove(shoppingList.get(i));
-            }
-        }
-//        Log.d("GetShoppingList", String.valueOf(shoppingList.size()));
         return shoppingList;
     }
 
@@ -218,9 +211,9 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
         //update bottom cart info
-        if (adapter.getItemCount() > 0) {
-            bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
-        }
+//        if (adapter.getItemCount() > 0) {
+//            bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
+//        }
 
 
         // add borderlines between items
