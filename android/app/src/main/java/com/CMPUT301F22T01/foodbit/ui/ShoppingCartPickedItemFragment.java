@@ -26,6 +26,7 @@ import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
@@ -50,6 +51,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
 
     public Context context;
     public IngredientController ingredientController = MainActivity.ingredientController;
+    public MealPlanController mealPlanController = MainActivity.mealPlanController;
     public Ingredient ingredient;
     public String id;
 
@@ -149,7 +151,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
 
         // setting to current ingredient details
         description.setText(ingredient.getDescription());
-        amountNeeded.setText(valueOf(ingredient.getAmount()));
+        amountNeeded.setText(valueOf(getAmountFromMealPlan(ingredient) - ingredient.getAmount()));
         unit.setText(ingredient.getUnit());
         if (ingredient.getCategory() == null) {
             category.setText("missing");
@@ -160,7 +162,16 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
 
         return view;
     }
-
+    private float getAmountFromMealPlan(Ingredient cartIngredient){
+        ArrayList<Ingredient> ingredients = mealPlanController.getAllIngredients();
+        for (Ingredient ingredient : ingredients
+             ) {
+            if(ingredient.getId() == cartIngredient.getId()) {
+                return ingredient.getAmount();
+            }
+        }
+        return -1;
+    }
 
     /**
      * Get Ingredient from ingredientController
