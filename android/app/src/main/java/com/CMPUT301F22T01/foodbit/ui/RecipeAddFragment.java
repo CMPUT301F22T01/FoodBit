@@ -23,7 +23,7 @@ import java.util.Objects;
  * Issues: users are not yet able to edit or remove ingredients that are added to the recipe in this screen.
  * There is a false error reported by the IDE which actually works fine.
  */
-public class RecipeAddFragment extends RecipeAddEditFragment {
+public class RecipeAddFragment extends RecipeInputFragment {
 
     private IngredientController ingredientStorage;
     public RecipeAddFragment() {
