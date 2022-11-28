@@ -286,6 +286,6 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
 
     @Override
     public void onIngredientItemClick(View v, int position) {
-        RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
+        RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), TAG);
     }
 }
