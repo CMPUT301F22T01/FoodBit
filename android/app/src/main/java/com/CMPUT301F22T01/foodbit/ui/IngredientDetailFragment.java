@@ -114,14 +114,16 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         toolbar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
             if (recipeController.containsIngredient(ingredient) || mealPlanController.containsIngredient(ingredient)) {
-                String toastMsg = "Edit/Deletion of only amount and location allowed - ingredient used in recipe(s) or meal plan(s)";
-                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
-                String restrictedEdit = "restricted editing";
-                new IngredientEditFragment(position, restrictedEdit).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+                if (itemId == R.id.ingredient_detail_edit) {
+                    String restrictedEdit = "restricted editing";
+                    new IngredientEditFragment(position, restrictedEdit).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+                } else if (itemId == R.id.ingredient_detail_delete) {
+                    String toastMsg = "Edit/Deletion of only amount and location allowed - ingredient used in recipe(s) or meal plan(s)";
+                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+                }
             } else if (itemId == R.id.ingredient_detail_edit) {
                 new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
-            }
-            else if (itemId == R.id.ingredient_detail_delete) {
+            } else if (itemId == R.id.ingredient_detail_delete) {
                 // Removing from the database
                 MainActivity.ingredientController.delete(ingredient);
                 Navigation.findNavController(view).popBackStack();
