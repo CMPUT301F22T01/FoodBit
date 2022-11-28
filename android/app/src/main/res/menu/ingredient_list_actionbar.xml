@@ -14,21 +14,61 @@
         android:id="@+id/filter1"
         android:title="Sort by: Description"
         app:showAsAction = "never"
-        />
+        >
+        <menu>
+            <item
+                android:id="@+id/descriptionFilter1"
+                android:title="Ascending(A-Z)"/>
+            <item
+                android:id="@+id/descriptionFilter2"
+                android:title="Descending(Z-A)"/>
+
+        </menu>
+    </item>
+
     <item
         android:id="@+id/filter2"
         android:title="Sort by: Best Before Date"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/dateFilter1"
+                android:title="Expiring Soon"/>
+            <item
+                android:id="@+id/dateFilter2"
+                android:title="Expiring Later"/>
+
+        </menu>
+    </item>
+
     <item
         android:id="@+id/filter3"
         android:title="Sort by: Location"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+    <menu>
+        <item
+            android:id="@+id/locationFilter1"
+            android:title="Ascending(A-Z)"/>
+        <item
+            android:id="@+id/locationFilter2"
+            android:title="Descending(Z-A)"/>
+
+    </menu>
+    </item>
+
     <item
         android:id="@+id/filter4"
         android:title="Sort by: Category"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/categoryFilter1"
+                android:title="Ascending(A-Z)"/>
+            <item
+                android:id="@+id/categoryFilter2"
+                android:title="Descending(Z-A)"/>
+
+        </menu>
+    </item>
 
 </menu>

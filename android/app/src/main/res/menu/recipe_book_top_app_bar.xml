@@ -13,22 +13,60 @@
     <item
         android:id="@+id/filter1"
         android:title="Sort by: Title"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+
+        <menu>
+            <item
+                android:id="@+id/titleFilter1"
+                android:title="Ascending(A-Z)"/>
+            <item
+                android:id="@+id/titleFilter2"
+                android:title="Descending(Z-A)"/>
+
+        </menu>
+    </item>
+
     <item
         android:id="@+id/filter2"
         android:title="Sort by: Preparation Time"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/timeFilter1"
+                android:title="Quick-Long"/>
+            <item
+                android:id="@+id/timeFilter2"
+                android:title="Long-Quick"/>
+
+        </menu>
+    </item>
     <item
         android:id="@+id/filter3"
         android:title="Sort by: Number of Servings"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/serveFilter1"
+                android:title="Low-High"/>
+            <item
+                android:id="@+id/serveFilter2"
+                android:title="High-Low"/>
+
+        </menu>
+    </item>
     <item
         android:id="@+id/filter4"
         android:title="Sort by: Category"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/categoryFilter1"
+                android:title="Ascending(A-Z)"/>
+            <item
+                android:id="@+id/categoryFilter2"
+                android:title="Descending(Z-A)"/>
+
+        </menu>
+    </item>
 
 </menu>
