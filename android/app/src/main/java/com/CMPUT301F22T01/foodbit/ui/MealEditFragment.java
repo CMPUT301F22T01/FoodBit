@@ -35,6 +35,10 @@ public class MealEditFragment extends MealAddFragment {
         return view;
     }
 
+    /**
+     * Edits a meal
+     * @param meal the meal to be added or edited
+     */
     @Override
     public void mealEditOrAdd(MealPlan meal) {
         mealPlanController.edit(meal);
@@ -44,6 +48,10 @@ public class MealEditFragment extends MealAddFragment {
         fragment.populateData();
     }
 
+    /**
+     * Gets the updated meal
+     * @return the updated meal
+     */
     public MealPlan getUpdatedMeal() {
         return meal;
     }

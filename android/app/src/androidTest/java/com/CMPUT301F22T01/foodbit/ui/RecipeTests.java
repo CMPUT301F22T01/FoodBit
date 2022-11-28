@@ -9,10 +9,8 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
@@ -34,7 +32,6 @@ import com.CMPUT301F22T01.foodbit.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,7 +62,7 @@ public class RecipeTests {
     @Test
     public void tests() throws InterruptedException {
         // add a recipe
-        addRecipe();
+        addRecipeTest();
 
         // view the recipe's detail
         viewRecipeDetailTest();
@@ -76,12 +73,29 @@ public class RecipeTests {
         // see a list of recipes
         seeListOfRecipesTest();
 
+        // add a burger
+        addBurger();
+
+        // sort the recipe book
+        sortRecipeTest();
+
         // delete the recipe
         deleteRecipeTest();
     }
 
-    private void addRecipe() throws InterruptedException {
-        Thread.sleep(2000);
+    private void addRecipeTest() throws InterruptedException {
+
+        Thread.sleep(10000);
+        // go to recipe book page
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_bar),
+                                        0),
+                                1),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
 
         // click add recipe button
         ViewInteraction actionMenuItemView = onView(
@@ -382,27 +396,471 @@ public class RecipeTests {
         // check title
         ViewInteraction textView = onView(
                 allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView.check(matches(withText("Sandwich")));
 
         //check preparation time
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView2.check(matches(withText("10 minutes")));
 
         // check number of servings
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.item_recipe_num_servings), withText("×1"),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView3.check(matches(withText("×1")));
 
         // check comments
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.item_recipe_comments), withText("A simple lunch."),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView4.check(matches(withText("A simple lunch.")));
 
+    }
+
+    private void addBurger() throws InterruptedException {
+        // go to recipe book page
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_bar),
+                                        0),
+                                1),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
+
+        // click add recipe button
+        ViewInteraction actionMenuItemView = onView(
+                allOf(withId(R.id.recipe_add), withContentDescription("AddRecipe"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView.perform(click());
+
+        // enter recipe title
+        ViewInteraction textInputEditText = onView(
+                allOf(withId(R.id.recipe_input_edit_text_title),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_title),
+                                        0),
+                                0)));
+        textInputEditText.perform(scrollTo(), replaceText("Burger"), closeSoftKeyboard());
+
+        // enter recipe category
+        ViewInteraction textInputEditText2 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_category),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_category),
+                                        0),
+                                0)));
+        textInputEditText2.perform(scrollTo(), replaceText("Dinner"), closeSoftKeyboard());
+
+        // enter recipe preparation time
+        ViewInteraction textInputEditText3 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_prep_time),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_prep_time),
+                                        0),
+                                0)));
+        textInputEditText3.perform(scrollTo(), replaceText("20"), closeSoftKeyboard());
+
+        // enter recipe number of servings
+        ViewInteraction textInputEditText4 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_num_servings),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_num_servings),
+                                        0),
+                                0)));
+        textInputEditText4.perform(scrollTo(), replaceText("2"), closeSoftKeyboard());
+
+        // enter recipe comments
+        ViewInteraction textInputEditText5 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_comments),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_comments),
+                                        0),
+                                0)));
+        textInputEditText5.perform(scrollTo(), replaceText("Not a simple lunch."), closeSoftKeyboard());
+
+        // confirm adding the recipe
+        ViewInteraction actionMenuItemView2 = onView(
+                allOf(withId(R.id.recipe_input_done), withContentDescription("CONFIRM"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_top_bar),
+                                        2),
+                                0)));
+        actionMenuItemView2.perform(scrollTo(), click());
+    }
+
+    private void sortRecipeTest() {
+        // click on more options
+        ViewInteraction overflowMenuButton10 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton10.perform(click());
+
+        // test sort by title ascending
+        ViewInteraction materialTextView = onView(
+                allOf(
+                        withId(androidx.recyclerview.R.id.title),
+                        withText("Sort by: Title"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView.perform(click());
+
+        ViewInteraction materialTextView2 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Ascending(A-Z)"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView2.perform(click());
+
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView.check(matches(withText("Burger")));
+
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView2.check(matches(withText("Sandwich")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton2 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton2.perform(click());
+
+        // test sort by title descending
+        ViewInteraction materialTextView3 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Title"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView3.perform(click());
+
+        ViewInteraction materialTextView4 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Descending(Z-A)"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView4.perform(click());
+
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView3.check(matches(withText("Sandwich")));
+
+        ViewInteraction textView4 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView4.check(matches(withText("Burger")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton3 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton3.perform(click());
+
+        // test sort by preparation time ascending
+        ViewInteraction materialTextView5 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Preparation Time"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView5.perform(click());
+
+        ViewInteraction materialTextView6 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Quick-Long"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView6.perform(click());
+
+        ViewInteraction textView5 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView5.check(matches(withText("Sandwich")));
+
+        ViewInteraction textView6 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView6.check(matches(withText("Burger")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton4 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton4.perform(click());
+
+        // test sort by preparation time descending
+        ViewInteraction materialTextView7 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Preparation Time"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView7.perform(click());
+
+        ViewInteraction materialTextView8 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Long-Quick"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView8.perform(click());
+
+        ViewInteraction textView7 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView7.check(matches(withText("Burger")));
+
+        ViewInteraction textView8 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView8.check(matches(withText("Sandwich")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton5 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton5.perform(click());
+
+        // test sort by number of servings ascending
+        ViewInteraction materialTextView9 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Number of Servings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView9.perform(click());
+
+        ViewInteraction materialTextView10 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Low-High"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView10.perform(click());
+
+        ViewInteraction textView9 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView9.check(matches(withText("Sandwich")));
+
+        ViewInteraction textView10 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView10.check(matches(withText("Burger")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton6 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton6.perform(click());
+
+        // test sort by number of servings descending
+        ViewInteraction materialTextView11 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Number of Servings"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView11.perform(click());
+
+        ViewInteraction materialTextView12 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("High-Low"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView12.perform(click());
+
+        ViewInteraction textView11 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView11.check(matches(withText("Burger")));
+
+        ViewInteraction textView12 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView12.check(matches(withText("Sandwich")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton7 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton7.perform(click());
+
+        // test sort by category ascending
+        ViewInteraction materialTextView13 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Category"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView13.perform(click());
+
+        ViewInteraction materialTextView14 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Ascending(A-Z)"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView14.perform(click());
+
+        ViewInteraction textView13 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView13.check(matches(withText("Burger")));
+
+        ViewInteraction textView14 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView14.check(matches(withText("Sandwich")));
+
+        // click on more options
+        ViewInteraction overflowMenuButton8 = onView(
+                allOf(withContentDescription("More options"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.action_bar),
+                                        1),
+                                1),
+                        isDisplayed()));
+        overflowMenuButton8.perform(click());
+
+        // test sort by category descending
+        ViewInteraction materialTextView15 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Category"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView15.perform(click());
+
+        ViewInteraction materialTextView16 = onView(
+                allOf(withId(androidx.recyclerview.R.id.title), withText("Descending(Z-A)"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(androidx.constraintlayout.widget.R.id.content),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView16.perform(click());
+
+        ViewInteraction textView15 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView15.check(matches(withText("Sandwich")));
+
+        ViewInteraction textView16 = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Burger"),
+                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        isDisplayed()));
+        textView16.check(matches(withText("Burger")));
     }
 
     private void deleteRecipeTest() {
@@ -415,7 +873,7 @@ public class RecipeTests {
                 ));
         recyclerView.perform(actionOnItem(hasDescendant(withText("Sandwich")), click()));
 
-        // click of delete recipe
+        // click on delete recipe
         ViewInteraction actionMenuItemView3 = onView(
                 allOf(withId(R.id.recipe_detail_delete), withContentDescription("DELETE"),
                         childAtPosition(
@@ -431,6 +889,27 @@ public class RecipeTests {
                 allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
                         isDisplayed()));
         textView.check(doesNotExist());
+
+        // click on item Burger in recipe book
+        ViewInteraction recyclerView2 = onView(
+                allOf(withId(R.id.recyclerView_recipe_book),
+                        hasDescendant(
+                                hasDescendant(withText("Burger"))
+                        )
+                ));
+        recyclerView2.perform(actionOnItem(hasDescendant(withText("Burger")), click()));
+
+        // click on delete recipe
+        ViewInteraction actionMenuItemView4 = onView(
+                allOf(withId(R.id.recipe_detail_delete), withContentDescription("DELETE"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_detail_toolbar),
+                                        2),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView4.perform(click());
+
     }
 
     private static Matcher<View> childAtPosition(

@@ -29,7 +29,6 @@ public class MealPlanController {
     public MealPlanController(){
         mealPlans = new ArrayList<MealPlan>();
         db = new DatabaseController("Meals");
-//        this.loadAllMeals();
     }
 
     public MealPlanController(List<MealPlan> mealPlans) {
@@ -62,14 +61,6 @@ public class MealPlanController {
         db.editItem(meal);
     }
 
-//    /**
-//     * Call before editing a meal plan object
-//     * @param meal
-//     */
-//    public void cacheEditingMeal(MealPlan meal) {
-//        editingMeal = new MealPlan();
-//        editingMeal.update(meal);
-//    }
     /**
      * Deletes a meal from the meal plan
      * @param meal the meal to be deleted
@@ -116,7 +107,7 @@ public class MealPlanController {
 
     /**
      * Converts the array of MealPlans to a string of their IDs
-     * @return
+     * @return the strings of the MealPlans IDs
      */
     public String toString() {
         String t = "";
@@ -225,6 +216,9 @@ public class MealPlanController {
         }
     }
 
+    /**
+     * Loads the meals
+     */
     public void load() {
         mealPlans.clear();
         db.getAllItemsCustom(mealPlans, new MealPlan());
@@ -247,6 +241,11 @@ public class MealPlanController {
         }
     }
 
+    /**
+     * Checks if a meal contains an ingredient
+     * @param mIngredient the ingredient to be checked for
+     * @return true if the meal contains the ingredient, false otherwise
+     */
     public boolean containsIngredient(Ingredient mIngredient) {
         ArrayList<Ingredient> ingredients = getAllIngredients();
         for (Ingredient ingredient :
@@ -258,6 +257,11 @@ public class MealPlanController {
         return false;
     }
 
+    /**
+     * Checks if a meal contains a recipe
+     * @param recipe the recipe to be checked for
+     * @return true if the meal contains the recipe, false otherwise
+     */
     public boolean containsRecipe(Recipe recipe) {
         ArrayList<Recipe> recipes = new ArrayList<>();
         for (MealPlan mealPlan :

@@ -1,5 +1,6 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.widget.Toast;
@@ -15,25 +16,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class RecipeEditFragment extends RecipeInputFragment {
-    private int position;
     private Recipe recipe;
-    private IngredientController ingredientController;
-
-    public interface OnRecipeEditedListener {
-        void onEdited();
-    }
     private OnRecipeEditedListener recipeEditedListener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         assert getArguments() != null;
-        position = getArguments().getInt("position");
+        int position = getArguments().getInt("position");
         recipe = recipeController.getRecipeByPosition(position);
         ingredients = recipe.getIngredients();
         recipeEditedListener = (OnRecipeEditedListener) getParentFragment();
         assert recipeEditedListener != null;
-        Log.d(TAG, "Parent fragment: "+ getParentFragment());
+        Log.d(TAG, "Parent fragment: " + getParentFragment());
     }
 
     @Override
@@ -50,7 +45,6 @@ public class RecipeEditFragment extends RecipeInputFragment {
         }
     }
 
-
     @Override
     public void setTAG() {
         TAG = "EditRecipe";
@@ -61,15 +55,20 @@ public class RecipeEditFragment extends RecipeInputFragment {
         return "Edit a Recipe";
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void doneButtonClicked() {
         String title = Objects.requireNonNull(titleEditText.getText()).toString();
         String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
         String numServings = Objects.requireNonNull(numServingsEditText.getText()).toString();
         String category = Objects.requireNonNull(categoryEditText.getText()).toString();
-        if (category.equals("")){category = null;}
+        if (category.equals("")) {
+            category = null;
+        }
         String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
-        if (comments.equals("")){comments = null;}
+        if (comments.equals("")) {
+            comments = null;
+        }
         // check empty fields
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
@@ -92,32 +91,28 @@ public class RecipeEditFragment extends RecipeInputFragment {
             requiredFieldEntered = false;
         }
 
-        ingredientController = MainActivity.ingredientController;
+        IngredientController ingredientController = MainActivity.ingredientController;
         List<String> ingredientDescriptionList = ingredientController.getDescriptions();
         ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 
         //Checking if it is an existing ingredient or needs to be added
         for (Ingredient ingredient : ingredients) {
-            if (!ingredientDescriptionList.contains(ingredient.getDescription()))
-            {
+            if (!ingredientDescriptionList.contains(ingredient.getDescription())) {
                 Ingredient newIngredient = new Ingredient(ingredient.getDescription(),
                         0,
                         ingredient.getUnit(),
                         ingredient.getCategory());
                 ingredientController.add(newIngredient);
                 ingredient.setId(newIngredient.getId());
-                Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+                Log.d(TAG, "doneButtonClicked: " + ingredient.getId());
                 ingredientAdapter.notifyDataSetChanged();
             }
-            if (ingredientDescriptionList.contains(ingredient.getDescription()))
-            {
-                for (Ingredient matchIngredient : ingredientList)
-                {
+            if (ingredientDescriptionList.contains(ingredient.getDescription())) {
+                for (Ingredient matchIngredient : ingredientList) {
                     Log.d(TAG, "doneButtonClicked: Successful");
-                    if (ingredient.getDescription().equals(matchIngredient.getDescription()))
-                    {
+                    if (ingredient.getDescription().equals(matchIngredient.getDescription())) {
                         ingredient.setId(matchIngredient.getId());
-                        Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+                        Log.d(TAG, "doneButtonClicked: " + ingredient.getId());
 
                     }
                 }
@@ -129,14 +124,14 @@ public class RecipeEditFragment extends RecipeInputFragment {
             recipe.setNumServings(Integer.parseInt(numServings));
             recipe.setCategory(category);
             recipe.setComments(comments);
-            Log.d(TAG, "doneButtonClicked: "+recipe.getPhoto());
+            Log.d(TAG, "doneButtonClicked: " + recipe.getPhoto());
             if (photoBitmap != null) {
                 recipe.setPhoto(saveImage());
             }
             if (!hasPhoto) {
                 recipe.setPhoto(null);
             }
-            Log.d(TAG, "doneButtonClicked: "+recipe.getPhoto());
+            Log.d(TAG, "doneButtonClicked: " + recipe.getPhoto());
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
             MainActivity.mealPlanController.notifyRecipeChanged(recipe);
@@ -145,5 +140,9 @@ public class RecipeEditFragment extends RecipeInputFragment {
         } else {
             Toast.makeText(context, "Invalid input value(s) - check all fields", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public interface OnRecipeEditedListener {
+        void onEdited();
     }
 }

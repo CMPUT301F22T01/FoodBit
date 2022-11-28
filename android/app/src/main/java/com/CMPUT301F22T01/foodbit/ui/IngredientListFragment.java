@@ -44,7 +44,7 @@ public class IngredientListFragment extends Fragment {
     private Context context;
 
     // getting ingredientController from main activity
-    private IngredientController ingredientController = MainActivity.ingredientController;
+    private final IngredientController ingredientController = MainActivity.ingredientController;
 
     IngredientAdapter adapter;
 

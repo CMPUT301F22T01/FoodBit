@@ -19,7 +19,7 @@ import java.util.List;
  * Stores each of the categories used in ingredients
  */
 public class IngredientCategoryController implements Serializable {
-    private DatabaseController db = new DatabaseController("Categories");
+    private final DatabaseController db = new DatabaseController("Categories");
     private final ArrayList<IngredientCategory> categories;
 
     /**

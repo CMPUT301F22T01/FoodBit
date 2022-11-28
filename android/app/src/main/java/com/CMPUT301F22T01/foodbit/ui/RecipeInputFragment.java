@@ -133,7 +133,7 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         // display recipe info if in recipe edit screen
         displayInfo();
 
-        imageLayout.setOnClickListener(v -> imageLayoutClicked(v));
+        imageLayout.setOnClickListener(this::imageLayoutClicked);
 
         // close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
@@ -157,19 +157,16 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
             dispatchTakePictureIntent();
         } else {
             PopupMenu popup = new PopupMenu(context, v);
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.new_photo) {
-                        dispatchTakePictureIntent();
-                        return true;
-                    } else if (item.getItemId() == R.id.delete_photo){
-                        hasPhoto = false;
-                        imageView.setImageBitmap(null);
-                        return true;
-                    }
-                    return false;
+            popup.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.new_photo) {
+                    dispatchTakePictureIntent();
+                    return true;
+                } else if (item.getItemId() == R.id.delete_photo){
+                    hasPhoto = false;
+                    imageView.setImageBitmap(null);
+                    return true;
                 }
+                return false;
             });
             MenuInflater inflater = popup.getMenuInflater();
             inflater.inflate(R.menu.recipe_add_photo_option, popup.getMenu());

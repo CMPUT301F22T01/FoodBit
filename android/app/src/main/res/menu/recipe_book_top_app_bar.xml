@@ -8,17 +8,19 @@
         android:icon="@drawable/ic_add_top"
         android:title="AddRecipe"
         app:showAsAction = "ifRoom"
-        />
+        tools:ignore="HardcodedText" />
 
     <item
         android:id="@+id/filter1"
         android:title="Sort by: Title"
-        app:showAsAction = "never">
+        app:showAsAction = "never"
+        tools:ignore="HardcodedText">
 
         <menu>
             <item
                 android:id="@+id/titleFilter1"
-                android:title="Ascending(A-Z)"/>
+                android:title="Ascending(A-Z)"
+                tools:ignore="HardcodedText" />
             <item
                 android:id="@+id/titleFilter2"
                 android:title="Descending(Z-A)"/>
@@ -29,7 +31,8 @@
     <item
         android:id="@+id/filter2"
         android:title="Sort by: Preparation Time"
-        app:showAsAction = "never">
+        app:showAsAction = "never"
+        tools:ignore="HardcodedText">
         <menu>
             <item
                 android:id="@+id/timeFilter1"
@@ -43,7 +46,8 @@
     <item
         android:id="@+id/filter3"
         android:title="Sort by: Number of Servings"
-        app:showAsAction = "never">
+        app:showAsAction = "never"
+        tools:ignore="HardcodedText">
         <menu>
             <item
                 android:id="@+id/serveFilter1"
@@ -57,7 +61,8 @@
     <item
         android:id="@+id/filter4"
         android:title="Sort by: Category"
-        app:showAsAction = "never">
+        app:showAsAction = "never"
+        tools:ignore="HardcodedText">
         <menu>
             <item
                 android:id="@+id/categoryFilter1"

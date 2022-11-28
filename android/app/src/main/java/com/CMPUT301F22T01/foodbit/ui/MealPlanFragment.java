@@ -143,7 +143,7 @@ public class MealPlanFragment extends Fragment {
                     newMealPlans.add(newMeal);
                 }
                 mealPlanController.update(newMealPlans);
-                Log.e(TAG, "Current meal plans: " + mealPlanController.toString() + MainActivity.mealPlanRef.getPath());
+                Log.e(TAG, "Current meal plans: " + mealPlanController + MainActivity.mealPlanRef.getPath());
 //                // sort
                 Collections.sort(mealPlanController.getMealPlans(), MealPlan.sortByDate);
                 adapter.notifyDataSetChanged();
