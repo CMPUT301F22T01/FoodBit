@@ -102,8 +102,6 @@ public class RecipeEditFragment extends RecipeInputFragment {
                 Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
                 ingredientAdapter.notifyDataSetChanged();
             }
-//            ingredientDescriptionList = ingredientController.getDescriptions();
-//            ingredientList = ingredientController.getIngredients();
             if (ingredientDescriptionList.contains(ingredient.getDescription()))
             {
                 for (Ingredient matchIngredient : ingredientList)
