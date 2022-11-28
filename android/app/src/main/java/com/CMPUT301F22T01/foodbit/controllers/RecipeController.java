@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.controllers;
 
 import android.util.Log;
 
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
 
@@ -26,6 +27,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Constructs a recipe book with an initial list of recipes.
+     *
      * @param recipes the initial list of recipes
      */
     public RecipeController(List<Recipe> recipes) {
@@ -43,6 +45,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Get a recipe by its index in the list.
+     *
      * @param position the index of the recipe
      * @return the recipe at the position
      */
@@ -52,6 +55,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Get a recipe by its id.
+     *
      * @param id the id of the recipe
      * @return the recipe with the id
      */
@@ -66,6 +70,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Get a list of titles of all the recipes in the recipe book.
+     *
      * @return a list of titles of all the recipes in the recipe book
      */
     public List<String> getTitles() {
@@ -78,6 +83,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Returns true if the recipe book contains the recipe.
+     *
      * @param recipe recipe whose presence in this recipe book is to be tested
      * @return whether if the recipe book contains the recipe
      */
@@ -87,6 +93,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Add a recipe to the recipe book and add the recipe data to the Firestore database.
+     *
      * @param recipe the recipe to be added
      * @throws AssertionError the recipe is already present in the recipe book
      */
@@ -102,6 +109,7 @@ public class RecipeController implements Serializable {
 
     /**
      * Remove the recipe from the recipe book if it is present.
+     *
      * @param recipe the recipe to be removed from the recipe book if it is present
      * @throws AssertionError the recipe is not found in the recipe book
      */
@@ -109,5 +117,20 @@ public class RecipeController implements Serializable {
         String TAG = "RecipeBookDeleteRecipe";
         assert contains(recipe) : "this recipe is not found in the recipe book!";
         db.deleteItem(recipe);
+    }
+
+    public boolean containsIngredient(Ingredient mIngredient) {
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        for (Recipe recipe :
+                recipes) {
+            if (recipe.containsIngredient(mIngredient)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void load() {
+        db.getAllItems(recipes);
     }
 }

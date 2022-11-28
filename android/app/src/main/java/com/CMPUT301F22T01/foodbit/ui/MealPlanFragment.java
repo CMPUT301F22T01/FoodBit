@@ -103,11 +103,11 @@ public class MealPlanFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
 
         // sort
-        Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
+        Collections.sort(mealPlan.getMealPlans(), MealPlan.sortByDate);
 
         // set RecyclerView
-        adapter = new MealPlanAdapter(mealPlan.getArrayList());
-        Log.e(TAG,"init = " + mealPlan.getArrayList());
+        adapter = new MealPlanAdapter(mealPlan.getMealPlans());
+        Log.e(TAG,"init = " + mealPlan.getMealPlans());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -145,7 +145,7 @@ public class MealPlanFragment extends Fragment {
                 mealPlan.update(newMealPlans);
                 Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
                 // sort
-                Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
+                Collections.sort(mealPlan.getMealPlans(), MealPlan.sortByDate);
                 adapter.notifyDataSetChanged();
             }
         });

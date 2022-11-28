@@ -50,12 +50,12 @@ public class MealPlanControllerTest {
     void getArrayList() {
         MealPlanController mpController1 = mockMealPlanController(1);
         assert mpController1 != null;
-        ArrayList<MealPlan> meals1 = mpController1.getArrayList();
+        ArrayList<MealPlan> meals1 = mpController1.getMealPlans();
         assertEquals("id1", meals1.get(0).getId());
         assertEquals("id2", meals1.get(1).getId());
         MealPlanController mpController2 = mockMealPlanController(2);
         assert mpController2 != null;
-        ArrayList<MealPlan> meals2 = mpController2.getArrayList();
+        ArrayList<MealPlan> meals2 = mpController2.getMealPlans();
         assertEquals("id3", meals2.get(0).getId());
         assertEquals("id4", meals2.get(1).getId());
     }
