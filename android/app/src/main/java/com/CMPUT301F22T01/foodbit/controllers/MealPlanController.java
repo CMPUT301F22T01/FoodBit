@@ -152,7 +152,7 @@ public class MealPlanController {
      */
     public void notifyRecipeChanged(Recipe recipe) {
         for (int i =0; i < mealPlan.size(); i++) {
-            if (mealPlan.get(i).getRecipeId().equals(recipe.getId())) {
+            if (mealPlan.get(i).getRecipeID().equals(recipe.getId())) {
                 //Recipe exists within meal, edit the meal
                 MealPlan meal = mealPlan.get(i);
                 meal.setName(recipe.getTitle());

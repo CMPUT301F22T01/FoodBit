@@ -171,20 +171,20 @@ public class MealPlanTest {
 
     @Test
     void getRecipeID() {
-        assertNull(mockMealPlanIngredient().getRecipeId());
-        assertNull(mockMealPlanRecipe().getRecipeId());
+        assertNull(mockMealPlanIngredient().getRecipeID());
+        assertNull(mockMealPlanRecipe().getRecipeID());
     }
 
     @Test
     void setRecipeID() {
         MealPlan mealPlanIngredient = mockMealPlanIngredient();
-        assertNull(mealPlanIngredient.getRecipeId());
+        assertNull(mealPlanIngredient.getRecipeID());
         mealPlanIngredient.setRecipeID("recipeID1");
-        assertEquals("recipeID1", mealPlanIngredient.getRecipeId());
+        assertEquals("recipeID1", mealPlanIngredient.getRecipeID());
 
         MealPlan mealPlanRecipe = mockMealPlanRecipe();
-        assertNull(mealPlanRecipe.getRecipeId());
+        assertNull(mealPlanRecipe.getRecipeID());
         mealPlanRecipe.setRecipeID("recipeID2");
-        assertEquals("recipeID2", mealPlanRecipe.getRecipeId());
+        assertEquals("recipeID2", mealPlanRecipe.getRecipeID());
     }
 }
