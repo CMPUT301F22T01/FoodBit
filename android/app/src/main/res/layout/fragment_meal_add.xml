@@ -123,7 +123,7 @@
                 android:id="@+id/meal_add_serving_size"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Serving Size"
+                android:hint="Servings"
                 android:inputType="number"
                 android:maxLines="1"
                 tools:ignore="HardcodedText"
