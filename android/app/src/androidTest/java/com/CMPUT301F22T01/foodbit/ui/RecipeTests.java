@@ -519,6 +519,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton10.perform(click());
 
+        // test sort by title ascending
         ViewInteraction materialTextView = onView(
                 allOf(
                         withId(androidx.recyclerview.R.id.title),
@@ -554,7 +555,6 @@ public class RecipeTests {
         textView2.check(matches(withText("Sandwich")));
 
         // click on more options
-
         ViewInteraction overflowMenuButton2 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -565,6 +565,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton2.perform(click());
 
+        // test sort by title descending
         ViewInteraction materialTextView3 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Title"),
                         childAtPosition(
@@ -608,6 +609,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton3.perform(click());
 
+        // test sort by preparation time ascending
         ViewInteraction materialTextView5 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Preparation Time"),
                         childAtPosition(
@@ -651,6 +653,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton4.perform(click());
 
+        // test sort by preparation time descending
         ViewInteraction materialTextView7 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Preparation Time"),
                         childAtPosition(
@@ -694,6 +697,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton5.perform(click());
 
+        // test sort by number of servings ascending
         ViewInteraction materialTextView9 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Number of Servings"),
                         childAtPosition(
@@ -737,6 +741,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton6.perform(click());
 
+        // test sort by number of servings descending
         ViewInteraction materialTextView11 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Number of Servings"),
                         childAtPosition(
@@ -780,6 +785,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton7.perform(click());
 
+        // test sort by category ascending
         ViewInteraction materialTextView13 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Category"),
                         childAtPosition(
@@ -823,6 +829,7 @@ public class RecipeTests {
                         isDisplayed()));
         overflowMenuButton8.perform(click());
 
+        // test sort by category descending
         ViewInteraction materialTextView15 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Category"),
                         childAtPosition(
