@@ -169,7 +169,9 @@ public class Ingredient implements Serializable, dbObject {
         @Override
         public int compare(Ingredient o1, Ingredient o2)
         {
-            return o1.getBestBefore().compareTo(o2.bestBefore);
+            if (o1.getBestBefore()!=null && o2.getBestBefore()!=null){
+                return o1.getBestBefore().compareTo(o2.bestBefore);}
+            return (o1.getBestBefore() == o2.getBestBefore())?0:(o1.getBestBefore()==null? 1 : -1);
         }
     };
     public static Comparator<Ingredient> locationAscending = new Comparator<Ingredient>() {
