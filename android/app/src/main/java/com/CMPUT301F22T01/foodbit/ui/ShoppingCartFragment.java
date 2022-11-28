@@ -91,8 +91,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
                 Toast.makeText(getActivity(), "Sorting(Z-A): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter1:
-                categoryASort();
-                //Sorting categories in ascending order
+                //Sorting categories in ascending order    
+                categoryASort();      
                 Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter2:
@@ -110,8 +110,9 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         Collections.sort(shoppingList, Ingredient.nameAscending);
         adapter.notifyDataSetChanged();
     }
-    public void descriptionDSort() {
-
+  
+    public void descriptionDSort()
+    {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Collections.sort(shoppingList, Ingredient.nameAscending.reversed());
         }
