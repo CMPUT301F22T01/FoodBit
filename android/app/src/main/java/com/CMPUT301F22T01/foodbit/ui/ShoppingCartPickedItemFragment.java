@@ -150,8 +150,11 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         });
 
         // setting to current ingredient details
+        ArrayList<Ingredient> needs = mealPlanController.getAllIngredients();
+        int index = lookUpIngredientID(ingredient.getId(), needs);
+        float amountNeed = needs.get(index).getAmount() - ingredient.getAmount();
         description.setText(ingredient.getDescription());
-        amountNeeded.setText(valueOf(getAmountFromMealPlan(ingredient) - ingredient.getAmount()));
+        amountNeeded.setText(valueOf(amountNeed));
         unit.setText(ingredient.getUnit());
         if (ingredient.getCategory() == null) {
             category.setText("missing");
@@ -162,12 +165,15 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
 
         return view;
     }
-    private float getAmountFromMealPlan(Ingredient cartIngredient){
-        ArrayList<Ingredient> ingredients = mealPlanController.getAllIngredients();
-        for (Ingredient ingredient : ingredients
-             ) {
-            if(ingredient.getId() == cartIngredient.getId()) {
-                return ingredient.getAmount();
+
+    public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (Ingredient ingredient :
+                ingredList) {
+            Log.d(TAG, "lookUpIngredientID: "+ingredient.getId());
+        }
+        for (int i = 0; i< ingredList.size(); i++) {
+            if (ID.equals(ingredList.get(i).getId())) {
+                return i;
             }
         }
         return -1;
