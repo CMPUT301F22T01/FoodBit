@@ -3,6 +3,7 @@ package com.CMPUT301F22T01.foodbit.models;
 import androidx.annotation.NonNull;
 
 import java.io.Serializable;
+import java.util.Comparator;
 
 /**
  * Class to represent ingredients
@@ -51,6 +52,17 @@ public class Ingredient implements Serializable, dbObject {
         this.amount = amount;
         this.unit = unit;
         this.category = category;
+    }
+
+    /**
+     * Creates a new Ingredient type with only a id and amount
+     * @param id id of the ingredient
+     * @param amount how many of the ingredient
+     */
+    public Ingredient(String id, float amount) {
+        this.id = id;
+        this.amount = amount;
+
     }
 
     /**
@@ -141,5 +153,51 @@ public class Ingredient implements Serializable, dbObject {
         amount = newIngredient.getAmount();
         unit = newIngredient.getUnit();
         category = newIngredient.getCategory();
+    }
+    public static Comparator<Ingredient> nameAscending = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient o1, Ingredient o2)
+        {
+            String desc1 = String.valueOf(o1.getDescription());
+            String desc2 = String.valueOf(o2.getDescription());
+
+            return String.CASE_INSENSITIVE_ORDER.compare(desc1,desc2);
+        }
+    };
+
+    public static Comparator<Ingredient> dateSort = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient o1, Ingredient o2)
+        {
+            return o1.getBestBefore().compareTo(o2.bestBefore);
+        }
+    };
+    public static Comparator<Ingredient> locationAscending = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient o1, Ingredient o2)
+        {
+            String loc1 = String.valueOf(o1.getLocation());
+            String loc2 = String.valueOf(o2.getLocation());
+
+            return String.CASE_INSENSITIVE_ORDER.compare(loc1,loc2);
+        }
+    };
+    public static Comparator<Ingredient> categoryAscending = new Comparator<Ingredient>() {
+        @Override
+        public int compare(Ingredient o1, Ingredient o2)
+        {
+            String cat1 = String.valueOf(o1.getCategory());
+            String cat2 = String.valueOf(o2.getCategory());
+
+            return String.CASE_INSENSITIVE_ORDER.compare(cat1,cat2);
+        }
+    };
+
+    /**
+     * Check if the ingredient is missing details.
+     * @return whether the ingredient is missing details
+     */
+    public boolean isMissingDetails() {
+        return ((description == null) || (bestBefore == null) || (location == null) || (unit == null)) && amount != 0;
     }
 }

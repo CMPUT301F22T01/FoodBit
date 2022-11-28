@@ -14,6 +14,7 @@
         android:gravity="center"
         android:text="ingredient"
         android:textSize="13sp"
+        android:textColor="@color/primaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/image_shopping_item"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,6 +29,7 @@
         android:gravity="center"
         android:text="1"
         android:textSize="13sp"
+        android:textColor="@color/primaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/shopping_ingredient_description"
         app:layout_constraintTop_toTopOf="parent" />
@@ -41,18 +43,20 @@
         android:gravity="center"
         android:text="Box"
         android:textSize="13sp"
+        android:textColor="@color/primaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/shopping_ingredient_amount"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/shopping_ingredient_category"
-        android:layout_width="70dp"
+        android:layout_width="90dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:gravity="center"
         android:text="Meat"
         android:textSize="13sp"
+        android:textColor="@color/primaryDarkColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/shopping_ingredient_unit"
         app:layout_constraintTop_toTopOf="parent" />

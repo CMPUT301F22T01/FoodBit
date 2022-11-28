@@ -5,17 +5,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
 
@@ -23,10 +20,30 @@ import java.util.ArrayList;
  * provide a set of ingredients according to the
  * ingredients storage and meal plan
  */
-public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder> {
-    private final static String TAG = "ShoppingCartAdapter";
-    private final ArrayList<Ingredient> items;
+public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapter.ViewHolder>{
+    final String TAG = "ShoppingCartAdapter";
+    protected final ArrayList<Ingredient> items;
 
+    /**
+     * Item click listener for ingredients
+     */
+    public interface OnItemClickListener {
+        void onIngredientItemClick(View v, int position);
+    }
+    protected OnItemClickListener itemClickListener;
+
+    /**
+     * setting the item click listener
+     * @param itemClickListener the listener for item clicks
+     */
+    public void setItemClickListener(OnItemClickListener itemClickListener) {
+        this.itemClickListener = itemClickListener;
+    }
+
+    /**
+     * Adapter for the ingredient items
+     * @param items list of ingredient items
+     */
     public ShoppingCartAdapter(ArrayList<Ingredient> items) {
         this.items = items;
     }
@@ -44,13 +61,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         public ViewHolder(View view) {
             super(view);
 
-            // Define click listener for items
-            view.setOnClickListener(v -> {
-                // put argument
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", getAdapterPosition());
-            });
-
             // init UI
             cartDescription = view.findViewById(R.id.shopping_ingredient_description);
             cartAmount = view.findViewById(R.id.shopping_ingredient_amount);
@@ -59,15 +69,11 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         }
 
         // view holder's get view methods
-        public TextView getCartDescriptionView() {
-            return cartDescription;
-        }
+        public TextView getCartDescriptionView() { return cartDescription; }
 
         public TextView getCartAmountView() { return cartAmount; }
 
-        public TextView getCartUnitView() {
-            return cartUnit;
-        }
+        public TextView getCartUnitView() { return cartUnit; }
 
         public TextView getCartCategoryView() { return cartCategory; }
     }
@@ -90,19 +96,31 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         String unit = items.get(position).getUnit();
         String category = items.get(position).getCategory();
 
-
         // get UI
         TextView descriptionView = holder.getCartDescriptionView();
         TextView amountView = holder.getCartAmountView();
         TextView unitView = holder.getCartUnitView();
         TextView categoryView = holder.getCartCategoryView();
+        descriptionView.setTextSize(20);
+        amountView.setTextSize(18);
+        unitView.setTextSize(18);
+        categoryView.setTextSize(18);
 
         // set up UI
         descriptionView.setText(description);
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);
         categoryView.setText(category);
+
+        // define item's on click behaviour
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
+            }
+        });
     }
+
 
     /**
      * provide an item count function

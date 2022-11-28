@@ -2,9 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/fragment_ingredient_storage"
+        android:id="@+id/fragment_ingredient_list"
         android:icon="@drawable/ic_ingredient_storage"
-        android:title="@string/title_ingredient_storage" />
+        android:title="@string/title_ingredient_list" />
 
     <item
         android:id="@+id/fragment_recipe_book"

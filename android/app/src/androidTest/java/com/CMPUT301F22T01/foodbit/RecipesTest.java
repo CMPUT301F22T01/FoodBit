@@ -29,6 +29,8 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import com.CMPUT301F22T01.foodbit.ui.LoadingPageActivity;
+
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -59,7 +61,7 @@ public class RecipesTest {
     public void recipeAddTest() throws InterruptedException {
         // click on the recipes icon on the bottom navigation bar
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"),
+                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_bar),
@@ -72,9 +74,9 @@ public class RecipesTest {
 
         // check if navigated to the recipe book screen
         ViewInteraction textView = onView(
-                allOf(withId(com.google.android.material.R.id.navigation_bar_item_large_label_view), withText("Recipes"),
+                allOf(withId(com.google.android.material.R.id.navigation_bar_item_large_label_view), withText("Recipe Book"),
                         withParent(allOf(withId(com.google.android.material.R.id.navigation_bar_item_labels_group),
-                                withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipes"))))),
+                                withParent(allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"))))),
                         isDisplayed()));
         textView.check(matches(isDisplayed()));
 
@@ -559,7 +561,7 @@ public class RecipesTest {
 
         // check title
         ViewInteraction viewGroup = onView(
-                allOf(withId(R.id.recipe_detail_topbar),
+                allOf(withId(R.id.recipe_detail_toolbar),
                         withParent(allOf(withContentDescription("Sandwich"),
                                 withParent(withId(R.id.appbar)))),
                         isDisplayed()));
@@ -610,11 +612,13 @@ public class RecipesTest {
         // click back button
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
-                                allOf(withId(R.id.recipe_detail_topbar),
+                                allOf(withId(R.id.recipe_detail_toolbar),
                                         childAtPosition(
-                                                withContentDescription("Sandwich"),
+                                                allOf(
+                                                        withId(R.id.recipe_detail_top_bar),
+                                                        withContentDescription("Sandwich")),
                                                 1)),
-                                0),
+                                1),
                         isDisplayed()));
         appCompatImageButton.perform(click());
 

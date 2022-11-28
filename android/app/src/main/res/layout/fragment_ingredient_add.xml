@@ -7,6 +7,7 @@
     android:layout_height="match_parent">
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="0dp"
@@ -16,7 +17,7 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:background="?android:windowBackground"
             tools:context=".ui.IngredientAddFragment">
 
@@ -24,13 +25,15 @@
                 android:id="@+id/ingredient_add_top_bar"
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="10dp"
                 android:minHeight="?attr/actionBarSize"
                 android:paddingEnd="6dp"
                 android:theme="@style/ThemeOverlay.MaterialComponents.ActionBar"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:menu="@menu/ingredient_storage_top_app_bar"
+                app:menu="@menu/ingredient_lsit_top_app_bar"
                 app:navigationIcon="@drawable/ic_close_24"
                 app:title="Add an ingredient"
                 tools:ignore="RtlSymmetry" />
@@ -48,7 +51,7 @@
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_add_top_bar"
-                app:startIconDrawable="@drawable/ic_twotone_timer_24">
+                app:startIconDrawable="@drawable/ic_description_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingredient_add_edit_text_description"
@@ -73,7 +76,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_description"
-                app:startIconDrawable="@drawable/ic_twotone_timer_24">
+                app:startIconDrawable="@drawable/ic_schedule_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingredient_add_edit_text_best_before"
@@ -93,35 +96,31 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
+                android:orientation="horizontal"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_best_before"
-                app:startIconDrawable="@drawable/ic_twotone_timer_24"
+                app:startIconDrawable="@drawable/ic_location_on_24"
                 app:startIconTint="@color/primaryColor">
 
                 <AutoCompleteTextView
                     android:id="@+id/location_picker"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
                     android:layout_marginStart="0dp"
                     android:layout_marginTop="16dp"
                     android:layout_marginEnd="0dp"
+                    android:layout_toStartOf="@+id/add_location_button"
                     android:hint="Location"
                     android:imeOptions="actionDone"
-                    android:inputType="none"
+                    android:inputType="textAutoComplete"
                     android:maxLines="1"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/add_location_button"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_best_before"
                     tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/add_location_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Add New Location"
-                    android:backgroundTint="@color/primaryColor"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -137,14 +136,14 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_location"
-                app:startIconDrawable="@drawable/ic_twotone_timer_24">
+                app:startIconDrawable="@drawable/ic_numbers_24">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/ingredient_add_edit_text_amount"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="Amount"
-                    android:inputType="number"
+                    android:inputType="numberDecimal"
                     android:maxLines="1"
                     tools:ignore="HardcodedText" />
 
@@ -156,13 +155,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="12dp"
                 android:layout_marginEnd="16dp"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_amount"
-                app:startIconDrawable="@drawable/ic_twotone_timer_24"
+                app:startIconDrawable="@drawable/ic_straighten_24"
                 app:startIconTint="@color/primaryColor">
 
                 <AutoCompleteTextView
@@ -174,19 +174,12 @@
                     android:layout_marginEnd="0dp"
                     android:hint="Unit"
                     android:imeOptions="actionDone"
-                    android:inputType="none"
+                    android:inputType="textAutoComplete"
                     android:maxLines="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_amount"
                     tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/add_unit_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Add New Unit"
-                    android:backgroundTint="@color/primaryColor"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -200,9 +193,10 @@
                 android:layout_marginEnd="16dp"
                 app:errorEnabled="true"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_unit"
-                app:startIconDrawable="@drawable/ic_twotone_timer_24"
+                app:startIconDrawable="@drawable/ic_category_24"
                 app:startIconTint="@color/primaryColor">
 
                 <AutoCompleteTextView
@@ -214,19 +208,12 @@
                     android:layout_marginEnd="0dp"
                     android:hint="Category"
                     android:imeOptions="actionDone"
-                    android:inputType="none"
+                    android:inputType="textAutoComplete"
                     android:maxLines="1"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ingredient_add_text_layout_unit"
                     tools:ignore="HardcodedText" />
-
-                <Button
-                    android:id="@+id/add_category_button"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Add New Category"
-                    android:backgroundTint="@color/primaryColor"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

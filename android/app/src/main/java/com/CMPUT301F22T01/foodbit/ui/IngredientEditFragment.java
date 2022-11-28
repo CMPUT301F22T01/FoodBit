@@ -7,25 +7,31 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 
-import com.CMPUT301F22T01.foodbit.MainActivity;
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientStorage;
+import com.CMPUT301F22T01.foodbit.models.IngredientCategory;
+import com.CMPUT301F22T01.foodbit.models.IngredientLocation;
+import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -36,22 +42,27 @@ import java.util.Objects;
 public class IngredientEditFragment extends DialogFragment {
     public final static String TAG = "EditIngredient";
     private Ingredient ingredient;
+    private int position;
     private Context context;
 
+    /**
+     * Interface for edited ingredients
+     */
+    public interface OnIngredientEditedListener {
+        void onEdited();
+    }
+    private OnIngredientEditedListener ingredientEditedListener;
 
     MaterialToolbar topBar;
     TextInputEditText descriptionEditText;
     TextInputLayout descriptionLayout;
     TextInputEditText bestBeforeEditText;
     TextInputLayout bestBeforeLayout;
-    TextInputEditText locationEditText;
-    TextInputLayout locationLayout;
     TextInputEditText amountEditText;
     TextInputLayout amountLayout;
-    TextInputEditText unitEditText;
-    TextInputLayout unitLayout;
-    TextInputEditText categoryEditText;
+    TextInputLayout locationLayout;
     TextInputLayout categoryLayout;
+    TextInputLayout unitLayout;
 
     public IngredientEditFragment() {
         // Required empty public constructor
@@ -59,10 +70,11 @@ public class IngredientEditFragment extends DialogFragment {
 
     /**
      * sets ingredient to be edited
-     * @param ingredient ingredient to be editied
+     * @param position position of the ingredient to be edited in the controller
      */
-    public IngredientEditFragment(Ingredient ingredient) {
-        this.ingredient = ingredient;
+    public IngredientEditFragment(int position) {
+        this.position = position;
+        this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
     }
 
     @Override
@@ -70,6 +82,7 @@ public class IngredientEditFragment extends DialogFragment {
         super.onAttach(context);
         this.context = context;
         Log.d(TAG, "context: " + context);
+        ingredientEditedListener = (OnIngredientEditedListener) getParentFragment();
     }
 
     @Override
@@ -81,32 +94,59 @@ public class IngredientEditFragment extends DialogFragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ingredient_edit, container, false);
-        topBar = view.findViewById(R.id.ingredient_edit_top_bar);
-        descriptionEditText = view.findViewById(R.id.ingredient_edit_edit_text_description);
-        descriptionLayout = view.findViewById(R.id.ingredient_edit_text_layout_description);
-        bestBeforeEditText = view.findViewById(R.id.ingredient_edit_edit_text_best_before);
-        bestBeforeLayout = view.findViewById(R.id.ingredient_edit_text_layout_best_before);
-        locationEditText = view.findViewById(R.id.ingredient_edit_edit_text_location);
-        locationLayout = view.findViewById(R.id.ingredient_edit_text_layout_location);
-        amountEditText = view.findViewById(R.id.ingredient_edit_edit_text_amount);
-        amountLayout = view.findViewById(R.id.ingredient_edit_text_layout_amount);
-        unitEditText = view.findViewById(R.id.ingredient_edit_edit_text_unit);
-        unitLayout = view.findViewById(R.id.ingredient_edit_text_layout_unit);
-        categoryEditText = view.findViewById(R.id.ingredient_edit_edit_text_category);
-        categoryLayout = view.findViewById(R.id.ingredient_edit_text_layout_category);
+        View view = inflater.inflate(R.layout.fragment_ingredient_add, container, false);
+        topBar = view.findViewById(R.id.ingredient_add_top_bar);
+        topBar.setTitle("Edit an Ingredient");
+        descriptionEditText = view.findViewById(R.id.ingredient_add_edit_text_description);
+        descriptionLayout = view.findViewById(R.id.ingredient_add_text_layout_description);
+        bestBeforeEditText = view.findViewById(R.id.ingredient_add_edit_text_best_before);
+        bestBeforeLayout = view.findViewById(R.id.ingredient_add_text_layout_best_before);
+        amountEditText = view.findViewById(R.id.ingredient_add_edit_text_amount);
+        amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
+        locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
+        categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
+        unitLayout = view.findViewById(R.id.ingredient_add_text_layout_unit);
 
+        //Dropdown box for location
+        AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
+        // Default location options - not in database
+        List<String> locations = new ArrayList<>(Arrays.asList("fridge", "pantry", "freezer"));
+        // Getting all locations from the database
+        locations.addAll(MainActivity.location.getLocationDescription());
+        ArrayAdapter<String> locationAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, locations);
+        locationTextView.setAdapter(locationAdapter);
+
+        //Dropdown box for units
+        AutoCompleteTextView unitTextView = view.findViewById(R.id.unit_picker);
+        // Default unit options - not in database
+        List<String> units = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
+        // Getting all units from the database
+        units.addAll(MainActivity.unit.getUnitDescription());
+        ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
+        unitTextView.setAdapter(unitAdapter);
+
+        //Dropdown box for categories
+        AutoCompleteTextView categoryTextView = view.findViewById(R.id.category_picker);
+        //Defaults of categories - not in database
+        List<String> categories = new ArrayList<>(Arrays.asList("vegetables", "fruits", "grains", "snacks", "dairy"));
+        //Getting any categories from the database
+        categories.addAll(MainActivity.category.getCategoryDescription());
+        ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, categories);
+        categoryTextView.setAdapter(categoryAdapter);
+
+        descriptionEditText.setText(ingredient.getDescription());
+        bestBeforeEditText.setText(ingredient.getBestBefore());
+        locationTextView.setText(ingredient.getLocation());
+        amountEditText.setText(String.valueOf(ingredient.getAmount()));
+        unitTextView.setText(ingredient.getUnit());
+        categoryTextView.setText(ingredient.getCategory());
+
+        // back button
         topBar.setNavigationOnClickListener(v -> {
             dismiss();
         });
 
-        descriptionEditText.setText(ingredient.getDescription());
-        bestBeforeEditText.setText(ingredient.getBestBefore());
-        locationEditText.setText(ingredient.getLocation());
-        amountEditText.setText(String.valueOf(ingredient.getAmount()));
-        unitEditText.setText(ingredient.getUnit());
-        categoryEditText.setText(ingredient.getCategory());
-
+        // allowing for user input
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -115,15 +155,29 @@ public class IngredientEditFragment extends DialogFragment {
                 if (itemId == R.id.ingredient_add_done) {
                     String description = Objects.requireNonNull(descriptionEditText.getText()).toString();
                     String bestBefore = Objects.requireNonNull(bestBeforeEditText.getText()).toString();
-                    String location = Objects.requireNonNull(locationEditText.getText()).toString();
+                    String location = Objects.requireNonNull(locationTextView.getText()).toString();
                     String amount = Objects.requireNonNull(amountEditText.getText()).toString();
-                    String unit = Objects.requireNonNull(unitEditText.getText()).toString();
-                    String category = Objects.requireNonNull(categoryEditText.getText()).toString();
+                    String unit = Objects.requireNonNull(unitTextView.getText()).toString();
+                    String category = Objects.requireNonNull(categoryTextView.getText()).toString();
+
+                    // checking if inputs are valid, will display an error message if not
+                    // required fields are ones that can be sorted by including description, best before, location, and category
+                    // if amount is not entered it defaults to 0
+                    // if the date is before today's date, amount will default to 0
+                    Date todayDate = Calendar.getInstance().getTime();
+                    SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+                    //String todayString = formatter.format(todayDate);
 
                     boolean requiredFieldEntered = true;
                     if (description.equals("")) {
                         descriptionLayout.setError("Required");
                         requiredFieldEntered = false;
+                    } else if (description.length() > 150) {
+                        descriptionLayout.setError("Maximum 150 characters");
+                        requiredFieldEntered = false;
+                    }
+                    if (amount.equals("")) {
+                        amount = String.valueOf(0);
                     }
                     if (bestBefore.equals("")) {
                         bestBeforeLayout.setError("Required");
@@ -132,30 +186,49 @@ public class IngredientEditFragment extends DialogFragment {
                         bestBeforeLayout.setError("Format for date is yyyy-mm-dd");
                         requiredFieldEntered = false;
                     }
+                    // This portion checks to see if date is expired
+                    else {
+                        try {
+                            Date bestBeforeDate = formatter.parse(bestBefore);
+                            if (bestBeforeDate.before(todayDate)) {
+                                amount = String.valueOf(0);
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
                     if (location.equals("")) {
                         locationLayout.setError("Required");
                         requiredFieldEntered = false;
-                    } else if (!location.equals("pantry") && !location.equals("freezer") && !location.equals("fridge")) {
-                        locationLayout.setError("Options are pantry, freezer, or fridge!");
-                        requiredFieldEntered = false;
-                    }
-                    if (amount.equals("")) {
-                        amountLayout.setError("Required");
-                        requiredFieldEntered = false;
+                    } else if (!locations.contains(location)) {
+                        // adding new location to adapter and database if it is not already in it
+                        locationAdapter.add(location);
+                        locationAdapter.notifyDataSetChanged();
+                        IngredientLocation newLocation = new IngredientLocation(location);
+                        MainActivity.location.add(newLocation);
+                        MainActivity.location.loadAllFromDB();
                     }
                     if (unit.equals("")) {
                         unitLayout.setError("Required");
                         requiredFieldEntered = false;
-                    } else if (!unit.equals("lbs") && !unit.equals("kg") && !unit.equals("oz") && !unit.equals("g")) {
-                        unitLayout.setError("Options are lbs, kg, oz, or g!");
-                        requiredFieldEntered = false;
+                    } else if (!units.contains(unit)) {
+                        //Adds new unit to the adapter and the database if it is not already in it
+                        unitAdapter.add(unit);
+                        unitAdapter.notifyDataSetChanged();
+                        IngredientUnit newUnit = new IngredientUnit(unit);
+                        MainActivity.unit.add(newUnit);
+                        MainActivity.unit.loadAllFromDB();
                     }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
                         requiredFieldEntered = false;
-                    } else if (!category.equals("vegetables") && !category.equals("fruits") && !category.equals("meat") && !category.equals("grains") && !category.equals("dairy") && !category.equals("snacks") && !category.equals("seasonings")) {
-                        categoryLayout.setError("Options are vegetables, fruits, meat, grains, dairy, snacks, or spices!");
-                        requiredFieldEntered = false;
+                    } else if (!categories.contains(category)) {
+                        // adding new category to adapter and database if it is not already in it
+                        categoryAdapter.add(category);
+                        categoryAdapter.notifyDataSetChanged();
+                        IngredientCategory newCategory = new IngredientCategory(category);
+                        MainActivity.category.add(newCategory);
+                        MainActivity.category.loadAllFromDB();
                     }
                     if (requiredFieldEntered) {
                         ingredient.setDescription(description);
@@ -164,7 +237,8 @@ public class IngredientEditFragment extends DialogFragment {
                         ingredient.setAmount(Float.parseFloat(amount));
                         ingredient.setUnit(unit);
                         ingredient.setCategory(category);
-                        MainActivity.ingredientStorage.edit(ingredient);
+                        MainActivity.ingredientController.edit(ingredient);
+                        ingredientEditedListener.onEdited();
                         dismiss();
                     }
                 }
@@ -173,6 +247,7 @@ public class IngredientEditFragment extends DialogFragment {
         });
         return view;
     }
+
     @Override
     public void onStart() {
         super.onStart();
