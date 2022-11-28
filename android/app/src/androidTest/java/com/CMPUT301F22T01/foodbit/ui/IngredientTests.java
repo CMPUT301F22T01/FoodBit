@@ -47,48 +47,24 @@ public class IngredientTests {
 
     @Test
     public void tests() throws InterruptedException {
+        // adding in an ingredient
         addIngredientTest();
+        // viewing the current ingredients
         viewListOfIngredientTest();
+        // viewing details of an ingredient
         viewIngredientDetailTest();
+        // add an apple ingredient
         addApple();
+        // testing the sorting of ingredients
         sortIngredientTest();
-        deleteRecipeTest();
+        // deleting an ingredient
+        deleteIngredientTest();
     }
 
     private void addIngredientTest() throws InterruptedException {
-//        Thread.sleep(2000);
-//        ViewInteraction bottomNavigationItemView2 = onView(
-//                allOf(withId(R.id.fragment_ingredient_list), withContentDescription("Ingredients"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.nav_bar),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        bottomNavigationItemView2.perform(click());
-//
-//        // click add button
-//        ViewInteraction actionMenuItemView2 = onView(
-//                allOf(withId(R.id.ingredient_add), withContentDescription("AddIngredient"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.action_bar),
-//                                        1),
-//                                0),
-//                        isDisplayed()));
-//        actionMenuItemView2.perform(click());
-//
-//        // enter description, best before, location, amount, unit, and category
-//        // enter description
-//        ViewInteraction textInputEditText = onView(
-//                allOf(withId(R.id.ingredient_add_edit_text_description),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.ingredient_add_text_layout_location),
-//                                        0),
-//                                0)));
-//        textInputEditText.perform(scrollTo(), replaceText("Rice"), closeSoftKeyboard());
         Thread.sleep(5000);
+
+        // got to ingredient page
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.fragment_ingredient_list), withContentDescription("Ingredients"),
                         childAtPosition(
@@ -99,6 +75,7 @@ public class IngredientTests {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
+        // click add button
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.ingredient_add), withContentDescription("AddIngredient"),
                         childAtPosition(
@@ -109,6 +86,7 @@ public class IngredientTests {
                         isDisplayed()));
         actionMenuItemView.perform(click());
 
+        // enter description
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_description),
                         childAtPosition(
@@ -208,6 +186,7 @@ public class IngredientTests {
     }
 
     private void viewIngredientDetailTest() {
+        // viewing details
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerView_ingredient_list),
                         hasDescendant(
@@ -215,44 +194,42 @@ public class IngredientTests {
                         )));
         recyclerView.perform(actionOnItem(hasDescendant(withText("Rice")), click()));
 
+        // check description
         ViewInteraction textView = onView(
                 allOf(withId(R.id.ingredient_detail_description), withText("Description: Rice"),
                         isDisplayed()));
         textView.check(matches(withText("Description: Rice")));
 
+        // check best before
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.ingredient_detail_best_before), withText("Best Before Date: 2023-12-13"),
                         isDisplayed()));
         textView2.check(matches(withText("Best Before Date: 2023-12-13")));
 
+        // check location
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.ingredient_detail_location), withText("Location: vehicle"),
                         isDisplayed()));
         textView3.check(matches(withText("Location: vehicle")));
 
+        // check amount
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.ingredient_detail_amount), withText("Amount: 2.0"),
                         isDisplayed()));
         textView4.check(matches(withText("Amount: 2.0")));
 
+        // check unit
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.ingredient_detail_unit), withText("Unit: cups"),
                         isDisplayed()));
         textView5.check(matches(withText("Unit: cups")));
 
+        // check category
         ViewInteraction textView6 = onView(
                 allOf(withId(R.id.ingredient_detail_category), withText("Category: grains"),
                         isDisplayed()));
         textView6.check(matches(withText("Category: grains")));
 
-//        ViewInteraction appCompatImageButton = onView(
-//                allOf(childAtPosition(
-//                                allOf(withId(R.id.ingredient_detail_toolbar),
-//                                        childAtPosition(
-//                                                allOf(withId(R.id.ingredient_detail_tool_bar), withContentDescription("Rice")),
-//                                                1)),
-//                                1),
-//                        isDisplayed()));
         ViewInteraction appCompatImageButton = onView(
                 allOf(childAtPosition(
                                 allOf(withId(R.id.ingredient_detail_toolbar),
@@ -265,6 +242,7 @@ public class IngredientTests {
     }
 
     private void addApple() {
+        // adding ingredient apple
         ViewInteraction actionMenuItemView3 = onView(
                 allOf(withId(R.id.ingredient_add), withContentDescription("AddIngredient"),
                         childAtPosition(
@@ -275,6 +253,7 @@ public class IngredientTests {
                         isDisplayed()));
         actionMenuItemView3.perform(click());
 
+        // enter description
         ViewInteraction textInputEditText4 = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_description),
                         childAtPosition(
@@ -284,6 +263,7 @@ public class IngredientTests {
                                 0)));
         textInputEditText4.perform(scrollTo(), replaceText("Apple"), closeSoftKeyboard());
 
+        // enter best before
         ViewInteraction textInputEditText5 = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_best_before),
                         childAtPosition(
@@ -293,6 +273,7 @@ public class IngredientTests {
                                 0)));
         textInputEditText5.perform(scrollTo(), replaceText("2024-01-01"), closeSoftKeyboard());
 
+        // enter location
         ViewInteraction materialAutoCompleteTextView7 = onView(
                 allOf(withId(R.id.location_picker),
                         childAtPosition(
@@ -302,6 +283,7 @@ public class IngredientTests {
                                 0)));
         materialAutoCompleteTextView7.perform(scrollTo(), replaceText("pantry"), closeSoftKeyboard());
 
+        // enter amount
         ViewInteraction textInputEditText6 = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_amount),
                         childAtPosition(
@@ -311,6 +293,7 @@ public class IngredientTests {
                                 0)));
         textInputEditText6.perform(scrollTo(), replaceText("3"), closeSoftKeyboard());
 
+        // enter unit
         ViewInteraction materialAutoCompleteTextView8 = onView(
                 allOf(withId(R.id.unit_picker),
                         childAtPosition(
@@ -320,6 +303,7 @@ public class IngredientTests {
                                 0)));
         materialAutoCompleteTextView8.perform(scrollTo(), replaceText("item"), closeSoftKeyboard());
 
+        // enter category
         ViewInteraction materialAutoCompleteTextView9 = onView(
                 allOf(withId(R.id.category_picker),
                         childAtPosition(
@@ -329,6 +313,7 @@ public class IngredientTests {
                                 0)));
         materialAutoCompleteTextView9.perform(scrollTo(), replaceText("fruits"), closeSoftKeyboard());
 
+        // finish adding
         ViewInteraction actionMenuItemView4 = onView(
                 allOf(withId(R.id.ingredient_add_done), withContentDescription("ADD"),
                         childAtPosition(
@@ -340,6 +325,7 @@ public class IngredientTests {
     }
 
     private void sortIngredientTest() {
+        // sorting ingredients
         ViewInteraction overflowMenuButton = onView(
                 allOf(
                         withContentDescription("More options"),
@@ -351,6 +337,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton.perform(click());
 
+        // sorting by description
         ViewInteraction materialTextView = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Description"),
                         childAtPosition(
@@ -361,6 +348,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView.perform(click());
 
+        // sort in ascending order
         ViewInteraction materialTextView2 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Ascending(A-Z)"),
                         childAtPosition(
@@ -371,18 +359,19 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView2.perform(click());
 
+        // check ordering
         ViewInteraction textView = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView.check(matches(withText("Apple")));
-
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView2.check(matches(withText("Rice")));
 
+        // sort ingredients
         ViewInteraction overflowMenuButton2 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -393,6 +382,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton2.perform(click());
 
+        // sort by description
         ViewInteraction materialTextView3 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Description"),
                         childAtPosition(
@@ -403,6 +393,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView3.perform(click());
 
+        // sort by descending
         ViewInteraction materialTextView4 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Descending(Z-A)"),
                         childAtPosition(
@@ -413,18 +404,19 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView4.perform(click());
 
+        // check sorting order
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView3.check(matches(withText("Rice")));
-
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView4.check(matches(withText("Apple")));
 
+        // ingredient sorting
         ViewInteraction overflowMenuButton3 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -435,6 +427,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton3.perform(click());
 
+        // sort by best before
         ViewInteraction materialTextView5 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Best Before Date"),
                         childAtPosition(
@@ -445,6 +438,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView5.perform(click());
 
+        // sort in expiring soon order
         ViewInteraction materialTextView6 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Expiring Soon"),
                         childAtPosition(
@@ -455,6 +449,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView6.perform(click());
 
+        // check sorting order
         ViewInteraction textView5 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
@@ -467,6 +462,7 @@ public class IngredientTests {
                         isDisplayed()));
         textView6.check(matches(withText("Apple")));
 
+        // ingredient sorting
         ViewInteraction overflowMenuButton4 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -477,6 +473,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton4.perform(click());
 
+        // sort by best before
         ViewInteraction materialTextView7 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Best Before Date"),
                         childAtPosition(
@@ -487,6 +484,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView7.perform(click());
 
+        // sort in expiring later order
         ViewInteraction materialTextView8 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Expiring Later"),
                         childAtPosition(
@@ -497,18 +495,19 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView8.perform(click());
 
+        // check sorting order
         ViewInteraction textView7 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView7.check(matches(withText("Apple")));
-
         ViewInteraction textView8 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView8.check(matches(withText("Rice")));
 
+        // sorting ingredients
         ViewInteraction overflowMenuButton5 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -519,6 +518,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton5.perform(click());
 
+        // sorting by location
         ViewInteraction materialTextView9 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Location"),
                         childAtPosition(
@@ -529,6 +529,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView9.perform(click());
 
+        // sort ascending
         ViewInteraction materialTextView10 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Ascending(A-Z)"),
                         childAtPosition(
@@ -539,18 +540,19 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView10.perform(click());
 
+        // check sort order
         ViewInteraction textView9 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView9.check(matches(withText("Apple")));
-
         ViewInteraction textView10 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView10.check(matches(withText("Rice")));
 
+        // sorting ingredients
         ViewInteraction overflowMenuButton6 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -561,6 +563,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton6.perform(click());
 
+        // sort by location
         ViewInteraction materialTextView11 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Location"),
                         childAtPosition(
@@ -571,6 +574,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView11.perform(click());
 
+        // sort descending
         ViewInteraction materialTextView12 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Descending(Z-A)"),
                         childAtPosition(
@@ -581,18 +585,19 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView12.perform(click());
 
+        // check sort order
         ViewInteraction textView11 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView11.check(matches(withText("Rice")));
-
         ViewInteraction textView12 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView12.check(matches(withText("Apple")));
 
+        // ingredient sorting
         ViewInteraction overflowMenuButton7 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -603,6 +608,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton7.perform(click());
 
+        // sort by category
         ViewInteraction materialTextView13 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Category"),
                         childAtPosition(
@@ -613,6 +619,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView13.perform(click());
 
+        // sort ascending
         ViewInteraction materialTextView14 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Ascending(A-Z)"),
                         childAtPosition(
@@ -623,6 +630,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView14.perform(click());
 
+        // check sort order
         ViewInteraction textView13 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
@@ -635,6 +643,7 @@ public class IngredientTests {
                         isDisplayed()));
         textView14.check(matches(withText("Rice")));
 
+        // sorting ingredients
         ViewInteraction overflowMenuButton8 = onView(
                 allOf(withContentDescription("More options"),
                         childAtPosition(
@@ -645,6 +654,7 @@ public class IngredientTests {
                         isDisplayed()));
         overflowMenuButton8.perform(click());
 
+        // sort by category
         ViewInteraction materialTextView15 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Sort by: Category"),
                         childAtPosition(
@@ -655,6 +665,7 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView15.perform(click());
 
+        // sort descending
         ViewInteraction materialTextView16 = onView(
                 allOf(withId(androidx.recyclerview.R.id.title), withText("Descending(Z-A)"),
                         childAtPosition(
@@ -665,12 +676,12 @@ public class IngredientTests {
                         isDisplayed()));
         materialTextView16.perform(click());
 
+        // check sort order
         ViewInteraction textView15 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Rice"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
         textView15.check(matches(withText("Rice")));
-
         ViewInteraction textView16 = onView(
                 allOf(withId(R.id.item_ingredient_description), withText("Apple"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
@@ -678,8 +689,8 @@ public class IngredientTests {
         textView16.check(matches(withText("Apple")));
     }
 
-    private void deleteRecipeTest() {
-        // click on item Sandwich in recipe book
+    private void deleteIngredientTest() {
+        // click on item
         ViewInteraction recyclerView = onView(
                 allOf(withId(R.id.recyclerView_ingredient_list),
                         hasDescendant(
@@ -688,7 +699,7 @@ public class IngredientTests {
                 ));
         recyclerView.perform(actionOnItem(hasDescendant(withText("Rice")), click()));
 
-        // click of delete recipe
+        // click of delete ingredient
         ViewInteraction actionMenuItemView3 = onView(
                 allOf(withId(R.id.ingredient_detail_delete), withContentDescription("DELETE"),
                         childAtPosition(
