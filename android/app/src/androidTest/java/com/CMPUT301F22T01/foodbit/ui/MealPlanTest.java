@@ -1,4 +1,4 @@
-package com.CMPUT301F22T01.foodbit;
+package com.CMPUT301F22T01.foodbit.ui;
 
 
 import static androidx.test.espresso.Espresso.onView;
@@ -21,14 +21,17 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 
 import androidx.test.espresso.ViewInteraction;
+import androidx.test.espresso.matcher.ViewMatchers;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 
+import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.ui.LoadingPageActivity;
 
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
+import org.hamcrest.Matchers;
 import org.hamcrest.TypeSafeMatcher;
 import org.junit.Rule;
 import org.junit.Test;
@@ -44,7 +47,7 @@ public class MealPlanTest {
 
     public void addIngredient() {
         ViewInteraction bottomNavigationItemView = onView(
-                allOf(withId(R.id.fragment_ingredient_list), withContentDescription("Ingredients"),
+                Matchers.allOf(ViewMatchers.withId(R.id.fragment_ingredient_list), withContentDescription("Ingredients"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_bar),
@@ -176,7 +179,7 @@ public class MealPlanTest {
         textInputEditText3.perform(replaceText("1"), closeSoftKeyboard());
 
         ViewInteraction actionMenuItemView2 = onView(
-                allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
+                allOf(withId(R.id.recipe_input_done), withContentDescription("ADD"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.recipe_input_top_bar),

@@ -42,7 +42,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
+public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener,
+        RecipeAddIngredientFragment.OnIngredientEditListener,
+        RecipeAddIngredientFragment.OnIngredientDeleteListener,
+        IngredientAdapter.OnItemClickListener {
     public static String TAG;
     final int REQUEST_IMAGE_CAPTURE = 1;
     // an ingredient list to obtain from the RecipeAddIngredientFragment
@@ -138,7 +141,7 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         {
             int itemId = item.getItemId();
             // done button behaviour
-            if (itemId == R.id.recipe_add_done) {
+            if (itemId == R.id.recipe_input_done) {
                 doneButtonClicked();
             }
             return false;
