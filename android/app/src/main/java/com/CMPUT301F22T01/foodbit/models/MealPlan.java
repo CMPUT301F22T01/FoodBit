@@ -93,7 +93,7 @@ public class MealPlan implements dbObject, dbObjectCustom {
         return ingredients;
     }
 
-    public void setIngredientsFromRecipe(ArrayList<Ingredient> ingredients, int recipeServings) {
+    public void setIngredientsFromRecipeScaled(ArrayList<Ingredient> ingredients, int recipeServings) {
         ArrayList<Ingredient> t = new ArrayList<Ingredient>();
         float scalingFactor = (float)this.servings/recipeServings;
         for (int i = 0; i<ingredients.size(); i++) {
@@ -116,6 +116,19 @@ public class MealPlan implements dbObject, dbObjectCustom {
         copy.setUnit(ingredient.getUnit());
         t.add(copy);
         ingredients = t;
+    }
+
+    public void setIngredientsFromRecipe(ArrayList<Ingredient> ingredients) {
+        ArrayList<Ingredient> t = new ArrayList<Ingredient>();
+        for (int i = 0; i<ingredients.size(); i++) {
+            Ingredient copy = new Ingredient();
+            copy.setId(ingredients.get(i).getId());
+            copy.setDescription(ingredients.get(i).getDescription());
+            copy.setUnit(ingredients.get(i).getUnit());
+            copy.setAmount(ingredients.get(i).getAmount());
+            t.add(copy);
+        }
+        this.ingredients = t;
     }
 
     public String getRecipeID() {
@@ -150,12 +163,18 @@ public class MealPlan implements dbObject, dbObjectCustom {
         this.recipeID = doc.get("recipeID").toString();
     }
 
+    /**
+     * Facilitate creating new meal objects from a document.
+     * @param doc
+     * @return
+     */
     public MealPlan createFromDocCustom(QueryDocumentSnapshot doc) {
-        name = (String) doc.get("name");
-        servings = (int) (long) doc.get("servings");
-        id = doc.getId();
-        isIngredient =  (boolean) doc.get("ingredient");
-        date = (Date) ((Timestamp) doc.get("date")).toDate();
+        MealPlan meal2 = new MealPlan();
+        meal2.setName((String) doc.get("name"));
+        meal2.setServings( (int) (long) doc.get("servings"));
+        meal2.setId(doc.getId());
+        meal2.setIngredient((boolean) doc.get("ingredient"));
+        meal2.setDate((Date) ((Timestamp) doc.get("date")).toDate());
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {
@@ -168,9 +187,9 @@ public class MealPlan implements dbObject, dbObjectCustom {
                     (String) map.get("unit"),
                     (String) map.get("category")));
         }
-        this.ingredients = ingredients;
-        this.recipeID = doc.get("recipeID").toString();
-        return this;
+        meal2.setIngredientsFromRecipe(ingredients);
+        meal2.setRecipeID(doc.get("recipeID").toString());
+        return meal2;
     }
 
     public MealPlan(String name, int servings, String id, boolean isIngredient, Date date) {

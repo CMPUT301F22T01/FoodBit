@@ -37,10 +37,6 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             tools:ignore="HardcodedText" />
-
-
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -98,15 +94,15 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             tools:ignore="HardcodedText" />
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/recipe_input_ingredient_new_unit"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="Add Unit"
-            android:textAlignment="center"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/primaryColor"
-            />
+<!--        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+<!--            android:id="@+id/recipe_input_ingredient_new_unit"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:text="Add Unit"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:backgroundTint="@color/primaryColor"-->
+<!--            />-->
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout

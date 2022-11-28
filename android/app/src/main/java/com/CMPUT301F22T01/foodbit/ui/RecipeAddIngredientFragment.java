@@ -6,16 +6,12 @@ import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -204,71 +200,24 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                 for (Ingredient findIngredient: ingredientList) {
 
                     if (findIngredient.getDescription().equals(item)){
-                    categoryEditText.setText(findIngredient.getCategory());
+                        categoryEditText.setText(findIngredient.getCategory());
+                        unitEditText.setText(findIngredient.getUnit());
 
-                }}
+                    }}
             }
         });
 
 
 
-
+        //Drop Down Menu for units
         unitTextView = view.findViewById(R.id.recipe_input_ingredient_add_auto_complete_units);
+        //Default list of Units (not in database)
         List<String> units = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
+        //Getting and Adding units from the database to the list
         units.addAll(MainActivity.unit.getUnitDescription());
         unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
         unitTextView.setAdapter(unitAdapter);
 
-        newUnit = (ExtendedFloatingActionButton) view.findViewById(R.id.recipe_input_ingredient_new_unit);
-        //Popup window for when user wants to add a new unit
-        newUnit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // inflate the layout of the popup window
-                View popupView = getLayoutInflater().inflate(R.layout.ingredient_add_dropdown_popup, null);
-
-                newUnitEditText = popupView.findViewById(R.id.add_dropdown_edit_text);
-                completeNewUnit = popupView.findViewById(R.id.add_complete);
-
-                // create the popup window
-                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
-                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
-                boolean focusable = true; // lets taps outside the popup also dismiss it
-                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
-
-                // show the popup window
-                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
-
-                //add button pressed in popup window
-                completeNewUnit.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        //getting information user typed and adding it to the unit options
-                        String newUnit = newUnitEditText.getText().toString();
-                        if (!units.contains(newUnit)){
-                            unitAdapter.add(newUnit);
-                            unitAdapter.notifyDataSetChanged();
-                            IngredientUnit unit = new IngredientUnit(newUnit);
-                            MainActivity.unit.add(unit);
-                            MainActivity.unit.loadAllFromDB();
-                            popupWindow.dismiss();
-                        }
-                        popupWindow.dismiss();
-                    }
-                });
-
-                // dismiss the popup window when touched
-                popupView.setOnTouchListener(new View.OnTouchListener() {
-                    @Override
-                    public boolean onTouch(View v, MotionEvent event) {
-                        popupWindow.dismiss();
-                        return true;
-                    }
-                });
-            }
-        });
-
-        //int mode = 0;
         ingredientStorage = MainActivity.ingredientController;
         adapter = new IngredientAdapter(ingredientStorage.getIngredients());
 
@@ -343,7 +292,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                 adapterList.notifyDataSetChanged();
 
             }
-    });
+        });
 
 
     }
@@ -359,7 +308,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                 Button positiveButton = dialog.getButton(Dialog.BUTTON_POSITIVE);
                 positiveButton.setOnClickListener(v -> {
                     boolean canAddIngredient = true;
-                    // input check
+                    // Checking and validating the inputs by the user
                     String description = String.valueOf(descriptionEditText.getText());
                     ingredientStorage = MainActivity.ingredientController;
 
@@ -367,8 +316,6 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                         canAddIngredient = false;
                         descriptionLayout.setError("Required");
                     }
-
-
                     else if (titleList.contains(description)) {
                         canAddIngredient = false;
                         descriptionLayout.setError("Description already exists");
@@ -387,35 +334,33 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                         canAddIngredient = false;
                         unitLayout.setError("Required");
                     }
-                    else if (!unit.equals("")){
+                    //Adds new unit to the adapter and the database if it is not already in it
+                    else if (!units.contains(unit)) {
+                        //Adds new unit to the adapter and the database if it is not already in it
+                        unitAdapter.add(unit);
                         unitAdapter.notifyDataSetChanged();
-                        boolean unitExists = false;
-                        //canAddIngredient = false;
-
-
-
-                        for (IngredientUnit findUnit:units)
-                        {
-                            if (findUnit.getUnitName().equals(unit))
-                            {
-                                unitExists = true;
-                            }
-
-                        }
-
-                        if (!unitExists){
-                            if (!definedUnits.contains(unit))
-                            {
-                                canAddIngredient = false;
-                                unitLayout.setError("Select Existing Unit or Add new Unit");
-                            }
-                            //canAddIngredient = false;
-                            //unitLayout.setError("Select Existing Unit or Add new Unit");
-                        }
-
-
+                        IngredientUnit newUnit = new IngredientUnit(unit);
+                        MainActivity.unit.add(newUnit);
+                        MainActivity.unit.loadAllFromDB();
                     }
-
+//                    else if (!unit.equals("")){
+//                        unitAdapter.notifyDataSetChanged();
+//                        boolean unitExists = false;
+//                        //canAddIngredient = false;
+//                        for (IngredientUnit findUnit:units)
+//                        {
+//                            if (findUnit.getUnitName().equals(unit)) {
+//                                unitExists = true;
+//                            }
+//                        }
+//                        if (!unitExists){
+//                            if (!definedUnits.contains(unit))
+//                            {
+//                                canAddIngredient = false;
+//                                unitLayout.setError("Select Existing Unit or Add new Unit");
+//                            }
+//                        }
+//                    }
                     String category = String.valueOf(categoryEditText.getText());
                     if (category.equals("")) {
                         category = null;
@@ -451,35 +396,13 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                         canUpdateIngredient = false;
                         unitLayout.setError("Required");
                     }
-
-                    else if (!unit.equals("")){
-                        boolean unitExists = false;
-                        //canUpdateIngredient = false;
-
-
-                        for (IngredientUnit findUnit:units)
-                        {
-                            if (findUnit.getUnitName().equals(unit))
-                            {
-                                unitExists = true;
-                            }
-                            else if (definedUnits.contains(findUnit.getUnitName()))
-                            {
-                                unitExists = true;
-                            }
-                        }
-
-                        if (!unitExists){
-                            if (!definedUnits.contains(unit))
-                            {
-                                canUpdateIngredient = false;
-                                unitLayout.setError("Select Existing Unit or Add new Unit");
-                            }
-                            //canUpdateIngredient = false;
-                            //unitLayout.setError("Select Existing Unit or Add new Unit");
-                        }
-
-
+                    //Adds new unit to the adapter and the database if it is not already in it
+                    else if (!units.contains(unit)) {
+                        unitAdapter.add(unit);
+                        unitAdapter.notifyDataSetChanged();
+                        IngredientUnit newUnit = new IngredientUnit(unit);
+                        MainActivity.unit.add(newUnit);
+                        MainActivity.unit.loadAllFromDB();
                     }
                     String category = String.valueOf(categoryEditText.getText());
                     if (category.equals("")) {

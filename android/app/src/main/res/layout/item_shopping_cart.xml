@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/shopping_ingredient_description"
-        android:layout_width="100dp"
+        android:layout_width="120dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:gravity="center"
@@ -22,9 +22,9 @@
 
     <TextView
         android:id="@+id/shopping_ingredient_amount"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="30dp"
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:gravity="center"
         android:text="1"
         android:textSize="13sp"
@@ -36,7 +36,7 @@
 
     <TextView
         android:id="@+id/shopping_ingredient_unit"
-        android:layout_width="50dp"
+        android:layout_width="80dp"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:gravity="center"

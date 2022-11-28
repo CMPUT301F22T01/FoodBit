@@ -6,13 +6,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RecipeEditFragment extends RecipeInputFragment {
     private int position;
     private Recipe recipe;
+    private IngredientController ingredientController;
 
     public interface OnRecipeEditedListener {
         void onEdited();
@@ -32,13 +37,17 @@ public class RecipeEditFragment extends RecipeInputFragment {
     }
 
     @Override
-    protected void presetInfo() {
-        super.presetInfo();
+    protected void displayInfo() {
+        super.displayInfo();
         titleEditText.setText(recipe.getTitle());
         prepTimeEditText.setText(String.valueOf(recipe.getPrepTime()));
         numServingsEditText.setText(String.valueOf(recipe.getNumServings()));
         categoryEditText.setText(recipe.getCategory());
         commentsEditText.setText(recipe.getComments());
+        if (recipe.getPhoto() != null) {
+            imageView.setImageURI(recipe.getPhoto());
+            hasPhoto = true;
+        }
     }
 
 
@@ -66,6 +75,9 @@ public class RecipeEditFragment extends RecipeInputFragment {
         if (title.equals("")) {
             titleLayout.setError("Required");
             requiredFieldEntered = false;
+        } else if (recipeController.getTitles().contains(title) && !title.equals(recipe.getTitle())) {
+            titleLayout.setError("This title already exists");
+            requiredFieldEntered = false;
         }
         if (prepTime.equals("")) {
             prepTimeLayout.setError("Required");
@@ -79,13 +91,52 @@ public class RecipeEditFragment extends RecipeInputFragment {
         } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
             requiredFieldEntered = false;
         }
+
+        ingredientController = MainActivity.ingredientController;
+        List<String> ingredientDescriptionList = ingredientController.getDescriptions();
+        ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
+
+        //Checking if it is an existing ingredient or needs to be added
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredientDescriptionList.contains(ingredient.getDescription()))
+            {
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(),
+                        0,
+                        ingredient.getUnit(),
+                        ingredient.getCategory());
+                ingredientController.add(newIngredient);
+                ingredient.setId(newIngredient.getId());
+                Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+                ingredientAdapter.notifyDataSetChanged();
+            }
+            if (ingredientDescriptionList.contains(ingredient.getDescription()))
+            {
+                for (Ingredient matchIngredient : ingredientList)
+                {
+                    Log.d(TAG, "doneButtonClicked: Successful");
+                    if (ingredient.getDescription().equals(matchIngredient.getDescription()))
+                    {
+                        ingredient.setId(matchIngredient.getId());
+                        Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+
+                    }
+                }
+            }
+        }
         if (requiredFieldEntered) {
             recipe.setTitle(title);
             recipe.setPrepTime(Integer.parseInt(prepTime));
             recipe.setNumServings(Integer.parseInt(numServings));
             recipe.setCategory(category);
             recipe.setComments(comments);
-            recipe.setPhoto(null);
+            Log.d(TAG, "doneButtonClicked: "+recipe.getPhoto());
+            if (photoBitmap != null) {
+                recipe.setPhoto(saveImage());
+            }
+            if (!hasPhoto) {
+                recipe.setPhoto(null);
+            }
+            Log.d(TAG, "doneButtonClicked: "+recipe.getPhoto());
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
             MainActivity.mealPlanController.notifyRecipeChanged(recipe);
