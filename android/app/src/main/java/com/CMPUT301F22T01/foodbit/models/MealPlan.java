@@ -2,9 +2,12 @@
 
 package com.CMPUT301F22T01.foodbit.models;
 
+import static android.icu.math.BigDecimal.ROUND_HALF_EVEN;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -95,13 +98,20 @@ public class MealPlan implements dbObject, dbObjectCustom {
 
     public void setIngredientsFromRecipeScaled(ArrayList<Ingredient> ingredients, int recipeServings) {
         ArrayList<Ingredient> t = new ArrayList<Ingredient>();
-        float scalingFactor = (float)this.servings/recipeServings;
+        BigDecimal tServings = BigDecimal.valueOf(this.servings);
+        BigDecimal rServings = BigDecimal.valueOf(recipeServings);
         for (int i = 0; i<ingredients.size(); i++) {
             Ingredient copy = new Ingredient();
             copy.setId(ingredients.get(i).getId());
             copy.setDescription(ingredients.get(i).getDescription());
             copy.setUnit(ingredients.get(i).getUnit());
-            copy.setAmount(ingredients.get(i).getAmount() * scalingFactor);
+            BigDecimal tAmount = BigDecimal.valueOf(ingredients.get(i).getAmount());
+            //scale the recipe ingredients by the need.
+            // recipeIngredientAmount/Recipe Serving Size   * desired meal serving size
+            // Rearranged to do the dividing at the end.
+            tAmount.setScale(10);
+            BigDecimal temp = tAmount.multiply(tServings).divide(rServings,10,ROUND_HALF_EVEN);
+            copy.setAmount(temp.setScale(2,ROUND_HALF_EVEN).floatValue());
             t.add(copy);
         }
         this.ingredients = t;
