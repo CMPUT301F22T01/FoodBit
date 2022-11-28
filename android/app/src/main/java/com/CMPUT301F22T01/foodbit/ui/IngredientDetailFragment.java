@@ -37,7 +37,6 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
     TextView unitView;
     TextView categoryView;
     Button deleteButton;
-    Button editButton;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     /**
