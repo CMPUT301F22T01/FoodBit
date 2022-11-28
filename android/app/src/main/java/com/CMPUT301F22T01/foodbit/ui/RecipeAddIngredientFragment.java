@@ -268,10 +268,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
             ingredientStorage.setIngredients(newIngredients);
             adapter.notifyDataSetChanged();
             adapterList.notifyDataSetChanged();
-
         });
-
-
     }
 
     /**

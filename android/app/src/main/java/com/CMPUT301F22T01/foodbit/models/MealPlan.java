@@ -149,7 +149,7 @@ public class MealPlan implements dbObject, dbObjectCustom {
         this.recipeID = recipeID;
     }
 
-    public MealPlan(){};
+    public MealPlan(){}
 
     /**
      * Create meal from a firebase document.
@@ -171,7 +171,7 @@ public class MealPlan implements dbObject, dbObjectCustom {
         meal2.setServings( (int) (long) doc.get("servings"));
         meal2.setId(doc.getId());
         meal2.setIngredient((boolean) doc.get("ingredient"));
-        meal2.setDate((Date) ((Timestamp) doc.get("date")).toDate());
+        meal2.setDate(((Timestamp) doc.get("date")).toDate());
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {

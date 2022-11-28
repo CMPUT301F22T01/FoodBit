@@ -26,10 +26,6 @@ public class IngredientListIngredientAdapter extends IngredientAdapter{
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         super.onBindViewHolder(holder, position);
-        String description = items.get(position).getDescription();
-        String bestBefore = items.get(position).getBestBefore();
-        String location = items.get(position).getLocation();
-        String unit = items.get(position).getUnit();
 
         TextView descriptionView = holder.getIngredientDescriptionView();
         TextView amountView = holder.getIngredientAmountView();
@@ -44,11 +40,6 @@ public class IngredientListIngredientAdapter extends IngredientAdapter{
         holder.itemView.setOnClickListener(onItemClick(holder));
     }
 
-    /**
-     * Fragment change when clicked
-     * @param holder viewholder
-     * @return the view
-     */
     private View.OnClickListener onItemClick(@NonNull ViewHolder holder) {
         return v -> {
             Bundle bundle = new Bundle();

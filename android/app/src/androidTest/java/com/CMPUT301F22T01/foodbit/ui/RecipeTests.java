@@ -393,24 +393,28 @@ public class RecipeTests {
         // check title
         ViewInteraction textView = onView(
                 allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView.check(matches(withText("Sandwich")));
 
         //check preparation time
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView2.check(matches(withText("10 minutes")));
 
         // check number of servings
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.item_recipe_num_servings), withText("×1"),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView3.check(matches(withText("×1")));
 
         // check comments
         ViewInteraction textView4 = onView(
                 allOf(withId(R.id.item_recipe_comments), withText("A simple lunch."),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView4.check(matches(withText("A simple lunch.")));
 

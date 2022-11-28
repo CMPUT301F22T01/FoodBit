@@ -19,7 +19,7 @@ import java.util.List;
  * Stores each of the units used in ingredients
  */
 public class IngredientUnitController implements Serializable {
-    private DatabaseController db = new DatabaseController("Units");
+    private final DatabaseController db = new DatabaseController("Units");
     private final ArrayList<IngredientUnit> units;
 
     /**

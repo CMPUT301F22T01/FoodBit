@@ -8,8 +8,6 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
 
-import com.CMPUT301F22T01.foodbit.ui.IngredientAdapter.ViewHolder;
-
 public class RecipeInputIngredientAdapter extends IngredientAdapter {
     /**
      * Adapter for the ingredient items

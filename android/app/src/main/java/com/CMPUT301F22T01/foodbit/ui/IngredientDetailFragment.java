@@ -98,7 +98,7 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         descriptionView.setText("Description: "+ingredient.getDescription());
         bestBeforeView.setText("Best Before Date: "+ingredient.getBestBefore());
         locationView.setText("Location: "+ingredient.getLocation());
-        amountView.setText("Amount: "+String.valueOf(ingredient.getAmount()));
+        amountView.setText("Amount: "+ ingredient.getAmount());
         unitView.setText("Unit: "+ingredient.getUnit());
         categoryView.setText("Category: "+ingredient.getCategory());
 
@@ -152,7 +152,7 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         descriptionView.setText("Description: "+ingredient.getDescription());
         bestBeforeView.setText("Best Before Date: "+ingredient.getBestBefore());
         locationView.setText("Location: "+ingredient.getLocation());
-        amountView.setText("Amount: "+String.valueOf(ingredient.getAmount()));
+        amountView.setText("Amount: "+ ingredient.getAmount());
         unitView.setText("Unit: "+ingredient.getUnit());
         categoryView.setText("Category: "+ingredient.getCategory());
     }
