@@ -40,7 +40,7 @@ public class MealPlanFragment extends Fragment {
     public String TAG = "MealPlan";
 
     // get meal plan from MainActivity
-    private final MealPlanController mealPlan = MainActivity.mealPlan;
+    private final MealPlanController mealPlan = MainActivity.mealPlanController;
 
     MealPlanAdapter adapter;
 

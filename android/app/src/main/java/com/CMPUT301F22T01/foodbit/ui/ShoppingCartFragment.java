@@ -21,10 +21,8 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -131,8 +129,8 @@ public class ShoppingCartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlan;
-//        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+        mealPlan = MainActivity.mealPlanController;
+//        ArrayList<Ingredient> mealIngredient = mealPlanController.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
 //        shoppingCart(shoppingList, mealIngredient, storage);
 
