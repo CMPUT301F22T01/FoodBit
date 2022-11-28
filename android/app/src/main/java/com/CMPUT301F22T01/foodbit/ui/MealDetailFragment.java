@@ -27,6 +27,9 @@ import com.google.android.material.snackbar.Snackbar;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+ * A <code>meal detail screen</code> that displays the details of a meal.
+ */
 public class MealDetailFragment extends Fragment {
 
     private static final String TAG = "Meal Detail Fragment";
@@ -69,8 +72,6 @@ public class MealDetailFragment extends Fragment {
         ingredientsFieldView = view.findViewById(R.id.meal_detail_ingredients_field);
         ingredientEmptyView = view.findViewById(R.id.meal_detail_ingredients_empty);
         collapsingToolbarLayout = view.findViewById(R.id.meal_detail_top_bar);
-
-
 
         // back button functionality
         topBar.setNavigationOnClickListener(v -> Navigation.findNavController(v).popBackStack());
@@ -120,6 +121,9 @@ public class MealDetailFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Sets up the recyclerView to display the list of meals
+     */
     private void setUpRecyclerView() {
         ingredientAdapter = new IngredientAdapter(mealPlan.getIngredients());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
@@ -128,6 +132,9 @@ public class MealDetailFragment extends Fragment {
         ingredientsRecyclerView.addItemDecoration(new DividerItemDecoration(ingredientsRecyclerView.getContext(), linearLayoutManager.getOrientation()));
     }
 
+    /**
+     * Gets the meal
+     */
     private void getMeal() {
         assert getArguments() != null;
         position = getArguments().getInt("position");
@@ -171,6 +178,10 @@ public class MealDetailFragment extends Fragment {
         return false; //checkIngredients false therefore we don't have enough
     }
 
+    /**
+     * Button to allow for deleting a meal
+     * @return
+     */
     @NonNull
     private View.OnClickListener deleteButtonClicked() {
         return v -> {
@@ -179,6 +190,9 @@ public class MealDetailFragment extends Fragment {
         };
     }
 
+    /**
+     * Button to allow for editing a meal
+     */
     private void editButtonClicked() {
         MealPlan editingMeal = new MealPlan();
         editingMeal.update(mealPlan);
@@ -189,7 +203,10 @@ public class MealDetailFragment extends Fragment {
         newFragment.show(fm, "EditMeal");
     }
 
-
+    /**
+     * Populates the detail screen with the information regarding the meal, including
+     * the name, date, number of servings/units, and ingredients if they exist
+     */
     public void populateData() {
         mealPlan = mealPlanController.getMealByPosition(position); //Update with edited meal.
         collapsingToolbarLayout.setTitle(mealPlan.getName());

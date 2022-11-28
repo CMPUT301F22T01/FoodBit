@@ -244,6 +244,10 @@ public class MealAddFragment extends DialogFragment {
         }
     }
 
+    /**
+     * Adds or edits the meal
+     * @param meal the meal to be added or edited
+     */
     public void mealEditOrAdd(MealPlan meal) {
         mealPlanController.addMeal(meal);
     }
