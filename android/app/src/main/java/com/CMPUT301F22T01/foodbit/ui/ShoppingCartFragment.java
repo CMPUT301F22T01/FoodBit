@@ -82,18 +82,22 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         {
             // Sorting the Shopping List accordingly
             case R.id.descriptionFilter1:
+                //Sorting titles in ascending order
                 descriptionASort(getView());
                 Toast.makeText(getActivity(), "Sorting(A-Z): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.descriptionFilter2:
+                //Sorting titles in descending order
                 descriptionDSort(getView());
                 Toast.makeText(getActivity(), "Sorting(Z-A): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter1:
                 categoryASort(getView());
+                //Sorting categories in ascending order
                 Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter2:
+                //Sorting categories in descending order
                 categoryDSort(getView());
                 Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
                 break;
@@ -104,14 +108,13 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     }
     public void descriptionASort(View view)
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
+        Collections.sort(shoppingList, Ingredient.nameAscending);
         adapter.notifyDataSetChanged();
     }
     public void descriptionDSort(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending.reversed());
+            Collections.sort(shoppingList, Ingredient.nameAscending.reversed());
         }
 
         adapter.notifyDataSetChanged();
@@ -119,15 +122,13 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
 
     public void categoryASort(View view)
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
+        Collections.sort(shoppingList, Ingredient.categoryAscending);
         adapter.notifyDataSetChanged();
     }
     public void categoryDSort(View view)
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending.reversed());
+            Collections.sort(shoppingList, Ingredient.categoryAscending.reversed());
         }
         adapter.notifyDataSetChanged();
     }
