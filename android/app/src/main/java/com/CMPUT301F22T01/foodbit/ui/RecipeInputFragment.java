@@ -26,7 +26,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
     public static String TAG;

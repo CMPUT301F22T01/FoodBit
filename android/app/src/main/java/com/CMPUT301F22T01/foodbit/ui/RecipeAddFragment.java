@@ -45,11 +45,14 @@ public class RecipeAddFragment extends RecipeInputFragment {
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
+    // Tasks to do once a recipe is confirmed by the user
     protected void doneButtonClicked() {
         String title = Objects.requireNonNull(titleEditText.getText()).toString();
         String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
         String numServings = Objects.requireNonNull(numServingsEditText.getText()).toString();
         String category = Objects.requireNonNull(categoryEditText.getText()).toString();
+
+        //Checks to make sure everything is entered and is valid
         if (category.equals("")){category = null;}
         String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
         if (comments.equals("")){comments = null;}
@@ -79,6 +82,7 @@ public class RecipeAddFragment extends RecipeInputFragment {
         List<String> ingredientDescriptionList = ingredientController.getDescriptions();
         ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 
+        //Checking if it is an existing ingredient or needs to be added
         for (Ingredient ingredient : ingredients) {
             if (!ingredientDescriptionList.contains(ingredient.getDescription()))
             {
@@ -97,11 +101,12 @@ public class RecipeAddFragment extends RecipeInputFragment {
             {
                 for (Ingredient matchIngredient : ingredientList)
                 {
-                    Log.d(TAG, "doneButtonClicked: yeehhhh");
+                    Log.d(TAG, "doneButtonClicked: Successful");
                     if (ingredient.getDescription().equals(matchIngredient.getDescription()))
                     {
                         ingredient.setId(matchIngredient.getId());
                         Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+
                     }
                 }
             }
@@ -130,8 +135,6 @@ public class RecipeAddFragment extends RecipeInputFragment {
         return("Add a recipe");
     }
 }
-
-
 
 
 
