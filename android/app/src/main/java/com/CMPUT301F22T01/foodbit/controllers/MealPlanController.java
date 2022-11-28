@@ -148,5 +148,21 @@ public class MealPlanController {
         mealPlan.clear();
         db.getAllItemsCustom(mealPlan, new MealPlan());
     }
+
+    /**
+     * Update the Mealplan with recipe changes
+     * @param recipe
+     */
+    public void notifyRecipeChanged(Recipe recipe) {
+        for (int i =0; i < mealPlan.size(); i++) {
+            if (mealPlan.get(i).getRecipeID().equals(recipe.getId())) {
+                //Recipe exists within meal, edit the meal
+                MealPlan meal = mealPlan.get(i);
+                meal.setName(recipe.getTitle());
+                meal.setIngredientsFromRecipe(recipe.getIngredients(),recipe.getNumServings());
+                this.edit(meal);
+            }
+        }
+    }
 }
 
