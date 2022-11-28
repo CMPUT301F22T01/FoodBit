@@ -33,6 +33,7 @@ public class MealDetailFragment extends Fragment {
     private static final MealPlanController mealPlanController = MainActivity.mealPlanController;
 
     private MealPlan mealPlan;
+    private int position = -1;
 
     Toolbar topBar;
     TextView mealNameView;
@@ -129,7 +130,7 @@ public class MealDetailFragment extends Fragment {
 
     private void getMeal() {
         assert getArguments() != null;
-        int position = getArguments().getInt("position");
+        position = getArguments().getInt("position");
         mealPlan = MainActivity.mealPlanController.getMealByPosition(position);
         Log.d(TAG, String.valueOf(mealPlan));
     }
@@ -179,7 +180,9 @@ public class MealDetailFragment extends Fragment {
     }
 
     private void editButtonClicked() {
-        MealEditFragment newFragment = new MealEditFragment(mealPlan);
+        MealPlan editingMeal = new MealPlan();
+        editingMeal.update(mealPlan);
+        MealEditFragment newFragment = new MealEditFragment(editingMeal);
         FragmentManager fm = getChildFragmentManager();
 
         fm.executePendingTransactions();
@@ -188,24 +191,39 @@ public class MealDetailFragment extends Fragment {
 
 
     public void populateData() {
+        mealPlan = mealPlanController.getMealByPosition(position); //Update with edited meal.
         collapsingToolbarLayout.setTitle(mealPlan.getName());
         SimpleDateFormat sf = new SimpleDateFormat("MMM dd/yy");
         collapsingToolbarLayout.setTitle(sf.format(mealPlan.getDate()));
         mealNameView.setText(mealPlan.getName());
         String servingsSuffix = " servings";
-        if (mealPlan.getServings() == 1) {
-            servingsSuffix = " serving";
+        if(mealPlan.isIngredient()) {
+            if (mealPlan.getIngredients().get(0).getUnit() != null) {
+                servingsSuffix = " " + mealPlan.getIngredients().get(0).getUnit();
+            } else {
+                servingsSuffix = "";
+            }
+        } else {
+            if (mealPlan.getServings() == 1) {
+                servingsSuffix = " serving";
+            }
         }
+
         String servingsText = mealPlan.getServings() + servingsSuffix;
         servingsView.setText(servingsText);
 
-        if (!mealPlan.getIngredients().isEmpty()) {
+        if(mealPlan.isIngredient()) { //Ingredient so show nothing
             ingredientEmptyView.setVisibility(View.INVISIBLE);
+            ingredientsFieldView.setVisibility(View.INVISIBLE);
+            ingredientsRecyclerView.setVisibility(View.INVISIBLE);
+        } else if (!mealPlan.getIngredients().isEmpty()) { //Recipe with ingredients
+            ingredientEmptyView.setVisibility(View.INVISIBLE);
+            ingredientsFieldView.setVisibility(View.VISIBLE);
             ingredientsRecyclerView.setVisibility(View.VISIBLE);
             setUpRecyclerView();
-        } else {
-            // no ingredients
+        } else { //recipe with no ingredients
             ingredientEmptyView.setVisibility(View.VISIBLE);
+            ingredientsFieldView.setVisibility(View.VISIBLE);
             ingredientsRecyclerView.setVisibility(View.INVISIBLE);
         }
     }

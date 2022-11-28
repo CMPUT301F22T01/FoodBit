@@ -145,33 +145,24 @@ public class IngredientController implements Serializable {
      */
     public void loadAllFromDB() {
         ingredients.clear();
-        CollectionReference collectionReference = MainActivity.ingredientListRef;
+        db.getAllItems(ingredients);
         Date todayDate = Calendar.getInstance().getTime();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
+        int ingredientsSize = ingredients.size();
+        for (int i = 0; i < ingredientsSize; i=i+1){
+            Ingredient ingredientItem = ingredients.get(i);
+            String bestBefore = ingredientItem.getBestBefore();
+            try {
+                assert bestBefore != null;
+                Date bestBeforeDate = formatter.parse(bestBefore);
+                assert bestBeforeDate != null;
+                if (bestBeforeDate.before(todayDate)) {
+                    ingredientItem.setAmount(0.0F);
+                    db.editItem(ingredientItem);
                 }
-                else {
-                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
-                    for (int i =0; i< task.getResult().size(); i++) {
-                        Ingredient model = task.getResult().getDocuments().get(i).toObject(Ingredient.class);
-                        try {
-                            assert model != null;
-                            Date bestBeforeDate = formatter.parse(model.getBestBefore());
-                            assert bestBeforeDate != null;
-                            if (bestBeforeDate.before(todayDate)) {
-                                model.setAmount(0F);
-                            }
-                        } catch (ParseException e) {
-                            e.printStackTrace();
-                        }
-                        ingredients.add(model);
-                    }
-                }
+            } catch (ParseException e) {
+                e.printStackTrace();
             }
-        });
+        }
     }
 }

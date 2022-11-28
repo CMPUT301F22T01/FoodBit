@@ -34,17 +34,20 @@ import java.security.PrivateKey;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ShoppingCartPickedItemFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Generate a PickedItem Fragment when user click item on Shopping Cart
  */
 public class ShoppingCartPickedItemFragment extends DialogFragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "Picked Ingredient";
 
+    public interface OnItemPickedUpListener {
+        void onItemPickedUp();
+    }
+    private OnItemPickedUpListener itemPickedUpListener;
+
     public Context context;
-    public IngredientController ingredientController;
+    public IngredientController ingredientController = MainActivity.ingredientController;
     public Ingredient ingredient;
     public int position;
 
@@ -65,6 +68,9 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         super.onAttach(context);
         this.context = context;
         Log.d(TAG, "context: " + context);
+        itemPickedUpListener = (OnItemPickedUpListener) getParentFragment();
+        assert itemPickedUpListener != null;
+        Log.d(TAG, "Parent fragment: "+ getParentFragment());
     }
 
     /**
@@ -73,9 +79,10 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
      *
      * @return A new instance of fragment ShoppingCartPickedItemFragment.
      */
-    public static ShoppingCartPickedItemFragment newInstance() {
+    public static ShoppingCartPickedItemFragment newInstance(int position) {
         ShoppingCartPickedItemFragment fragment = new ShoppingCartPickedItemFragment();
         Bundle args = new Bundle();
+        args.putInt("position", position);
         fragment.setArguments(args);
         return fragment;
     }
@@ -107,27 +114,32 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         topBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).popBackStack();
+//                Navigation.findNavController(v).popBackStack();
+                dismiss();
             }
         });
 
         topBar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                String inputPickedAmount = Objects.requireNonNull(pickedAmountEditText.getText().toString());
-                boolean requiredFieldEntered = true;
-                if (inputPickedAmount.equals("")) {
-                    pickedAmountLayout.setError("Required");
-                    requiredFieldEntered = false;
-                }
-                if (requiredFieldEntered) {
-                    Log.d(TAG, "current ingredient: "+ ingredient.getDescription());
-                    Log.d(TAG, "current neededAmount: "+ inputPickedAmount);
-                    Log.d(TAG, "current originalAmount: "+ ingredient.getAmount());
-                    float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
-                    ingredient.setAmount(amount);
-                    MainActivity.ingredientController.edit(ingredient);
-                    dismiss();
+                int itemId = item.getItemId();
+                if (itemId == R.id.shopping_edit_done) {
+                    String inputPickedAmount = Objects.requireNonNull(pickedAmountEditText.getText().toString());
+                    boolean requiredFieldEntered = true;
+                    if (inputPickedAmount.equals("")) {
+                        pickedAmountLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    }
+                    if (requiredFieldEntered) {
+                        Log.d(TAG, "current ingredient: " + ingredient.getDescription());
+                        Log.d(TAG, "current neededAmount: " + inputPickedAmount);
+                        Log.d(TAG, "current originalAmount: " + ingredient.getAmount());
+                        float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
+                        ingredient.setAmount(amount);
+                        MainActivity.ingredientController.edit(ingredient);
+                        itemPickedUpListener.onItemPickedUp();
+                        dismiss();
+                    }
                 }
                 return false;
             }
@@ -142,10 +154,13 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * Get Ingredient from ingredientController
+     */
     private void getIngredient() {
         assert getArguments() != null;
         position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        ingredient = ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
     }
 
@@ -159,9 +174,5 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
             dialog.getWindow().setLayout(width, height);
             dialog.getWindow().setWindowAnimations(R.style.Theme_FoodBit_Slide);
         }
-    }
-
-    @Override
-    public void onDismiss(DialogInterface dialog) {
     }
 }

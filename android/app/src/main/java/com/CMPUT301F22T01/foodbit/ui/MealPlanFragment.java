@@ -138,12 +138,14 @@ public class MealPlanFragment extends Fragment {
                 ArrayList<MealPlan> newMealPlans = new ArrayList<MealPlan>();
                 assert value != null;
                 for (QueryDocumentSnapshot doc : value) {
-                    MealPlan newMeal = new MealPlan(doc);
+                    MealPlan newMeal = new  MealPlan(doc);
                     newMeal.setId(doc.getId());
                     newMealPlans.add(newMeal);
                 }
                 mealPlan.update(newMealPlans);
                 Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
+                // sort
+                Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
                 adapter.notifyDataSetChanged();
             }
         });

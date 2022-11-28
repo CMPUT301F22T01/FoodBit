@@ -1,7 +1,9 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +25,9 @@ import java.util.Objects;
  * Issues: users are not yet able to edit or remove ingredients that are added to the recipe in this screen.
  * There is a false error reported by the IDE which actually works fine.
  */
-public class RecipeAddFragment extends RecipeAddEditFragment {
+public class RecipeAddFragment extends RecipeInputFragment {
 
-    private IngredientController ingredientStorage;
+    private IngredientController ingredientController;
     public RecipeAddFragment() {
         // Required empty public constructor
     }
@@ -41,6 +43,7 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         super.ingredients = new ArrayList<>();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void doneButtonClicked() {
         String title = Objects.requireNonNull(titleEditText.getText()).toString();
@@ -72,32 +75,36 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
             requiredFieldEntered = false;
         }
 
-        ingredientStorage = MainActivity.ingredientController;
-        List ingredientDescriptionList = ingredientStorage.getDescriptions();
-        ArrayList<Ingredient> ingredientList = ingredientStorage.getIngredients();
+        ingredientController = MainActivity.ingredientController;
+        List<String> ingredientDescriptionList = ingredientController.getDescriptions();
+        ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 
         for (Ingredient ingredient : ingredients) {
-
-
             if (!ingredientDescriptionList.contains(ingredient.getDescription()))
             {
-                Ingredient newIngredient = new Ingredient(ingredient.getId(),ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
-                MainActivity.ingredientController.add(newIngredient);
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(),
+                        0,
+                        ingredient.getUnit(),
+                        ingredient.getCategory());
+                ingredientController.add(newIngredient);
+                ingredient.setId(newIngredient.getId());
+                Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
                 ingredientAdapter.notifyDataSetChanged();
             }
-
+//            ingredientDescriptionList = ingredientController.getDescriptions();
+//            ingredientList = ingredientController.getIngredients();
             if (ingredientDescriptionList.contains(ingredient.getDescription()))
             {
-
-                for (Ingredient matchIngredient:ingredientList)
+                for (Ingredient matchIngredient : ingredientList)
                 {
+                    Log.d(TAG, "doneButtonClicked: yeehhhh");
                     if (ingredient.getDescription().equals(matchIngredient.getDescription()))
                     {
                         ingredient.setId(matchIngredient.getId());
+                        Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
                     }
                 }
             }
-
         }
 
 
