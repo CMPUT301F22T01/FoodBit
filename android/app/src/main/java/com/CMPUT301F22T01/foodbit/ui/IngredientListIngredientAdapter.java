@@ -44,6 +44,11 @@ public class IngredientListIngredientAdapter extends IngredientAdapter{
         holder.itemView.setOnClickListener(onItemClick(holder));
     }
 
+    /**
+     * Fragment change when clicked
+     * @param holder viewholder
+     * @return the view
+     */
     private View.OnClickListener onItemClick(@NonNull ViewHolder holder) {
         return v -> {
             Bundle bundle = new Bundle();

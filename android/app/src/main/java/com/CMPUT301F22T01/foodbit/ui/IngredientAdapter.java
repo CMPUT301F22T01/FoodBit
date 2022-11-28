@@ -1,6 +1,5 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
-import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -112,7 +111,6 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
 
         // set up UI
         descriptionView.setText(description);
-//        setDescriptionTextSize(descriptionView);
         descriptionView.setTextSize(14);
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);

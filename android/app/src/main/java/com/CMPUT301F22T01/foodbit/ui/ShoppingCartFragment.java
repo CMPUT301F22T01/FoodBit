@@ -21,6 +21,7 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
+import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -99,11 +100,11 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        //shoppingCart(shoppingList, mealIngredient, storage);
+        //shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
         //get views
-        //RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        //TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         adapter.notifyDataSetChanged();
 
@@ -116,15 +117,15 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        //shoppingCart(shoppingList, mealIngredient, storage);
+        //shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
 
         //get views
-        //RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        //TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        //int mode = 0;
+        int mode = 0;
 
         adapter.notifyDataSetChanged();
     }
@@ -136,7 +137,6 @@ public class ShoppingCartFragment extends Fragment {
      * @param shoppingList
      * @param mealIngredient
      * @param storage
-     //* @param descriptionList
      */
     public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
                              ArrayList<Ingredient> storage) {
@@ -168,6 +168,7 @@ public class ShoppingCartFragment extends Fragment {
     }
 
 
+    public ArrayList<Ingredient> shoppingList = new ArrayList<>();
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -176,20 +177,16 @@ public class ShoppingCartFragment extends Fragment {
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
         mealPlan = MainActivity.mealPlan;
-        ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        List<String> descriptionList = ingredientController.getDescriptions();
-        //shoppingCart(shoppingList, mealIngredient, storage);
-
+//        shoppingCart(shoppingList, mealIngredient, storage);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        int mode = 0;
-        adapter = new ShoppingCartAdapter(shoppingList, mode);
+        adapter = new ShoppingCartAdapter(storage);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -197,6 +194,7 @@ public class ShoppingCartFragment extends Fragment {
         if (adapter.getItemCount() > 0) {
             bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
         }
+
 
         // add borderlines between items
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(recyclerView.getContext(),
