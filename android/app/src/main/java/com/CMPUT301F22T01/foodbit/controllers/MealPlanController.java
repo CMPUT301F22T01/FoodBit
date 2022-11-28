@@ -12,6 +12,7 @@ import com.CMPUT301F22T01.foodbit.models.Recipe;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Receive requests from UI and other Controllers to update the meal plan and pass along
@@ -30,6 +31,10 @@ public class MealPlanController {
         mealPlan = new ArrayList<MealPlan>();
         db = new DatabaseController("Meals");
 //        this.loadAllMeals();
+    }
+
+    public MealPlanController(List<MealPlan> meals) {
+        this.mealPlan = (ArrayList<MealPlan>) meals;
     }
 
     /**
