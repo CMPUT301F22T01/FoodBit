@@ -213,8 +213,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     }
 
     @Override
-    public void onIngredientItemClick(View v, int position) {
-        ShoppingCartPickedItemFragment.newInstance(position).show(getChildFragmentManager(), TAG);
+    public void onIngredientItemClick(View v, String id) {
+        ShoppingCartPickedItemFragment.newInstance(id).show(getChildFragmentManager(), TAG);
     }
 
     @SuppressLint("NotifyDataSetChanged")

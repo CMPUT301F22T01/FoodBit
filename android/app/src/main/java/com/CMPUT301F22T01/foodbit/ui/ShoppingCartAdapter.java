@@ -28,7 +28,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
      * Item click listener for ingredients
      */
     public interface OnItemClickListener {
-        void onIngredientItemClick(View v, int position);
+        void onIngredientItemClick(View v, String id);
     }
     protected OnItemClickListener itemClickListener;
 
@@ -95,6 +95,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         float amount = items.get(position).getAmount();
         String unit = items.get(position).getUnit();
         String category = items.get(position).getCategory();
+        String id = items.get(position).getId();
 
         // get UI
         TextView descriptionView = holder.getCartDescriptionView();
@@ -116,7 +117,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
+                itemClickListener.onIngredientItemClick(v, id);
             }
         });
     }
