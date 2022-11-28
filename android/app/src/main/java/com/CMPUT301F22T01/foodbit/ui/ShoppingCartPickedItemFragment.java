@@ -44,7 +44,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     private static final String TAG = "Picked Ingredient";
 
     public interface OnItemPickedUpListener {
-        void onItemPickedUp(Ingredient ingredient);
+        void onItemPickedUp();
     }
     private OnItemPickedUpListener itemPickedUpListener;
 
@@ -139,7 +139,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
                         float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
                         ingredient.setAmount(amount);
                         MainActivity.ingredientController.edit(ingredient);
-                        itemPickedUpListener.onItemPickedUp(ingredient);
+                        itemPickedUpListener.onItemPickedUp();
                         dismiss();
                     }
                 }
