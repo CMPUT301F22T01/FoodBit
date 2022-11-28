@@ -6,8 +6,11 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
+import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
@@ -31,20 +34,56 @@ import com.CMPUT301F22T01.foodbit.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
+import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+/**
+ * These are the test regarding user stories of recipes. Unfortunately, due to the nature of Android Espresso tests,
+ * the instrumented test gets stuck when auto complete text fields are present in a dialog fragment (presumably with multiple fragments on the backstack).
+ * More specifically, after this dialog fragment is "drawn", the test will fail to go back to idle state, which prevents the test to move onto the next step.
+ * Therefore, requirements that involves manipulating ingredients in a recipe (adding ingredients to, editing ingredients in, and deleting ingredients from a recipe)
+ * will not be possible to include in the tests.
+ * <p>
+ * Similarly, since Android espresso is not entitled to operate in the camera app, adding a photo to, editing a photo in, and deleting a photo from a recipe
+ * will not be possible to include in the test.
+ * </p><p>
+ * However, those requirements are guaranteed to work properly.
+ * </p>
+ */
 @LargeTest
 @RunWith(AndroidJUnit4.class)
 public class RecipeTests {
-
     @Rule
     public ActivityScenarioRule<LoadingPageActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(LoadingPageActivity.class);
 
+    /**
+     * This set of tests include five tests, set to run in this particular order.
+     */
     @Test
-    public void addRecipeTest() {
+    public void tests() throws InterruptedException {
+        // add a recipe
+        addRecipe();
+
+        // view the recipe's detail
+        viewRecipeDetailTest();
+
+        // edit the recipe
+        editRecipeTest();
+
+        // see a list of recipes
+        seeListOfRecipesTest();
+
+        // delete the recipe
+        deleteRecipeTest();
+    }
+
+    private void addRecipe() throws InterruptedException {
+
+        Thread.sleep(10000);
+        // go to recipe book page
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
                         childAtPosition(
@@ -55,27 +94,7 @@ public class RecipeTests {
                         isDisplayed()));
         bottomNavigationItemView.perform(click());
 
-        ViewInteraction bottomNavigationItemView2 = onView(
-                allOf(withId(R.id.fragment_meal_plan), withContentDescription("Meal Plan"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_bar),
-                                        0),
-                                2),
-                        isDisplayed()));
-        bottomNavigationItemView2.perform(click());
-
-        ViewInteraction bottomNavigationItemView3 = onView(
-                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
-                        childAtPosition(
-                                childAtPosition(
-                                        withId(R.id.nav_bar),
-                                        0),
-                                1),
-                        isDisplayed()));
-        bottomNavigationItemView3.perform(click());
-
-        // click add button
+        // click add recipe button
         ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.recipe_add), withContentDescription("AddRecipe"),
                         childAtPosition(
@@ -86,7 +105,7 @@ public class RecipeTests {
                         isDisplayed()));
         actionMenuItemView.perform(click());
 
-        // enter title, category, preparation time, number of servings, and comments
+        // enter recipe title
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.recipe_input_edit_text_title),
                         childAtPosition(
@@ -95,6 +114,8 @@ public class RecipeTests {
                                         0),
                                 0)));
         textInputEditText.perform(scrollTo(), replaceText("Sandwich"), closeSoftKeyboard());
+
+        // enter recipe category
         ViewInteraction textInputEditText2 = onView(
                 allOf(withId(R.id.recipe_input_edit_text_category),
                         childAtPosition(
@@ -103,6 +124,8 @@ public class RecipeTests {
                                         0),
                                 0)));
         textInputEditText2.perform(scrollTo(), replaceText("Lunch"), closeSoftKeyboard());
+
+        // enter recipe preparation time
         ViewInteraction textInputEditText3 = onView(
                 allOf(withId(R.id.recipe_input_edit_text_prep_time),
                         childAtPosition(
@@ -111,6 +134,8 @@ public class RecipeTests {
                                         0),
                                 0)));
         textInputEditText3.perform(scrollTo(), replaceText("10"), closeSoftKeyboard());
+
+        // enter recipe number of servings
         ViewInteraction textInputEditText4 = onView(
                 allOf(withId(R.id.recipe_input_edit_text_num_servings),
                         childAtPosition(
@@ -119,6 +144,8 @@ public class RecipeTests {
                                         0),
                                 0)));
         textInputEditText4.perform(scrollTo(), replaceText("1"), closeSoftKeyboard());
+
+        // enter recipe comments
         ViewInteraction textInputEditText5 = onView(
                 allOf(withId(R.id.recipe_input_edit_text_comments),
                         childAtPosition(
@@ -126,168 +153,141 @@ public class RecipeTests {
                                         withId(R.id.recipe_input_text_layout_comments),
                                         0),
                                 0)));
-        textInputEditText5.perform(scrollTo(), replaceText("A simple but delicious lunch."), closeSoftKeyboard());
-
-//        // click add ingredient button
-//        ViewInteraction actionMenuItemView2 = onView(
-//                allOf(withId(R.id.recipe_add_ingredient_add), withContentDescription("Add an ingredient"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredients_bar),
-//                                        1),
-//                                0),
-//                        isDisplayed()));
-//        actionMenuItemView2.perform(click());
-//
-        // enter ingredient info
-//        ViewInteraction materialAutoCompleteTextView = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_ingredients),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_description),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView.perform(click());
-//        ViewInteraction materialAutoCompleteTextView2 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_ingredients),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_description),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView2.perform(replaceText("Bread"), closeSoftKeyboard());
-//        ViewInteraction textInputEditText6 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_amount),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_amount),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        textInputEditText6.perform(replaceText("2"), closeSoftKeyboard());
-//        ViewInteraction materialAutoCompleteTextView3 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_units),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_unit),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView3.perform(click());
-//        ViewInteraction materialAutoCompleteTextView4 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_units),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_unit),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView4.perform(replaceText("slice"), closeSoftKeyboard());
-//        ViewInteraction textInputEditText7 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_category),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_category),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        textInputEditText7.perform(replaceText("grains"), closeSoftKeyboard());
-//
-//        // click confirm add ingredient button
-//        ViewInteraction materialButton = onView(
-//                allOf(withId(android.R.id.button1), withText("Add"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withClassName(is("android.widget.ScrollView")),
-//                                        0),
-//                                3)));
-//        materialButton.perform(scrollTo(), click());
-//
-//        // add another one
-//        ViewInteraction actionMenuItemView3 = onView(
-//                allOf(withId(R.id.recipe_add_ingredient_add), withContentDescription("Add an ingredient"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredients_bar),
-//                                        1),
-//                                0),
-//                        isDisplayed()));
-//        actionMenuItemView3.perform(click());
-//
-//        ViewInteraction materialAutoCompleteTextView5 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_ingredients),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_description),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView5.perform(click());
-//
-//        ViewInteraction materialAutoCompleteTextView6 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_ingredients),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_description),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView6.perform(replaceText("egg"), closeSoftKeyboard());
-//
-//        ViewInteraction textInputEditText8 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_amount),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_amount),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        textInputEditText8.perform(replaceText("1"), closeSoftKeyboard());
-//
-//        ViewInteraction materialAutoCompleteTextView7 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_units),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_unit),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView7.perform(click());
-//
-//        ViewInteraction materialAutoCompleteTextView8 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_auto_complete_units),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_unit),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        materialAutoCompleteTextView8.perform(replaceText("item"), closeSoftKeyboard());
-//
-//        ViewInteraction textInputEditText9 = onView(
-//                allOf(withId(R.id.recipe_input_ingredient_add_edit_text_category),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withId(R.id.recipe_input_ingredient_add_layout_category),
-//                                        0),
-//                                0),
-//                        isDisplayed()));
-//        textInputEditText9.perform(replaceText("protein"), closeSoftKeyboard());
-//
-//        ViewInteraction materialButton2 = onView(
-//                allOf(withId(android.R.id.button1), withText("Add"),
-//                        childAtPosition(
-//                                childAtPosition(
-//                                        withClassName(is("android.widget.ScrollView")),
-//                                        0),
-//                                3)));
-//        materialButton2.perform(scrollTo(), click());
+        textInputEditText5.perform(scrollTo(), replaceText("A simple lunch."), closeSoftKeyboard());
 
         // confirm adding the recipe
+        ViewInteraction actionMenuItemView2 = onView(
+                allOf(withId(R.id.recipe_input_done), withContentDescription("CONFIRM"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_top_bar),
+                                        2),
+                                0)));
+        actionMenuItemView2.perform(scrollTo(), click());
+    }
+
+    private void viewRecipeDetailTest() {
+        // click on item Sandwich in the recipe book
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView_recipe_book),
+                        hasDescendant(
+                                hasDescendant(withText("Sandwich"))
+                        )
+                ));
+        recyclerView.perform(actionOnItem(hasDescendant(withText("Sandwich")), click()));
+
+        // check recipe preparation time
+        ViewInteraction textView5 = onView(
+                allOf(withId(R.id.recipe_detail_prep_time), withText("10 minutes"),
+                        isDisplayed()));
+        textView5.check(matches(withText("10 minutes")));
+
+        // check recipe number of servings
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.recipe_detail_num_servings), withText("1 serving"),
+                        isDisplayed()));
+        textView.check(matches(withText("1 serving")));
+
+        // check recipe category
+        ViewInteraction textView6 = onView(
+                allOf(withId(R.id.recipe_detail_category_content), withText("Lunch"),
+                        isDisplayed()));
+        textView6.check(matches(withText("Lunch")));
+
+        // check recipe comments
+        ViewInteraction textView7 = onView(
+                allOf(withId(R.id.recipe_detail_comments_content), withText("A simple lunch."),
+                        isDisplayed()));
+        textView7.check(matches(withText("A simple lunch.")));
+
+        // go back to recipe book screen
+        ViewInteraction appCompatImageButton = onView(
+                allOf(childAtPosition(
+                                allOf(withId(R.id.recipe_detail_toolbar),
+                                        childAtPosition(
+                                                allOf(withId(R.id.recipe_detail_top_bar)
+                                                ),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+
+    }
+
+    private void editRecipeTest() {
+        // click on item Sandwich in the recipe book
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView_recipe_book),
+                        hasDescendant(
+                                hasDescendant(withText("Sandwich"))
+                        )
+                ));
+        recyclerView.perform(actionOnItem(hasDescendant(withText("Sandwich")), click()));
+
+        // click on edit recipe button
+        ViewInteraction actionMenuItemView3 = onView(
+                allOf(withId(R.id.recipe_detail_edit), withContentDescription("EDIT"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_detail_toolbar),
+                                        2),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView3.perform(click());
+
+        // edit recipe title
+        ViewInteraction textInputEditText6 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_title), withText("Sandwich"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_title),
+                                        0),
+                                0)));
+        textInputEditText6.perform(scrollTo(), replaceText("Burger"));
+
+        // edit recipe category
+        ViewInteraction textInputEditText10 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_category), withText("Lunch"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_category),
+                                        0),
+                                0)));
+        textInputEditText10.perform(scrollTo(), replaceText("Dinner"));
+
+        // edit recipe preparation time
+        ViewInteraction textInputEditText13 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_prep_time), withText("10"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_prep_time),
+                                        0),
+                                0)));
+        textInputEditText13.perform(scrollTo(), replaceText("20"));
+
+        // edit recipe number of servings
+        ViewInteraction textInputEditText15 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_num_servings), withText("1"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_num_servings),
+                                        0),
+                                0)));
+        textInputEditText15.perform(scrollTo(), replaceText("2"));
+
+        // edit recipe comments
+        ViewInteraction textInputEditText17 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_comments), withText("A simple lunch."),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_comments),
+                                        0),
+                                0)));
+        textInputEditText17.perform(scrollTo(), replaceText("A not so simple lunch."));
+
+        // confirm editing recipe
         ViewInteraction actionMenuItemView4 = onView(
-                allOf(withId(R.id.recipe_add_done), withContentDescription("ADD"),
+                allOf(withId(R.id.recipe_input_done), withContentDescription("CONFIRM"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.recipe_input_top_bar),
@@ -295,30 +295,157 @@ public class RecipeTests {
                                 0)));
         actionMenuItemView4.perform(scrollTo(), click());
 
-        // check if recipe is added to the recipe book page
+        // check preparation time
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.recipe_detail_prep_time), withText("20 minutes"),
+                        isDisplayed()));
+        textView.check(matches(withText("20 minutes")));
+
+        // check number of servings
+        ViewInteraction textView2 = onView(
+                allOf(withId(R.id.recipe_detail_num_servings), withText("2 servings"),
+                        isDisplayed()));
+        textView2.check(matches(withText("2 servings")));
+
+        // check category
+        ViewInteraction textView3 = onView(
+                allOf(withId(R.id.recipe_detail_category_content), withText("Dinner"),
+                        isDisplayed()));
+        textView3.check(matches(withText("Dinner")));
+
+        // check comments
+        ViewInteraction textView4 = onView(
+                allOf(withId(R.id.recipe_detail_comments_content), withText("A not so simple lunch."),
+                        isDisplayed()));
+        textView4.check(matches(withText("A not so simple lunch.")));
+
+        // revert changes
+        ViewInteraction actionMenuItemView5 = onView(
+                allOf(withId(R.id.recipe_detail_edit), withContentDescription("EDIT"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_detail_toolbar),
+                                        2),
+                                0),
+                        isDisplayed()));
+        actionMenuItemView5.perform(click());
+        ViewInteraction textInputEditText23 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_title), withText("Burger"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_title),
+                                        0),
+                                0)));
+        textInputEditText23.perform(scrollTo(), replaceText("Sandwich"));
+        ViewInteraction textInputEditText25 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_category), withText("Dinner"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_category),
+                                        0),
+                                0)));
+        textInputEditText25.perform(scrollTo(), replaceText("Lunch"));
+        ViewInteraction textInputEditText27 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_prep_time), withText("20"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_prep_time),
+                                        0),
+                                0)));
+        textInputEditText27.perform(scrollTo(), replaceText("10"));
+        ViewInteraction textInputEditText29 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_num_servings), withText("2"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_num_servings),
+                                        0),
+                                0)));
+        textInputEditText29.perform(scrollTo(), replaceText("1"));
+        ViewInteraction textInputEditText31 = onView(
+                allOf(withId(R.id.recipe_input_edit_text_comments), withText("A not so simple lunch."),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_text_layout_comments),
+                                        0),
+                                0)));
+        textInputEditText31.perform(scrollTo(), replaceText("A simple lunch."));
+        ViewInteraction actionMenuItemView6 = onView(
+                allOf(withId(R.id.recipe_input_done), withContentDescription("CONFIRM"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_input_top_bar),
+                                        2),
+                                0)));
+        actionMenuItemView6.perform(scrollTo(), click());
+        ViewInteraction appCompatImageButton = onView(
+                allOf(childAtPosition(
+                                allOf(withId(R.id.recipe_detail_toolbar),
+                                        childAtPosition(
+                                                allOf(withId(R.id.recipe_detail_top_bar)
+                                                ),
+                                                1)),
+                                1),
+                        isDisplayed()));
+        appCompatImageButton.perform(click());
+    }
+
+    private void seeListOfRecipesTest() {
+        // check title
         ViewInteraction textView = onView(
                 allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView.check(matches(withText("Sandwich")));
 
+        //check preparation time
         ViewInteraction textView2 = onView(
                 allOf(withId(R.id.item_recipe_prep_time), withText("10 minutes"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView2.check(matches(withText("10 minutes")));
 
+        // check number of servings
         ViewInteraction textView3 = onView(
                 allOf(withId(R.id.item_recipe_num_servings), withText("×1"),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
         textView3.check(matches(withText("×1")));
 
+        // check comments
         ViewInteraction textView4 = onView(
-                allOf(withId(R.id.item_recipe_comments), withText("A simple but delicious lunch."),
-                        withParent(withParent(withId(R.id.recyclerView_recipe_book))),
+                allOf(withId(R.id.item_recipe_comments), withText("A simple lunch."),
+                        withParent(hasDescendant(withText("Sandwich"))),
                         isDisplayed()));
-        textView4.check(matches(withText("A simple but delicious lunch.")));
+        textView4.check(matches(withText("A simple lunch.")));
+
+    }
+
+    private void deleteRecipeTest() {
+        // click on item Sandwich in recipe book
+        ViewInteraction recyclerView = onView(
+                allOf(withId(R.id.recyclerView_recipe_book),
+                        hasDescendant(
+                                hasDescendant(withText("Sandwich"))
+                        )
+                ));
+        recyclerView.perform(actionOnItem(hasDescendant(withText("Sandwich")), click()));
+
+        // click of delete recipe
+        ViewInteraction actionMenuItemView3 = onView(
+                allOf(withId(R.id.recipe_detail_delete), withContentDescription("DELETE"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.recipe_detail_toolbar),
+                                        2),
+                                1),
+                        isDisplayed()));
+        actionMenuItemView3.perform(click());
+
+        // check if item no longer exists
+        ViewInteraction textView = onView(
+                allOf(withId(R.id.item_recipe_title), withText("Sandwich"),
+                        isDisplayed()));
+        textView.check(doesNotExist());
     }
 
     private static Matcher<View> childAtPosition(

@@ -8,7 +8,7 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
 
-public class RecipeInputIngredientAdapter extends IngredientAdapter{
+public class RecipeInputIngredientAdapter extends IngredientAdapter {
     /**
      * Adapter for the ingredient items
      *
@@ -25,6 +25,6 @@ public class RecipeInputIngredientAdapter extends IngredientAdapter{
     }
 
     private View.OnClickListener onItemClick(@NonNull ViewHolder holder) {
-        return v -> itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
+        return v -> super.itemClickListener.onIngredientItemClick(v, holder.getAdapterPosition());
     }
 }

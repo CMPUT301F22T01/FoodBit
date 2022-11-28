@@ -41,7 +41,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     private final IngredientController ingredientController = MainActivity.ingredientController;
     private final MealPlanController mealPlanController = MainActivity.mealPlanController;
 
-    private ArrayList<Ingredient> shoppingList = new ArrayList<>();
+    private final ArrayList<Ingredient> shoppingList = new ArrayList<>();
     private ArrayList<Ingredient> need;
     private ArrayList<Ingredient> have;
     ShoppingCartAdapter adapter;

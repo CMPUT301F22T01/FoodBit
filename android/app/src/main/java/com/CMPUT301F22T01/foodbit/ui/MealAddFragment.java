@@ -46,7 +46,7 @@ public class MealAddFragment extends DialogFragment {
     protected MealPlanController mealPlanController;
     private RecipeController recipeController;
     private int positionSelected;
-    private Boolean notRealItem = false;
+    private final Boolean notRealItem = false;
     protected MealPlan meal;
     ArrayList<String> itemsDropdown = new ArrayList<String>();
     private String mealSelected = "";
@@ -177,7 +177,7 @@ public class MealAddFragment extends DialogFragment {
 
 
         //Date picker
-        mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
+        mealDateEditText = view.findViewById(R.id.meal_add_date);
         mealDatePicker = new EditDatePicker(context,mealDateEditText);
 
 

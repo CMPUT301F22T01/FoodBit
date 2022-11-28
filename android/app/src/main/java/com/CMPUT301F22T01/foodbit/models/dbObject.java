@@ -1,6 +1,6 @@
 package com.CMPUT301F22T01.foodbit.models;
 
 public interface dbObject {
-    public void setId(String id);
-    public String getId();
+    void setId(String id);
+    String getId();
 }

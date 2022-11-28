@@ -28,7 +28,6 @@ import java.util.Objects;
  */
 public class RecipeAddFragment extends RecipeInputFragment {
 
-    private IngredientController ingredientController;
     public RecipeAddFragment() {
         // Required empty public constructor
     }
@@ -83,7 +82,7 @@ public class RecipeAddFragment extends RecipeInputFragment {
             requiredFieldEntered = false;
         }
 
-        ingredientController = MainActivity.ingredientController;
+        IngredientController ingredientController = MainActivity.ingredientController;
         List<String> ingredientDescriptionList = ingredientController.getDescriptions();
         ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 

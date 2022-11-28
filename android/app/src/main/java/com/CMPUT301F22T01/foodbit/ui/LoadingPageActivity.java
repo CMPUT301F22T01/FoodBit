@@ -12,6 +12,7 @@ import static com.CMPUT301F22T01.foodbit.ui.MainActivity.location;
 import static com.CMPUT301F22T01.foodbit.ui.MainActivity.unit;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.splashscreen.SplashScreen;
 import androidx.lifecycle.Observer;
 
 import android.content.Intent;
@@ -33,6 +34,7 @@ public class LoadingPageActivity extends AppCompatActivity {
     public static String FID = "empty";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SplashScreen splashScreen = SplashScreen.installSplashScreen(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading_page);
 

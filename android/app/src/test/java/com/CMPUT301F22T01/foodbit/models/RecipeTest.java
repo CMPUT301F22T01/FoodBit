@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.models;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import android.net.Uri;
 
@@ -131,11 +132,8 @@ class RecipeTest {
         assertEquals("new ingredient", recipe.getIngredients().get(0).getDescription());
     }
 
-//    @Test
-//    void doGetIngredientList() {
-//        Recipe recipe = mockRecipe();
-//        Map<String, Float> list = recipe.doGetIngredientList();
-//        Float value = list.get("id");
-//        assertEquals(2f, (float) value);
-//    }
+    @Test
+    void containsIngredient() {
+        assertTrue(mockRecipe().containsIngredient(mockIngredient()));
+    }
 }

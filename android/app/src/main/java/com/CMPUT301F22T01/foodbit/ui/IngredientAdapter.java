@@ -98,11 +98,8 @@ public class IngredientAdapter extends RecyclerView.Adapter<IngredientAdapter.Vi
         Log.d(TAG, String.valueOf(items));
         Log.d(TAG, items.getClass().getName());
         String description = items.get(position).getDescription();
-        String bestBefore = items.get(position).getBestBefore();
-        String location = items.get(position).getLocation();
         float amount = items.get(position).getAmount();
         String unit = items.get(position).getUnit();
-        String category = items.get(position).getUnit();
 
         // get UI
         TextView descriptionView = holder.getIngredientDescriptionView();
