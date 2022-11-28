@@ -9,10 +9,8 @@ import static androidx.test.espresso.action.ViewActions.scrollTo;
 import static androidx.test.espresso.assertion.ViewAssertions.doesNotExist;
 import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItem;
-import static androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition;
 import static androidx.test.espresso.matcher.ViewMatchers.hasDescendant;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withParent;
@@ -34,7 +32,6 @@ import com.CMPUT301F22T01.foodbit.R;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
-import org.hamcrest.core.IsInstanceOf;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,7 +62,7 @@ public class RecipeTests {
     @Test
     public void tests() throws InterruptedException {
         // add a recipe
-        addRecipe();
+        addRecipeTest();
 
         // view the recipe's detail
         viewRecipeDetailTest();
@@ -80,7 +77,7 @@ public class RecipeTests {
         deleteRecipeTest();
     }
 
-    private void addRecipe() throws InterruptedException {
+    private void addRecipeTest() throws InterruptedException {
 
         Thread.sleep(10000);
         // go to recipe book page
