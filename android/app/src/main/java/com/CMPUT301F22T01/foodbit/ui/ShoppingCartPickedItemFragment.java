@@ -108,7 +108,8 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         topBar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).popBackStack();
+//                Navigation.findNavController(v).popBackStack();
+                dismiss();
             }
         });
 
