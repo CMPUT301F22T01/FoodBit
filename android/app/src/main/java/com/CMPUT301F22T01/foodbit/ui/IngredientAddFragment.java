@@ -183,7 +183,7 @@ public class IngredientAddFragment extends DialogFragment {
                         MainActivity.location.add(newLocation);
                         MainActivity.location.loadAllFromDB();
                     }
-                    if (!units.contains(unit)) {
+                    if (!units.contains(unit) && !units.equals("")) {
                         //Adds new unit to the adapter and the database if it is not already in it
                         unitAdapter.add(unit);
                         unitAdapter.notifyDataSetChanged();
