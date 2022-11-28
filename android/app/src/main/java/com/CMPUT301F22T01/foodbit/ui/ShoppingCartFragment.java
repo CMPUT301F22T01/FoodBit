@@ -156,6 +156,9 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
                 float amountNeeded = cartItem.getAmount() - have.get(index).getAmount();
                 cartItem.setAmount(amountNeeded);
                 cartItem.setCategory(ingredientController.getIngredientById(cartItem.getId()).getCategory());
+                if(cartItem.getCategory() == null) {
+                    cartItem.setCategory("missing");
+                }
             }
         }
         return shoppingList;
