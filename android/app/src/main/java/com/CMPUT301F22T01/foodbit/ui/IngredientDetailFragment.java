@@ -1,19 +1,26 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -25,6 +32,11 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
 
     private static final String TAG = "Ingredient Detail Fragment";
 
+    private final IngredientController ingredientController = MainActivity.ingredientController;
+    private final RecipeController recipeController = MainActivity.recipeController;
+    private final MealPlanController mealPlanController = MainActivity.mealPlanController;
+    private Context context;
+
     Ingredient ingredient;
     int position;
 
@@ -35,8 +47,7 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
     TextView amountView;
     TextView unitView;
     TextView categoryView;
-    Button deleteButton;
-    Button editButton;
+//    Button deleteButton;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     /**
@@ -44,6 +55,12 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
      */
     public IngredientDetailFragment() {
         // Required empty constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -78,31 +95,37 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         });
 
         // setting to current ingredient details
-        descriptionView.setText(ingredient.getDescription());
-        bestBeforeView.setText(ingredient.getBestBefore());
-        locationView.setText(ingredient.getLocation());
-        amountView.setText(String.valueOf(ingredient.getAmount()));
-        unitView.setText(ingredient.getUnit());
-        categoryView.setText(ingredient.getCategory());
+        descriptionView.setText("Description: "+ingredient.getDescription());
+        bestBeforeView.setText("Best Before Date: "+ingredient.getBestBefore());
+        locationView.setText("Location: "+ingredient.getLocation());
+        amountView.setText("Amount: "+String.valueOf(ingredient.getAmount()));
+        unitView.setText("Unit: "+ingredient.getUnit());
+        categoryView.setText("Category: "+ingredient.getCategory());
 
-        // allows for deleting of ingredient being viewed when delete button is clicked
-        deleteButton = view.findViewById(R.id.button_ingredient_detail_delete);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Removing from the database
-                MainActivity.ingredientController.delete(ingredient);
-                Navigation.findNavController(v).popBackStack();
-            }
-        });
+//        // allows for deleting of ingredient being viewed when delete button is clicked
+//        deleteButton = view.findViewById(R.id.button_ingredient_detail_delete);
+//        deleteButton.setOnClickListener(v -> {
+//            // Removing from the database
+//            MainActivity.ingredientController.delete(ingredient);
+//            Navigation.findNavController(v).popBackStack();
+//        });
 
         // allows for editing of ingredient being viewed when edit button is clicked
-        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        toolbar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (recipeController.containsIngredient(ingredient) || mealPlanController.containsIngredient(ingredient)) {
+                String toastMsg = "Edit/Deletion not allowed - ingredient used in recipe(s) or meal plan(s)";
+                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.ingredient_detail_edit) {
                 new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
+            else if (itemId == R.id.ingredient_detail_delete) {
+                // Removing from the database
+                MainActivity.ingredientController.delete(ingredient);
+                Navigation.findNavController(view).popBackStack();
+
+            }
+            return false;
         });
         return view;
     }
@@ -114,19 +137,19 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
     private void getIngredient() {
         assert getArguments() != null;
         position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        ingredient = ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
     }
 
     @Override
     public void onEdited() {
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        ingredient = ingredientController.getIngredientByPosition(position);
         collapsingToolbarLayout.setTitle(ingredient.getDescription());
-        descriptionView.setText(ingredient.getDescription());
-        bestBeforeView.setText(ingredient.getBestBefore());
-        locationView.setText(ingredient.getLocation());
-        amountView.setText(String.valueOf(ingredient.getAmount()));
-        unitView.setText(ingredient.getUnit());
-        categoryView.setText(ingredient.getCategory());
+        descriptionView.setText("Description: "+ingredient.getDescription());
+        bestBeforeView.setText("Best Before Date: "+ingredient.getBestBefore());
+        locationView.setText("Location: "+ingredient.getLocation());
+        amountView.setText("Amount: "+String.valueOf(ingredient.getAmount()));
+        unitView.setText("Unit: "+ingredient.getUnit());
+        categoryView.setText("Category: "+ingredient.getCategory());
     }
 }

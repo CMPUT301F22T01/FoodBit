@@ -4,14 +4,15 @@ package com.CMPUT301F22T01.foodbit.controllers;
 
 import android.util.Log;
 
+import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 
-import org.checkerframework.checker.units.qual.A;
-
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 /**
  * Receive requests from UI and other Controllers to update the meal plan and pass along
@@ -19,7 +20,7 @@ import java.util.ArrayList;
  */
 public class MealPlanController {
 
-    private ArrayList<MealPlan> mealPlan;
+    private final ArrayList<MealPlan> mealPlans;
     private DatabaseController db;
     private ArrayList<Ingredient> ingredList = new ArrayList<Ingredient>();
 
@@ -27,9 +28,13 @@ public class MealPlanController {
      * Creates a new list of MealPlans
      */
     public MealPlanController(){
-        mealPlan = new ArrayList<MealPlan>();
+        mealPlans = new ArrayList<MealPlan>();
         db = new DatabaseController("Meals");
 //        this.loadAllMeals();
+    }
+
+    public MealPlanController(List<MealPlan> mealPlans) {
+        this.mealPlans = (ArrayList<MealPlan>) mealPlans;
     }
 
     /**
@@ -38,17 +43,21 @@ public class MealPlanController {
      */
     public void addMeal(MealPlan meal){
         db.addItem(meal);
-        mealPlan.add(meal);
+        mealPlans.add(meal);
         this.addToIngredientList(meal);
     }
 
+    /**
+     * Edit a meal
+     * @param meal the meal to be edited
+     */
     public void edit(MealPlan meal) {
         assert contains(meal) : "This meal is not found int the meal list";
-        for (int i =0; i < mealPlan.size(); i++) {
-            if (mealPlan.get(i).getId().equals(meal.getId())) {
-                subtractFromIngredientList(mealPlan.get(i));
+        for (int i = 0; i < mealPlans.size(); i++) {
+            if (mealPlans.get(i).getId().equals(meal.getId())) {
+                subtractFromIngredientList(mealPlans.get(i));
                 addToIngredientList(meal);
-                mealPlan.set(i,meal);
+                mealPlans.set(i,meal);
             }
         }
         db.editItem(meal);
@@ -69,7 +78,7 @@ public class MealPlanController {
     public void deleteMeal(MealPlan meal) {
         assert contains(meal) : "this meal is not found in the meal plan!";
         db.deleteItem(meal);
-        mealPlan.remove(meal);
+        mealPlans.remove(meal);
         this.subtractFromIngredientList(meal);
     }
 
@@ -78,8 +87,8 @@ public class MealPlanController {
      * Sort and return a cache of the mealPlan by date
      * @return the sorted array of MealPlans
      */
-    public ArrayList<MealPlan> getArrayList() {
-        return mealPlan;
+    public ArrayList<MealPlan> getMealPlans() {
+        return mealPlans;
     }
 
     /**
@@ -88,8 +97,8 @@ public class MealPlanController {
      * @return whether the meal plan contains the meal
      */
     public boolean contains(MealPlan meal) {
-        for (int i =0; i < mealPlan.size(); i++) {
-            if (mealPlan.get(i).getId().equals(meal.getId())) {
+        for (int i = 0; i < mealPlans.size(); i++) {
+            if (mealPlans.get(i).getId().equals(meal.getId())) {
                 return true;
             }
         }
@@ -101,8 +110,8 @@ public class MealPlanController {
      * @param newMealPlan
      */
     public void update(ArrayList<MealPlan> newMealPlan) {
-        mealPlan.clear();
-        mealPlan.addAll(newMealPlan);
+        mealPlans.clear();
+        mealPlans.addAll(newMealPlan);
     }
 
     /**
@@ -111,8 +120,8 @@ public class MealPlanController {
      */
     public String toString() {
         String t = "";
-        for (int i =0; i < mealPlan.size(); i++) {
-            t = t + mealPlan.get(i).getId();
+        for (int i = 0; i < mealPlans.size(); i++) {
+            t = t + mealPlans.get(i).getId();
         }
         return t;
     }
@@ -123,13 +132,13 @@ public class MealPlanController {
      * @return the meal at the position
      */
     public MealPlan getMealByPosition(int position) {
-        return mealPlan.get(position);
+        return mealPlans.get(position);
     }
 
     /**
-     *
+     * Gets the index of an ingredient within the ingredient list from its ID
      * @param ID
-     * @return -1 if ingredient ID doesnt exist within the ingredient list. Otherwise return index
+     * @return -1 if ingredient ID doesn't exist within the ingredient list. Otherwise return index
      */
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
         for (int i = 0; i< ingredList.size(); i++) {
@@ -159,8 +168,8 @@ public class MealPlanController {
      */
     public void calcAllIngredients() {
         ArrayList<Ingredient> allIngredients = new ArrayList<Ingredient>();
-        for (int i =0; i < mealPlan.size(); i++) { //iterate through all meals
-            MealPlan meal = mealPlan.get(i);
+        for (int i = 0; i < mealPlans.size(); i++) { //iterate through all meals
+            MealPlan meal = mealPlans.get(i);
             for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
                 Ingredient currentIngred = new Ingredient();
                 currentIngred.update(meal.getIngredients().get(j));
@@ -217,8 +226,8 @@ public class MealPlanController {
     }
 
     public void load() {
-        mealPlan.clear();
-        db.getAllItemsCustom(mealPlan, new MealPlan());
+        mealPlans.clear();
+        db.getAllItemsCustom(mealPlans, new MealPlan());
         calcAllIngredients();
     }
 
@@ -227,15 +236,37 @@ public class MealPlanController {
      * @param recipe
      */
     public void notifyRecipeChanged(Recipe recipe) {
-        for (int i =0; i < mealPlan.size(); i++) {
-            if (mealPlan.get(i).getRecipeID().equals(recipe.getId())) {
+        for (int i = 0; i < mealPlans.size(); i++) {
+            if (mealPlans.get(i).getRecipeID().equals(recipe.getId())) {
                 //Recipe exists within meal, edit the meal
-                MealPlan meal = mealPlan.get(i);
+                MealPlan meal = mealPlans.get(i);
                 meal.setName(recipe.getTitle());
                 meal.setIngredientsFromRecipe(recipe.getIngredients(),recipe.getNumServings());
                 this.edit(meal);
             }
         }
+    }
+
+    public boolean containsIngredient(Ingredient mIngredient) {
+        ArrayList<Ingredient> ingredients = getAllIngredients();
+        for (Ingredient ingredient :
+                ingredients) {
+            if (Objects.equals(ingredient.getId(), mIngredient.getId())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean containsRecipe(Recipe recipe) {
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        for (MealPlan mealPlan :
+                mealPlans) {
+            if (!mealPlan.isIngredient() && Objects.equals(mealPlan.getRecipeID(), recipe.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 }
 

@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import static java.lang.Float.parseFloat;
+import static java.lang.String.valueOf;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -25,28 +26,34 @@ import android.widget.TextView;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ShoppingCartPickedItemFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Generate a PickedItem Fragment when user click item on Shopping Cart
  */
 public class ShoppingCartPickedItemFragment extends DialogFragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "Picked Ingredient";
 
+    public interface OnItemPickedUpListener {
+        void onItemPickedUp();
+    }
+    private OnItemPickedUpListener itemPickedUpListener;
+
     public Context context;
     public IngredientController ingredientController = MainActivity.ingredientController;
+    public MealPlanController mealPlanController = MainActivity.mealPlanController;
     public Ingredient ingredient;
-    public int position;
+    public String id;
 
     MaterialToolbar topBar;
     TextView description;
@@ -65,6 +72,9 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         super.onAttach(context);
         this.context = context;
         Log.d(TAG, "context: " + context);
+        itemPickedUpListener = (OnItemPickedUpListener) getParentFragment();
+        assert itemPickedUpListener != null;
+        Log.d(TAG, "Parent fragment: "+ getParentFragment());
     }
 
     /**
@@ -73,10 +83,10 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
      *
      * @return A new instance of fragment ShoppingCartPickedItemFragment.
      */
-    public static ShoppingCartPickedItemFragment newInstance(int position) {
+    public static ShoppingCartPickedItemFragment newInstance(String id) {
         ShoppingCartPickedItemFragment fragment = new ShoppingCartPickedItemFragment();
         Bundle args = new Bundle();
-        args.putInt("position", position);
+        args.putString("id", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -131,6 +141,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
                         float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
                         ingredient.setAmount(amount);
                         MainActivity.ingredientController.edit(ingredient);
+                        itemPickedUpListener.onItemPickedUp();
                         dismiss();
                     }
                 }
@@ -140,18 +151,36 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
 
         // setting to current ingredient details
         description.setText(ingredient.getDescription());
-        amountNeeded.setText(String.valueOf(ingredient.getAmount()));
+        amountNeeded.setText(valueOf(getAmountFromMealPlan(ingredient) - ingredient.getAmount()));
         unit.setText(ingredient.getUnit());
-        category.setText(ingredient.getCategory());
+        if (ingredient.getCategory() == null) {
+            category.setText("missing");
+        }
+        else {
+            category.setText(ingredient.getCategory());
+        }
 
         return view;
     }
+    private float getAmountFromMealPlan(Ingredient cartIngredient){
+        ArrayList<Ingredient> ingredients = mealPlanController.getAllIngredients();
+        for (Ingredient ingredient : ingredients
+             ) {
+            if(ingredient.getId() == cartIngredient.getId()) {
+                return ingredient.getAmount();
+            }
+        }
+        return -1;
+    }
 
+    /**
+     * Get Ingredient from ingredientController
+     */
     private void getIngredient() {
         assert getArguments() != null;
-        position = getArguments().getInt("position");
-        ingredient = ingredientController.getIngredientByPosition(position);
-        Log.d(TAG, String.valueOf(ingredient));
+        id = getArguments().getString("id");
+        ingredient = ingredientController.getIngredientById(id);
+        Log.d(TAG, valueOf(ingredient));
     }
 
     @Override

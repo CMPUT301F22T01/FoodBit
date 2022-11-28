@@ -52,6 +52,7 @@ public class LoadingPageActivity extends AppCompatActivity {
 
                 MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
                 MainActivity.recipeController = new RecipeController();
+                MainActivity.recipeController.load();
 
                 MainActivity.ingredientListRef = db.collection(FID).document(FID).collection("ingredient list");
                 MainActivity.ingredientController = new IngredientController();

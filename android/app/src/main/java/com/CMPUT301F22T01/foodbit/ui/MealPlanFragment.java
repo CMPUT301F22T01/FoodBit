@@ -30,7 +30,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * The main Meal Plan page that displays the list of MealPlans
@@ -40,7 +39,7 @@ public class MealPlanFragment extends Fragment {
     public String TAG = "MealPlan";
 
     // get meal plan from MainActivity
-    private final MealPlanController mealPlan = MainActivity.mealPlanController;
+    private final MealPlanController mealPlanController = MainActivity.mealPlanController;
 
     MealPlanAdapter adapter;
 
@@ -102,12 +101,12 @@ public class MealPlanFragment extends Fragment {
         // get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_meal_plan);
 
-        // sort
-        Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
+//        // sort
+//        Collections.sort(mealPlan.getMealPlans(), MealPlan.sortByDate);
 
         // set RecyclerView
-        adapter = new MealPlanAdapter(mealPlan.getArrayList());
-        Log.e(TAG,"init = " + mealPlan.getArrayList());
+        adapter = new MealPlanAdapter(mealPlanController.getMealPlans());
+        Log.e(TAG,"init = " + mealPlanController.getMealPlans());
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -142,10 +141,10 @@ public class MealPlanFragment extends Fragment {
                     newMeal.setId(doc.getId());
                     newMealPlans.add(newMeal);
                 }
-                mealPlan.update(newMealPlans);
-                Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
-                // sort
-                Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
+                mealPlanController.update(newMealPlans);
+                Log.e(TAG, "Current meal plans: " + mealPlanController.toString() + MainActivity.mealPlanRef.getPath());
+//                // sort
+//                Collections.sort(mealPlan.getMealPlans(), MealPlan.sortByDate);
                 adapter.notifyDataSetChanged();
             }
         });

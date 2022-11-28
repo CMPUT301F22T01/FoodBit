@@ -4,29 +4,29 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_menu"
     app:startDestination="@id/fragment_recipe_book">
-    <fragment
-        android:id="@+id/fragment_ingredient_edit"
-        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment"
-        android:label="IngredientAddFragment"
-        tools:layout="@layout/fragment_ingredient_add">
-        <action
-            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_list"
-            app:destination="@+id/fragment_ingredient_list"
-            app:enterAnim="@anim/slide_left_enter"
-            app:popEnterAnim="@anim/slide_right_exit"/>
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/fragment_ingredient_edit"-->
+<!--        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment"-->
+<!--        android:label="IngredientAddFragment"-->
+<!--        tools:layout="@layout/fragment_ingredient_add">-->
+<!--&lt;!&ndash;        <action&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_list"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:destination="@+id/fragment_ingredient_list"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:enterAnim="@anim/slide_left_enter"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:popEnterAnim="@anim/slide_right_exit"/>&ndash;&gt;-->
+<!--    </fragment>-->
 
-    <fragment
-        android:id="@+id/fragment_ingredient_add"
-        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment"
-        android:label="IngredientAddFragment"
-        tools:layout="@layout/fragment_ingredient_add">
-        <action
-            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_detail"
-            app:destination="@+id/fragment_ingredient_detail"
-            app:enterAnim="@anim/slide_left_enter"
-            app:popEnterAnim="@anim/slide_right_exit"/>
-    </fragment>
+<!--    <fragment-->
+<!--        android:id="@+id/fragment_ingredient_add"-->
+<!--        android:name="com.CMPUT301F22T01.foodbit.ui.IngredientAddFragment"-->
+<!--        android:label="IngredientAddFragment"-->
+<!--        tools:layout="@layout/fragment_ingredient_add">-->
+<!--&lt;!&ndash;        <action&ndash;&gt;-->
+<!--&lt;!&ndash;            android:id="@+id/fragment_ingredient_edit_to_fragment_ingredient_detail"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:destination="@+id/fragment_ingredient_detail"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:enterAnim="@anim/slide_left_enter"&ndash;&gt;-->
+<!--&lt;!&ndash;            app:popEnterAnim="@anim/slide_right_exit"/>&ndash;&gt;-->
+<!--    </fragment>-->
 
     <fragment
         android:id="@+id/fragment_ingredient_list"
@@ -68,11 +68,11 @@
         android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartFragment"
         android:label="ShoppingCartFragment"
         tools:layout="@layout/fragment_shopping_cart">
-    <action
-        android:id="@+id/action_fragment_shopping_cart_to_fragment_shopping_cart_edit"
-        app:destination="@id/fragment_shopping_cart_edit"
-        app:enterAnim="@anim/slide_left_enter"
-        app:popExitAnim="@anim/slide_right_exit" />
+<!--    <action-->
+<!--        android:id="@+id/action_fragment_shopping_cart_to_fragment_shopping_cart_edit"-->
+<!--        app:destination="@id/fragment_shopping_cart_edit"-->
+<!--        app:enterAnim="@anim/slide_left_enter"-->
+<!--        app:popExitAnim="@anim/slide_right_exit" />-->
     </fragment>
     <fragment
         android:id="@+id/fragment_shopping_cart_edit"
