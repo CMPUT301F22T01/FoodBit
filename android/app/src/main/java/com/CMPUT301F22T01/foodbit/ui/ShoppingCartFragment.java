@@ -27,7 +27,6 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.Objects;
 
 /**
@@ -142,14 +141,19 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
      */
     private ArrayList<Ingredient> getShoppingList(ArrayList<Ingredient> need, ArrayList<Ingredient> have) {
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
-        for(Iterator<Ingredient> iterator = need.iterator(); iterator.hasNext();) {
+        for (Ingredient ingredientNeeded :
+                need) {
             Ingredient cartItem = new Ingredient();
-            Ingredient ingredientNeeded = iterator.next();
             cartItem.update(ingredientNeeded);
-
+            shoppingList.add(cartItem);
+        }
+        for (Ingredient cartItem :
+                shoppingList) {
             Log.d(TAG, "getShoppingList: "+cartItem.getId());
             int index = lookUpIngredientID(cartItem.getId(), have);
-            if(cartItem.getAmount() > have.get(index).getAmount()) {
+            if (cartItem.getAmount() <= have.get(index).getAmount()) {
+                shoppingList.remove(cartItem);
+            } else {
                 float amountNeeded = cartItem.getAmount() - have.get(index).getAmount();
                 cartItem.setAmount(amountNeeded);
                 cartItem.setCategory(ingredientController.getIngredientById(cartItem.getId()).getCategory());
@@ -157,7 +161,6 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
                     cartItem.setCategory("missing");
                 }
             }
-            shoppingList.add(cartItem);
         }
         return shoppingList;
     }
