@@ -13,13 +13,32 @@
     <item
         android:id="@+id/filter1"
         android:title="Sort by: Description"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/descriptionFilter1"
+                android:title="Ascending(A-Z)"/>
+            <item
+                android:id="@+id/descriptionFilter2"
+                android:title="Descending(Z-A)"/>
+
+        </menu>
+    </item>
 
     <item
         android:id="@+id/filter2"
         android:title="Sort by: Category"
-        app:showAsAction = "never"
-        />
+        app:showAsAction = "never">
+        <menu>
+            <item
+                android:id="@+id/categoryFilter1"
+                android:title="Ascending(A-Z)"/>
+            <item
+                android:id="@+id/categoryFilter2"
+                android:title="Descending(Z-A)"/>
+
+        </menu>
+    </item>
+
 
 </menu>
