@@ -1,8 +1,10 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,23 +25,26 @@ import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Objects;
 
 /**
  * provide a fragment show shopping cart ingredients
  */
-public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapter.OnItemClickListener{
+public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapter.OnItemClickListener, ShoppingCartPickedItemFragment.OnItemPickedUpListener{
 
     public String TAG = "shoppingCartFragment";
 
     private Context context;
 
     // get ingredient storage and meal plan controller from MainActivity
-    private IngredientController ingredientController;
-    private MealPlanController mealPlan;
+    private final IngredientController ingredientController = MainActivity.ingredientController;
+    private final MealPlanController mealPlanController = MainActivity.mealPlanController;
 
+    private ArrayList<Ingredient> shoppingList = new ArrayList<>();
+    private ArrayList<Ingredient> need;
+    private ArrayList<Ingredient> have;
     ShoppingCartAdapter adapter;
 
     public ShoppingCartFragment() {
@@ -184,18 +189,16 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     }
 
 
-    public ArrayList<Ingredient> shoppingList;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         // Get shoppingCart after calculating between meal plan and storage
-        ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlanController;
-        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
-        ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        shoppingList = getShoppingList(mealIngredient, storage);
+        need = mealPlanController.getAllIngredients();
+        have = ingredientController.getIngredients();
+        shoppingList.clear();
+        shoppingList.addAll(getShoppingList(need, have));
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
@@ -225,5 +228,27 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     @Override
     public void onIngredientItemClick(View v, int position) {
         ShoppingCartPickedItemFragment.newInstance(position).show(getChildFragmentManager(), TAG);
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    @Override
+    public void onItemPickedUp(Ingredient newIngredient) {
+//        have = ingredientController.getIngredients();
+//        for (Ingredient item :
+//                have) {
+//            if (Objects.equals(item.getId(), newIngredient.getId())) {
+//                Log.d(TAG, "onItemPickedUp: newIngredient amount: "+newIngredient.getAmount());
+//                item.update(newIngredient);
+//                Log.d(TAG, "onItemPickedUp: "+item.getId()+" amount: "+item.getAmount());
+//            }
+//        }
+//        shoppingList = getShoppingList(need, have);
+//        for (Ingredient item :
+//                shoppingList) {
+//            Log.d(TAG, "onItemPickedUp: shopping List "+item.getAmount());
+//        }
+        shoppingList.clear();
+        shoppingList.addAll(getShoppingList(need, have));
+        adapter.notifyDataSetChanged();
     }
 }

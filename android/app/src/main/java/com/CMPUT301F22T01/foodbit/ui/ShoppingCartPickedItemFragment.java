@@ -43,6 +43,11 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String TAG = "Picked Ingredient";
 
+    public interface OnItemPickedUpListener {
+        void onItemPickedUp(Ingredient ingredient);
+    }
+    private OnItemPickedUpListener itemPickedUpListener;
+
     public Context context;
     public IngredientController ingredientController = MainActivity.ingredientController;
     public Ingredient ingredient;
@@ -65,6 +70,9 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         super.onAttach(context);
         this.context = context;
         Log.d(TAG, "context: " + context);
+        itemPickedUpListener = (OnItemPickedUpListener) getParentFragment();
+        assert itemPickedUpListener != null;
+        Log.d(TAG, "Parent fragment: "+ getParentFragment());
     }
 
     /**
@@ -131,6 +139,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
                         float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
                         ingredient.setAmount(amount);
                         MainActivity.ingredientController.edit(ingredient);
+                        itemPickedUpListener.onItemPickedUp(ingredient);
                         dismiss();
                     }
                 }
