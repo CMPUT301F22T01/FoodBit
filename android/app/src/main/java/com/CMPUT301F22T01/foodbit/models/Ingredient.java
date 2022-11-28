@@ -198,6 +198,6 @@ public class Ingredient implements Serializable, dbObject {
      * @return whether the ingredient is missing details
      */
     public boolean isMissingDetails() {
-        return (description == null) || (bestBefore == null) || (location == null) || (unit == null);
+        return ((description == null) || (bestBefore == null) || (location == null) || (unit == null)) && amount != 0;
     }
 }
