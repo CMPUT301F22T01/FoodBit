@@ -381,14 +381,18 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
                     String unit = String.valueOf(unitEditText.getText());
                     List<IngredientUnit> units = MainActivity.unit.getUnits();
+                    List<String> definedUnits = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
                     //units.addAll(MainActivity.unit.getUnitDescription());
                     if (unit.equals("")) {
                         canAddIngredient = false;
                         unitLayout.setError("Required");
                     }
                     else if (!unit.equals("")){
+                        unitAdapter.notifyDataSetChanged();
                         boolean unitExists = false;
-                        canAddIngredient = false;
+                        //canAddIngredient = false;
+
+
 
                         for (IngredientUnit findUnit:units)
                         {
@@ -396,13 +400,19 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                             {
                                 unitExists = true;
                             }
+
                         }
 
-                        if (unitExists){
-                            canAddIngredient = true;
+                        if (!unitExists){
+                            if (!definedUnits.contains(unit))
+                            {
+                                canAddIngredient = false;
+                                unitLayout.setError("Select Existing Unit or Add new Unit");
+                            }
+                            //canAddIngredient = false;
+                            //unitLayout.setError("Select Existing Unit or Add new Unit");
                         }
-                        else
-                        {unitLayout.setError("Select Existing Unit or Add new Unit");}
+
 
                     }
 
@@ -435,6 +445,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                     }
                     String unit = String.valueOf(unitEditText.getText());
                     List<IngredientUnit> units = MainActivity.unit.getUnits();
+                    List<String> definedUnits = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
 
                     if (unit.equals("")) {
                         canUpdateIngredient = false;
@@ -443,19 +454,31 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
                     else if (!unit.equals("")){
                         boolean unitExists = false;
-                        canUpdateIngredient = false;
-                        unitLayout.setError("Select Existing Unit or Add new Unit");
+                        //canUpdateIngredient = false;
+
+
                         for (IngredientUnit findUnit:units)
                         {
                             if (findUnit.getUnitName().equals(unit))
                             {
                                 unitExists = true;
                             }
+                            else if (definedUnits.contains(findUnit.getUnitName()))
+                            {
+                                unitExists = true;
+                            }
                         }
 
-                        if (unitExists){
-                            canUpdateIngredient = true;
+                        if (!unitExists){
+                            if (!definedUnits.contains(unit))
+                            {
+                                canUpdateIngredient = false;
+                                unitLayout.setError("Select Existing Unit or Add new Unit");
+                            }
+                            //canUpdateIngredient = false;
+                            //unitLayout.setError("Select Existing Unit or Add new Unit");
                         }
+
 
                     }
                     String category = String.valueOf(categoryEditText.getText());
