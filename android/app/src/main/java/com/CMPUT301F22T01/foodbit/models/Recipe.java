@@ -85,7 +85,10 @@ public class Recipe implements dbObject {
         for (HashMap map :
                 (ArrayList<HashMap>) Objects.requireNonNull(doc.get("ingredients"))) {
             ingredients.add(new Ingredient(
+                    (String) map.get("id"),
                     (String) map.get("description"),
+                    (String) map.get("bestBefore"),
+                    (String) map.get("location"),
                     (float) (double) map.get("amount"),
                     (String) map.get("unit"),
                     (String) map.get("category")));
