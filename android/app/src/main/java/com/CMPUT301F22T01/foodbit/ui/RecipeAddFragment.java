@@ -73,14 +73,29 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         }
 
         ingredientStorage = MainActivity.ingredientController;
-        List ingredientList = ingredientStorage.getDescriptions();
+        List ingredientDescriptionList = ingredientStorage.getDescriptions();
+        ArrayList<Ingredient> ingredientList = ingredientStorage.getIngredients();
 
         for (Ingredient ingredient : ingredients) {
-            if (!ingredientList.contains(ingredient.getDescription()))
+
+
+            if (!ingredientDescriptionList.contains(ingredient.getDescription()))
             {
                 Ingredient newIngredient = new Ingredient(ingredient.getId(),ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
                 MainActivity.ingredientController.add(newIngredient);
                 ingredientAdapter.notifyDataSetChanged();
+            }
+
+            if (ingredientDescriptionList.contains(ingredient.getDescription()))
+            {
+
+                for (Ingredient matchIngredient:ingredientList)
+                {
+                    if (ingredient.getDescription().equals(matchIngredient.getDescription()))
+                    {
+                        ingredient.setId(matchIngredient.getId());
+                    }
+                }
             }
 
         }

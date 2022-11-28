@@ -21,7 +21,6 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
-import com.CMPUT301F22T01.foodbit.models.MealPlan;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -94,7 +93,7 @@ public class ShoppingCartFragment extends Fragment {
     public void descriptionSort(View view)
     {
         ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlan;
+        mealPlan = MainActivity.mealPlanController;
         Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
@@ -111,7 +110,7 @@ public class ShoppingCartFragment extends Fragment {
     }
     public void categorySort(View view)
     {   ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlan;
+        mealPlan = MainActivity.mealPlanController;
         Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
