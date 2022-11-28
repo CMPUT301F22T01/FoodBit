@@ -15,7 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -52,6 +51,7 @@ public class IngredientAddFragment extends DialogFragment {
     TextInputLayout amountLayout;
     TextInputLayout locationLayout;
     TextInputLayout categoryLayout;
+    TextInputLayout unitLayout;
 
     /**
      * Required empty constructor
@@ -89,6 +89,7 @@ public class IngredientAddFragment extends DialogFragment {
         amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
         locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
         categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
+        unitLayout = view.findViewById(R.id.ingredient_add_text_layout_unit);
 
         //Dropdown box for location
         AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
@@ -183,16 +184,16 @@ public class IngredientAddFragment extends DialogFragment {
                         MainActivity.location.add(newLocation);
                         MainActivity.location.loadAllFromDB();
                     }
-                    if (!units.contains(unit) && !units.equals("")) {
+                    if (unit.equals("")) {
+                        unitLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    } else if (!units.contains(unit)) {
                         //Adds new unit to the adapter and the database if it is not already in it
                         unitAdapter.add(unit);
                         unitAdapter.notifyDataSetChanged();
                         IngredientUnit newUnit = new IngredientUnit(unit);
                         MainActivity.unit.add(newUnit);
                         MainActivity.unit.loadAllFromDB();
-                    }
-                    if (unit.equals("")) {
-                        unit = null;
                     }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");
