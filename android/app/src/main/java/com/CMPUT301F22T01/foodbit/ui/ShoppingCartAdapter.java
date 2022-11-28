@@ -110,6 +110,10 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         TextView amountView = holder.getCartAmountView();
         TextView unitView = holder.getCartUnitView();
         TextView categoryView = holder.getCartCategoryView();
+        descriptionView.setTextSize(20);
+        amountView.setTextSize(18);
+        unitView.setTextSize(18);
+        categoryView.setTextSize(18);
 
         // set up UI
         descriptionView.setText(description);

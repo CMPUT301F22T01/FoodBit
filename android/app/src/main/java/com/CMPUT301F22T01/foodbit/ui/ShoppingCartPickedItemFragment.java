@@ -55,7 +55,6 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     TextView category;
     TextInputEditText pickedAmountEditText;
     TextInputLayout pickedAmountLayout;
-    ArrayAdapter<String> adapter;
 
     public ShoppingCartPickedItemFragment() {
         // Required empty public constructor
@@ -101,6 +100,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         unit = view.findViewById(R.id.shopping_picked_unit);
         category = view.findViewById(R.id.shopping_picked_category);
         pickedAmountEditText = view.findViewById(R.id.shopping_picked_amount);
+        pickedAmountLayout = view.findViewById(R.id.shopping_picked_amount_layout);
 
         topBar.setTitle("Picked Ingredient");
         // close button
@@ -127,7 +127,6 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
                     float amount = parseFloat(inputPickedAmount) + ingredient.getAmount();
                     ingredient.setAmount(amount);
                     MainActivity.ingredientController.edit(ingredient);
-//                    ingredientEdit(ingredient);
                     dismiss();
                 }
                 return false;
@@ -141,10 +140,6 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         category.setText(ingredient.getCategory());
 
         return view;
-    }
-
-    public void ingredientEdit(Ingredient ingredient) {
-        ingredientController.edit(ingredient);
     }
 
     private void getIngredient() {
