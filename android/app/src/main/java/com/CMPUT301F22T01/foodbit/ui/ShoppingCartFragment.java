@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +24,7 @@ import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -73,15 +75,54 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         switch(item.getItemId())
         {
             // Sorting the Shopping List accordingly
-            case R.id.filter1:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            case R.id.filter2:
-                Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-
+            case R.id.descriptionFilter1:
+                descriptionASort(getView());
+                Toast.makeText(getActivity(), "Sorting(A-Z): Description", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.descriptionFilter2:
+                descriptionDSort(getView());
+                Toast.makeText(getActivity(), "Sorting(Z-A): Description", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.categoryFilter1:
+                categoryASort(getView());
+                Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.categoryFilter2:
+                categoryDSort(getView());
+                Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    return true;
+    }
+    public void descriptionASort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
+        adapter.notifyDataSetChanged();
+    }
+    public void descriptionDSort(View view) {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending.reversed());
+        }
 
+        adapter.notifyDataSetChanged();
+    }
+    public void categoryASort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
+        adapter.notifyDataSetChanged();
+    }
+    public void categoryDSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending.reversed());
+        }
+        adapter.notifyDataSetChanged();
     }
 
     /**
