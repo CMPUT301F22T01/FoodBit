@@ -198,7 +198,8 @@ public class MealPlanController {
      */
     private void subtractFromIngredientList(MealPlan meal) {
         for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
-            Ingredient currentIngred = meal.getIngredients().get(j);
+            Ingredient currentIngred = new Ingredient();
+            currentIngred.update(meal.getIngredients().get(j));
             int index = lookUpIngredientID(currentIngred.getId(),ingredList);
             if(index != -1) {//Found this ingredient
                 float diff = ingredList.get(index).getAmount() - currentIngred.getAmount();
