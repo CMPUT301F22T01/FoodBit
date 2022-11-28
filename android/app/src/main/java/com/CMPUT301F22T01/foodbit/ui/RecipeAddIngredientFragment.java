@@ -7,11 +7,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,14 +20,10 @@ import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.IngredientUnit;
-import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.EventListener;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -48,9 +42,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
     private IngredientController ingredientStorage;
 
-    AutoCompleteTextView autoCompleteIngredients;
     ArrayAdapter<String> adapterList;
-    AutoCompleteTextView unitTextView;
     ArrayAdapter<String> unitAdapter;
 
     IngredientAdapter adapter;
@@ -76,16 +68,12 @@ public class RecipeAddIngredientFragment extends DialogFragment {
     private TextInputEditText amountEditText;
     private TextInputLayout unitLayout;
     private AutoCompleteTextView unitEditText;
-    private TextInputLayout categoryLayout;
     private TextInputEditText categoryEditText;
 
     private ArrayList<String> titleList;
     private Ingredient ingredient;
     private int position;
 
-    private ExtendedFloatingActionButton newUnit;
-    private EditText newUnitEditText;
-    private Button completeNewUnit;
 
 
 
@@ -174,49 +162,42 @@ public class RecipeAddIngredientFragment extends DialogFragment {
         descriptionLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_description);
         amountLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_amount);
         unitLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_unit);
-        categoryLayout = view.findViewById(R.id.recipe_input_ingredient_add_layout_category);
         descriptionEditText = view.findViewById(R.id.recipe_input_ingredient_add_auto_complete_ingredients);
         amountEditText = view.findViewById(R.id.recipe_input_ingredient_add_edit_text_amount);
-        unitEditText = view.findViewById(R.id.recipe_input_ingredient_add_auto_complete_units);
         categoryEditText = view.findViewById(R.id.recipe_input_ingredient_add_edit_text_category);
 
-        autoCompleteIngredients = view.findViewById(R.id.recipe_input_ingredient_add_auto_complete_ingredients);
         ingredientStorage = MainActivity.ingredientController;
-        List ingredientList = ingredientStorage.getDescriptions();
-        adapterList = new ArrayAdapter<String>(getActivity(),R.layout.recipe_add_dropdown_layout,ingredientList);
-        autoCompleteIngredients.setAdapter(adapterList);
+        List<String> ingredientList = ingredientStorage.getDescriptions();
+        adapterList = new ArrayAdapter<>(getActivity(), R.layout.recipe_add_dropdown_layout, ingredientList);
+        descriptionEditText.setAdapter(adapterList);
 
 
 
-        autoCompleteIngredients.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String item = parent.getItemAtPosition(position).toString();
-                ingredientStorage = MainActivity.ingredientController;
-                ArrayList<Ingredient> ingredientList = ingredientStorage.getIngredients();
+        descriptionEditText.setOnItemClickListener((parent, view1, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            ingredientStorage = MainActivity.ingredientController;
+            ArrayList<Ingredient> ingredientList1 = ingredientStorage.getIngredients();
 
 
-                for (Ingredient findIngredient: ingredientList) {
+            for (Ingredient findIngredient: ingredientList1) {
 
-                    if (findIngredient.getDescription().equals(item)){
-                        categoryEditText.setText(findIngredient.getCategory());
-                        unitEditText.setText(findIngredient.getUnit());
+                if (findIngredient.getDescription().equals(item)){
+                    categoryEditText.setText(findIngredient.getCategory());
+                    unitEditText.setText(findIngredient.getUnit());
 
-                    }}
-            }
+                }}
         });
 
 
 
         //Drop Down Menu for units
-        unitTextView = view.findViewById(R.id.recipe_input_ingredient_add_auto_complete_units);
+        unitEditText = view.findViewById(R.id.recipe_input_ingredient_add_auto_complete_units);
         //Default list of Units (not in database)
         List<String> units = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
         //Getting and Adding units from the database to the list
         units.addAll(MainActivity.unit.getUnitDescription());
         unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, units);
-        unitTextView.setAdapter(unitAdapter);
+        unitEditText.setAdapter(unitAdapter);
 
         ingredientStorage = MainActivity.ingredientController;
         adapter = new IngredientAdapter(ingredientStorage.getIngredients());
@@ -256,6 +237,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onResume() {
         super.onResume();
@@ -263,35 +245,30 @@ public class RecipeAddIngredientFragment extends DialogFragment {
         adapter.notifyDataSetChanged();
         adapterList.notifyDataSetChanged();
         CollectionReference ingredientStorageRef = MainActivity.ingredientListRef;
-        ingredientStorageRef.addSnapshotListener(new EventListener<QuerySnapshot>() {
-
-            @SuppressLint("NotifyDataSetChanged")
-            @Override
-            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                if (error != null) {
-                    Log.w(TAG, "Listen failed.", error);
-                    return;
-                }
-                ArrayList<Ingredient> newIngredients = new ArrayList<Ingredient>();
-                assert value != null;
-                for (QueryDocumentSnapshot doc : value) {
-                    Map<String, Object> data = doc.getData();
-                    String description = (String) data.get("description");
-                    String bestBefore = (String) data.get("bestBefore");
-                    String location = (String) data.get("location");
-                    float amount = (float) (double) data.get("amount");
-                    String unit = (String) data.get("unit");
-                    String category = (String) data.get("category");
-
-                    Ingredient newIngredient = new Ingredient(doc.getId(), description, bestBefore, location, amount, unit, category);
-                    newIngredients.add(newIngredient);
-                    Log.d(TAG, "ingredient id: " + newIngredient.getId());
-                }
-                ingredientStorage.setIngredients(newIngredients);
-                adapter.notifyDataSetChanged();
-                adapterList.notifyDataSetChanged();
-
+        ingredientStorageRef.addSnapshotListener((value, error) -> {
+            if (error != null) {
+                Log.w(TAG, "Listen failed.", error);
+                return;
             }
+            ArrayList<Ingredient> newIngredients = new ArrayList<>();
+            assert value != null;
+            for (QueryDocumentSnapshot doc : value) {
+                Map<String, Object> data = doc.getData();
+                String description = (String) data.get("description");
+                String bestBefore = (String) data.get("bestBefore");
+                String location = (String) data.get("location");
+                float amount = (float) (double) data.get("amount");
+                String unit = (String) data.get("unit");
+                String category = (String) data.get("category");
+
+                Ingredient newIngredient = new Ingredient(doc.getId(), description, bestBefore, location, amount, unit, category);
+                newIngredients.add(newIngredient);
+                Log.d(TAG, "ingredient id: " + newIngredient.getId());
+            }
+            ingredientStorage.setIngredients(newIngredients);
+            adapter.notifyDataSetChanged();
+            adapterList.notifyDataSetChanged();
+
         });
 
 
@@ -328,7 +305,6 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
                     String unit = String.valueOf(unitEditText.getText());
                     List<IngredientUnit> units = MainActivity.unit.getUnits();
-                    List<String> definedUnits = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
                     //units.addAll(MainActivity.unit.getUnitDescription());
                     if (unit.equals("")) {
                         canAddIngredient = false;
@@ -343,24 +319,6 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                         MainActivity.unit.add(newUnit);
                         MainActivity.unit.loadAllFromDB();
                     }
-//                    else if (!unit.equals("")){
-//                        unitAdapter.notifyDataSetChanged();
-//                        boolean unitExists = false;
-//                        //canAddIngredient = false;
-//                        for (IngredientUnit findUnit:units)
-//                        {
-//                            if (findUnit.getUnitName().equals(unit)) {
-//                                unitExists = true;
-//                            }
-//                        }
-//                        if (!unitExists){
-//                            if (!definedUnits.contains(unit))
-//                            {
-//                                canAddIngredient = false;
-//                                unitLayout.setError("Select Existing Unit or Add new Unit");
-//                            }
-//                        }
-//                    }
                     String category = String.valueOf(categoryEditText.getText());
                     if (category.equals("")) {
                         category = null;
@@ -390,7 +348,6 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                     }
                     String unit = String.valueOf(unitEditText.getText());
                     List<IngredientUnit> units = MainActivity.unit.getUnits();
-                    List<String> definedUnits = new ArrayList<>(Arrays.asList("kg", "lbs", "oz", "tbs", "tsp", "g"));
 
                     if (unit.equals("")) {
                         canUpdateIngredient = false;

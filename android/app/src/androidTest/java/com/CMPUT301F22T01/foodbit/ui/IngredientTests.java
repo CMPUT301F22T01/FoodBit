@@ -40,19 +40,51 @@ public class IngredientTests {
             new ActivityScenarioRule<>(LoadingPageActivity.class);
 
     @Test
-    public void addIngredientTest() {
-        ViewInteraction bottomNavigationItemView3 = onView(
-                allOf(withId(R.id.fragment_ingredient_list), withContentDescription("Ingredient List"),
+    public void addIngredientTest() throws InterruptedException {
+//        Thread.sleep(2000);
+//        ViewInteraction bottomNavigationItemView2 = onView(
+//                allOf(withId(R.id.fragment_ingredient_list), withContentDescription("Ingredients"),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withId(R.id.nav_bar),
+//                                        0),
+//                                0),
+//                        isDisplayed()));
+//        bottomNavigationItemView2.perform(click());
+//
+//        // click add button
+//        ViewInteraction actionMenuItemView2 = onView(
+//                allOf(withId(R.id.ingredient_add), withContentDescription("AddIngredient"),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withId(R.id.action_bar),
+//                                        1),
+//                                0),
+//                        isDisplayed()));
+//        actionMenuItemView2.perform(click());
+//
+//        // enter description, best before, location, amount, unit, and category
+//        // enter description
+//        ViewInteraction textInputEditText = onView(
+//                allOf(withId(R.id.ingredient_add_edit_text_description),
+//                        childAtPosition(
+//                                childAtPosition(
+//                                        withId(R.id.ingredient_add_text_layout_location),
+//                                        0),
+//                                0)));
+//        textInputEditText.perform(scrollTo(), replaceText("Rice"), closeSoftKeyboard());
+        Thread.sleep(5000);
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.fragment_ingredient_list), withContentDescription("Ingredients"),
                         childAtPosition(
                                 childAtPosition(
                                         withId(R.id.nav_bar),
                                         0),
-                                1),
+                                0),
                         isDisplayed()));
-        bottomNavigationItemView3.perform(click());
+        bottomNavigationItemView.perform(click());
 
-        // click add button
-        ViewInteraction actionMenuItemView2 = onView(
+        ViewInteraction actionMenuItemView = onView(
                 allOf(withId(R.id.ingredient_add), withContentDescription("AddIngredient"),
                         childAtPosition(
                                 childAtPosition(
@@ -60,15 +92,13 @@ public class IngredientTests {
                                         1),
                                 0),
                         isDisplayed()));
-        actionMenuItemView2.perform(click());
+        actionMenuItemView.perform(click());
 
-        // enter description, best before, location, amount, unit, and category
-        // enter description
         ViewInteraction textInputEditText = onView(
                 allOf(withId(R.id.ingredient_add_edit_text_description),
                         childAtPosition(
                                 childAtPosition(
-                                        withId(R.id.ingredient_add_text_layout_location),
+                                        withId(R.id.ingredient_add_text_layout_description),
                                         0),
                                 0)));
         textInputEditText.perform(scrollTo(), replaceText("Rice"), closeSoftKeyboard());
@@ -144,10 +174,10 @@ public class IngredientTests {
 
         // check for amount
         ViewInteraction textView2 = onView(
-                allOf(withId(R.id.item_ingredient_amount), withText("2"),
+                allOf(withId(R.id.item_ingredient_amount), withText("2.0"),
                         withParent(withParent(withId(R.id.recyclerView_ingredient_list))),
                         isDisplayed()));
-        textView2.check(matches(withText("2")));
+        textView2.check(matches(withText("2.0")));
 
         // check for unit
         ViewInteraction textView3 = onView(

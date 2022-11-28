@@ -59,13 +59,13 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.5.3'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.4-rc01'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0-rc01'
-    androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.5.0-rc01'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+    androidTestImplementation 'androidx.test:runner:1.5.1'
+    androidTestImplementation 'androidx.test:rules:1.5.0'
     androidTestImplementation 'com.jayway.android.robotium:robotium-solo:5.3.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0-rc01'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.1'
 
     implementation platform('com.google.firebase:firebase-bom:31.0.1')

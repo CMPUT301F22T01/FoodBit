@@ -71,6 +71,10 @@ public class Recipe implements dbObject {
         this.ingredients = ingredients;
     }
 
+    /**
+     * Constructs a recipe with a <code>QueryDocumentSnapshot</code> object obtained from the database.
+     * @param doc a <code>QueryDocumentSnapshot</code> object
+     */
     public Recipe(QueryDocumentSnapshot doc) {
         this(doc.getId(),
                 Objects.requireNonNull(doc.get("title")).toString(),
@@ -160,6 +164,11 @@ public class Recipe implements dbObject {
         this.ingredients = ingredients;
     }
 
+    /**
+     * Check if this recipe contains an ingredient with the same ID.
+     * @param mIngredient the ingredient to check if in the recipe
+     * @return whether the ingredient is in the recipe
+     */
     public boolean containsIngredient(Ingredient mIngredient) {
         for (Ingredient ingredient :
                 ingredients) {
@@ -185,8 +194,8 @@ public class Recipe implements dbObject {
         @Override
         public int compare(Recipe r1, Recipe r2)
         {
-            Integer prepTime1 = Integer.valueOf(r1.getPrepTime());
-            Integer prepTime2 = Integer.valueOf(r2.getPrepTime());
+            Integer prepTime1 = r1.getPrepTime();
+            Integer prepTime2 = r2.getPrepTime();
 
             return prepTime1 - prepTime2;
         }
@@ -196,8 +205,8 @@ public class Recipe implements dbObject {
         @Override
         public int compare(Recipe r1, Recipe r2)
         {
-            Integer numServing1 = Integer.valueOf(r1.getNumServings());
-            Integer numServing2 = Integer.valueOf(r2.getNumServings());
+            Integer numServing1 = r1.getNumServings();
+            Integer numServing2 = r2.getNumServings();
 
             return numServing1 - numServing2;
         }
