@@ -138,7 +138,10 @@ public class MealPlan implements dbObject, dbObjectCustom {
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {
             ingredients.add(new Ingredient(
+                    (String) map.get("id"),
                     (String) map.get("description"),
+                    (String) map.get("bestBefore"),
+                    (String) map.get("location"),
                     (float) (double) map.get("amount"),
                     (String) map.get("unit"),
                     (String) map.get("category")));
@@ -157,7 +160,10 @@ public class MealPlan implements dbObject, dbObjectCustom {
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {
             ingredients.add(new Ingredient(
+                    (String) map.get("id"),
                     (String) map.get("description"),
+                    (String) map.get("bestBefore"),
+                    (String) map.get("location"),
                     (float) (double) map.get("amount"),
                     (String) map.get("unit"),
                     (String) map.get("category")));
