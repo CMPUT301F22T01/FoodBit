@@ -214,7 +214,7 @@ public class MealAddFragment extends DialogFragment {
                         } else {
                             meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
                             meal.setIngredient(false);
-                            meal.setIngredientsFromRecipe(recipeController.getRecipeByPosition(positionSelected-ingredientSize).getIngredients(),
+                            meal.setIngredientsFromRecipeScaled(recipeController.getRecipeByPosition(positionSelected-ingredientSize).getIngredients(),
                                     recipeController.getRecipeByPosition(positionSelected-ingredientSize).getNumServings());
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
