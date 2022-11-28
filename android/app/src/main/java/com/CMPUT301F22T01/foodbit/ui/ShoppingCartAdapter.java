@@ -60,13 +60,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for items
-//            view.setOnClickListener(v -> {
-//                Bundle bundle = new Bundle();
-//                bundle.putInt("position", getAdapterPosition());
-////                Navigation.findNavController(v).navigate(R.id.action_fragment_shopping_cart_to_fragment_shopping_cart_edit, bundle);
-////                ShoppingCartPickedItemFragment.newInstance(getAdapterPosition()).show();
-//            });
 
             // init UI
             cartDescription = view.findViewById(R.id.shopping_ingredient_description);
@@ -128,13 +121,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         });
     }
 
-//    private View.OnClickListener onItemClick(@NonNull IngredientAdapter.ViewHolder holder) {
-//        return v -> {
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("position", holder.getAdapterPosition());
-//            Navigation.findNavController(v).navigate(R.id.action_fragment_shopping_cart_to_fragment_shopping_cart_edit, bundle);
-//        };
-//    }
 
     /**
      * provide an item count function

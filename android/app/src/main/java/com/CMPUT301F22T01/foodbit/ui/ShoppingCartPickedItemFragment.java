@@ -34,9 +34,7 @@ import java.security.PrivateKey;
 import java.util.Objects;
 
 /**
- * A simple {@link Fragment} subclass.
- * Use the {@link ShoppingCartPickedItemFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Generate a PickedItem Fragment when user click item on Shopping Cart
  */
 public class ShoppingCartPickedItemFragment extends DialogFragment {
 
@@ -156,6 +154,9 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         return view;
     }
 
+    /**
+     * Get Ingredient from ingredientController
+     */
     private void getIngredient() {
         assert getArguments() != null;
         position = getArguments().getInt("position");

@@ -26,6 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?attr/actionBarSize"
                 app:layout_collapseMode="pin"
+                app:menu="@menu/ingredient_detail_top_bar"
                 app:navigationIcon="@drawable/ic_arrow_back_24" />
         </com.google.android.material.appbar.CollapsingToolbarLayout>
 
@@ -150,18 +151,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_category"
                 app:layout_constraintVertical_bias="0.0" />
-
-            <Button
-                android:id="@+id/button_ingredient_detail_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:text="Edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button_ingredient_detail_delete"
-                app:layout_constraintTop_toBottomOf="@+id/ingredient_detail_category" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
