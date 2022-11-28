@@ -12,6 +12,7 @@ import com.CMPUT301F22T01.foodbit.models.Recipe;
 import org.checkerframework.checker.units.qual.A;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Receive requests from UI and other Controllers to update the meal plan and pass along
@@ -32,6 +33,10 @@ public class MealPlanController {
 //        this.loadAllMeals();
     }
 
+    public MealPlanController(List<MealPlan> meals) {
+        this.mealPlan = (ArrayList<MealPlan>) meals;
+    }
+
     /**
      * Adds a new meal to the database from the UI
      * @param meal the meal to be added
@@ -42,6 +47,10 @@ public class MealPlanController {
         this.addToIngredientList(meal);
     }
 
+    /**
+     * Edit a meal
+     * @param meal the meal to be edited
+     */
     public void edit(MealPlan meal) {
         assert contains(meal) : "This meal is not found int the meal list";
         for (int i =0; i < mealPlan.size(); i++) {
@@ -127,9 +136,9 @@ public class MealPlanController {
     }
 
     /**
-     *
+     * Gets the index of an ingredient within the ingredient list from its ID
      * @param ID
-     * @return -1 if ingredient ID doesnt exist within the ingredient list. Otherwise return index
+     * @return -1 if ingredient ID doesn't exist within the ingredient list. Otherwise return index
      */
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
         for (int i = 0; i< ingredList.size(); i++) {
