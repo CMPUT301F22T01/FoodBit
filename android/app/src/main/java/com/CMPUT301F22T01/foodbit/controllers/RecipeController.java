@@ -1,10 +1,7 @@
 package com.CMPUT301F22T01.foodbit.controllers;
 
-import android.util.Log;
-
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.ui.RecipeAddFragment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -15,14 +12,14 @@ import java.util.Objects;
  * Provide controls to a list of <code>Recipe</code> class objects.
  */
 public class RecipeController implements Serializable {
-    private DatabaseController db = new DatabaseController("Recipe Book");
+    private final DatabaseController db = new DatabaseController("Recipe Book");
     private final ArrayList<Recipe> recipes;
 
     /**
      * Constructs an empty <code>RecipeController</code>.
      */
     public RecipeController() {
-        recipes = new ArrayList<Recipe>();
+        recipes = new ArrayList<>();
     }
 
     /**
@@ -98,11 +95,15 @@ public class RecipeController implements Serializable {
      * @throws AssertionError the recipe is already present in the recipe book
      */
     public void add(Recipe recipe) {
-        String TAG = RecipeAddFragment.TAG;
         assert !contains(recipe) : "This recipe is already in the recipe book!";
         db.addItem(recipe);
     }
 
+    /**
+     * Edit the recipe in the recipe book and edit the recipe data int the Firestore database.
+     *
+     * @param recipe the recipe to be edited
+     */
     public void edit(Recipe recipe) {
         db.editItem(recipe);
     }
@@ -114,13 +115,16 @@ public class RecipeController implements Serializable {
      * @throws AssertionError the recipe is not found in the recipe book
      */
     public void remove(Recipe recipe) {
-        String TAG = "RecipeBookDeleteRecipe";
         assert contains(recipe) : "this recipe is not found in the recipe book!";
         db.deleteItem(recipe);
     }
 
+    /**
+     * Check if any recipes in this controller contains an ingredient with the same ID.
+     * @param mIngredient the ingredient to check if in the recipe
+     * @return whether the ingredient is in the recipe
+     */
     public boolean containsIngredient(Ingredient mIngredient) {
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (Recipe recipe :
                 recipes) {
             if (recipe.containsIngredient(mIngredient)) {
@@ -128,9 +132,5 @@ public class RecipeController implements Serializable {
             }
         }
         return false;
-    }
-
-    public void load() {
-        db.getAllItems(recipes);
     }
 }

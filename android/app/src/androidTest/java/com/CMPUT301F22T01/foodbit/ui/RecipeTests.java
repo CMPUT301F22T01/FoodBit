@@ -81,7 +81,18 @@ public class RecipeTests {
     }
 
     private void addRecipe() throws InterruptedException {
-        Thread.sleep(2000);
+
+        Thread.sleep(10000);
+        // go to recipe book page
+        ViewInteraction bottomNavigationItemView = onView(
+                allOf(withId(R.id.fragment_recipe_book), withContentDescription("Recipe Book"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withId(R.id.nav_bar),
+                                        0),
+                                1),
+                        isDisplayed()));
+        bottomNavigationItemView.perform(click());
 
         // click add recipe button
         ViewInteraction actionMenuItemView = onView(

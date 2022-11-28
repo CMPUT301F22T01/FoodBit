@@ -26,7 +26,6 @@ import java.util.Objects;
  */
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder> {
-    private final static String TAG = "RecipeAdapter";
     private final ArrayList<Recipe> items;
 
     /**
