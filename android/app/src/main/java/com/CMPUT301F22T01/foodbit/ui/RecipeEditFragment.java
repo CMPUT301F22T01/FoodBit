@@ -90,6 +90,7 @@ public class RecipeEditFragment extends RecipeAddEditFragment {
             recipe.setPhoto(null);
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
+            MainActivity.mealPlanController.notifyRecipeChanged(recipe);
             recipeEditedListener.onEdited();
             dismiss();
         } else {

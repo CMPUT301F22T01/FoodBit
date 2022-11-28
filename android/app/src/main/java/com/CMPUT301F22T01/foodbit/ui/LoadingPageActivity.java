@@ -47,8 +47,8 @@ public class LoadingPageActivity extends AppCompatActivity {
                 //FID has been updated. Grab data and move to main activity!
                 FID = listen.getValue();
                 MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
-                MainActivity.mealPlan = new MealPlanController();
-                MainActivity.mealPlan.load();
+                MainActivity.mealPlanController = new MealPlanController();
+                MainActivity.mealPlanController.load();
 
                 MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
                 MainActivity.recipeController = new RecipeController();

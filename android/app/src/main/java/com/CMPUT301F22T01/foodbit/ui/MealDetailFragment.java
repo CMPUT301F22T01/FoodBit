@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class MealDetailFragment extends Fragment {
 
     private static final String TAG = "Meal Detail Fragment";
-    private static final MealPlanController mealPlanController = MainActivity.mealPlan;
+    private static final MealPlanController mealPlanController = MainActivity.mealPlanController;
 
     private MealPlan mealPlan;
 
@@ -79,7 +79,7 @@ public class MealDetailFragment extends Fragment {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                MainActivity.mealPlan.deleteMeal(mealPlan);
+                MainActivity.mealPlanController.deleteMeal(mealPlan);
                 Navigation.findNavController(v).popBackStack();
             }
         });
@@ -99,7 +99,7 @@ public class MealDetailFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(consumeIngredients(mealPlan)) {
-                    MainActivity.mealPlan.deleteMeal(mealPlan);
+                    MainActivity.mealPlanController.deleteMeal(mealPlan);
                     Snackbar snackbar = Snackbar.make(getActivity().findViewById(R.id.nav_container),
                             "Meal consumed! Corresponding ingredients will be removed from your" +
                                     "ingredient list!", Snackbar.LENGTH_SHORT);
@@ -130,7 +130,7 @@ public class MealDetailFragment extends Fragment {
     private void getMeal() {
         assert getArguments() != null;
         int position = getArguments().getInt("position");
-        mealPlan = MainActivity.mealPlan.getMealByPosition(position);
+        mealPlan = MainActivity.mealPlanController.getMealByPosition(position);
         Log.d(TAG, String.valueOf(mealPlan));
     }
 
