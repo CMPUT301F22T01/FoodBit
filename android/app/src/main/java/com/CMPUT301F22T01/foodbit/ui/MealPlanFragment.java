@@ -144,6 +144,8 @@ public class MealPlanFragment extends Fragment {
                 }
                 mealPlan.update(newMealPlans);
                 Log.e(TAG, "Current meal plans: " + mealPlan.toString() + MainActivity.mealPlanRef.getPath());
+                // sort
+                Collections.sort(mealPlan.getArrayList(), MealPlan.sortByDate);
                 adapter.notifyDataSetChanged();
             }
         });
