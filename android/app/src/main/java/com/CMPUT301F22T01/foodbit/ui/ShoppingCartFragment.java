@@ -82,22 +82,22 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
             // Sorting the Shopping List accordingly
             case R.id.descriptionFilter1:
                 //Sorting titles in ascending order
-                descriptionASort(getView());
+                descriptionASort();
                 Toast.makeText(getActivity(), "Sorting(A-Z): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.descriptionFilter2:
                 //Sorting titles in descending order
-                descriptionDSort(getView());
+                descriptionDSort();
                 Toast.makeText(getActivity(), "Sorting(Z-A): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter1:
-                categoryASort(getView());
+                categoryASort();
                 //Sorting categories in ascending order
                 Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter2:
                 //Sorting categories in descending order
-                categoryDSort(getView());
+                categoryDSort();
                 Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -105,12 +105,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         }
         return true;
     }
-    public void descriptionASort(View view)
+    public void descriptionASort()
     {
         Collections.sort(shoppingList, Ingredient.nameAscending);
         adapter.notifyDataSetChanged();
     }
-    public void descriptionDSort(View view) {
+    public void descriptionDSort() {
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Collections.sort(shoppingList, Ingredient.nameAscending.reversed());
@@ -119,12 +119,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         adapter.notifyDataSetChanged();
     }
 
-    public void categoryASort(View view)
+    public void categoryASort()
     {
         Collections.sort(shoppingList, Ingredient.categoryAscending);
         adapter.notifyDataSetChanged();
     }
-    public void categoryDSort(View view)
+    public void categoryDSort()
     {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Collections.sort(shoppingList, Ingredient.categoryAscending.reversed());
