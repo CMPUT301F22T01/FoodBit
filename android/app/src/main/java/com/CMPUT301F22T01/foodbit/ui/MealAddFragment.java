@@ -14,7 +14,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
@@ -32,7 +31,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
@@ -121,7 +119,7 @@ public class MealAddFragment extends DialogFragment {
         //Populate dropdown with ingredients and recipes
         recipeController = MainActivity.recipeController;
         ingredientController = MainActivity.ingredientController;
-        mealPlanController = MainActivity.mealPlan;
+        mealPlanController = MainActivity.mealPlanController;
         ArrayList<Ingredient> ingredientList =  ingredientController.getIngredients();
         ArrayList<Recipe> recipeList = recipeController.getRecipes();
         String[] items = new String[ingredientList.size() + recipeList.size()];
