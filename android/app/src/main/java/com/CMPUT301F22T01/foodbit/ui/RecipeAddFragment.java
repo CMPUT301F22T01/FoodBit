@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,7 +28,6 @@ import java.util.Objects;
  */
 public class RecipeAddFragment extends RecipeInputFragment {
 
-    private IngredientController ingredientController;
     public RecipeAddFragment() {
         // Required empty public constructor
     }
@@ -51,11 +51,15 @@ public class RecipeAddFragment extends RecipeInputFragment {
         String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
         String numServings = Objects.requireNonNull(numServingsEditText.getText()).toString();
         String category = Objects.requireNonNull(categoryEditText.getText()).toString();
-
-        //Checks to make sure everything is entered and is valid
         if (category.equals("")){category = null;}
         String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
         if (comments.equals("")){comments = null;}
+        Uri photoUri = hasPhoto ? saveImage() : null;
+
+        //Checks to make sure everything is entered and is valid
+//        if (category.equals("")){category = null;}
+//        String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
+//        if (comments.equals("")){comments = null;}
         // check empty fields
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
@@ -78,7 +82,7 @@ public class RecipeAddFragment extends RecipeInputFragment {
             requiredFieldEntered = false;
         }
 
-        ingredientController = MainActivity.ingredientController;
+        IngredientController ingredientController = MainActivity.ingredientController;
         List<String> ingredientDescriptionList = ingredientController.getDescriptions();
         ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 
@@ -115,7 +119,7 @@ public class RecipeAddFragment extends RecipeInputFragment {
             Recipe recipe = new Recipe(title,
                     Integer.parseInt(prepTime),
                     Integer.parseInt(numServings),
-                    category, comments, null, ingredients);
+                    category, comments, photoUri, ingredients);
             super.recipeController.add(recipe);
             dismiss();
         } else {

@@ -1,34 +1,53 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
-import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
+public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener,
+        RecipeAddIngredientFragment.OnIngredientEditListener,
+        RecipeAddIngredientFragment.OnIngredientDeleteListener,
+        IngredientAdapter.OnItemClickListener {
     public static String TAG;
+    final int REQUEST_IMAGE_CAPTURE = 1;
     // an ingredient list to obtain from the RecipeAddIngredientFragment
     public ArrayList<Ingredient> ingredients;
     IngredientAdapter ingredientAdapter;
@@ -44,15 +63,17 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     TextInputLayout categoryLayout;
     TextInputEditText commentsEditText;
     TextInputLayout commentsLayout;
+    ConstraintLayout imageLayout;
+    ImageView imageView;
     MaterialToolbar ingredientsBar;
     RecyclerView ingredientsRecyclerView;
-    IngredientController ingredientStorage;
+    Context context;
 
-
-
-    protected Context context;
     // get recipe book from MainActivity
     protected RecipeController recipeController = MainActivity.recipeController;
+
+    protected boolean hasPhoto = false;
+    protected Bitmap photoBitmap;
 
     public abstract void setTAG();
 
@@ -104,12 +125,15 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         categoryLayout = view.findViewById(R.id.recipe_input_text_layout_category);
         commentsEditText = view.findViewById(R.id.recipe_input_edit_text_comments);
         commentsLayout = view.findViewById(R.id.recipe_input_text_layout_comments);
+        imageLayout = view.findViewById(R.id.recipe_input_image_layout);
+        imageView = view.findViewById(R.id.recipe_input_image);
         ingredientsBar = view.findViewById(R.id.recipe_input_ingredients_bar);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_input_ingredients_list);
 
+        // display recipe info if in recipe edit screen
+        displayInfo();
 
-        // preset recipe info in recipe edit screen
-        presetInfo();
+        imageLayout.setOnClickListener(this::imageLayoutClicked);
 
         // close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
@@ -117,7 +141,7 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         {
             int itemId = item.getItemId();
             // done button behaviour
-            if (itemId == R.id.recipe_add_done) {
+            if (itemId == R.id.recipe_input_done) {
                 doneButtonClicked();
             }
             return false;
@@ -128,7 +152,51 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         return view;
     }
 
-    protected void presetInfo() {
+    private void imageLayoutClicked(View v) {
+        if (!hasPhoto) {
+            dispatchTakePictureIntent();
+        } else {
+            PopupMenu popup = new PopupMenu(context, v);
+            popup.setOnMenuItemClickListener(item -> {
+                if (item.getItemId() == R.id.new_photo) {
+                    dispatchTakePictureIntent();
+                    return true;
+                } else if (item.getItemId() == R.id.delete_photo){
+                    hasPhoto = false;
+                    imageView.setImageBitmap(null);
+                    return true;
+                }
+                return false;
+            });
+            MenuInflater inflater = popup.getMenuInflater();
+            inflater.inflate(R.menu.recipe_add_photo_option, popup.getMenu());
+            popup.show();
+        }
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        try {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        } catch (ActivityNotFoundException e) {
+            // display error state to the user
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
+            assert data != null;
+            photoBitmap = (Bitmap) data.getExtras().get("data");
+            imageView.setImageBitmap(photoBitmap);
+            hasPhoto = true;
+        }
+    }
+
+    /**
+     * A hook method for <code>RecipeEditFragment</code> to override.
+     */
+    protected void displayInfo() {
     }
 
 
@@ -247,6 +315,25 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
 
             }
         };
+    }
+
+    protected Uri saveImage() {
+        File imagesFolder = new File(context.getCacheDir(), "images");
+        Uri uri = null;
+        String title = String.valueOf(titleEditText.getText());
+        try {
+            imagesFolder.mkdirs();
+            File file = new File(imagesFolder, title+".jpg");
+            FileOutputStream stream = new FileOutputStream(file);
+            photoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+            stream.flush();
+            stream.close();
+            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.CMPUT301F22T01.foodbit.provider", file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG, "saveImage: "+uri);
+        return uri;
     }
 
     protected abstract void doneButtonClicked();

@@ -39,7 +39,7 @@ import java.util.ArrayList;
  */
 public class DatabaseController {
     private FirebaseFirestore db;
-    private String mode;
+    private final String mode;
     private Object model;
 
     public DatabaseController(String mode){
@@ -99,7 +99,7 @@ public class DatabaseController {
         CollectionReference collectionReference = getCollectionReference();
         String id = collectionReference.document().getId();
         newItem.setId(id);
-        Log.e("db is adding: ",  id + "   " + collectionReference.getId() + collectionReference.getPath().toString());
+        Log.e("db is adding: ",  id + "   " + collectionReference.getId() + collectionReference.getPath());
         collectionReference.document(id).set(newItem);
     }
 
@@ -120,12 +120,13 @@ public class DatabaseController {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
+                    Log.e("db is loading  !!!!!!!!!! ", collectionReference.getPath());
                     for (int i =0; i< task.getResult().size(); i++) {
                         model = task.getResult().getDocuments().get(i).toObject(model.getClass());
                         items.add((T)model);
-                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
+                        Log.e("firebase response??", String.valueOf(i) + task.getResult().getDocuments().get(i));
                     }
+                    MainActivity.listen2.setValue(MainActivity.listen2.getValue() -1 );
                 }
             }
         });
@@ -148,12 +149,13 @@ public class DatabaseController {
                     Log.e("firebase", "Error getting data", task.getException());
                 }
                 else {
-                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
+                    Log.e("db is loading  !!!!!!!!!! ", collectionReference.getPath());
                     for (int i =0; i< task.getResult().size(); i++) {
                         T s = (T) item.createFromDocCustom((QueryDocumentSnapshot) task.getResult().getDocuments().get(i));
                         items.add(s);
-                        Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
+                        Log.e("firebase response??", String.valueOf(i) + task.getResult().getDocuments().get(i));
                     }
+                    MainActivity.listen2.setValue(MainActivity.listen2.getValue() -1);
                 }
             }
         });

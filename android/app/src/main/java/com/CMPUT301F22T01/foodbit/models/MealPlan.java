@@ -2,9 +2,12 @@
 
 package com.CMPUT301F22T01.foodbit.models;
 
+import static android.icu.math.BigDecimal.ROUND_HALF_EVEN;
+
 import com.google.firebase.Timestamp;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Date;
@@ -93,15 +96,22 @@ public class MealPlan implements dbObject, dbObjectCustom {
         return ingredients;
     }
 
-    public void setIngredientsFromRecipe(ArrayList<Ingredient> ingredients, int recipeServings) {
+    public void setIngredientsFromRecipeScaled(ArrayList<Ingredient> ingredients, int recipeServings) {
         ArrayList<Ingredient> t = new ArrayList<Ingredient>();
-        float scalingFactor = (float)this.servings/recipeServings;
+        BigDecimal tServings = BigDecimal.valueOf(this.servings);
+        BigDecimal rServings = BigDecimal.valueOf(recipeServings);
         for (int i = 0; i<ingredients.size(); i++) {
             Ingredient copy = new Ingredient();
             copy.setId(ingredients.get(i).getId());
             copy.setDescription(ingredients.get(i).getDescription());
             copy.setUnit(ingredients.get(i).getUnit());
-            copy.setAmount(ingredients.get(i).getAmount() * scalingFactor);
+            BigDecimal tAmount = BigDecimal.valueOf(ingredients.get(i).getAmount());
+            //scale the recipe ingredients by the need.
+            // recipeIngredientAmount/Recipe Serving Size   * desired meal serving size
+            // Rearranged to do the dividing at the end.
+            tAmount.setScale(10);
+            BigDecimal temp = tAmount.multiply(tServings).divide(rServings,10,ROUND_HALF_EVEN);
+            copy.setAmount(temp.setScale(2,ROUND_HALF_EVEN).floatValue());
             t.add(copy);
         }
         this.ingredients = t;
@@ -118,6 +128,19 @@ public class MealPlan implements dbObject, dbObjectCustom {
         ingredients = t;
     }
 
+    public void setIngredientsFromRecipe(ArrayList<Ingredient> ingredients) {
+        ArrayList<Ingredient> t = new ArrayList<Ingredient>();
+        for (int i = 0; i<ingredients.size(); i++) {
+            Ingredient copy = new Ingredient();
+            copy.setId(ingredients.get(i).getId());
+            copy.setDescription(ingredients.get(i).getDescription());
+            copy.setUnit(ingredients.get(i).getUnit());
+            copy.setAmount(ingredients.get(i).getAmount());
+            t.add(copy);
+        }
+        this.ingredients = t;
+    }
+
     public String getRecipeID() {
         return recipeID;
     }
@@ -126,36 +149,29 @@ public class MealPlan implements dbObject, dbObjectCustom {
         this.recipeID = recipeID;
     }
 
-    public MealPlan(){};
+    public MealPlan(){}
 
+    /**
+     * Create meal from a firebase document.
+     * @param doc
+     */
     public MealPlan(QueryDocumentSnapshot doc) {
-        this((String) doc.get("name"),
-                (int) (long) doc.get("servings"),
-                doc.getId(),
-                (boolean) doc.get("ingredient"),
-                (Date) ((Timestamp) doc.get("date")).toDate());
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        for (HashMap map :
-                (ArrayList<HashMap>) doc.get("ingredients")) {
-            ingredients.add(new Ingredient(
-                    (String) map.get("id"),
-                    (String) map.get("description"),
-                    (String) map.get("bestBefore"),
-                    (String) map.get("location"),
-                    (float) (double) map.get("amount"),
-                    (String) map.get("unit"),
-                    (String) map.get("category")));
-        }
-        this.ingredients = ingredients;
-        this.recipeID = doc.get("recipeID").toString();
+        MealPlan meal = createFromDocCustom(doc);
+        this.update(meal);
     }
 
+    /**
+     * Facilitate creating new meal objects from a document for dbObjectCustom implementation.
+     * @param doc
+     * @return meal
+     */
     public MealPlan createFromDocCustom(QueryDocumentSnapshot doc) {
-        name = (String) doc.get("name");
-        servings = (int) (long) doc.get("servings");
-        id = doc.getId();
-        isIngredient =  (boolean) doc.get("ingredient");
-        date = (Date) ((Timestamp) doc.get("date")).toDate();
+        MealPlan meal2 = new MealPlan();
+        meal2.setName((String) doc.get("name"));
+        meal2.setServings( (int) (long) doc.get("servings"));
+        meal2.setId(doc.getId());
+        meal2.setIngredient((boolean) doc.get("ingredient"));
+        meal2.setDate(((Timestamp) doc.get("date")).toDate());
         ArrayList<Ingredient> ingredients = new ArrayList<>();
         for (HashMap map :
                 (ArrayList<HashMap>) doc.get("ingredients")) {
@@ -168,9 +184,9 @@ public class MealPlan implements dbObject, dbObjectCustom {
                     (String) map.get("unit"),
                     (String) map.get("category")));
         }
-        this.ingredients = ingredients;
-        this.recipeID = doc.get("recipeID").toString();
-        return this;
+        meal2.setIngredientsFromRecipe(ingredients);
+        meal2.setRecipeID(doc.get("recipeID").toString());
+        return meal2;
     }
 
     public MealPlan(String name, int servings, String id, boolean isIngredient, Date date) {

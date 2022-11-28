@@ -47,7 +47,6 @@ public class RecipeBookFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        getActivity().setTitle("Recipe Book");
 
         // This fragment has options menu for the action bar
         setHasOptionsMenu(true);
@@ -55,7 +54,7 @@ public class RecipeBookFragment extends Fragment {
 
 
     @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    public void onCreateOptionsMenu(@NonNull Menu menu, MenuInflater inflater) {
 
         // Inflating the menu resource file for this fragment
         inflater.inflate(R.menu.recipe_book_top_app_bar, menu);
@@ -66,59 +65,50 @@ public class RecipeBookFragment extends Fragment {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {   //Adding a Recipe
-            case R.id.recipe_add:
-                //launches RecipeAddFragment
-                new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-                return true;
+        int itemId = item.getItemId();//Adding a Recipe
+        if (itemId == R.id.recipe_add) {//launches RecipeAddFragment
+            new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
+            return true;
 
             // Sorting the Recipes accordingly
-            case R.id.titleFilter1:
-                titleASort(getView());
-                Toast.makeText(getActivity(), "Sorting(A-Z): Title", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.titleFilter2:
-                titleDSort(getView());
-                Toast.makeText(getActivity(), "Sorting(Z-A): Title", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.timeFilter1:
-                prepTimeASort(getView());
-                Toast.makeText(getActivity(), "Sorting(Quick-Long): Preparation Time", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.timeFilter2:
-                prepTimeDSort(getView());
-                Toast.makeText(getActivity(), "Sorting(Long-Quick): Preparation Time", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.serveFilter1:
-                serveASort(getView());
-                Toast.makeText(getActivity(), "Sorting(Low-High): Number of Servings", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.serveFilter2:
-                serveDSort(getView());
-                Toast.makeText(getActivity(), "Sorting(High-Low): Number of Servings", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.categoryFilter1:
-                categoryASort(getView());
-                Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
-                break;
-            case R.id.categoryFilter2:
-                categoryDSort(getView());
-                Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
-                break;
-            default:
-                return super.onOptionsItemSelected(item);
+        } else if (itemId == R.id.titleFilter1) {//Sorting titles in ascending order
+            titleASort();
+            Toast.makeText(getActivity(), "Sorting(A-Z): Title", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.titleFilter2) {//Sorting titles in descending order
+            titleDSort();
+            Toast.makeText(getActivity(), "Sorting(Z-A): Title", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.timeFilter1) {//Sorting preparation time in ascending order
+            prepTimeASort();
+            Toast.makeText(getActivity(), "Sorting(Quick-Long): Preparation Time", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.timeFilter2) {//Sorting preparation time in descending order
+            prepTimeDSort();
+            Toast.makeText(getActivity(), "Sorting(Long-Quick): Preparation Time", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.serveFilter1) {//Sorting number of servings in ascending order
+            serveASort();
+            Toast.makeText(getActivity(), "Sorting(Low-High): Number of Servings", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.serveFilter2) {//Sorting number of servings in descending order
+            serveDSort();
+            Toast.makeText(getActivity(), "Sorting(High-Low): Number of Servings", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.categoryFilter1) {//Sorting category in ascending order
+            categoryASort();
+            Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
+        } else if (itemId == R.id.categoryFilter2) {//Sorting category in descending order
+            categoryDSort();
+            Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
+        } else {
+            return super.onOptionsItemSelected(item);
         }
         return true;
     }
-        public void titleASort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void titleASort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.titleAscending);
             adapter.notifyDataSetChanged();
         }
-        public void titleDSort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void titleDSort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Collections.sort(recipeController.getRecipes(), Recipe.titleAscending.reversed());
             }
@@ -126,44 +116,44 @@ public class RecipeBookFragment extends Fragment {
         }
 
 
-        public void prepTimeASort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void prepTimeASort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort);
             adapter.notifyDataSetChanged();
         }
-        public void prepTimeDSort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void prepTimeDSort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort.reversed());
         }
             adapter.notifyDataSetChanged();
         }
-        public void serveASort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void serveASort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.servingSort);
             adapter.notifyDataSetChanged();
         }
-        public void serveDSort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void serveDSort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Collections.sort(recipeController.getRecipes(), Recipe.servingSort.reversed());
             }
             adapter.notifyDataSetChanged();
         }
 
-        public void categoryASort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void categoryASort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending);
             adapter.notifyDataSetChanged();
         }
-        public void categoryDSort(View view)
+        @SuppressLint("NotifyDataSetChanged")
+        public void categoryDSort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                 Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending.reversed());
             }
@@ -183,7 +173,7 @@ public class RecipeBookFragment extends Fragment {
         // set up RecyclerView for the list of recipes
          setUpRecyclerView(recyclerView);
 
-        getActivity().setTitle("Recipe Book");
+        requireActivity().setTitle("Recipe Book");
         return view;
     }
 
@@ -222,16 +212,6 @@ public class RecipeBookFragment extends Fragment {
             ArrayList<Recipe> newRecipes = new ArrayList<>();
             assert value != null;
             for (QueryDocumentSnapshot doc : value) {
-//                Recipe newRecipe = doc.toObject(Recipe.class);
-//                Recipe newRecipe = new Recipe(
-//                        doc.getId(),
-//                        doc.get("title").toString(),
-//                        (int) (long) doc.get("prepTime"),
-//                        (int) (long) doc.get("numServings"),
-//                        (String) doc.get("category"),
-//                        (String) doc.get("comments"),
-//                        doc.get("photo") != null ? Uri.parse((String) doc.get("photo")) : null,
-//                        (ArrayList<Ingredient>) doc.get("ingredients"));
                 Recipe newRecipe = new Recipe(doc);
                 newRecipe.setId(doc.getId());
                 newRecipes.add(newRecipe);

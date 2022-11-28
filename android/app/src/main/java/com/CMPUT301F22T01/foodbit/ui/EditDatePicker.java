@@ -11,12 +11,12 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class EditDatePicker implements View.OnClickListener, DatePickerDialog.OnDateSetListener {
-    private EditText editText;
+    private final EditText editText;
     private int day;
     private int month;
     private int year;
-    private Context _context;
-    private Calendar calendar;
+    private final Context _context;
+    private final Calendar calendar;
 
     public EditDatePicker(Context context, EditText editText)
     {

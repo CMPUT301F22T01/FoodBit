@@ -19,7 +19,7 @@ import java.util.List;
  * Stores each of the locations used in ingredients
  */
 public class IngredientLocationController implements Serializable {
-    private DatabaseController db = new DatabaseController("Locations");
+    private final DatabaseController db = new DatabaseController("Locations");
     private final ArrayList<IngredientLocation> locations;
 
     /**

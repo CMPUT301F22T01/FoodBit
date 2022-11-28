@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The main Meal Plan page that displays the list of MealPlans
@@ -142,9 +143,9 @@ public class MealPlanFragment extends Fragment {
                     newMealPlans.add(newMeal);
                 }
                 mealPlanController.update(newMealPlans);
-                Log.e(TAG, "Current meal plans: " + mealPlanController.toString() + MainActivity.mealPlanRef.getPath());
+                Log.e(TAG, "Current meal plans: " + mealPlanController + MainActivity.mealPlanRef.getPath());
 //                // sort
-//                Collections.sort(mealPlan.getMealPlans(), MealPlan.sortByDate);
+                Collections.sort(mealPlanController.getMealPlans(), MealPlan.sortByDate);
                 adapter.notifyDataSetChanged();
             }
         });

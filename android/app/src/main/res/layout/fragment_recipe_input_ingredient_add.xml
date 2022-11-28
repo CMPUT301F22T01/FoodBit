@@ -18,7 +18,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        style = "@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu">
+        style = "@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+        >
 
         <AutoCompleteTextView
 
@@ -37,10 +38,6 @@
             app:layout_constraintEnd_toEndOf="parent"
 
             tools:ignore="HardcodedText" />
-
-
-
-
     </com.google.android.material.textfield.TextInputLayout>
 
 

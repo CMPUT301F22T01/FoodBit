@@ -27,7 +27,8 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Objects;
+import java.util.Iterator;
+import java.util.ListIterator;
 
 /**
  * provide a fragment show shopping cart ingredients
@@ -42,7 +43,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     private final IngredientController ingredientController = MainActivity.ingredientController;
     private final MealPlanController mealPlanController = MainActivity.mealPlanController;
 
-    private ArrayList<Ingredient> shoppingList = new ArrayList<>();
+    private final ArrayList<Ingredient> shoppingList = new ArrayList<>();
     private ArrayList<Ingredient> need;
     private ArrayList<Ingredient> have;
     ShoppingCartAdapter adapter;
@@ -82,19 +83,23 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         {
             // Sorting the Shopping List accordingly
             case R.id.descriptionFilter1:
-                descriptionASort(getView());
+                //Sorting titles in ascending order
+                descriptionASort();
                 Toast.makeText(getActivity(), "Sorting(A-Z): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.descriptionFilter2:
-                descriptionDSort(getView());
+                //Sorting titles in descending order
+                descriptionDSort();
                 Toast.makeText(getActivity(), "Sorting(Z-A): Description", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter1:
-                categoryASort(getView());
+                //Sorting categories in ascending order    
+                categoryASort();      
                 Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.categoryFilter2:
-                categoryDSort(getView());
+                //Sorting categories in descending order
+                categoryDSort();
                 Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
                 break;
             default:
@@ -102,32 +107,30 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         }
         return true;
     }
-    public void descriptionASort(View view)
+    public void descriptionASort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
+        Collections.sort(shoppingList, Ingredient.nameAscending);
         adapter.notifyDataSetChanged();
     }
-    public void descriptionDSort(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+  
+    public void descriptionDSort()
+    {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending.reversed());
+            Collections.sort(shoppingList, Ingredient.nameAscending.reversed());
         }
 
         adapter.notifyDataSetChanged();
     }
 
-    public void categoryASort(View view)
+    public void categoryASort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
+        Collections.sort(shoppingList, Ingredient.categoryAscending);
         adapter.notifyDataSetChanged();
     }
-    public void categoryDSort(View view)
+    public void categoryDSort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending.reversed());
+            Collections.sort(shoppingList, Ingredient.categoryAscending.reversed());
         }
         adapter.notifyDataSetChanged();
     }
@@ -140,24 +143,26 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
      */
     private ArrayList<Ingredient> getShoppingList(ArrayList<Ingredient> need, ArrayList<Ingredient> have) {
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
-        for (Ingredient ingredientNeeded :
-                need) {
+        for (int i = 0; i < need.size(); i++){
             Ingredient cartItem = new Ingredient();
-            cartItem.update(ingredientNeeded);
+            cartItem.update(need.get(i));
             shoppingList.add(cartItem);
+            Log.d("GetShoppingList", String.valueOf(cartItem.getDescription()));
         }
-        for (Ingredient cartItem :
-                shoppingList) {
-            Log.d(TAG, "getShoppingList: "+cartItem.getId());
-            int index = lookUpIngredientID(cartItem.getId(), have);
-            if (cartItem.getAmount() <= have.get(index).getAmount()) {
-                shoppingList.remove(cartItem);
+        ListIterator<Ingredient> iter = shoppingList.listIterator();
+        while (iter.hasNext()){
+            Ingredient currentIngredient = iter.next();
+
+            int index = lookUpIngredientID(currentIngredient.getId(), have);
+            String id = currentIngredient.getId();
+            if (currentIngredient.getAmount() <= have.get(index).getAmount()) {
+                iter.remove();
             } else {
-                float amountNeeded = cartItem.getAmount() - have.get(index).getAmount();
-                cartItem.setAmount(amountNeeded);
-                cartItem.setCategory(ingredientController.getIngredientById(cartItem.getId()).getCategory());
-                if(cartItem.getCategory() == null) {
-                    cartItem.setCategory("missing");
+                float amountNeeded = currentIngredient.getAmount() - have.get(index).getAmount();
+                currentIngredient.setAmount(amountNeeded);
+                currentIngredient.setCategory(ingredientController.getIngredientById(currentIngredient.getId()).getCategory());
+                if(currentIngredient.getCategory() == null) {
+                    currentIngredient.setCategory("missing");
                 }
             }
         }
@@ -206,9 +211,9 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
         //update bottom cart info
-        if (adapter.getItemCount() > 0) {
-            bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
-        }
+//        if (adapter.getItemCount() > 0) {
+//            bottomInfoView.setText("Your shopping cart has " + adapter.getItemCount() + " item(s)");
+//        }
 
 
         // add borderlines between items
