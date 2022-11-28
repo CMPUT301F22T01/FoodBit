@@ -381,6 +381,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
 
                     String unit = String.valueOf(unitEditText.getText());
                     List<IngredientUnit> units = MainActivity.unit.getUnits();
+                    //units.addAll(MainActivity.unit.getUnitDescription());
                     if (unit.equals("")) {
                         canAddIngredient = false;
                         unitLayout.setError("Required");

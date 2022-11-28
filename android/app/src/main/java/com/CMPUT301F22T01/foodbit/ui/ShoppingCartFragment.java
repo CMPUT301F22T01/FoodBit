@@ -101,17 +101,10 @@ public class ShoppingCartFragment extends Fragment {
         List<String> descriptionList = ingredientController.getDescriptions();
         shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
-
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
-        //set recyclerView
-        int mode = 0;
-//        adapter = new ShoppingCartAdapter(shoppingList, mode);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
     }
@@ -132,10 +125,7 @@ public class ShoppingCartFragment extends Fragment {
 
         //set recyclerView
         int mode = 0;
-//        adapter = new ShoppingCartAdapter(shoppingList, mode);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//        recyclerView.setAdapter(adapter);
+
         adapter.notifyDataSetChanged();
     }
 

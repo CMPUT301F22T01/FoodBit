@@ -78,7 +78,7 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         for (Ingredient ingredient : ingredients) {
             if (!ingredientList.contains(ingredient.getDescription()))
             {
-                Ingredient newIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "Not Assigned", ingredient.getCategory());
+                Ingredient newIngredient = new Ingredient(ingredient.getId(),ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "Not Assigned", ingredient.getCategory());
                 MainActivity.ingredientController.add(newIngredient);
                 ingredientAdapter.notifyDataSetChanged();
             }
