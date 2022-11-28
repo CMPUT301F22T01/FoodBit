@@ -97,13 +97,12 @@ public class MealPlanController {
     }
 
     /**
-     * Update cache with new meals
+     * Update cache with new meals. Used by MealPlanFragment onResume
      * @param newMealPlan
      */
     public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlan.clear();
         mealPlan.addAll(newMealPlan);
-        calcAllIngredients();
     }
 
     /**
@@ -147,6 +146,9 @@ public class MealPlanController {
      * @return the arraylist of ingredients
      */
     public ArrayList<Ingredient> getAllIngredients() {
+        if (ingredList.isEmpty()) {
+            calcAllIngredients();
+        }
         return ingredList;
     }
 
