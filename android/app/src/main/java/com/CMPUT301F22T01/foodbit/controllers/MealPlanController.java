@@ -4,7 +4,6 @@ package com.CMPUT301F22T01.foodbit.controllers;
 
 import android.util.Log;
 
-import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
@@ -241,7 +240,7 @@ public class MealPlanController {
                 //Recipe exists within meal, edit the meal
                 MealPlan meal = mealPlans.get(i);
                 meal.setName(recipe.getTitle());
-                meal.setIngredientsFromRecipe(recipe.getIngredients(),recipe.getNumServings());
+                meal.setIngredientsFromRecipeScaled(recipe.getIngredients(),recipe.getNumServings());
                 this.edit(meal);
             }
         }

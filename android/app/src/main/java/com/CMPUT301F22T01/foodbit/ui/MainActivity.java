@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
     public static IngredientUnitController unit;
 
     public static MutableLiveData<String> listen = new MutableLiveData<>(); //Listener for FID from firebase
+    public static MutableLiveData<Integer> listen2 = new MutableLiveData<>(); //Listener for FID from firebase
 
 
     @Override
