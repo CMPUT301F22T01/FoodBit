@@ -21,6 +21,15 @@ public class MealEditFragment extends MealAddFragment {
         servingsEditText.setText(String.valueOf(meal.getServings()));
         mealAddTextView.setText(meal.getName());
         mealDatePicker.setDate(meal.getDate());
+        if(meal.isIngredient()) {
+            if (meal.getIngredients().get(0).getUnit() != null) {
+                servingsEditText.setHint(meal.getIngredients().get(0).getUnit());
+                servingsLayout.setHint(meal.getIngredients().get(0).getUnit());
+            }
+        } else {
+            servingsEditText.setHint("Servings");
+            servingsLayout.setHint("Servings");
+        }
 
 
         return view;
@@ -29,6 +38,7 @@ public class MealEditFragment extends MealAddFragment {
     @Override
     public void mealEditOrAdd(MealPlan meal) {
         mealPlanController.edit(meal);
+
         // Reload detail fragment
         MealDetailFragment fragment = (MealDetailFragment) this.getParentFragment();
         fragment.populateData();
