@@ -130,16 +130,16 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
         mealPlan = MainActivity.mealPlanController;
-//        ArrayList<Ingredient> mealIngredient = mealPlanController.getAllIngredients();
+        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
-//        shoppingCart(shoppingList, mealIngredient, storage);
+        shoppingCart(shoppingList, mealIngredient, storage);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
         TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        adapter = new ShoppingCartAdapter(storage);
+        adapter = new ShoppingCartAdapter(shoppingList);
         adapter.setItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
