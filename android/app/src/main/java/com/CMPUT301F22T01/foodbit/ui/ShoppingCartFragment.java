@@ -94,7 +94,7 @@ public class ShoppingCartFragment extends Fragment {
     public void descriptionSort(View view)
     {
         ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlan;
+        mealPlan = MainActivity.mealPlanController;
         Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
@@ -111,7 +111,7 @@ public class ShoppingCartFragment extends Fragment {
     }
     public void categorySort(View view)
     {   ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlan;
+        mealPlan = MainActivity.mealPlanController;
         Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
@@ -178,8 +178,8 @@ public class ShoppingCartFragment extends Fragment {
         ingredientController = MainActivity.ingredientController;
 
         mealPlan = MainActivity.mealPlanController;
-        ArrayList<Ingredient> shoppingList = new ArrayList<>();
-        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+//        ArrayList<Ingredient> shoppingList = new ArrayList<>();
+//        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
 //        shoppingCart(shoppingList, mealIngredient, storage);
 
