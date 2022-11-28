@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import android.net.Uri;
 
-import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -149,50 +148,62 @@ public class MealPlanTest {
 
     @Test
     void getIngredients() {
-        assertEquals("id_ingredient", mockMPIngredient().getIngredients().get(0).getId());
-        assertEquals("desc", mockMPIngredient().getIngredients().get(0).getDescription());
-        assertEquals("bb", mockMPIngredient().getIngredients().get(0).getBestBefore());
-        assertEquals("loc", mockMPIngredient().getIngredients().get(0).getLocation());
-        assertEquals(4.0F, mockMPIngredient().getIngredients().get(0).getAmount());
-        assertEquals("unit", mockMPIngredient().getIngredients().get(0).getUnit());
-        assertEquals("cat", mockMPIngredient().getIngredients().get(0).getCategory());
+        Ingredient ingredient1 = mockMPIngredient().getIngredients().get(0);
+        assertEquals("id_ingredient", ingredient1.getId());
+        assertEquals("desc", ingredient1.getDescription());
+        assertEquals("bb", ingredient1.getBestBefore());
+        assertEquals("loc", ingredient1.getLocation());
+        assertEquals(4.0F, ingredient1.getAmount());
+        assertEquals("unit", ingredient1.getUnit());
+        assertEquals("cat", ingredient1.getCategory());
 
-        assertEquals("id_ingredient", mockMPRecipe().getIngredients().get(0).getId());
-        assertEquals("desc", mockMPRecipe().getIngredients().get(0).getDescription());
-        assertEquals("bb", mockMPRecipe().getIngredients().get(0).getBestBefore());
-        assertEquals("loc", mockMPRecipe().getIngredients().get(0).getLocation());
-        assertEquals(4.0F, mockMPRecipe().getIngredients().get(0).getAmount());
-        assertEquals("unit", mockMPRecipe().getIngredients().get(0).getUnit());
-        assertEquals("cat", mockMPRecipe().getIngredients().get(0).getCategory());
+        Ingredient ingredient2 = mockMPRecipe().getIngredients().get(0);
+        assertEquals("id_ingredient", ingredient2.getId());
+        assertEquals("desc", ingredient2.getDescription());
+        assertEquals("bb", ingredient2.getBestBefore());
+        assertEquals("loc", ingredient2.getLocation());
+        assertEquals(4.0F, ingredient2.getAmount());
+        assertEquals("unit", ingredient2.getUnit());
+        assertEquals("cat", ingredient2.getCategory());
     }
 
     @Test
     void setIngredients() {
         Ingredient newIngredient = new Ingredient("id_ingredient_new","desc_new", "bb_new", "loc_new", 1.0F, "unit_new", "cat_new");
         MealPlan mealPlanIngredient = mockMPIngredient();
-        assertEquals("id_ingredient", mealPlanIngredient.getIngredients().get(0).getId());
+
+        Ingredient ingredient1 = mockMPIngredient().getIngredients().get(0);
+        assertEquals("id_ingredient", ingredient1.getId());
+        assertEquals("desc", ingredient1.getDescription());
+        assertEquals("unit", ingredient1.getUnit());
+
         mealPlanIngredient.setIngredients(newIngredient);
-        assertEquals("id_ingredient_new", mealPlanIngredient.getIngredients().get(0).getId());
-        assertEquals("desc_new", mealPlanIngredient.getIngredients().get(0).getDescription());
-//        assertEquals("bb_new", mealPlanIngredient.getIngredients().get(0).getBestBefore());
-//        assertEquals("loc_new", mealPlanIngredient.getIngredients().get(0).getLocation());
-//        assertEquals(1.0F, mealPlanIngredient.getIngredients().get(0).getAmount());
-        assertEquals("unit_new", mealPlanIngredient.getIngredients().get(0).getUnit());
-//        assertEquals("cat_new", mealPlanIngredient.getIngredients().get(0).getCategory());
+        Ingredient ingredient2 = mealPlanIngredient.getIngredients().get(0);
+        assertEquals("id_ingredient_new", ingredient2.getId());
+        assertEquals("desc_new", ingredient2.getDescription());
+        assertEquals("unit_new", ingredient2.getUnit());
     }
 
     @Test
     void setIngredientsFromRecipe() {
         Ingredient newIngredient = new Ingredient("id_ingredient_new","desc_new", "bb_new", "loc_new", 1, "unit_new", "cat_new");
         ArrayList<Ingredient> ingredients = new ArrayList<>(List.of(newIngredient));
+
         MealPlan mealPlanRecipe = mockMPRecipe();
-        assertEquals("id_ingredient", mealPlanRecipe.getIngredients().get(0).getId());
+        Ingredient ingredient1 = mealPlanRecipe.getIngredients().get(0);
+
+        assertEquals("id_ingredient", ingredient1.getId());
+        assertEquals("desc", ingredient1.getDescription());
+        assertEquals("unit", ingredient1.getUnit());
+        assertEquals(4, ingredient1.getAmount());
+
         mealPlanRecipe.setIngredientsFromRecipe(ingredients, 2);
-        assertEquals("id_ingredient_new", mealPlanRecipe.getIngredients().get(0).getId());
-        assertEquals("desc_new", mealPlanRecipe.getIngredients().get(0).getDescription());
-        assertEquals("unit_new", mealPlanRecipe.getIngredients().get(0).getUnit());
+        Ingredient ingredient2 = mealPlanRecipe.getIngredients().get(0);
+        assertEquals("id_ingredient_new", ingredient2.getId());
+        assertEquals("desc_new", ingredient2.getDescription());
+        assertEquals("unit_new", ingredient2.getUnit());
         // since the mockRecipe originally serves 10 people and we want 2 servings, 10/2 = 5
-        assertEquals(5, mealPlanRecipe.getIngredients().get(0).getAmount());
+        assertEquals(5, ingredient2.getAmount());
     }
 
     @Test
