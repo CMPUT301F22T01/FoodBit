@@ -197,7 +197,7 @@ public class MealPlanTest {
         assertEquals("unit", ingredient1.getUnit());
         assertEquals(4, ingredient1.getAmount());
 
-        mealPlanRecipe.setIngredientsFromRecipe(ingredients, 2);
+        mealPlanRecipe.setIngredientsFromRecipeScaled(ingredients, 2);
         Ingredient ingredient2 = mealPlanRecipe.getIngredients().get(0);
         assertEquals("id_ingredient_new", ingredient2.getId());
         assertEquals("desc_new", ingredient2.getDescription());

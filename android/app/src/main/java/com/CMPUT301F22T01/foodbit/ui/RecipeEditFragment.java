@@ -37,13 +37,17 @@ public class RecipeEditFragment extends RecipeInputFragment {
     }
 
     @Override
-    protected void presetInfo() {
-        super.presetInfo();
+    protected void displayInfo() {
+        super.displayInfo();
         titleEditText.setText(recipe.getTitle());
         prepTimeEditText.setText(String.valueOf(recipe.getPrepTime()));
         numServingsEditText.setText(String.valueOf(recipe.getNumServings()));
         categoryEditText.setText(recipe.getCategory());
         commentsEditText.setText(recipe.getComments());
+        if (recipe.getPhoto() != null) {
+            imageView.setImageURI(recipe.getPhoto());
+            hasPhoto = true;
+        }
     }
 
 
@@ -70,6 +74,9 @@ public class RecipeEditFragment extends RecipeInputFragment {
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
             titleLayout.setError("Required");
+            requiredFieldEntered = false;
+        } else if (recipeController.getTitles().contains(title) && !title.equals(recipe.getTitle())) {
+            titleLayout.setError("This title already exists");
             requiredFieldEntered = false;
         }
         if (prepTime.equals("")) {
@@ -122,7 +129,14 @@ public class RecipeEditFragment extends RecipeInputFragment {
             recipe.setNumServings(Integer.parseInt(numServings));
             recipe.setCategory(category);
             recipe.setComments(comments);
-            recipe.setPhoto(null);
+            Log.d(TAG, "doneButtonClicked: "+recipe.getPhoto());
+            if (photoBitmap != null) {
+                recipe.setPhoto(saveImage());
+            }
+            if (!hasPhoto) {
+                recipe.setPhoto(null);
+            }
+            Log.d(TAG, "doneButtonClicked: "+recipe.getPhoto());
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
             MainActivity.mealPlanController.notifyRecipeChanged(recipe);
