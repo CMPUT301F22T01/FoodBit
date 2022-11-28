@@ -5,11 +5,9 @@ package com.CMPUT301F22T01.foodbit.controllers;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
-import com.CMPUT301F22T01.foodbit.ui.IngredientEditFragment;
+
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 
 /**
  * Receive requests from UI and other Controllers to update the meal plan and pass along
@@ -148,5 +146,22 @@ public class MealPlanController {
         mealPlan.clear();
         db.getAllItemsCustom(mealPlan, new MealPlan());
     }
+
+    /**
+     * Update the Mealplan with recipe changes
+     * @param recipe
+     */
+    public void notifyRecipeChanged(Recipe recipe) {
+        for (int i =0; i < mealPlan.size(); i++) {
+            if (mealPlan.get(i).getRecipeID().equals(recipe.getId())) {
+                //Recipe exists within meal, edit the meal
+                MealPlan meal = mealPlan.get(i);
+                meal.setName(recipe.getTitle());
+                meal.setIngredientsFromRecipe(recipe.getIngredients(),recipe.getNumServings());
+                this.edit(meal);
+            }
+        }
+    }
 }
+
 

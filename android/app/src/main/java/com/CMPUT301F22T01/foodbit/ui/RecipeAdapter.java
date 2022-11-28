@@ -87,7 +87,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
     @Override
     public RecipeAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_recipe, parent, false);
+                .inflate(R.layout.item_recipe_book, parent, false);
         return new RecipeAdapter.ViewHolder(view);
     }
 
@@ -110,17 +110,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
 
         // set up UI
         titleView.setText(title);
-        String min = prepTime <= 1 ? " minute" : " minutes";
+        String min = " minutes";
+        if (prepTime <= 1) {
+            min = " minute";
+        }
         prepTimeView.setText(prepTime + min);
         numServingsView.setText("×" + numServings);
         commentsView.setText(Objects.requireNonNullElse(comments, "No comments."));
-        if (photo != null) {
-            ImageView photoView = photoLayout.findViewById(R.id.item_recipe_photo_image);
-            photoView.setImageURI(photo);
-        } else {
-            TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
-            capLetter.setText(Character.toString(title.charAt(0)));
-        }
+        TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
+        capLetter.setText(Character.toString(title.charAt(0)));
 
         // Define click listener for items
         holder.itemView.setOnClickListener(v -> {

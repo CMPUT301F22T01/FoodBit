@@ -1,52 +1,37 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
-import android.content.ActivityNotFoundException;
 import android.content.Context;
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.FileProvider;
 import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.MaterialToolbar;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
-public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener, IngredientAdapter.OnItemClickListener {
+public abstract class RecipeAddEditFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
     public static String TAG;
-    final int REQUEST_IMAGE_CAPTURE = 1;
     // an ingredient list to obtain from the RecipeAddIngredientFragment
-    ArrayList<Ingredient> ingredients;
+    public ArrayList<Ingredient> ingredients;
     IngredientAdapter ingredientAdapter;
     // UI
     MaterialToolbar topBar;
@@ -60,24 +45,23 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     TextInputLayout categoryLayout;
     TextInputEditText commentsEditText;
     TextInputLayout commentsLayout;
-    ConstraintLayout imageLayout;
-    ImageView imageView;
     MaterialToolbar ingredientsBar;
     RecyclerView ingredientsRecyclerView;
-    Context context;
+    IngredientController ingredientStorage;
+
+
+
+    protected Context context;
     // get recipe book from MainActivity
     protected RecipeController recipeController = MainActivity.recipeController;
 
-    protected boolean hasPhoto = false;
-    protected Bitmap photoBitmap;
-
     public abstract void setTAG();
 
-    public static RecipeInputFragment newInstance(int position) {
+    public static RecipeAddEditFragment newInstance(int position) {
 
         Bundle args = new Bundle();
         args.putInt("position", position);
-        RecipeInputFragment fragment = new RecipeEditFragment();
+        RecipeAddEditFragment fragment = new RecipeEditFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -98,6 +82,7 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_FoodBit_FullScreenDialog);
 
         setHasOptionsMenu(false);
+
     }
 
     @Override
@@ -120,15 +105,12 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         categoryLayout = view.findViewById(R.id.recipe_input_text_layout_category);
         commentsEditText = view.findViewById(R.id.recipe_input_edit_text_comments);
         commentsLayout = view.findViewById(R.id.recipe_input_text_layout_comments);
-        imageLayout = view.findViewById(R.id.recipe_input_image_layout);
-        imageView = view.findViewById(R.id.recipe_input_image);
         ingredientsBar = view.findViewById(R.id.recipe_input_ingredients_bar);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_input_ingredients_list);
-        
-        // display recipe info if in recipe edit screen
-        displayInfo();
 
-        imageLayout.setOnClickListener(v -> imageLayoutClicked(v));
+
+        // preset recipe info in recipe edit screen
+        presetInfo();
 
         // close button behaviour
         topBar.setNavigationOnClickListener(v -> dismiss());
@@ -142,61 +124,14 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
             return false;
         });
 
-        ingredientsBar.setOnMenuItemClickListener(addIngredientsButtonClicked());
+        ingredientsBar.setOnMenuItemClickListener(AddIngredientsButtonClicked());
         setUpRecyclerView();
-
         return view;
     }
 
-    private void imageLayoutClicked(View v) {
-        if (!hasPhoto) {
-            dispatchTakePictureIntent();
-        } else {
-            PopupMenu popup = new PopupMenu(context, v);
-            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem item) {
-                    if (item.getItemId() == R.id.new_photo) {
-                        dispatchTakePictureIntent();
-                        return true;
-                    } else if (item.getItemId() == R.id.delete_photo){
-                        hasPhoto = false;
-                        imageView.setImageBitmap(null);
-                        return true;
-                    }
-                    return false;
-                }
-            });
-            MenuInflater inflater = popup.getMenuInflater();
-            inflater.inflate(R.menu.recipe_add_photo_option, popup.getMenu());
-            popup.show();
-        }
+    protected void presetInfo() {
     }
 
-    private void dispatchTakePictureIntent() {
-        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        try {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-        } catch (ActivityNotFoundException e) {
-            // display error state to the user
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == Activity.RESULT_OK) {
-            assert data != null;
-            photoBitmap = (Bitmap) data.getExtras().get("data");
-            imageView.setImageBitmap(photoBitmap);
-            hasPhoto = true;
-        }
-    }
-
-    /**
-     * A hook method for <code>RecipeEditFragment</code> to override.
-     */
-    protected void displayInfo() {
-    }
 
     private void topBarSetText() {
         topBar.setTitle(getTitle());
@@ -205,13 +140,14 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     protected abstract String getTitle();
 
     @NonNull
-    private Toolbar.OnMenuItemClickListener addIngredientsButtonClicked() {
+    private Toolbar.OnMenuItemClickListener AddIngredientsButtonClicked() {
         return item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.recipe_add_ingredient_add) {
                 ArrayList<String> titleList = new ArrayList<>();
                 for (Ingredient ingredient : ingredients) {
                     titleList.add(ingredient.getDescription());
+
                 }
                 RecipeAddIngredientFragment.newInstance(titleList).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
             }
@@ -314,31 +250,22 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
         };
     }
 
-    protected Uri saveImage() {
-        File imagesFolder = new File(context.getCacheDir(), "images");
-        Uri uri = null;
-        String title = String.valueOf(titleEditText.getText());
-        try {
-            imagesFolder.mkdirs();
-            File file = new File(imagesFolder, title+".jpg");
-            FileOutputStream stream = new FileOutputStream(file);
-            photoBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            stream.flush();
-            stream.close();
-            uri = FileProvider.getUriForFile(context.getApplicationContext(), "com.CMPUT301F22T01.foodbit.provider", file);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Log.d(TAG, "saveImage: "+uri);
-        return uri;
-    }
-
     protected abstract void doneButtonClicked();
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onIngredientAdd(Ingredient newIngredient) {
         ingredients.add(newIngredient);
+
+        ingredientStorage = MainActivity.ingredientController;
+        List ingredientList = ingredientStorage.getDescriptions();
+
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredientList.contains(ingredient.getDescription())) {
+                Ingredient addIngredient = new Ingredient(ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
+                MainActivity.ingredientController.add(addIngredient);
+            }
+        }
         ingredientAdapter.notifyDataSetChanged();
     }
 
