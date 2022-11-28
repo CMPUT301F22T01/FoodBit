@@ -118,7 +118,7 @@ public class MealPlan implements dbObject, dbObjectCustom {
         ingredients = t;
     }
 
-    public void setIngredients(ArrayList<Ingredient> ingredients) {
+    public void setIngredientsFromRecipe(ArrayList<Ingredient> ingredients) {
         ArrayList<Ingredient> t = new ArrayList<Ingredient>();
         for (int i = 0; i<ingredients.size(); i++) {
             Ingredient copy = new Ingredient();
@@ -187,7 +187,7 @@ public class MealPlan implements dbObject, dbObjectCustom {
                     (String) map.get("unit"),
                     (String) map.get("category")));
         }
-        meal2.setIngredients(ingredients);//no scaling since we're loading in
+        meal2.setIngredientsFromRecipe(ingredients);
         meal2.setRecipeID(doc.get("recipeID").toString());
         return meal2;
     }
