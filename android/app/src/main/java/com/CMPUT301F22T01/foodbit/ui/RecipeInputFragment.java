@@ -28,7 +28,7 @@ import com.google.android.material.textfield.TextInputLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class RecipeAddEditFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
+public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
     public static String TAG;
     // an ingredient list to obtain from the RecipeAddIngredientFragment
     public ArrayList<Ingredient> ingredients;
@@ -57,11 +57,11 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
 
     public abstract void setTAG();
 
-    public static RecipeAddEditFragment newInstance(int position) {
+    public static RecipeInputFragment newInstance(int position) {
 
         Bundle args = new Bundle();
         args.putInt("position", position);
-        RecipeAddEditFragment fragment = new RecipeEditFragment();
+        RecipeInputFragment fragment = new RecipeEditFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -286,6 +286,6 @@ public abstract class RecipeAddEditFragment extends DialogFragment implements Re
 
     @Override
     public void onIngredientItemClick(View v, int position) {
-        RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), RecipeAddIngredientFragment.TAG);
+        RecipeAddIngredientFragment.newInstance(ingredients.get(position), position).show(getChildFragmentManager(), TAG);
     }
 }
