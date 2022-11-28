@@ -255,22 +255,6 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     @Override
     public void onIngredientAdd(Ingredient newIngredient) {
         ingredients.add(newIngredient);
-
-//        ingredientStorage = MainActivity.ingredientController;
-//        List<String> ingredientList = ingredientStorage.getDescriptions();
-//
-//        for (Ingredient ingredient : ingredients) {
-//            if (!ingredientList.contains(ingredient.getDescription())) {
-//                Ingredient addIngredient =
-//                        new Ingredient(ingredient.getDescription(),
-//                                "0000-00-00",
-//                                "Not Assigned",
-//                                0,
-//                                "0",
-//                                ingredient.getCategory());
-//                MainActivity.ingredientController.add(addIngredient);
-//            }
-//        }
         ingredientAdapter.notifyDataSetChanged();
     }
 
