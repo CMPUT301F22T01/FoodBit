@@ -148,6 +148,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         }
         for (Ingredient cartItem :
                 shoppingList) {
+            Log.d(TAG, "getShoppingList: "+cartItem.getId());
             int index = lookUpIngredientID(cartItem.getId(), have);
             if (cartItem.getAmount() <= have.get(index).getAmount()) {
                 shoppingList.remove(cartItem);
@@ -167,6 +168,10 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
      * @return an index of a given ingredient
      */
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (Ingredient ingredient :
+                ingredList) {
+            Log.d(TAG, "lookUpIngredientID: "+ingredient.getId());
+        }
         for (int i = 0; i< ingredList.size(); i++) {
             if (ID.equals(ingredList.get(i).getId())) {
                 return i;

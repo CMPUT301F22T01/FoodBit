@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,8 +21,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -34,7 +37,10 @@ import java.util.Objects;
 public class RecipeDetailFragment extends Fragment implements RecipeEditFragment.OnRecipeEditedListener{
 
     public static final String TAG = "Recipe Detail Fragment";
-    private static final RecipeController recipeController = MainActivity.recipeController;
+    private final RecipeController recipeController = MainActivity.recipeController;
+    private final MealPlanController mealPlanController = MainActivity.mealPlanController;
+    private Context context;
+
     private Recipe recipe;
     private int position;
 
@@ -53,6 +59,12 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
 
     public RecipeDetailFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -96,7 +108,12 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
             int itemId = item.getItemId();
             // edit button behaviour
             if (itemId == R.id.recipe_detail_edit) {
-                editButtonClicked();
+                if (mealPlanController.containsRecipe(recipe)) {
+                    String toastMsg = "Edit not allowed - recipe used in meal plan(s)";
+                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    editButtonClicked();
+                }
             }
             return false;
 

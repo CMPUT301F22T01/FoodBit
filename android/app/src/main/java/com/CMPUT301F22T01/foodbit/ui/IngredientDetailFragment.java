@@ -1,7 +1,9 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -13,8 +15,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
+import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
 
@@ -25,6 +31,11 @@ import com.google.android.material.appbar.CollapsingToolbarLayout;
 public class IngredientDetailFragment extends Fragment implements IngredientEditFragment.OnIngredientEditedListener {
 
     private static final String TAG = "Ingredient Detail Fragment";
+
+    private final IngredientController ingredientController = MainActivity.ingredientController;
+    private final RecipeController recipeController = MainActivity.recipeController;
+    private final MealPlanController mealPlanController = MainActivity.mealPlanController;
+    private Context context;
 
     Ingredient ingredient;
     int position;
@@ -44,6 +55,12 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
      */
     public IngredientDetailFragment() {
         // Required empty constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -100,7 +117,12 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         toolbar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
             if (itemId == R.id.ingredient_detail_edit) {
-                new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+                if (recipeController.containsIngredient(ingredient) || mealPlanController.containsIngredient(ingredient)) {
+                    String toastMsg = "Edit not allowed - ingredient used in recipe(s) or meal plan(s)";
+                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+                } else {
+                    new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
+                }
             }
             return false;
         });
@@ -114,13 +136,13 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
     private void getIngredient() {
         assert getArguments() != null;
         position = getArguments().getInt("position");
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        ingredient = ingredientController.getIngredientByPosition(position);
         Log.d(TAG, String.valueOf(ingredient));
     }
 
     @Override
     public void onEdited() {
-        ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        ingredient = ingredientController.getIngredientByPosition(position);
         collapsingToolbarLayout.setTitle(ingredient.getDescription());
         descriptionView.setText(ingredient.getDescription());
         bestBeforeView.setText(ingredient.getBestBefore());

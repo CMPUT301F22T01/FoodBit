@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.controllers;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import org.junit.jupiter.api.Test;
@@ -39,6 +40,11 @@ class RecipeControllerTest {
                 return new RecipeController(recipes);
         }
         return null;
+    }
+    private Ingredient mockIngredient() {
+        Ingredient ingredient = new Ingredient();
+        ingredient.setId("ingredient1");
+        return ingredient;
     }
 
     @Test
@@ -115,5 +121,18 @@ class RecipeControllerTest {
             assert recipeController != null;
             recipeController.remove(mockRecipe(3));
         }, "this recipe is not found in the recipe book!");
+    }
+
+    @Test
+    public void containsIngredient() {
+        Recipe recipe = mockRecipe(1);
+        assert recipe != null;
+        ArrayList<Ingredient> ingredients = new ArrayList<>();
+        ingredients.add(mockIngredient());
+        recipe.setIngredients(ingredients);
+        ArrayList<Recipe> recipes = new ArrayList<>();
+        recipes.add(recipe);
+        RecipeController recipeController = new RecipeController(recipes);
+        assertTrue(recipeController.containsIngredient(mockIngredient()));
     }
 }
