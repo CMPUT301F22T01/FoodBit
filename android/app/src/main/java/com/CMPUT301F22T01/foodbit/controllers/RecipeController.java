@@ -110,8 +110,4 @@ public class RecipeController implements Serializable {
         assert contains(recipe) : "this recipe is not found in the recipe book!";
         db.deleteItem(recipe);
     }
-
-    public void load() {
-        db.getAllItems(recipes);
-    }
 }

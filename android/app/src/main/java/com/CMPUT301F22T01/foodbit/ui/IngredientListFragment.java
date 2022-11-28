@@ -30,6 +30,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Map;
 
 /**
@@ -79,31 +80,68 @@ public class IngredientListFragment extends Fragment {
 
     //Actions performed by the Action Bar
     @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item)
-    {
-        int itemId = item.getItemId();//Adding an Ingredient
-        if (itemId == R.id.ingredient_add) {//launches IngredientAddFragment
-            // allows for addition of a new ingredient when the add option is clicked on the action bar
-            new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
-            return true;
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {   //Adding an Ingredient
+            case R.id.ingredient_add:
+                //launches IngredientAddFragment
+                // allows for addition of a new ingredient when the add option is clicked on the action bar
+                new IngredientAddFragment().show(getChildFragmentManager(), IngredientAddFragment.TAG);
+                return true;
 
             // Sorting the Ingredients accordingly
-        } else if (itemId == R.id.filter1) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (itemId == R.id.filter2) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (itemId == R.id.filter3) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            return true;
-        } else if (itemId == R.id.filter4) {
-            Toast.makeText(getActivity(), "Sorting Functionality Coming Soon", Toast.LENGTH_SHORT).show();
-            return true;
+            case R.id.filter1:
+                descriptionSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Description", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter2:
+                dateSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Best Before", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter3:
+                locationSort(getView());
+                Toast.makeText(getActivity(), "Sorting: Location", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.filter4:
+                categorySort(getView());
+                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
+                break;
+            default:
+                return super.onOptionsItemSelected(item);
+
         }
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
 
+    public void descriptionSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
+//        adapter = new IngredientAdapter(ingredientController.getIngredients());
+        adapter.notifyDataSetChanged();
+//
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
+//        recyclerView.setLayoutManager(linearLayoutManager);
+//
+//        recyclerView.setAdapter(adapter);
 
+    }
+    public void dateSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        Collections.sort(ingredientController.getIngredients(), Ingredient.dateSort);
+        adapter.notifyDataSetChanged();
+    }
+    public void locationSort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        Collections.sort(ingredientController.getIngredients(), Ingredient.locationAscending);
+        adapter.notifyDataSetChanged();
+    }
+    public void categorySort(View view)
+    {
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
