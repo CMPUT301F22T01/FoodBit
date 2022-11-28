@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
@@ -106,5 +107,119 @@ public class MealPlanControllerTest {
         assert mpController != null;
         assertEquals(0, mpController.lookUpIngredientID(id,ingredList));
     }
+
+    @Test
+    void getAllIngredients() {
+        MealPlanController mpController = mockMealPlanController(2);
+        assert mpController != null;
+        MealPlan mp1 = mockMealPlan(4);
+        //Ensure every ingredient within this mealPlan is found within .getAllIngredients
+        for (Ingredient ingred : mp1.getIngredients()) {
+            int i = 0;
+            for (Ingredient ingredWithinMealPlanController : mpController.getAllIngredients()) {
+                if (ingred.getId().equals(ingredWithinMealPlanController.getId())) {
+                    i = 1;
+                    break;
+                }
+            }
+            assertEquals(1,i);
+        }
+//        assertEquals(mpController.getAllIngredients(),mp1.getIngredients());
+    }
+
+    @Test
+    void addToIngredientList() {
+        MealPlanController mpController = mockMealPlanController(2);
+        assert mpController != null;
+
+        ArrayList<Ingredient> ingredList = new ArrayList<>();
+        Ingredient ingredient = new Ingredient("id2", 2);
+        ingredList.add(ingredient);
+        MealPlan mp1 = new MealPlan("5", 4, "id5", false, new Date(), "rid5", ingredList);
+
+        for (Ingredient ingred : mp1.getIngredients()) {//Check if no ingredients are in there
+            int i = 0;
+            for (Ingredient ingredWithinMealPlanController : mpController.getAllIngredients()) {
+                if (ingred.getId().equals(ingredWithinMealPlanController.getId())) {
+                    i = 1;
+                    break;
+                }
+            }
+            assertEquals(0,i);
+        }
+
+        mpController.addToIngredientList(mp1);
+        for (Ingredient ingred : mp1.getIngredients()) {//Check if every ingredient is in there
+            int i = 0;
+            for (Ingredient ingredWithinMealPlanController : mpController.getAllIngredients()) {
+                if (ingred.getId().equals(ingredWithinMealPlanController.getId())) {
+                    i = 1;
+                    break;
+                }
+            }
+            assertEquals(1,i);
+        }
+    }
+
+    @Test
+    void subtractFromIngredientList() {
+        MealPlanController mpController = mockMealPlanController(2);
+        assert mpController != null;
+
+        ArrayList<Ingredient> ingredList = new ArrayList<>();
+        Ingredient ingredient = new Ingredient("id2", 2);
+        ingredList.add(ingredient);
+        MealPlan mp1 = new MealPlan("5", 4, "id5", false, new Date(), "rid5", ingredList);
+
+        mpController.addToIngredientList(mp1);// we know this works from previous test
+
+        mpController.subtractFromIngredientList(mp1);
+        for (Ingredient ingred : mp1.getIngredients()) {//Check if no ingredients are in there
+            int i = 0;
+            for (Ingredient ingredWithinMealPlanController : mpController.getAllIngredients()) {
+                if (ingred.getId().equals(ingredWithinMealPlanController.getId())) {
+                    i = 1;
+                    break;
+                }
+            }
+            assertEquals(0,i);
+        }
+    }
+
+    @Test
+    void containsIngredient() {
+        MealPlanController mpController = mockMealPlanController(2);
+        assert mpController != null;
+
+        ArrayList<Ingredient> ingredList = new ArrayList<>();
+        Ingredient ingredient = new Ingredient("id2", 2);
+        ingredList.add(ingredient);
+        MealPlan mp1 = new MealPlan("5", 4, "id5", false, new Date(), "rid5", ingredList);
+
+        for (Ingredient ingred : mp1.getIngredients()) {
+            assertFalse(mpController.containsIngredient(ingred));
+        }
+
+        mpController.addToIngredientList(mp1);// we know this works from previous test
+
+        for (Ingredient ingred : mp1.getIngredients()) {
+            assertTrue(mpController.containsIngredient(ingred));
+        }
+    }
+
+    @Test
+    void containsRecipe() {
+        MealPlanController mpController = mockMealPlanController(2);
+        assert mpController != null;
+
+        MealPlan mp1 = new MealPlan("5", 4, "id5", false, new Date(), "rid5", null);
+        assertFalse(mpController.contains(mp1));
+
+        MealPlan mp2 = mockMealPlan(4);
+        assertTrue(mpController.contains(mp2));
+
+
+    }
+
 
 }

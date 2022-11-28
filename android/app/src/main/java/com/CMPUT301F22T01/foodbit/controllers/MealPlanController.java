@@ -189,7 +189,7 @@ public class MealPlanController {
      * Adds ingredient from meal to internal meal plan list of ingredients
      * @param meal
      */
-    private void addToIngredientList(MealPlan meal) {
+    public void addToIngredientList(MealPlan meal) {
         for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
             Ingredient currentIngred = new Ingredient();
             currentIngred.update(meal.getIngredients().get(j));
@@ -207,7 +207,7 @@ public class MealPlanController {
      * Subtracts ingredient from meal from internal meal plan list of ingredients
      * @param meal
      */
-    private void subtractFromIngredientList(MealPlan meal) {
+    public void subtractFromIngredientList(MealPlan meal) {
         for (int j = 0; j<meal.getIngredients().size();j++) {//Iterate through all ingreds within meal
             Ingredient currentIngred = new Ingredient();
             currentIngred.update(meal.getIngredients().get(j));
