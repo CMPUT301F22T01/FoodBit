@@ -202,7 +202,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-//        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
+        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
         adapter = new ShoppingCartAdapter(shoppingList);
