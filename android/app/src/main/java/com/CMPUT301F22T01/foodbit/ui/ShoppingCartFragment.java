@@ -132,7 +132,7 @@ public class ShoppingCartFragment extends Fragment {
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
         mealPlan = MainActivity.mealPlan;
-        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
+//        ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
 //        shoppingCart(shoppingList, mealIngredient, storage);
 
