@@ -27,7 +27,7 @@ import java.util.ArrayList;
 /**
  * provide a fragment show shopping cart ingredients
  */
-public class ShoppingCartFragment extends Fragment {
+public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapter.OnItemClickListener{
 
     public String TAG = "shoppingCartFragment";
 
@@ -140,6 +140,7 @@ public class ShoppingCartFragment extends Fragment {
 
         //set recyclerView
         adapter = new ShoppingCartAdapter(storage);
+        adapter.setItemClickListener(this);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setAdapter(adapter);
@@ -158,4 +159,8 @@ public class ShoppingCartFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onIngredientItemClick(View v, int position) {
+        ShoppingCartPickedItemFragment.newInstance(position).show(getChildFragmentManager(), TAG);
+    }
 }

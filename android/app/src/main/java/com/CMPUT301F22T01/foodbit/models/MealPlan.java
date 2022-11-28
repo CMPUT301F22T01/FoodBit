@@ -181,12 +181,13 @@ public class MealPlan implements dbObject, dbObjectCustom {
         this.date = date;
     }
 
-    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, ArrayList<Ingredient> ingredients) {
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, String recipeID, ArrayList<Ingredient> ingredients) {
         this.name = name;
         this.servings = servings;
         this.id = id;
         this.isIngredient = isIngredient;
         this.date = date;
+        this.recipeID = recipeID;
         this.ingredients = ingredients;
     }
 
@@ -196,6 +197,16 @@ public class MealPlan implements dbObject, dbObjectCustom {
             return o1.getDate().compareTo(o2.getDate());
         }
     };
+
+    public void update(MealPlan meal) {
+        this.name = meal.getName();
+        this.servings = meal.getServings();
+        this.id = meal.getId();
+        this.isIngredient = meal.isIngredient();
+        this.date = meal.getDate();
+        this.recipeID = meal.getRecipeID();
+        this.ingredients = meal.getIngredients();
+    }
 
 }
 

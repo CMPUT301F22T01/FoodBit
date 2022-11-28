@@ -100,21 +100,6 @@ public class IngredientLocationController implements Serializable {
      */
     public void loadAllFromDB() {
         locations.clear();
-        CollectionReference collectionReference = MainActivity.locationListRef;
-        collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.e("db is loading  !!!!!!!!!! ",  collectionReference.getPath().toString());
-                    for (int i =0; i< task.getResult().size(); i++) {
-                        IngredientLocation model = task.getResult().getDocuments().get(i).toObject(IngredientLocation.class);
-                        locations.add(model);
-                    }
-                }
-            }
-        });
+        db.getAllItems(locations);
     }
 }

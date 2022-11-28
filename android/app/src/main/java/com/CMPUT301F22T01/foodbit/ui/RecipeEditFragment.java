@@ -6,13 +6,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
-public class RecipeEditFragment extends RecipeAddEditFragment {
+public class RecipeEditFragment extends RecipeInputFragment {
     private int position;
     private Recipe recipe;
 

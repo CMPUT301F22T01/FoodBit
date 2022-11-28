@@ -179,7 +179,9 @@ public class MealDetailFragment extends Fragment {
     }
 
     private void editButtonClicked() {
-        MealEditFragment newFragment = new MealEditFragment(mealPlan);
+        MealPlan editingMeal = new MealPlan();
+        editingMeal.update(mealPlan);
+        MealEditFragment newFragment = new MealEditFragment(editingMeal);
         FragmentManager fm = getChildFragmentManager();
 
         fm.executePendingTransactions();
