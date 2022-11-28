@@ -123,6 +123,7 @@ public class RecipeEditFragment extends RecipeInputFragment {
             }
             recipe.setIngredients(ingredients);
             recipeController.edit(recipe);
+            MainActivity.mealPlanController.notifyRecipeChanged(recipe);
             recipeEditedListener.onEdited();
             dismiss();
         } else {

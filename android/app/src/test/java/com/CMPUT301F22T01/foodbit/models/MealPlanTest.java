@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import android.net.Uri;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -172,20 +171,20 @@ public class MealPlanTest {
 
     @Test
     void getRecipeID() {
-        assertNull(mockMealPlanIngredient().getRecipeID());
-        assertNull(mockMealPlanRecipe().getRecipeID());
+        assertNull(mockMealPlanIngredient().getRecipeId());
+        assertNull(mockMealPlanRecipe().getRecipeId());
     }
 
     @Test
     void setRecipeID() {
         MealPlan mealPlanIngredient = mockMealPlanIngredient();
-        assertNull(mealPlanIngredient.getRecipeID());
+        assertNull(mealPlanIngredient.getRecipeId());
         mealPlanIngredient.setRecipeID("recipeID1");
-        assertEquals("recipeID1", mealPlanIngredient.getRecipeID());
+        assertEquals("recipeID1", mealPlanIngredient.getRecipeId());
 
         MealPlan mealPlanRecipe = mockMealPlanRecipe();
-        assertNull(mealPlanRecipe.getRecipeID());
+        assertNull(mealPlanRecipe.getRecipeId());
         mealPlanRecipe.setRecipeID("recipeID2");
-        assertEquals("recipeID2", mealPlanRecipe.getRecipeID());
+        assertEquals("recipeID2", mealPlanRecipe.getRecipeId());
     }
 }

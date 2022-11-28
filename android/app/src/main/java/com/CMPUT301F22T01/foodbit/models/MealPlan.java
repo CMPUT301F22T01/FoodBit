@@ -118,7 +118,7 @@ public class MealPlan implements dbObject, dbObjectCustom {
         ingredients = t;
     }
 
-    public String getRecipeID() {
+    public String getRecipeId() {
         return recipeID;
     }
 

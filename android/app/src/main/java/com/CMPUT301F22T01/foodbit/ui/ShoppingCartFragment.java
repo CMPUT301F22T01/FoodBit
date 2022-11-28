@@ -130,7 +130,7 @@ public class ShoppingCartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_shopping_cart, container, false);
         // Get shoppingCart after calculating between meal plan and storage
         ingredientController = MainActivity.ingredientController;
-        mealPlan = MainActivity.mealPlan;
+        mealPlan = MainActivity.mealPlanController;
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
