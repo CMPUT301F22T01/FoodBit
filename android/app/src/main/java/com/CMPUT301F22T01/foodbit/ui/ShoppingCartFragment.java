@@ -99,11 +99,11 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+        //shoppingCart(shoppingList, mealIngredient, storage);
 
         //get views
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
+        //RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        //TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         adapter.notifyDataSetChanged();
 
@@ -116,15 +116,15 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+        //shoppingCart(shoppingList, mealIngredient, storage);
 
 
         //get views
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
-        TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
+        //RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
+        //TextView bottomInfoView = view.findViewById(R.id.shopping_cart_item_info);
 
         //set recyclerView
-        int mode = 0;
+        //int mode = 0;
 
         adapter.notifyDataSetChanged();
     }
@@ -136,10 +136,10 @@ public class ShoppingCartFragment extends Fragment {
      * @param shoppingList
      * @param mealIngredient
      * @param storage
-     * @param descriptionList
+     //* @param descriptionList
      */
     public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
-                             ArrayList<Ingredient> storage, List descriptionList) {
+                             ArrayList<Ingredient> storage) {
         for (Ingredient ingredient: mealIngredient
              ) {
             shoppingList.add(ingredient);
@@ -180,7 +180,7 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+        //shoppingCart(shoppingList, mealIngredient, storage);
 
 
         //get views
