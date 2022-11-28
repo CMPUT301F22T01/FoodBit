@@ -8,6 +8,7 @@ import androidx.navigation.Navigation;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -97,12 +98,12 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         });
 
         // allows for editing of ingredient being viewed when edit button is clicked
-        editButton = view.findViewById(R.id.button_ingredient_detail_edit);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        toolbar.setOnMenuItemClickListener(item -> {
+            int itemId = item.getItemId();
+            if (itemId == R.id.ingredient_detail_edit) {
                 new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
+            return false;
         });
         return view;
     }

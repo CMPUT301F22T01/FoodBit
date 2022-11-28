@@ -94,7 +94,7 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         // edit button behaviour
         topBar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
-            // done button behaviour
+            // edit button behaviour
             if (itemId == R.id.recipe_detail_edit) {
                 editButtonClicked();
             }
