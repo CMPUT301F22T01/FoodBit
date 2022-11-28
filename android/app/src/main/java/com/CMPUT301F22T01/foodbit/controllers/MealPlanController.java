@@ -105,6 +105,7 @@ public class MealPlanController {
     public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlan.clear();
         mealPlan.addAll(newMealPlan);
+        calcAllIngredients();
     }
 
     /**
