@@ -26,7 +26,6 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public abstract class RecipeInputFragment extends DialogFragment implements RecipeAddIngredientFragment.OnIngredientAddListener, RecipeAddIngredientFragment.OnIngredientEditListener, RecipeAddIngredientFragment.OnIngredientDeleteListener,  IngredientAdapter.OnItemClickListener {
     public static String TAG;
@@ -169,7 +168,7 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     }
 
     private void setUpRecyclerView() {
-//        ingredientAdapter = new IngredientAdapter(ingredients, IngredientAdapter.RECIPE_INPUT);
+//
         ingredientAdapter = new RecipeInputIngredientAdapter(ingredients);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         ingredientsRecyclerView.setLayoutManager(linearLayoutManager);
@@ -256,22 +255,6 @@ public abstract class RecipeInputFragment extends DialogFragment implements Reci
     @Override
     public void onIngredientAdd(Ingredient newIngredient) {
         ingredients.add(newIngredient);
-
-//        ingredientStorage = MainActivity.ingredientController;
-//        List<String> ingredientList = ingredientStorage.getDescriptions();
-//
-//        for (Ingredient ingredient : ingredients) {
-//            if (!ingredientList.contains(ingredient.getDescription())) {
-//                Ingredient addIngredient =
-//                        new Ingredient(ingredient.getDescription(),
-//                                "0000-00-00",
-//                                "Not Assigned",
-//                                0,
-//                                "0",
-//                                ingredient.getCategory());
-//                MainActivity.ingredientController.add(addIngredient);
-//            }
-//        }
         ingredientAdapter.notifyDataSetChanged();
     }
 
