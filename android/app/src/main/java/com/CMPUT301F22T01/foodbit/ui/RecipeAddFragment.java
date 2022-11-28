@@ -3,6 +3,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -76,7 +77,7 @@ public class RecipeAddFragment extends RecipeInputFragment {
 
         ingredientController = MainActivity.ingredientController;
         List<String> ingredientDescriptionList = ingredientController.getDescriptions();
-        ArrayList<Ingredient> ingredientList = this.ingredientController.getIngredients();
+        ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 
         for (Ingredient ingredient : ingredients) {
             if (!ingredientDescriptionList.contains(ingredient.getDescription()))
@@ -85,16 +86,22 @@ public class RecipeAddFragment extends RecipeInputFragment {
                         0,
                         ingredient.getUnit(),
                         ingredient.getCategory());
-                MainActivity.ingredientController.add(newIngredient);
+                ingredientController.add(newIngredient);
+                ingredient.setId(newIngredient.getId());
+                Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
                 ingredientAdapter.notifyDataSetChanged();
             }
+//            ingredientDescriptionList = ingredientController.getDescriptions();
+//            ingredientList = ingredientController.getIngredients();
             if (ingredientDescriptionList.contains(ingredient.getDescription()))
             {
-                for (Ingredient matchIngredient:ingredientList)
+                for (Ingredient matchIngredient : ingredientList)
                 {
+                    Log.d(TAG, "doneButtonClicked: yeehhhh");
                     if (ingredient.getDescription().equals(matchIngredient.getDescription()))
                     {
                         ingredient.setId(matchIngredient.getId());
+                        Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
                     }
                 }
             }
