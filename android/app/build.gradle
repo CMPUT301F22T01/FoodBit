@@ -94,6 +94,10 @@ dependencies {
     // Testing Navigation
     androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
+    def splahScreenVersion = "1.0.0"
+
+    implementation("androidx.core:core-splashscreen:1.0.0")
+
 //    todo: removing this implementation enables recording espresso test. Don't know if it causes any problems
     // Jetpack Compose Integration
 //    implementation "androidx.navigation:navigation-compose:$nav_version"

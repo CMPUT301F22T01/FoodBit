@@ -35,6 +35,8 @@
         </activity>
         <activity
             android:name=".ui.LoadingPageActivity"
+            android:theme="@style/Theme.SplashScreenFoodbit"
+            android:launchMode="singleTask"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
