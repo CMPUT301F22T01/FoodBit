@@ -154,6 +154,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
             } else {
                 float amountNeeded = cartItem.getAmount() - have.get(index).getAmount();
                 cartItem.setAmount(amountNeeded);
+                cartItem.setCategory(ingredientController.getIngredientById(cartItem.getId()).getCategory());
             }
         }
         return shoppingList;
