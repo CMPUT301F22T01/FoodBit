@@ -50,14 +50,14 @@ public class LoadingPageActivity extends AppCompatActivity {
                 //FID has been updated. Grab data and move to main activity!
                 FID = listen.getValue();
                 if(!FID.equals("empty")) {
-//                    listen2.setValue(5); // 6 loading transactions. So this will be -1 when they are all done.
+//                    listen2.setValue(4); // 5 loading transactions. So this will be -1 when they are all done.
                     MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
                     MainActivity.mealPlanController = new MealPlanController();
                     MainActivity.mealPlanController.load();
 
                     MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
                     MainActivity.recipeController = new RecipeController();
-                    MainActivity.recipeController.load();
+//                    MainActivity.recipeController.load();
 
 
                     MainActivity.ingredientListRef = db.collection(FID).document(FID).collection("ingredient list");
@@ -71,6 +71,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                     MainActivity.locationListRef = db.collection(FID).document(FID).collection("Location List");
                     MainActivity.location = new IngredientLocationController();
                     location.loadAllFromDB();
+
 
                     MainActivity.unitListRef = db.collection(FID).document(FID).collection("Unit List");
                     MainActivity.unit = new IngredientUnitController();
