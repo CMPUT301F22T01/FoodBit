@@ -148,12 +148,14 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         }
         for (Ingredient cartItem :
                 shoppingList) {
+            Log.d(TAG, "getShoppingList: "+cartItem.getId());
             int index = lookUpIngredientID(cartItem.getId(), have);
             if (cartItem.getAmount() <= have.get(index).getAmount()) {
                 shoppingList.remove(cartItem);
             } else {
                 float amountNeeded = cartItem.getAmount() - have.get(index).getAmount();
                 cartItem.setAmount(amountNeeded);
+                cartItem.setCategory(ingredientController.getIngredientById(cartItem.getId()).getCategory());
             }
         }
         return shoppingList;
@@ -166,6 +168,10 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
      * @return an index of a given ingredient
      */
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
+        for (Ingredient ingredient :
+                ingredList) {
+            Log.d(TAG, "lookUpIngredientID: "+ingredient.getId());
+        }
         for (int i = 0; i< ingredList.size(); i++) {
             if (ID.equals(ingredList.get(i).getId())) {
                 return i;
@@ -212,8 +218,8 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
     }
 
     @Override
-    public void onIngredientItemClick(View v, int position) {
-        ShoppingCartPickedItemFragment.newInstance(position).show(getChildFragmentManager(), TAG);
+    public void onIngredientItemClick(View v, String id) {
+        ShoppingCartPickedItemFragment.newInstance(id).show(getChildFragmentManager(), TAG);
     }
 
     @SuppressLint("NotifyDataSetChanged")

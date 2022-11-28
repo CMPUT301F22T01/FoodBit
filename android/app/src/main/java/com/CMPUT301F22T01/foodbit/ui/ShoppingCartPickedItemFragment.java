@@ -31,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.security.PrivateKey;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -49,7 +50,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     public Context context;
     public IngredientController ingredientController = MainActivity.ingredientController;
     public Ingredient ingredient;
-    public int position;
+    public String id;
 
     MaterialToolbar topBar;
     TextView description;
@@ -79,10 +80,10 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
      *
      * @return A new instance of fragment ShoppingCartPickedItemFragment.
      */
-    public static ShoppingCartPickedItemFragment newInstance(int position) {
+    public static ShoppingCartPickedItemFragment newInstance(String id) {
         ShoppingCartPickedItemFragment fragment = new ShoppingCartPickedItemFragment();
         Bundle args = new Bundle();
-        args.putInt("position", position);
+        args.putString("id", id);
         fragment.setArguments(args);
         return fragment;
     }
@@ -154,13 +155,14 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         return view;
     }
 
+
     /**
      * Get Ingredient from ingredientController
      */
     private void getIngredient() {
         assert getArguments() != null;
-        position = getArguments().getInt("position");
-        ingredient = ingredientController.getIngredientByPosition(position);
+        id = getArguments().getString("id");
+        ingredient = ingredientController.getIngredientById(id);
         Log.d(TAG, String.valueOf(ingredient));
     }
 
