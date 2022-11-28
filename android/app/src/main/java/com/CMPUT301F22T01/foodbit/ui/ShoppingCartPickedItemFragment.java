@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import static java.lang.Float.parseFloat;
+import static java.lang.String.valueOf;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -148,9 +149,14 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
 
         // setting to current ingredient details
         description.setText(ingredient.getDescription());
-        amountNeeded.setText(String.valueOf(ingredient.getAmount()));
+        amountNeeded.setText(valueOf(ingredient.getAmount()));
         unit.setText(ingredient.getUnit());
-        category.setText(ingredient.getCategory());
+        if (ingredient.getCategory() == null) {
+            category.setText("missing");
+        }
+        else {
+            category.setText(ingredient.getCategory());
+        }
 
         return view;
     }
@@ -163,7 +169,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
         assert getArguments() != null;
         id = getArguments().getString("id");
         ingredient = ingredientController.getIngredientById(id);
-        Log.d(TAG, String.valueOf(ingredient));
+        Log.d(TAG, valueOf(ingredient));
     }
 
     @Override

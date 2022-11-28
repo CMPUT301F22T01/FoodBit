@@ -6,13 +6,18 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class RecipeEditFragment extends RecipeInputFragment {
     private int position;
     private Recipe recipe;
+    private IngredientController ingredientController;
 
     public interface OnRecipeEditedListener {
         void onEdited();
@@ -78,6 +83,38 @@ public class RecipeEditFragment extends RecipeInputFragment {
             requiredFieldEntered = false;
         } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
             requiredFieldEntered = false;
+        }
+
+        ingredientController = MainActivity.ingredientController;
+        List<String> ingredientDescriptionList = ingredientController.getDescriptions();
+        ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
+
+        //Checking if it is an existing ingredient or needs to be added
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredientDescriptionList.contains(ingredient.getDescription()))
+            {
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(),
+                        0,
+                        ingredient.getUnit(),
+                        ingredient.getCategory());
+                ingredientController.add(newIngredient);
+                ingredient.setId(newIngredient.getId());
+                Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+                ingredientAdapter.notifyDataSetChanged();
+            }
+            if (ingredientDescriptionList.contains(ingredient.getDescription()))
+            {
+                for (Ingredient matchIngredient : ingredientList)
+                {
+                    Log.d(TAG, "doneButtonClicked: Successful");
+                    if (ingredient.getDescription().equals(matchIngredient.getDescription()))
+                    {
+                        ingredient.setId(matchIngredient.getId());
+                        Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
+
+                    }
+                }
+            }
         }
         if (requiredFieldEntered) {
             recipe.setTitle(title);
