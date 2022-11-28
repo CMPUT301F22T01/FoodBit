@@ -197,5 +197,15 @@ public class MealPlan implements dbObject, dbObjectCustom {
         }
     };
 
+    public void update(MealPlan meal) {
+        this.name = meal.getName();
+        this.servings = meal.getServings();
+        this.id = meal.getId();
+        this.isIngredient = meal.isIngredient();
+        this.date = meal.getDate();
+        this.recipeID = meal.getRecipeID();
+        this.ingredients = meal.getIngredients();
+    }
+
 }
 
