@@ -76,8 +76,8 @@
     </fragment>
     <fragment
         android:id="@+id/fragment_shopping_cart_edit"
-        android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartDetailFragment"
-        android:label="ShoppingDetailFragment"
+        android:name="com.CMPUT301F22T01.foodbit.ui.ShoppingCartPickedItemFragment"
+        android:label="ShoppingPickedItemFragment"
         tools:layout="@layout/fragment_shopping_cart_edit">
 
     </fragment>
