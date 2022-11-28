@@ -126,6 +126,7 @@ public class DatabaseController {
                         items.add((T)model);
                         Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
                     }
+                    MainActivity.listen2.setValue(MainActivity.listen2.getValue() -1 );
                 }
             }
         });
@@ -154,6 +155,7 @@ public class DatabaseController {
                         items.add(s);
                         Log.e("firebase response??", String.valueOf(i) + String.valueOf(task.getResult().getDocuments().get(i)));
                     }
+                    MainActivity.listen2.setValue(MainActivity.listen2.getValue() -1);
                 }
             }
         });

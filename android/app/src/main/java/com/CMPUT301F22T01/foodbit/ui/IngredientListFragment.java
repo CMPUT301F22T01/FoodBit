@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -89,21 +90,45 @@ public class IngredientListFragment extends Fragment {
                 return true;
 
             // Sorting the Ingredients accordingly
-            case R.id.filter1:
-                descriptionSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Description", Toast.LENGTH_SHORT).show();
+            case R.id.descriptionFilter1:
+                //Sorting description in ascending order
+                descriptionASort();
+                Toast.makeText(getActivity(), "Sorting(A-Z): Description", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.filter2:
-                dateSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Best Before", Toast.LENGTH_SHORT).show();
+            case R.id.descriptionFilter2:
+                //Sorting description in descending order
+                descriptionDSort();
+                Toast.makeText(getActivity(), "Sorting(Z-A): Description", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.filter3:
-                locationSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Location", Toast.LENGTH_SHORT).show();
+            case R.id.dateFilter1:
+                //Sorting best before date in ascending order
+                dateASort();
+                Toast.makeText(getActivity(), "Sorting(Ascending): Best Before", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.filter4:
-                categorySort(getView());
-                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
+            case R.id.dateFilter2:
+                //Sorting best before date in descending order
+                dateDSort();
+                Toast.makeText(getActivity(), "Sorting(Descending): Best Before", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.locationFilter1:
+                //Sorting location in ascending order
+                locationASort();
+                Toast.makeText(getActivity(), "Sorting(A-Z): Location", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.locationFilter2:
+                //Sorting location in descending order
+                locationDSort();
+                Toast.makeText(getActivity(), "Sorting(Z-A): Location", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.categoryFilter1:
+                //Sorting category in ascending order
+                categoryASort();
+                Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.categoryFilter2:
+                //Sorting category in descending order
+                categoryDSort();
+                Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
@@ -112,35 +137,56 @@ public class IngredientListFragment extends Fragment {
         return true;
     }
 
-    public void descriptionSort(View view)
+    public void descriptionASort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
         Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending);
-//        adapter = new IngredientAdapter(ingredientController.getIngredients());
         adapter.notifyDataSetChanged();
-//
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//        recyclerView.setLayoutManager(linearLayoutManager);
-//
-//        recyclerView.setAdapter(adapter);
-
     }
-    public void dateSort(View view)
+    public void descriptionDSort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(ingredientController.getIngredients(), Ingredient.nameAscending.reversed());
+        }
+
+        adapter.notifyDataSetChanged();
+    }
+
+    public void dateASort()
+    {
         Collections.sort(ingredientController.getIngredients(), Ingredient.dateSort);
         adapter.notifyDataSetChanged();
     }
-    public void locationSort(View view)
+    public void dateDSort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(ingredientController.getIngredients(), Ingredient.dateSort.reversed());
+        }
+        Collections.reverseOrder();
+        adapter.notifyDataSetChanged();
+    }
+    public void locationASort()
+    {
         Collections.sort(ingredientController.getIngredients(), Ingredient.locationAscending);
         adapter.notifyDataSetChanged();
     }
-    public void categorySort(View view)
+    public void locationDSort()
     {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_ingredient_list);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(ingredientController.getIngredients(), Ingredient.locationAscending.reversed());
+        }
+        Collections.reverseOrder();
+        adapter.notifyDataSetChanged();
+    }
+    public void categoryASort()
+    {
         Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending);
+        adapter.notifyDataSetChanged();
+    }
+    public void categoryDSort()
+    {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Collections.sort(ingredientController.getIngredients(), Ingredient.categoryAscending.reversed());
+        }
         adapter.notifyDataSetChanged();
     }
 

@@ -1,7 +1,10 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,9 +26,9 @@ import java.util.Objects;
  * Issues: users are not yet able to edit or remove ingredients that are added to the recipe in this screen.
  * There is a false error reported by the IDE which actually works fine.
  */
-public class RecipeAddFragment extends RecipeAddEditFragment {
+public class RecipeAddFragment extends RecipeInputFragment {
 
-    private IngredientController ingredientStorage;
+    private IngredientController ingredientController;
     public RecipeAddFragment() {
         // Required empty public constructor
     }
@@ -41,7 +44,9 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         super.ingredients = new ArrayList<>();
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
+    // Tasks to do once a recipe is confirmed by the user
     protected void doneButtonClicked() {
         String title = Objects.requireNonNull(titleEditText.getText()).toString();
         String prepTime = Objects.requireNonNull(prepTimeEditText.getText()).toString();
@@ -50,6 +55,12 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         if (category.equals("")){category = null;}
         String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
         if (comments.equals("")){comments = null;}
+        Uri photoUri = hasPhoto ? saveImage() : null;
+
+        //Checks to make sure everything is entered and is valid
+//        if (category.equals("")){category = null;}
+//        String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
+//        if (comments.equals("")){comments = null;}
         // check empty fields
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
@@ -72,17 +83,36 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
             requiredFieldEntered = false;
         }
 
-        ingredientStorage = MainActivity.ingredientController;
-        List ingredientList = ingredientStorage.getDescriptions();
+        ingredientController = MainActivity.ingredientController;
+        List<String> ingredientDescriptionList = ingredientController.getDescriptions();
+        ArrayList<Ingredient> ingredientList = ingredientController.getIngredients();
 
+        //Checking if it is an existing ingredient or needs to be added
         for (Ingredient ingredient : ingredients) {
-            if (!ingredientList.contains(ingredient.getDescription()))
+            if (!ingredientDescriptionList.contains(ingredient.getDescription()))
             {
-                Ingredient newIngredient = new Ingredient(ingredient.getId(),ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
-                MainActivity.ingredientController.add(newIngredient);
+                Ingredient newIngredient = new Ingredient(ingredient.getDescription(),
+                        0,
+                        ingredient.getUnit(),
+                        ingredient.getCategory());
+                ingredientController.add(newIngredient);
+                ingredient.setId(newIngredient.getId());
+                Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
                 ingredientAdapter.notifyDataSetChanged();
             }
+            if (ingredientDescriptionList.contains(ingredient.getDescription()))
+            {
+                for (Ingredient matchIngredient : ingredientList)
+                {
+                    Log.d(TAG, "doneButtonClicked: Successful");
+                    if (ingredient.getDescription().equals(matchIngredient.getDescription()))
+                    {
+                        ingredient.setId(matchIngredient.getId());
+                        Log.d(TAG, "doneButtonClicked: "+ingredient.getId());
 
+                    }
+                }
+            }
         }
 
 
@@ -90,7 +120,7 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
             Recipe recipe = new Recipe(title,
                     Integer.parseInt(prepTime),
                     Integer.parseInt(numServings),
-                    category, comments, null, ingredients);
+                    category, comments, photoUri, ingredients);
             super.recipeController.add(recipe);
             dismiss();
         } else {
@@ -108,8 +138,6 @@ public class RecipeAddFragment extends RecipeAddEditFragment {
         return("Add a recipe");
     }
 }
-
-
 
 
 

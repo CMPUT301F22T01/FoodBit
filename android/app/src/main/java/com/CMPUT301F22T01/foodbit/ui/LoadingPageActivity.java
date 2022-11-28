@@ -7,6 +7,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 import static com.CMPUT301F22T01.foodbit.ui.MainActivity.category;
 import static com.CMPUT301F22T01.foodbit.ui.MainActivity.ingredientController;
 import static com.CMPUT301F22T01.foodbit.ui.MainActivity.listen;
+import static com.CMPUT301F22T01.foodbit.ui.MainActivity.listen2;
 import static com.CMPUT301F22T01.foodbit.ui.MainActivity.location;
 import static com.CMPUT301F22T01.foodbit.ui.MainActivity.unit;
 
@@ -36,6 +37,8 @@ public class LoadingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading_page);
 
         listen.setValue("empty"); //Facilitate getting User DB
+        listen2.setValue(0); //Facilitate waiting for the async Firebase calls.
+
 
         //Get Firebase Instance ID
         DatabaseController dbControl = new DatabaseController("Meals");
@@ -46,31 +49,51 @@ public class LoadingPageActivity extends AppCompatActivity {
             public void onChanged(String changedValue) {
                 //FID has been updated. Grab data and move to main activity!
                 FID = listen.getValue();
-                MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
-                MainActivity.mealPlanController = new MealPlanController();
-                MainActivity.mealPlanController.load();
+                if(!FID.equals("empty")) {
+                    listen2.setValue(4); // 5 loading transactions. So this will be -1 when they are all done.
+                    MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
+                    MainActivity.mealPlanController = new MealPlanController();
+                    MainActivity.mealPlanController.load();
 
-                MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
-                MainActivity.recipeController = new RecipeController();
+                    MainActivity.recipeControllerRef = db.collection(FID).document(FID).collection("Recipe Book");
+                    MainActivity.recipeController = new RecipeController();
+//                    MainActivity.recipeController.load();
 
-                MainActivity.ingredientListRef = db.collection(FID).document(FID).collection("ingredient list");
-                MainActivity.ingredientController = new IngredientController();
-                ingredientController.loadAllFromDB();
 
-                MainActivity.categoryListRef = db.collection(FID).document(FID).collection("Category List");
-                MainActivity.category = new IngredientCategoryController();
-                category.loadAllFromDB();
+                    MainActivity.ingredientListRef = db.collection(FID).document(FID).collection("ingredient list");
+                    MainActivity.ingredientController = new IngredientController();
+                    ingredientController.loadAllFromDB();
 
-                MainActivity.locationListRef = db.collection(FID).document(FID).collection("Location List");
-                MainActivity.location = new IngredientLocationController();
-                location.loadAllFromDB();
+                    MainActivity.categoryListRef = db.collection(FID).document(FID).collection("Category List");
+                    MainActivity.category = new IngredientCategoryController();
+                    category.loadAllFromDB();
 
-                MainActivity.unitListRef = db.collection(FID).document(FID).collection("Unit List");
-                MainActivity.unit = new IngredientUnitController();
-                unit.loadAllFromDB();
+                    MainActivity.locationListRef = db.collection(FID).document(FID).collection("Location List");
+                    MainActivity.location = new IngredientLocationController();
+                    location.loadAllFromDB();
 
-                Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
-                LoadingPageActivity.this.startActivity(myIntent);
+
+                    MainActivity.unitListRef = db.collection(FID).document(FID).collection("Unit List");
+                    MainActivity.unit = new IngredientUnitController();
+                    unit.loadAllFromDB();
+
+
+
+                }
+
+            }
+        });
+
+        listen2.observe(this, new Observer<Integer>() {
+            @Override
+            public void onChanged(Integer integer) {
+                if(listen2.getValue() == -1) {
+                    //Loaded in all databases, let's ensure mealPlan ingredient needs have been
+                    //updated and move on
+                    MainActivity.mealPlanController.calcAllIngredients();
+                    Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
+                    LoadingPageActivity.this.startActivity(myIntent);
+                }
             }
         });
 //

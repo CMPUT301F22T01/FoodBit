@@ -2,6 +2,7 @@ package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
+import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -20,8 +21,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.CMPUT301F22T01.foodbit.R;
+import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.controllers.RecipeController;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -34,7 +37,10 @@ import java.util.Objects;
 public class RecipeDetailFragment extends Fragment implements RecipeEditFragment.OnRecipeEditedListener{
 
     public static final String TAG = "Recipe Detail Fragment";
-    private static final RecipeController recipeController = MainActivity.recipeController;
+    private final RecipeController recipeController = MainActivity.recipeController;
+    private final MealPlanController mealPlanController = MainActivity.mealPlanController;
+    private Context context;
+
     private Recipe recipe;
     private int position;
 
@@ -47,12 +53,18 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
     ImageView appBarImageView;
     RecyclerView ingredientsRecyclerView;
     TextView ingredientEmptyView;
-    Button tempDeleteButton;
+//    Button tempDeleteButton;
     IngredientAdapter ingredientAdapter;
     CollapsingToolbarLayout collapsingToolbarLayout;
 
     public RecipeDetailFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -82,8 +94,8 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         appBarImageView = view.findViewById(R.id.recipe_detail_bar_image);
         ingredientsRecyclerView = view.findViewById(R.id.recipe_detail_ingredient_list);
         ingredientEmptyView = view.findViewById(R.id.recipe_detail_ingredients_empty);
-        tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
-        tempDeleteButton.setOnClickListener(deleteButtonClicked());
+//        tempDeleteButton = view.findViewById(R.id.recipe_detail_temp_delete);
+//        tempDeleteButton.setOnClickListener(deleteButtonClicked());
         collapsingToolbarLayout = view.findViewById(R.id.recipe_detail_top_bar);
 
         // back button behaviour
@@ -94,9 +106,15 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         // edit button behaviour
         topBar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
-            // done button behaviour
+            // edit button behaviour
             if (itemId == R.id.recipe_detail_edit) {
                 editButtonClicked();
+            } else if (mealPlanController.containsRecipe(recipe)) {
+                String toastMsg = "Edit/Deletion not allowed - recipe used in meal plan(s)";
+                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.recipe_detail_delete) {
+                recipeController.remove(recipe);
+                Navigation.findNavController(view).popBackStack();
             }
             return false;
 
@@ -139,13 +157,13 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         ingredientsRecyclerView.addItemDecoration(new DividerItemDecoration(ingredientsRecyclerView.getContext(), linearLayoutManager.getOrientation()));
     }
 
-    @NonNull
-    private View.OnClickListener deleteButtonClicked() {
-        return v -> {
-            recipeController.remove(recipe);
-            Navigation.findNavController(v).popBackStack();
-        };
-    }
+//    @NonNull
+//    private View.OnClickListener deleteButtonClicked() {
+//        return v -> {
+//            recipeController.remove(recipe);
+//            Navigation.findNavController(v).popBackStack();
+//        };
+//    }
 
     // get recipe from recipe book obtained from MainActivity and position given by the adapter
     private void getRecipe() {

@@ -30,11 +30,25 @@
             tools:layout_conversion_absoluteWidth="411dp" />
 
         <TextView
-            android:id="@+id/shopping_picked_description"
+            android:id="@+id/shopping_picked_description_head"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Description"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_pick_top_bar" />
+        <TextView
+            android:id="@+id/shopping_picked_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             android:text="Description"
             android:textSize="18dp"
@@ -42,14 +56,28 @@
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shopping_pick_top_bar" />
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_description_head" />
 
+        <TextView
+            android:id="@+id/shopping_picked_need_amount_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Amount Needed"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_description" />
         <TextView
             android:id="@+id/shopping_picked_need_amount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             android:text="Amount Needed"
             android:textSize="18dp"
@@ -57,14 +85,28 @@
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_description" />
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_need_amount_head" />
 
+        <TextView
+            android:id="@+id/shopping_picked_unit_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Unit"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_need_amount" />
         <TextView
             android:id="@+id/shopping_picked_unit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             android:text="Unit"
             android:textSize="18dp"
@@ -72,14 +114,28 @@
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_need_amount" />
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_unit_head" />
 
+        <TextView
+            android:id="@+id/shopping_picked_category_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="24dp"
+            android:layout_marginEnd="24dp"
+            android:text="Category"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="?android:attr/textColorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_unit" />
         <TextView
             android:id="@+id/shopping_picked_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="12dp"
             android:layout_marginEnd="24dp"
             android:text="Category"
             android:textSize="18dp"
@@ -87,7 +143,7 @@
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_unit" />
+            app:layout_constraintTop_toBottomOf="@+id/shopping_picked_category_head" />
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -111,7 +167,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Input Picked Amount"
-                android:inputType="number"
+                android:inputType="numberDecimal"
                 android:maxLines="1"
                 tools:ignore="HardcodedText"
                 tools:layout_conversion_absoluteHeight="48dp"

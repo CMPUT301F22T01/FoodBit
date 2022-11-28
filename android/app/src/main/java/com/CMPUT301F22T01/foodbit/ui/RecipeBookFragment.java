@@ -1,6 +1,7 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -72,60 +73,102 @@ public class RecipeBookFragment extends Fragment {
                 return true;
 
             // Sorting the Recipes accordingly
-            case R.id.filter1:
-                titleSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Title", Toast.LENGTH_SHORT).show();
+            case R.id.titleFilter1:
+                //Sorting titles in ascending order
+                titleASort();
+                Toast.makeText(getActivity(), "Sorting(A-Z): Title", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.filter2:
-                prepTimeSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Preparation Time", Toast.LENGTH_SHORT).show();
+            case R.id.titleFilter2:
+                //Sorting titles in descending order
+                titleDSort();
+                Toast.makeText(getActivity(), "Sorting(Z-A): Title", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.filter3:
-                serveSort(getView());
-                Toast.makeText(getActivity(), "Sorting: Number of Servings", Toast.LENGTH_SHORT).show();
+            case R.id.timeFilter1:
+                //Sorting preparation time in ascending order
+                prepTimeASort();
+                Toast.makeText(getActivity(), "Sorting(Quick-Long): Preparation Time", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.filter4:
-                categorySort(getView());
-                Toast.makeText(getActivity(), "Sorting: Category", Toast.LENGTH_SHORT).show();
+            case R.id.timeFilter2:
+                //Sorting preparation time in descending order
+                prepTimeDSort();
+                Toast.makeText(getActivity(), "Sorting(Long-Quick): Preparation Time", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.serveFilter1:
+                //Sorting number of servings in ascending order
+                serveASort();
+                Toast.makeText(getActivity(), "Sorting(Low-High): Number of Servings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.serveFilter2:
+                //Sorting number of servings in descending order
+                serveDSort();
+                Toast.makeText(getActivity(), "Sorting(High-Low): Number of Servings", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.categoryFilter1:
+                //Sorting category in ascending order
+                categoryASort();
+                Toast.makeText(getActivity(), "Sorting(A-Z): Category", Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.categoryFilter2:
+                //Sorting category in descending order
+                categoryDSort();
+                Toast.makeText(getActivity(), "Sorting(Z-A): Category", Toast.LENGTH_SHORT).show();
                 break;
             default:
                 return super.onOptionsItemSelected(item);
         }
         return true;
     }
-        public void titleSort(View view)
+        public void titleASort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.titleAscending);
             adapter.notifyDataSetChanged();
-//            adapter = new RecipeAdapter(recipeController.getRecipes());
-//
-//            LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
-//            recyclerView.setLayoutManager(linearLayoutManager);
-//
-//            recyclerView.setAdapter(adapter);
+        }
+        public void titleDSort()
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(recipeController.getRecipes(), Recipe.titleAscending.reversed());
+            }
+            adapter.notifyDataSetChanged();
         }
 
-        public void prepTimeSort(View view)
+
+        public void prepTimeASort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
             Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort);
             adapter.notifyDataSetChanged();
         }
-
-        public void serveSort(View view)
+        public void prepTimeDSort()
         {
-            RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(recipeController.getRecipes(), Recipe.prepTimeSort.reversed());
+        }
+            adapter.notifyDataSetChanged();
+        }
+        public void serveASort()
+        {
             Collections.sort(recipeController.getRecipes(), Recipe.servingSort);
             adapter.notifyDataSetChanged();
         }
+        public void serveDSort()
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(recipeController.getRecipes(), Recipe.servingSort.reversed());
+            }
+            adapter.notifyDataSetChanged();
+        }
 
-    public void categorySort(View view)
-    {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerView_recipe_book);
-        Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending);
-        adapter.notifyDataSetChanged();
-    }
+        public void categoryASort()
+        {
+            Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending);
+            adapter.notifyDataSetChanged();
+        }
+        public void categoryDSort()
+        {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                Collections.sort(recipeController.getRecipes(), Recipe.categoryAscending.reversed());
+            }
+            adapter.notifyDataSetChanged();
+        }
 
 
 
@@ -153,13 +196,6 @@ public class RecipeBookFragment extends Fragment {
         // real time updates of the recipeController
         recipeBookUpdate();
     }
-
-
-// Changed from addButton to adding by clicking the add icon on the Top Action Bar
-//    @NonNull
-//    private View.OnClickListener addButtonClicked() {
-//        return v -> new RecipeAddFragment().show(getChildFragmentManager(), RecipeAddFragment.TAG);
-//    }
 
 
 

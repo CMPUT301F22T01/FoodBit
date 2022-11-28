@@ -117,8 +117,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.ViewHolder
         prepTimeView.setText(prepTime + min);
         numServingsView.setText("×" + numServings);
         commentsView.setText(Objects.requireNonNullElse(comments, "No comments."));
-        TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
-        capLetter.setText(Character.toString(title.charAt(0)));
+        if (photo != null) {
+            ImageView photoView = photoLayout.findViewById(R.id.item_recipe_photo_image);
+            photoView.setImageURI(photo);
+        } else {
+            TextView capLetter = (TextView) photoLayout.getViewById(R.id.item_recipe_photo_text);
+            capLetter.setText(Character.toString(title.charAt(0)));
+        }
 
         // Define click listener for items
         holder.itemView.setOnClickListener(v -> {

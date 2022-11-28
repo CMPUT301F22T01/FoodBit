@@ -156,6 +156,15 @@ public class MealAddFragment extends DialogFragment {
                         if(str.compareTo(temp) == 0) {
                             mealSelected = temp;
                             positionSelected = itemsDropdown.indexOf(mealSelected);
+                            if(positionSelected < ingredientList.size()) {
+                                if (ingredientList.get(positionSelected).getUnit() != null) {
+                                    servingsEditText.setHint(ingredientList.get(positionSelected).getUnit());
+                                    servingsLayout.setHint(ingredientList.get(positionSelected).getUnit());
+                                }
+                            } else {
+                                servingsEditText.setHint("Servings");
+                                servingsLayout.setHint("Servings");
+                            }
                             return;
                         } else {
                             positionSelected = i+1;
@@ -166,12 +175,6 @@ public class MealAddFragment extends DialogFragment {
             }
         });
 
-//        mealAddTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//
-//            }
-//        });
 
         //Date picker
         mealDateEditText = (EditText) view.findViewById(R.id.meal_add_date);
@@ -211,8 +214,8 @@ public class MealAddFragment extends DialogFragment {
                         } else {
                             meal.setRecipeID(recipeList.get(positionSelected-ingredientSize).getId());
                             meal.setIngredient(false);
-                            meal.setIngredientsFromRecipe(recipeList.get(positionSelected-ingredientSize).getIngredients(),
-                                    recipeList.get(positionSelected-ingredientSize).getNumServings());
+                            meal.setIngredientsFromRecipeScaled(recipeController.getRecipeByPosition(positionSelected-ingredientSize).getIngredients(),
+                                    recipeController.getRecipeByPosition(positionSelected-ingredientSize).getNumServings());
                             Log.e("mealAdd Recipe:", recipeList.get(positionSelected-ingredientSize).getTitle());
                         }
                     }

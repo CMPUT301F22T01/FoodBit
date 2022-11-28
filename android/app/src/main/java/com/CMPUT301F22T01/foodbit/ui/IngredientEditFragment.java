@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -42,6 +43,7 @@ import java.util.Objects;
 public class IngredientEditFragment extends DialogFragment {
     public final static String TAG = "EditIngredient";
     private Ingredient ingredient;
+    private String keyword;
     private int position;
     private Context context;
 
@@ -62,6 +64,7 @@ public class IngredientEditFragment extends DialogFragment {
     TextInputLayout amountLayout;
     TextInputLayout locationLayout;
     TextInputLayout categoryLayout;
+    TextInputLayout unitLayout;
 
     public IngredientEditFragment() {
         // Required empty public constructor
@@ -74,6 +77,12 @@ public class IngredientEditFragment extends DialogFragment {
     public IngredientEditFragment(int position) {
         this.position = position;
         this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+    }
+
+    public IngredientEditFragment(int position, String keyword) {
+        this.position = position;
+        this.ingredient = MainActivity.ingredientController.getIngredientByPosition(position);
+        this.keyword = keyword;
     }
 
     @Override
@@ -104,6 +113,7 @@ public class IngredientEditFragment extends DialogFragment {
         amountLayout = view.findViewById(R.id.ingredient_add_text_layout_amount);
         locationLayout = view.findViewById(R.id.ingredient_add_text_layout_location);
         categoryLayout = view.findViewById(R.id.ingredient_add_text_layout_category);
+        unitLayout = view.findViewById(R.id.ingredient_add_text_layout_unit);
 
         //Dropdown box for location
         AutoCompleteTextView locationTextView = view.findViewById(R.id.location_picker);
@@ -131,6 +141,17 @@ public class IngredientEditFragment extends DialogFragment {
         categories.addAll(MainActivity.category.getCategoryDescription());
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, categories);
         categoryTextView.setAdapter(categoryAdapter);
+
+        //This section is used if the ingredient is in a recipe or meal plan
+        //If so, only amount and location can be edited, the rest are restricted to viewing only
+        if (Objects.equals(keyword, "restricted editing")) {
+            descriptionEditText.setInputType(InputType.TYPE_NULL);
+            bestBeforeEditText.setInputType(InputType.TYPE_NULL);
+            unitTextView.setInputType(InputType.TYPE_NULL);
+            categoryTextView.setInputType(InputType.TYPE_NULL);
+            categoryTextView.setAdapter(null);
+            unitTextView.setAdapter(null);
+        }
 
         descriptionEditText.setText(ingredient.getDescription());
         bestBeforeEditText.setText(ingredient.getBestBefore());
@@ -206,16 +227,16 @@ public class IngredientEditFragment extends DialogFragment {
                         MainActivity.location.add(newLocation);
                         MainActivity.location.loadAllFromDB();
                     }
-                    if (!units.contains(unit) && !units.equals("")) {
-                        // adding new unit to adapter and database if it is not already in it
+                    if (unit.equals("")) {
+                        unitLayout.setError("Required");
+                        requiredFieldEntered = false;
+                    } else if (!units.contains(unit)) {
+                        //Adds new unit to the adapter and the database if it is not already in it
                         unitAdapter.add(unit);
                         unitAdapter.notifyDataSetChanged();
                         IngredientUnit newUnit = new IngredientUnit(unit);
                         MainActivity.unit.add(newUnit);
                         MainActivity.unit.loadAllFromDB();
-                    }
-                    if (unit.equals("")) {
-                        unit = null;
                     }
                     if (category.equals("")) {
                         categoryLayout.setError("Required");

@@ -28,7 +28,7 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
      * Item click listener for ingredients
      */
     public interface OnItemClickListener {
-        void onIngredientItemClick(View v, int position);
+        void onIngredientItemClick(View v, String id);
     }
     protected OnItemClickListener itemClickListener;
 
@@ -60,12 +60,6 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
 
         public ViewHolder(View view) {
             super(view);
-            // Define click listener for items
-            view.setOnClickListener(v -> {
-                Bundle bundle = new Bundle();
-                bundle.putInt("position", getAdapterPosition());
-                Navigation.findNavController(v).navigate(R.id.action_fragment_shopping_cart_to_fragment_shopping_cart_edit, bundle);
-            });
 
             // init UI
             cartDescription = view.findViewById(R.id.shopping_ingredient_description);
@@ -101,27 +95,33 @@ public class ShoppingCartAdapter extends RecyclerView.Adapter<ShoppingCartAdapte
         float amount = items.get(position).getAmount();
         String unit = items.get(position).getUnit();
         String category = items.get(position).getCategory();
+        String id = items.get(position).getId();
 
         // get UI
         TextView descriptionView = holder.getCartDescriptionView();
         TextView amountView = holder.getCartAmountView();
         TextView unitView = holder.getCartUnitView();
         TextView categoryView = holder.getCartCategoryView();
+        descriptionView.setTextSize(20);
+        amountView.setTextSize(18);
+        unitView.setTextSize(18);
+        categoryView.setTextSize(18);
 
         // set up UI
         descriptionView.setText(description);
         amountView.setText(String.valueOf(amount));
         unitView.setText(unit);
         categoryView.setText(category);
+
+        // define item's on click behaviour
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemClickListener.onIngredientItemClick(v, id);
+            }
+        });
     }
 
-//    private View.OnClickListener onItemClick(@NonNull IngredientAdapter.ViewHolder holder) {
-//        return v -> {
-//            Bundle bundle = new Bundle();
-//            bundle.putInt("position", holder.getAdapterPosition());
-//            Navigation.findNavController(v).navigate(R.id.action_fragment_shopping_cart_to_fragment_shopping_cart_edit, bundle);
-//        };
-//    }
 
     /**
      * provide an item count function
