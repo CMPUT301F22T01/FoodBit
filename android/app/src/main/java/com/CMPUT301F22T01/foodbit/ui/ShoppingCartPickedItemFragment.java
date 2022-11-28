@@ -44,7 +44,7 @@ public class ShoppingCartPickedItemFragment extends DialogFragment {
     private static final String TAG = "Picked Ingredient";
 
     public Context context;
-    public IngredientController ingredientController;
+    public IngredientController ingredientController = MainActivity.ingredientController;
     public Ingredient ingredient;
     public int position;
 
