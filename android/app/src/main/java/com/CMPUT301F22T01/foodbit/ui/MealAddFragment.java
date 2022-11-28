@@ -18,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+
 import com.CMPUT301F22T01.foodbit.R;
 import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
@@ -30,6 +31,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Objects;
 
