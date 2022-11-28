@@ -1,14 +1,20 @@
 package com.CMPUT301F22T01.foodbit.ui;
 
 import android.content.Context;
-import android.net.Uri;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
+import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -17,10 +23,16 @@ import java.util.Objects;
  * Issues: users are not yet able to edit or remove ingredients that are added to the recipe in this screen.
  * There is a false error reported by the IDE which actually works fine.
  */
-public class RecipeAddFragment extends RecipeInputFragment {
+public class RecipeAddFragment extends RecipeAddEditFragment {
 
+    private IngredientController ingredientStorage;
     public RecipeAddFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
@@ -38,8 +50,6 @@ public class RecipeAddFragment extends RecipeInputFragment {
         if (category.equals("")){category = null;}
         String comments = Objects.requireNonNull(commentsEditText.getText()).toString();
         if (comments.equals("")){comments = null;}
-        Uri photoUri = hasPhoto ? saveImage() : null;
-
         // check empty fields
         boolean requiredFieldEntered = true;
         if (title.equals("")) {
@@ -61,12 +71,27 @@ public class RecipeAddFragment extends RecipeInputFragment {
         } else if (numServings.length() > 3 || Integer.parseInt(numServings) > 100) {
             requiredFieldEntered = false;
         }
+
+        ingredientStorage = MainActivity.ingredientController;
+        List ingredientList = ingredientStorage.getDescriptions();
+
+        for (Ingredient ingredient : ingredients) {
+            if (!ingredientList.contains(ingredient.getDescription()))
+            {
+                Ingredient newIngredient = new Ingredient(ingredient.getId(),ingredient.getDescription(), "0000-00-00", "Not Assigned", 0, "0", ingredient.getCategory());
+                MainActivity.ingredientController.add(newIngredient);
+                ingredientAdapter.notifyDataSetChanged();
+            }
+
+        }
+
+
         if (requiredFieldEntered) {
             Recipe recipe = new Recipe(title,
                     Integer.parseInt(prepTime),
                     Integer.parseInt(numServings),
-                    category, comments, photoUri, ingredients);
-            recipeController.add(recipe);
+                    category, comments, null, ingredients);
+            super.recipeController.add(recipe);
             dismiss();
         } else {
             Toast.makeText(super.context, "Invalid input value(s) - check all fields", Toast.LENGTH_SHORT).show();

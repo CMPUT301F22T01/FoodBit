@@ -94,4 +94,3 @@ public class MealPlanAdapter extends RecyclerView.Adapter<MealPlanAdapter.ViewHo
         public TextView getMealPlanServings() { return mealPlanServings; }
     }
 }
-

@@ -6,6 +6,7 @@ import com.CMPUT301F22T01.foodbit.models.Ingredient;
 import com.CMPUT301F22T01.foodbit.models.MealPlan;
 import com.CMPUT301F22T01.foodbit.models.Recipe;
 
+
 import java.util.ArrayList;
 
 /**
@@ -162,4 +163,5 @@ public class MealPlanController {
         }
     }
 }
+
 
