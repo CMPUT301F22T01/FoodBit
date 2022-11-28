@@ -100,7 +100,7 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+        //shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
@@ -117,7 +117,7 @@ public class ShoppingCartFragment extends Fragment {
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
         List<String> descriptionList = ingredientController.getDescriptions();
-        shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
+        //shoppingCart(shoppingList, mealIngredient, storage, descriptionList);
 
 
         //get views
