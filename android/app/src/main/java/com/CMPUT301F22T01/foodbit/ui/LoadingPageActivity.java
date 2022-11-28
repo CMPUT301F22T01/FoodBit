@@ -37,7 +37,7 @@ public class LoadingPageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_loading_page);
 
         listen.setValue("empty"); //Facilitate getting User DB
-        listen2.setValue(0); //Facilitate getting User DB
+        listen2.setValue(0); //Facilitate waiting for the async Firebase calls.
 
 
         //Get Firebase Instance ID
@@ -88,7 +88,9 @@ public class LoadingPageActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(listen2.getValue() == -1) {
-                    //Loaded in all databases, we can move on!
+                    //Loaded in all databases, let's ensure mealPlan ingredient needs have been
+                    //updated and move on
+                    MainActivity.mealPlanController.calcAllIngredients();
                     Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
                     LoadingPageActivity.this.startActivity(myIntent);
                 }
