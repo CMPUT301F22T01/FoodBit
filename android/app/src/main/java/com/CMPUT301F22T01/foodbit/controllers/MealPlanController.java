@@ -41,9 +41,9 @@ public class MealPlanController {
      * @param meal the meal to be added
      */
     public void addMeal(MealPlan meal){
+        this.addToIngredientList(meal);
         db.addItem(meal);
         mealPlans.add(meal);
-        this.addToIngredientList(meal);
     }
 
     /**
@@ -76,9 +76,9 @@ public class MealPlanController {
      */
     public void deleteMeal(MealPlan meal) {
         assert contains(meal) : "this meal is not found in the meal plan!";
+        this.subtractFromIngredientList(meal);
         db.deleteItem(meal);
         mealPlans.remove(meal);
-        this.subtractFromIngredientList(meal);
     }
 
 
@@ -111,6 +111,7 @@ public class MealPlanController {
     public void update(ArrayList<MealPlan> newMealPlan) {
         mealPlans.clear();
         mealPlans.addAll(newMealPlan);
+
     }
 
     /**
