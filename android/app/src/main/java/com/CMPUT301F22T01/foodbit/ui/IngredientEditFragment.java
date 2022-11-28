@@ -142,23 +142,35 @@ public class IngredientEditFragment extends DialogFragment {
         ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.ingredient_dropdown_layout, categories);
         categoryTextView.setAdapter(categoryAdapter);
 
-        //This section is used if the ingredient is in a recipe or meal plan
-        //If so, only amount and location can be edited, the rest are restricted to viewing only
-        if (Objects.equals(keyword, "restricted editing")) {
-            descriptionEditText.setInputType(InputType.TYPE_NULL);
-            bestBeforeEditText.setInputType(InputType.TYPE_NULL);
-            unitTextView.setInputType(InputType.TYPE_NULL);
-            categoryTextView.setInputType(InputType.TYPE_NULL);
-            categoryTextView.setAdapter(null);
-            unitTextView.setAdapter(null);
-        }
-
         descriptionEditText.setText(ingredient.getDescription());
         bestBeforeEditText.setText(ingredient.getBestBefore());
         locationTextView.setText(ingredient.getLocation());
         amountEditText.setText(String.valueOf(ingredient.getAmount()));
         unitTextView.setText(ingredient.getUnit());
         categoryTextView.setText(ingredient.getCategory());
+
+        //This section is used if the ingredient is in a recipe or meal plan
+        //If so, only amount, location, and empty fields can be updated
+        if (Objects.equals(keyword, "restricted editing")) {
+            if (!Objects.requireNonNull(descriptionEditText.getText()).toString().equals("")) {
+                descriptionEditText.setInputType(InputType.TYPE_NULL);
+                descriptionEditText.setFocusable(false);
+            }
+            if (!Objects.requireNonNull(bestBeforeEditText.getText()).toString().equals("")) {
+                bestBeforeEditText.setInputType(InputType.TYPE_NULL);
+                bestBeforeEditText.setFocusable(false);
+            }
+            if (!unitTextView.getText().toString().equals("")) {
+                unitTextView.setInputType(InputType.TYPE_NULL);
+                unitTextView.setFocusable(false);
+                unitTextView.setAdapter(null);
+            }
+            if (!categoryTextView.getText().toString().equals("")) {
+                categoryTextView.setInputType(InputType.TYPE_NULL);
+                categoryTextView.setFocusable(false);
+                categoryTextView.setAdapter(null);
+            }
+        }
 
         // back button
         topBar.setNavigationOnClickListener(v -> {

@@ -115,6 +115,8 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
             int itemId = item.getItemId();
             if (recipeController.containsIngredient(ingredient) || mealPlanController.containsIngredient(ingredient)) {
                 if (itemId == R.id.ingredient_detail_edit) {
+                    String toastMsg = "Edit of amount, location, and empty fields - ingredient used in recipe(s) or meal plan(s)";
+                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
                     String restrictedEdit = "restricted editing";
                     new IngredientEditFragment(position, restrictedEdit).show(getChildFragmentManager(), IngredientEditFragment.TAG);
                 } else if (itemId == R.id.ingredient_detail_delete) {
