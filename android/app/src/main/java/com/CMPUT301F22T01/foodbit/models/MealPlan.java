@@ -141,32 +141,19 @@ public class MealPlan implements dbObject, dbObjectCustom {
 
     public MealPlan(){};
 
+    /**
+     * Create meal from a firebase document.
+     * @param doc
+     */
     public MealPlan(QueryDocumentSnapshot doc) {
-        this((String) doc.get("name"),
-                (int) (long) doc.get("servings"),
-                doc.getId(),
-                (boolean) doc.get("ingredient"),
-                (Date) ((Timestamp) doc.get("date")).toDate());
-        ArrayList<Ingredient> ingredients = new ArrayList<>();
-        for (HashMap map :
-                (ArrayList<HashMap>) doc.get("ingredients")) {
-            ingredients.add(new Ingredient(
-                    (String) map.get("id"),
-                    (String) map.get("description"),
-                    (String) map.get("bestBefore"),
-                    (String) map.get("location"),
-                    (float) (double) map.get("amount"),
-                    (String) map.get("unit"),
-                    (String) map.get("category")));
-        }
-        this.ingredients = ingredients;
-        this.recipeID = doc.get("recipeID").toString();
+        MealPlan meal = createFromDocCustom(doc);
+        this.update(meal);
     }
 
     /**
-     * Facilitate creating new meal objects from a document.
+     * Facilitate creating new meal objects from a document for dbObjectCustom implementation.
      * @param doc
-     * @return
+     * @return meal
      */
     public MealPlan createFromDocCustom(QueryDocumentSnapshot doc) {
         MealPlan meal2 = new MealPlan();
