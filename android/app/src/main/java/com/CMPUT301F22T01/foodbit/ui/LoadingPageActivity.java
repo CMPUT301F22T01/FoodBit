@@ -50,7 +50,7 @@ public class LoadingPageActivity extends AppCompatActivity {
                 //FID has been updated. Grab data and move to main activity!
                 FID = listen.getValue();
                 if(!FID.equals("empty")) {
-//                    listen2.setValue(4); // 5 loading transactions. So this will be -1 when they are all done.
+                    listen2.setValue(4); // 5 loading transactions. So this will be -1 when they are all done.
                     MainActivity.mealPlanRef = db.collection(FID).document(FID).collection("Meals");
                     MainActivity.mealPlanController = new MealPlanController();
                     MainActivity.mealPlanController.load();
@@ -88,7 +88,7 @@ public class LoadingPageActivity extends AppCompatActivity {
             @Override
             public void onChanged(Integer integer) {
                 if(listen2.getValue() == -1) {
-                    //Loaded in all 6 databases, we can move on!
+                    //Loaded in all databases, we can move on!
                     Intent myIntent = new Intent(LoadingPageActivity.this, MainActivity.class );
                     LoadingPageActivity.this.startActivity(myIntent);
                 }
