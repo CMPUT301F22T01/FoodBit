@@ -391,18 +391,12 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                         unitAdapter.notifyDataSetChanged();
                         boolean unitExists = false;
                         //canAddIngredient = false;
-
-
-
                         for (IngredientUnit findUnit:units)
                         {
-                            if (findUnit.getUnitName().equals(unit))
-                            {
+                            if (findUnit.getUnitName().equals(unit)) {
                                 unitExists = true;
                             }
-
                         }
-
                         if (!unitExists){
                             if (!definedUnits.contains(unit))
                             {
@@ -412,10 +406,7 @@ public class RecipeAddIngredientFragment extends DialogFragment {
                             //canAddIngredient = false;
                             //unitLayout.setError("Select Existing Unit or Add new Unit");
                         }
-
-
                     }
-
                     String category = String.valueOf(categoryEditText.getText());
                     if (category.equals("")) {
                         category = null;
