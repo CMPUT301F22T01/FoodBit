@@ -23,6 +23,7 @@ import com.CMPUT301F22T01.foodbit.controllers.IngredientController;
 import com.CMPUT301F22T01.foodbit.controllers.MealPlanController;
 import com.CMPUT301F22T01.foodbit.models.Ingredient;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -125,31 +126,51 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         adapter.notifyDataSetChanged();
     }
 
-    /**
-     * Compare the Ingredient of MealPlan with Ingredient Storage
-     * Store new amount into new Shopping Ingredient list for adapter use
-     * @param shoppingList
-     * @param mealIngredient
-     * @param storage
-     */
-    public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
-                             ArrayList<Ingredient> storage) {
-        for (Ingredient ingredient: mealIngredient
-             ) {
-            shoppingList.add(ingredient);
+//    /**
+//     * Compare the Ingredient of MealPlan with Ingredient Storage
+//     * Store new amount into new Shopping Ingredient list for adapter use
+//     * @param shoppingList
+//     * @param mealIngredient
+//     * @param storage
+//     */
+//    public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
+//                             ArrayList<Ingredient> storage) {
+//        for (Ingredient ingredient: mealIngredient
+//             ) {
+//            shoppingList.add(ingredient);
+//        }
+//        for (Ingredient ingredient: shoppingList
+//        ) {
+//            int index = lookUpIngredientID(ingredient.getId(), storage);
+//            if (ingredient.getAmount() > storage.get(index).getAmount()){
+//                float amountNeed = ingredient.getAmount() - storage.get(index).getAmount();
+//                ingredient.update(storage.get(index));
+//                ingredient.setAmount(amountNeed);
+//            }
+//            else{
+//                shoppingList.remove(ingredient);
+//            }
+//        }
+//    }
+    private ArrayList<Ingredient> getShoppingList(ArrayList<Ingredient> need, ArrayList<Ingredient> have) {
+        ArrayList<Ingredient> shoppingList = new ArrayList<>();
+        for (Ingredient ingredientNeeded :
+                need) {
+            Ingredient cartItem = new Ingredient();
+            cartItem.update(ingredientNeeded);
+            shoppingList.add(cartItem);
         }
-        for (Ingredient ingredient: shoppingList
-        ) {
-            int index = lookUpIngredientID(ingredient.getId(), storage);
-            if (ingredient.getAmount() > storage.get(index).getAmount()){
-                float amountNeed = ingredient.getAmount() - storage.get(index).getAmount();
-                ingredient.update(storage.get(index));
-                ingredient.setAmount(amountNeed);
-            }
-            else{
-                shoppingList.remove(ingredient);
+        for (Ingredient cartItem :
+                shoppingList) {
+            int index = lookUpIngredientID(cartItem.getId(), have);
+            if (cartItem.getAmount() <= have.get(index).getAmount()) {
+                shoppingList.remove(cartItem);
+            } else {
+                float amountNeeded = cartItem.getAmount() - have.get(index).getAmount();
+                cartItem.setAmount(amountNeeded);
             }
         }
+        return shoppingList;
     }
 
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
@@ -173,7 +194,7 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         mealPlan = MainActivity.mealPlanController;
         ArrayList<Ingredient> mealIngredient = mealPlan.getAllIngredients();
         ArrayList<Ingredient> storage = ingredientController.getIngredients();
-        shoppingCart(shoppingList, mealIngredient, storage);
+//        shoppingCart(shoppingList, mealIngredient, storage);
 
         //get views
         RecyclerView recyclerView = view.findViewById(R.id.recyclerView_shopping_cart);
