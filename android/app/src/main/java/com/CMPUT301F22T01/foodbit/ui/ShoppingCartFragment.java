@@ -132,32 +132,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         adapter.notifyDataSetChanged();
     }
 
-    //    /**
-//     * Compare the Ingredient of MealPlan with Ingredient Storage
-//     * Store new amount into new Shopping Ingredient list for adapter use
-//     * @param shoppingList
-//     * @param mealIngredient
-//     * @param storage
-//     */
-//    public void shoppingCart(ArrayList<Ingredient> shoppingList, ArrayList<Ingredient> mealIngredient,
-//                             ArrayList<Ingredient> storage) {
-//        for (Ingredient ingredient: mealIngredient
-//             ) {
-//            shoppingList.add(ingredient);
-//        }
-//        for (Ingredient ingredient: shoppingList
-//        ) {
-//            int index = lookUpIngredientID(ingredient.getId(), storage);
-//            if (ingredient.getAmount() > storage.get(index).getAmount()){
-//                float amountNeed = ingredient.getAmount() - storage.get(index).getAmount();
-//                ingredient.update(storage.get(index));
-//                ingredient.setAmount(amountNeed);
-//            }
-//            else{
-//                shoppingList.remove(ingredient);
-//            }
-//        }
-//    }
+    /**
+     * get a shopping list from meal ingredient and ingredient storage
+     * @param need the amount that need for a ingredient in mealPlan
+     * @param have the amount that have in the ingredientList
+     * @return an arrayList of Ingredient
+     */
     private ArrayList<Ingredient> getShoppingList(ArrayList<Ingredient> need, ArrayList<Ingredient> have) {
         ArrayList<Ingredient> shoppingList = new ArrayList<>();
         for (Ingredient ingredientNeeded :
@@ -179,6 +159,12 @@ public class ShoppingCartFragment extends Fragment implements ShoppingCartAdapte
         return shoppingList;
     }
 
+    /**
+     * get ingredient index by look up ingredientID
+     * @param ID ingredient
+     * @param ingredList ingredientController
+     * @return an index of a given ingredient
+     */
     public int lookUpIngredientID(String ID, ArrayList<Ingredient> ingredList) {
         for (int i = 0; i< ingredList.size(); i++) {
             if (ID.equals(ingredList.get(i).getId())) {
