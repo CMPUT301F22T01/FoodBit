@@ -181,12 +181,13 @@ public class MealPlan implements dbObject, dbObjectCustom {
         this.date = date;
     }
 
-    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, ArrayList<Ingredient> ingredients) {
+    public MealPlan(String name, int servings, String id, boolean isIngredient, Date date, String recipeID, ArrayList<Ingredient> ingredients) {
         this.name = name;
         this.servings = servings;
         this.id = id;
         this.isIngredient = isIngredient;
         this.date = date;
+        this.recipeID = recipeID;
         this.ingredients = ingredients;
     }
 
