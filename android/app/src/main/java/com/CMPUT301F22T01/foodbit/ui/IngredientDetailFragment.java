@@ -113,15 +113,13 @@ public class IngredientDetailFragment extends Fragment implements IngredientEdit
         // allows for editing of ingredient being viewed when edit button is clicked
         toolbar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
-            if (itemId == R.id.ingredient_detail_edit) {
-                if (recipeController.containsIngredient(ingredient) || mealPlanController.containsIngredient(ingredient)) {
-                    String toastMsg = "Edit not allowed - ingredient used in recipe(s) or meal plan(s)";
-                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
-                } else {
-                    new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
-                }
+            if (recipeController.containsIngredient(ingredient) || mealPlanController.containsIngredient(ingredient)) {
+                String toastMsg = "Edit/Deletion not allowed - ingredient used in recipe(s) or meal plan(s)";
+                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.ingredient_detail_edit) {
+                new IngredientEditFragment(position).show(getChildFragmentManager(), IngredientEditFragment.TAG);
             }
-            if (itemId == R.id.ingredient_detail_delete) {
+            else if (itemId == R.id.ingredient_detail_delete) {
                 // Removing from the database
                 MainActivity.ingredientController.delete(ingredient);
                 Navigation.findNavController(view).popBackStack();

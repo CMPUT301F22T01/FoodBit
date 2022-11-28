@@ -107,15 +107,12 @@ public class RecipeDetailFragment extends Fragment implements RecipeEditFragment
         topBar.setOnMenuItemClickListener(item -> {
             int itemId = item.getItemId();
             // edit button behaviour
-            if (itemId == R.id.recipe_detail_edit) {
-                if (mealPlanController.containsRecipe(recipe)) {
-                    String toastMsg = "Edit not allowed - recipe used in meal plan(s)";
-                    Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
-                } else {
-                    editButtonClicked();
-                }
-            }
-            if (itemId == R.id.recipe_detail_delete) {
+            if (mealPlanController.containsRecipe(recipe)) {
+                String toastMsg = "Edit/Deletion not allowed - recipe used in meal plan(s)";
+                Toast.makeText(context, toastMsg, Toast.LENGTH_SHORT).show();
+            } else if (itemId == R.id.recipe_detail_edit) {
+                editButtonClicked();
+            } else if (itemId == R.id.recipe_detail_delete) {
                 recipeController.remove(recipe);
                 Navigation.findNavController(view).popBackStack();
             }
